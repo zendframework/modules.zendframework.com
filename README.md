@@ -1,11 +1,10 @@
-ZFModules.com
+modules.zendframework.com
 =============
 Version 0.0.1
 
 Introduction
 ------------
-ZFModules.com will be a community site for publishing and sharing Zend Framework
-modules.
+This site will eventually be a community site for publishing and sharing Zend Framework modules.
 
 Deployment
 ----------

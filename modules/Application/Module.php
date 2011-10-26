@@ -76,7 +76,7 @@ class Module
 
         $view->plugin('headTitle')->setSeparator(' - ')
                                   ->setAutoEscape(false)
-                                  ->append('ZFModules.com');
+                                  ->append('modules.zendframework.com');
         $this->view = $view;
         return $view;
     }
