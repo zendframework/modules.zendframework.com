@@ -11,6 +11,7 @@ body > header {
     width: 100%;
     height: 490px;
     background: url(../image/subtle-waves.jpg) repeat;
+    font-family: 'HaymerPetiteCapitalsLight-Light';
 }
 
 body > header > figure {
@@ -57,6 +58,7 @@ body > header > nav {
     background-image: url(../image/separator.jpg);
     background-repeat: repeat-x;
     background-position: bottom;
+    text-transform: uppercase;
 }
 body > header > nav > ul {
     margin: 0 auto;
@@ -116,6 +118,7 @@ body > header > nav > ul > li:last-child {
     text-transform: uppercase;
     font-size: 200%;
     margin-bottom: 20px;
+    font-family: 'HaymerPetiteCapitalsLight-Light';
 }
 
 #content article {
@@ -145,6 +148,10 @@ body > header > nav > ul > li:last-child {
 #content article a {
     color: #68b604;
     text-transform: uppercase;
+}
+
+#content article header {
+    font-family: 'HaymerPetiteCapitalsLight-Light';
 }
 
 #content article a {
