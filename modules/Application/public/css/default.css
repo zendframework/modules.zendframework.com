@@ -134,8 +134,11 @@ body > header > nav > ul > li:last-child {
 }
 
 #content article p,
-#content article p * {
+#content article li {
     font-size: 80%;
+}
+#content article p * {
+    font-size: 100%;
 }
 
 #content article header,
@@ -167,6 +170,12 @@ body > header > nav > ul > li:last-child {
     -webkit-column-gap: 15px;
     column-count: 3;
     column-gap: 15px;
+}
+
+#content article.wide{
+    width: 100%;
+    padding 5px;
+    margin-top: 20px;
 }
 
 aside {
