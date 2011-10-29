@@ -33,7 +33,7 @@ body > header > form {
     margin: 0 auto;
 }
 
-body > header > form > input[type=search] { 
+body > header > form > input { 
     height: 40px;
     border: 0px;
     width: 270px;
