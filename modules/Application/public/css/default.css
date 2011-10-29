@@ -20,8 +20,9 @@ body > aside.corner {
     padding: 0;
     right:0;
     top: 0;
-    width: 199px;
-    height: 194px;
+    width: 149px;
+    height: 149px;
+    text-align: right;
 }
 
 body > header > figure {
