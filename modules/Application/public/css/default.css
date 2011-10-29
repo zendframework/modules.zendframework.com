@@ -21,6 +21,10 @@ body > header > figure {
     margin-top: 50px;
 }
 
+body > header > figure > figcaption{
+    display: none;
+}
+
 body > header > form {
     background-image: url(../image/search.png);
     background-repeat: no-repeat;
