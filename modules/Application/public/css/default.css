@@ -18,6 +18,7 @@ body > header > figure {
     width: 550px;
     height: 405px;
     margin: 0 auto;
+    margin-top: 50px;
 }
 
 body > header > form {
@@ -38,7 +39,7 @@ body > header > form > input[type=search] {
 
 body > header > form,
 body > header > nav {
-    top: -31px;
+    top: -81px;
     position: relative;
 }
 
