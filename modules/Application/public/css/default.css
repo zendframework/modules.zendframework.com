@@ -14,6 +14,16 @@ body > header {
     font-family: 'HaymerPetiteCapitalsLight-Light';
 }
 
+body > aside.corner {
+    position: absolute;
+    margin:0;
+    padding: 0;
+    right:0;
+    top: 0;
+    width: 199px;
+    height: 194px;
+}
+
 body > header > figure {
     width: 550px;
     height: 405px;
