@@ -7,7 +7,7 @@ use ArrayAccess,
     Zend\EventManager\EventCollection,
     Zend\EventManager\ListenerAggregate,
     Zend\EventManager\StaticEventCollection,
-    Zend\Http\Response,
+    Zend\Http\PhpEnvironment\Response as PhpHttpResponse,
     Zend\Mvc\Application,
     Zend\Mvc\MvcEvent,
     Zend\View\Renderer;
@@ -135,7 +135,7 @@ class Listener implements ListenerAggregate
     {
         $response = $e->getResponse();
         if (!$response) {
-            $response = new Response();
+            $response = new PhpHttpResponse();
             $e->setResponse($response);
         }
         if ($response->isRedirect()) {
@@ -159,7 +159,7 @@ class Listener implements ListenerAggregate
     public function render404(MvcEvent $e)
     {
         $vars = $e->getResult();
-        if ($vars instanceof Response) {
+        if ($vars instanceof PhpHttpResponse) {
             return;
         }
 
