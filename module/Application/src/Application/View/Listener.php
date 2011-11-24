@@ -7,7 +7,7 @@ use ArrayAccess,
     Zend\EventManager\EventCollection,
     Zend\EventManager\ListenerAggregate,
     Zend\EventManager\StaticEventCollection,
-    Zend\Http\PhpEnvironment\Response as PhpHttpResponse,
+    Zend\Http\PhpEnvironment\Response,
     Zend\Mvc\Application,
     Zend\Mvc\MvcEvent,
     Zend\View\Renderer;
@@ -97,7 +97,7 @@ class Listener implements ListenerAggregate
             $response->setStatusCode(404);
         }
 
-        $script     = 'pages/' . $page . '.phtml';
+        $script     = 'error/' . $page . '.phtml';
 
         // Action content
         $content    = $this->view->render($script);
@@ -135,7 +135,7 @@ class Listener implements ListenerAggregate
     {
         $response = $e->getResponse();
         if (!$response) {
-            $response = new PhpHttpResponse();
+            $response = new Response();
             $e->setResponse($response);
         }
         if ($response->isRedirect()) {
@@ -159,7 +159,7 @@ class Listener implements ListenerAggregate
     public function render404(MvcEvent $e)
     {
         $vars = $e->getResult();
-        if ($vars instanceof PhpHttpResponse) {
+        if ($vars instanceof Response) {
             return;
         }
 
@@ -169,9 +169,13 @@ class Listener implements ListenerAggregate
             return;
         }
 
-        $vars = array('message' => 'Page not found.');
+        $vars = array(
+            'message'            => 'Page not found.',
+            'exception'          => $e->getParam('exception'),
+            'display_exceptions' => $this->displayExceptions(),
+        );
 
-        $content = $this->view->render('pages/404.phtml', $vars);
+        $content = $this->view->render('error/404.phtml', $vars);
 
         $e->setResult($content);
 
@@ -192,7 +196,9 @@ class Listener implements ListenerAggregate
             case Application::ERROR_CONTROLLER_NOT_FOUND:
             case Application::ERROR_CONTROLLER_INVALID:
                 $vars = array(
-                    'message' => 'Page not found.',
+                    'message'            => 'Page not found.',
+                    'exception'          => $e->getParam('exception'),
+                    'display_exceptions' => $this->displayExceptions(),
                 );
                 $response->setStatusCode(404);
                 break;
