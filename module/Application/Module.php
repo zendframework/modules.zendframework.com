@@ -2,7 +2,8 @@
 
 namespace Application;
 
-use Zend\EventManager\StaticEventManager,
+use Zend\Module\Manager,
+    Zend\EventManager\StaticEventManager,
     Zend\Module\Consumer\AutoloaderProvider;
 
 class Module implements AutoloaderProvider
@@ -10,7 +11,7 @@ class Module implements AutoloaderProvider
     protected $view;
     protected $viewListener;
 
-    public function init()
+    public function init(Manager $moduleManager)
     {
         $events = StaticEventManager::getInstance();
         $events->attach('bootstrap', 'bootstrap', array($this, 'initializeView'), 100);
@@ -30,7 +31,7 @@ class Module implements AutoloaderProvider
         );
     }
 
-    public function getConfig($env = null)
+    public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
@@ -66,14 +67,16 @@ class Module implements AutoloaderProvider
             return $this->view;
         }
 
-        $di     = $app->getLocator();
-        $view   = $di->get('view');
-        $url    = $view->plugin('url');
-        $url->setRouter($app->getRouter());
+        $locator = $app->getLocator();
+        $view    = $locator->get('view');
 
-        $view->plugin('headTitle')->setSeparator(' - ')
-                                  ->setAutoEscape(false)
-                                  ->append('ZF2 Modules');
+        // Set up view helpers        
+        $view->plugin('url')->setRouter($app->getRouter());
+        $view->doctype()->setDoctype('HTML5');
+
+        $basePath = $app->getRequest()->getBasePath();
+        $view->plugin('basePath')->setBasePath($basePath);
+
         $this->view = $view;
         return $view;
     }

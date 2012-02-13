@@ -1,6 +1,9 @@
 <?php
 return array(
     'modules' => array(
+        'ZfcBase',
+        'ZfcUser',
+        'EdpGithub',
         'Application',
     ),
     'module_listener_options' => array( 
