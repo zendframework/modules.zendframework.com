@@ -3,15 +3,20 @@ return array(
     'modules' => array(
         'ZfcBase',
         'ZfcUser',
-        'EdpGithub',
+        'ScnSocialAuth',
         'Application',
+        'AssetManager',
+        'HybridAuth',
     ),
-    'module_listener_options' => array( 
-        'config_cache_enabled' => false,
-        'cache_dir'            => 'data/cache',
+    'module_listener_options' => array(
+        'config_glob_paths'    => array(
+            'config/autoload/{,*.}{global,local}.php',
+        ),
         'module_paths' => array(
+            'ScnSocialAuth' => '../moduledev/ScnSocialAuth',
             './module',
             './vendor',
+            '../moduledev',
         ),
     ),
 );

@@ -4,7 +4,7 @@ body {
 }
 
 .zf-green {
-    color: #68b604; 
+    color: #68b604;
 }
 
 .btn-success {
@@ -31,7 +31,8 @@ body {
 }
 
 div.container a.brand {
-    background: url("../images/zf2-logo.png") no-repeat scroll 0 10px transparent;
+    background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
     margin-left: 0;
     padding: 8px 20px 12px 40px;
 }
+
