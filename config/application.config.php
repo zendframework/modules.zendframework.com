@@ -6,6 +6,7 @@ return array(
         'ScnSocialAuth',
         'Application',
         'AssetManager',
+        'Assetic',
         'HybridAuth',
     ),
     'module_listener_options' => array(

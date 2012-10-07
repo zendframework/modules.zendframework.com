@@ -73,7 +73,11 @@ return array(
         ),
     ),
     'asset_manager' => array(
-        'paths' => array(__DIR__ . '/../public'),
+        'resolver_configs' => array(
+            'paths' => array(
+                __DIR__ . '/../public',
+            ),
+        ),
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,

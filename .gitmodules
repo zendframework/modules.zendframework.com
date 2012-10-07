@@ -16,3 +16,6 @@
 [submodule "vendor/HybridAuth/hybridauth"]
 	path = vendor/HybridAuth/hybridauth
 	url = https://github.com/hybridauth/hybridauth.git
+[submodule "vendor/Assetic/assetic"]
+	path = vendor/Assetic/assetic
+	url = https://github.com/kriswallsmith/assetic.git
