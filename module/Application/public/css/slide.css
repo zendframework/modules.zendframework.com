@@ -85,8 +85,27 @@ Version: 1.0
 
 .tab .sep {color:#414141}
 
-.tab li.user-info {
-    padding-top: 11px;
+.tab li {
+    line-height: 42px;
+}
+
+.gravatar-container {
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+    margin-right: 16px;
+    background: white;
+    margin-top: 5px;
+    margin-left: -8px;
+    border: 1px #999 double;
+}
+
+.gravatar-container img {
+    width:16px;
+    height:16px;
+    line-height: 16px;
+    margin: 0 auto;
+    vertical-align:top;
 }
 
 .tab a.open, .tab a.close {
