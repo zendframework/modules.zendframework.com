@@ -21,9 +21,21 @@
 <article class="wide">
     <header><a id="modules">Modules</a></header>
     <div>
-        <p>The new ZF2 module system is very young; and as such, there are not many modules yet.</p>
-        <p>Below are some links to modules under development. Remember, ZF2 and the module system is beta and not meant to be used in production. These modules are not tested, reveiwed by anyone, or guaranteed to work at all.</p>
+        <p>Below are links to some open source ZF2 modules. These modules are not tested, reveiwed by anyone, or guaranteed to work at all.</p>
         <ul>
+            <?php
+            /**
+             * ATTENTION!!!!!
+             *
+             * Please add your modules to this list in alphabetical order.
+             *
+             * If you want to help with the new, dynamic version of this site, see the following forks/branches:
+             *
+             * https://github.com/EvanDotPro/modules.zendframework.com/tree/feature/updates
+             * https://github.com/BinaryKitten/modules.zendframework.com/tree/feature/updates
+             */
+            ?>
+
             <li><a href="https://github.com/widmogrod/zf2-assetic-module">AsseticBundle</a> -  Privides asset managment (depended of route-name, controller-alias-name [di]). Core of module is <a href="https://github.com/kriswallsmith/assetic">Assetic</a> library. By <a href="https://github.com/widmogrod">Gabriel Habryn</a>.</li>
             <li><a href="https://github.com/DASPRiD/AssetLoader">AssetLoader</a> – Provides loading of assets within modules. By <a href="http://www.dasprids.de">Ben Scholzen</a></li>
             <li><a href="https://github.com/RWOverdijk/AssetManager">AssetManager</a> - Allows you to load, filter and cache assets. Provides lots of functionality with clean integration. By <a href="http://blog.spoonx.nl/">Wesley Overdijk</a>.</li>
@@ -33,42 +45,52 @@
             <li><a href="https://github.com/bjyoungblood/BjyCacheStorage">BjyCacheStorage</a> - Provides various (currently only Redis) cache storage adapters for Zend\Cache. By <a href="http://bjyoungblood.com">Ben Youngblood</a>.</li>
             <li><a href="https://github.com/bjyoungblood/BjyProfiler">BjyProfiler</a> - Zend\Db query profiler (also a plugin for ZendDeveloperTools). By <a href="http://bjyoungblood.com">Ben Youngblood</a>.</li>
             <li><a href="https://github.com/cgmartin/CgmConfigAdmin">CgmConfigAdmin</a> - Easy administration of application settings. By <a href="http://cgmartin.com">Christopher Martin</a>.</li>
+            <li><a href="https://github.com/juriansluiman/ChromePhpLogger">ChromePhpLogger</a> - Provides the logging utility for Chrome, able to use with Zend\Log. By <a href="http://juriansluiman.nl">Jurian Sluiman</a></li>
             <li><a href="https://github.com/artur-gajewski/ContentEditable">ContentEditable</a> -  Provides simple way to to make any tag's content editable and then send modified content to your application. By <a href="https://github.com/artur-gajewski">Artur Gajewski</a>.</li>
             <li><a href="https://bitbucket.org/dlu/dlutwbootstrap">DluTwBootstrap</a> - Renders <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> UI (forms, navigation, etc.). Check the <a href="http://apps.zfdaily.com/dlutwbootstrap-demo">on-line demo</a>. By <a href="http://www.zfdaily.com">David Lukas</a>.</li>
             <li>
-                <a href="https://github.com/doctrine/DoctrineModule">DoctrineModule</a> - Complete Doctrine 2.x integration for your ZF2 application with pagination, validators, and auth adapters.
+                <a href="https://github.com/doctrine/DoctrineModule">DoctrineModule</a> - Complete, official Doctrine 2.x integration for your ZF2 application with pagination, validators, and auth adapters.
                 <ul>
                     <li><a href="https://github.com/doctrine/DoctrineORMModule">DoctrineORMModule</a> - DoctrineORM provider for DoctrineModule.</li>
                     <li><a href="https://github.com/doctrine/DoctrineMongoODMModule">DoctrineMongoODMModule</a> - MongoODM provider for DoctrineModule.</li>
                 </ul>
             </li>
-            <li><a href="https://github.com/mickaelCOLLET/MiklSeo">MiklSeo</a> - Provides a simple module to manage your basic "On-page" Seo. By <a href="https://github.com/mickaelCOLLET">Mickaël COLLET</a>.</li>
             <li><a href="https://github.com/superdweebie/DojoModule">DojoModule</a> A simple module to integrate Dojo 1.7 with zf2. Includes basic structure for view helpers, and a skeleton for bootstrapping dojo. By Tim Roediger.</li>
             <li><a href="https://github.com/EvanDotPro/EdpMarkdown">EdpMarkdown</a> - Uses the <a href="http://michelf.com/projects/php-markdown/">PHP Markdown</a> parser to provide a very simple markdown view helper. By <a href="http://blog.evan.pro/">Evan Coury</a>.</li>
             <li><a href="https://github.com/EvanDotPro/EdpSuperluminal">EdpSuperluminal</a> - Caches the common Zend\* classes used by your application into a single cache file, reducing reliance on the autoloader, and greatly improving the baseline performance of ZF2. By <a href="http://blog.evan.pro/">Evan Coury</a>.</li>
-            <li><a href="https://github.com/Ocramius/OcraDiCompiler">OcraDiCompiler</a> - Compiles the default Zend\Di instance into a very fast dependency injection container proxy, making your application blazing fast. By <a href="http://marco-pivetta.com/">Marco Pivetta</a>.</li>
             <li><a href="https://github.com/widmogrod/zf2-facebook-module">FacebookBundle</a> -  Privides very simple integration with <a href="https://github.com/facebook/php-sdk">Facebook php-sdk</a> library. By <a href="https://github.com/widmogrod">Gabriel Habryn</a>.</li>
             <li><a href="https://github.com/artur-gajewski/FileBank">FileBank</a> -  Provides simple way to save files and their metadata and keyword tags into database and retrieve them with a view helpers. By <a href="https://github.com/artur-gajewski">Artur Gajewski</a>.</li>
+            <li><a href="https://github.com/gabriel403/G403Translator">G403Translator</a> -  Simple module for using Zend\Translate with database entries. By <a href="http://autonomicpilot.co.uk">Gabriel Baker</a>.</li>
+            <li><a href="https://github.com/juriansluiman/GedmoDoctrineExtensions">GedmoDoctrineExtensions</a> - Provides the Doctrine Extensions from "l3pp4rd", to be used with the DoctrineModule and DoctrineORMModule. By <a href="http://juriansluiman.nl">Jurian Sluiman</a></li>
             <li><a href="https://github.com/cderue/GoogleMaps">GoogleMaps</a> - A ZF2 module that provides a PHP wrapper to the Google Maps Geocoding API. By <a href="https://github.com/cderue">CÃ©dric Derue</a>.</li>
             <li><a href="https://github.com/artur-gajewski/GoogleWeather">GoogleWeather</a> -  Provides access to Google's weather forecast, localized data and forecast graphics. By <a href="https://github.com/artur-gajewski">Artur Gajewski</a>.</li>
-            <li><a href="https://github.com/gabriel403/G403Translator">G403Translator</a> -  Simple module for using Zend\Translate with database entries. By <a href="http://autonomicpilot.co.uk">Gabriel Baker</a>.</li>
             <li><a href="https://github.com/basz/zf2-module-ideal-service">iDealService</a> - Module for the online payment system <a href="http://http://www.ideal.nl/?s=&lang=eng-GB">iDeal</a> which to free shop owners from specific acquirers 'lock-in'. It does this by having a unified interface on top of vendor specific adapters. By <a href="http://www.bushbaby.nl/">Bas Kamer</a>.</li>
+            <li><a href="https://github.com/mickaelCOLLET/MiklSeo">MiklSeo</a> - Provides a simple module to manage your basic "On-page" Seo. By <a href="https://github.com/mickaelCOLLET">Mickaël COLLET</a>.</li>
             <li><a href="https://github.com/mistmodules/MistDoctrine">MistDoctrine</a> - Provides a somewhat bare bones Doctrine 2.x integration. By <a href="http://www.michielstaessen.be/">Michiel Staessen</a>.</li>
+            <li><a href="https://github.com/blanchonvincent/ModuleDefaultRouteListener">ModuleDefaultRouteListener</a> - Provides a module to get default routes with module/controller/action with auto-register controllers, zf1 way. By <a href="http://developpeur-zend-framework.fr/">Vincent Blanchon</a></li>
             <li><a href="https://github.com/mwillbanks/mwGearman">mwGearman</a> - Provides a module for <a href="http://gearman.org">Gearman</a> integration.  Currently only supports PECL Gearman. By <a href="http://blog.digitalstruct.com">Mike Willbanks</a></li>
-            <li><a href="https://github.com/EvanDotPro/MwopGuestbook">MwopGuestbook</a> - Provides very simple Guestbook functionality. Built as a demo for the zf-quickstart. By <a href="http://weierophinney.net/matthew/">Matthew Weier O'Phinney</a>.</li>
             <li><a href="https://github.com/ocramius/OcraComposer">OcraComposer</a> - Provides composer autoloading for modules, helps in composer setup. By <a href="http://marco-pivetta.com/">Marco Pivetta</a>.</li>
+            <li><a href="https://github.com/Ocramius/OcraDiCompiler">OcraDiCompiler</a> - Compiles the default Zend\Di instance into a very fast dependency injection container proxy, making your application blazing fast. By <a href="http://marco-pivetta.com/">Marco Pivetta</a>.</li>
+            <li><a href="https://github.com/blanchonvincent/ParallelJobs">ParallelJobs</a> - Provides a fork manager. By <a href="http://developpeur-zend-framework.fr/">Vincent Blanchon</a></li>
+            <li><a href="https://github.com/basz/zf2-module-phing-service">PhingService</a> - Exposes <a href="http://www.phing.info">Phing</a> within ZF2, a PHP project build system or build tool based on Apache Ant. By <a href="http://www.bushbaby.nl/">Bas Kamer</a>.</li>
             <li><a href="https://github.com/weierophinney/PhlyBlog">PhlyBlog</a> - Provides a static blog generator. By <a href="http://mwop.net/">Matthew Weier O'Phinney</a></li>
             <li><a href="https://github.com/weierophinney/PhlyCommon">PhlyCommon</a> - Provides SPL extensions and generic interfaces for entities and collections. By <a href="http://mwop.net/">Matthew Weier O'Phinney</a></li>
             <li><a href="https://github.com/weierophinney/PhlyContact">PhlyContact</a> - Provides a CAPTCHA-protected contact form, with the ability to configure the mail transport. By <a href="http://mwop.net/">Matthew Weier O'Phinney</a></li>
             <li><a href="https://github.com/silvester/ReverseForm">ReverseForm</a> - Renders ZF2 forms with viewscripts, adds extended elements and properties to Zend\Form and gives possibility to render forms with other css frameworks. Works with stable ZF2. By <a href="http://maraz.org/">Silvester Maraž</a>.</li>
             <li><a href="https://github.com/silvester/ReverseOAuth2">ReverseOAuth2</a> - Another OAuth2 provider. It provides providers for github and google, others soon to come. By <a href="http://maraz.org/">Silvester Maraž</a>.</li>
+            <li><a href="https://github.com/blanchonvincent/SimpleMemoryShared">SimpleMemoryShared</a> - Provides a memory shared manager. By <a href="http://developpeur-zend-framework.fr/">Vincent Blanchon</a></li>
             <li><a href="http://git.mwop.net/?a=summary&p=SkeletonCss">SkeletonCss</a> - Provides <a href="http://getskeleton.com/">Skeleton CSS</a> assets. Packaged by <a href="http://mwop.net/">Matthew Weier O'Phinney</a></li>
+            <li><a href="https://github.com/juriansluiman/SlmMail">SlmMail</a> - Provides several api implementations of the largest Email Service Providers. Examples: Amazon SES, ElasticEmail, Mailchimp, Postage, Postmark, SendGrid. By <a href="http://juriansluiman.nl">Jurian Sluiman</a></li>
+            <li><a href="https://github.com/juriansluiman/SlmGoogleAnalytics">SlmGoogleAnalytics</a> - Provides integration of Google Analytics page tracking, event tracking and ecommerce tracking. By <a href="http://juriansluiman.nl">Jurian Sluiman</a></li>
             <li><a href="https://github.com/Domi-cc/SmartyModule">SmartyModule</a> - Smarty3 Integration. By <a href="https://github.com/Domi-cc">Dominik Haßelkuss</a></li>
             <li><a href="https://github.com/BostjanOb/SolrClient">SolrClient</a> - Apache SOLR Client. By <a href="http://bostjan.muha.cc/">Bostjan Oblak</a></li>
             <li><a href="https://github.com/widmogrod/zf2-twitter-bootstrap-module">TwitterBootstrap</a> -  Provides Zend_Form integration with <a href="https://github.com/twitter/bootstrap">twitter bootstrap toolkit</a>. By <a href="https://github.com/widmogrod">Gabriel Habryn</a>.</li>
             <li><a href="https://github.com/zendframework/ZendDeveloperTools">ZendDeveloperTools</a> - Will eventually provide a JS/CSS floating toolbar with helpful debugging tools such as profiling and debugging output.</li>
             <li><a href="https://github.com/zendframework/ZendSkeletonModule">ZendSkeletonModule</a> - Provides a simple starting place for developing typical MVC-oriented modules.</li>
-            <li><a href="https://github.com/Ocramius/ZfPhpcrOdm">ZfPhpcrOdm</a> - Provides integration of Doctrine PHPCR ODM for ZF2 applications through Doctrine DBAL/Jackrabbit or Midgard 2. By <a href="http://marco-pivetta.com/">Marco Pivetta</a>.</li>
+            <li><a href="https://github.com/ZendExperts/ZeSecurity">ZeSecurity</a> - Provides out of the box security layer currently using only IDS(Intrusion Detection System) based on PHPIDS. By <a href="http://www.zendexperts.com">ZendExperts</a>.</li>
+            <li><a href="https://github.com/ZendExperts/ZeTheme">ZeTheme</a> - Allows you to switch between various themes (created by you or someone else). You can also define on what conditions a theme should be used. By <a href="http://www.zendexperts.com">ZendExperts</a>.</li>
+            <li><a href="https://github.com/ZendExperts/ZeTwig">ZeTwig</a> - Integrates <a href="http://twig.sensiolabs.org/">Twig templating engine</a> in ZF2 applications with additional extensions for rendering actions and triggering events from within your templates. By <a href="http://www.zendexperts.com">ZendExperts</a>.</li>
+            <li><a href="https://github.com/webino/ZF2NetteDebug">ZF2NetteDebug</a> - User friendly Exception and Error handler ported from Nette Framework. By <a href="http://www.bacinsky.sk/">Peter Bačinský</a>.</li>
             <li><a href="https://github.com/mwillbanks/ZfcTwitterBootstrap">ZfcTwitterBootstrap</a> - Provides Twitter Bootstrap integration.  (Currently unofficial -- pending ZF-Commons vote).</li>
             <li><a href="https://github.com/Zf-Commons/ZfcUser">ZfcUser (Formerly EdpUser)</a> - Provides a very simple and customizable user authentication and registration system. The goal is to support Zend\Db out of the box and Doctrine2.x ORM and MongoDB ODM via adapter modules. By <a href="https://zf-commons.github.com/">ZF-Commons Team</a>.
                 <ul>
@@ -87,20 +109,9 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="https://github.com/basz/zf2-module-phing-service">PhingService</a> - Exposes <a href="http://www.phing.info">Phing</a> within ZF2, a PHP project build system or build tool based on Apache Ant. By <a href="http://www.bushbaby.nl/">Bas Kamer</a>.</li>
-            <li><a href="https://github.com/juriansluiman/SlmMail">SlmMail</a> - Provides several api implementations of the largest Email Service Providers. Examples: Amazon SES, ElasticEmail, Mailchimp, Postage, Postmark, SendGrid. By <a href="http://juriansluiman.nl">Jurian Sluiman</a></li>
-            <li><a href="https://github.com/juriansluiman/SlmGoogleAnalytics">SlmGoogleAnalytics</a> - Provides integration of Google Analytics page tracking, event tracking and ecommerce tracking. By <a href="http://juriansluiman.nl">Jurian Sluiman</a></li>
-            <li><a href="https://github.com/juriansluiman/GedmoDoctrineExtensions">GedmoDoctrineExtensions</a> - Provides the Doctrine Extensions from "l3pp4rd", to be used with the DoctrineModule and DoctrineORMModule. By <a href="http://juriansluiman.nl">Jurian Sluiman</a></li>
-            <li><a href="https://github.com/juriansluiman/ChromePhpLogger">ChromePhpLogger</a> - Provides the logging utility for Chrome, able to use with Zend\Log. By <a href="http://juriansluiman.nl">Jurian Sluiman</a></li>
-            <li><a href="https://github.com/blanchonvincent/ParallelJobs">ParallelJobs</a> - Provides a fork manager. By <a href="http://developpeur-zend-framework.fr/">Vincent Blanchon</a></li>
-            <li><a href="https://github.com/blanchonvincent/SimpleMemoryShared">SimpleMemoryShared</a> - Provides a memory shared manager. By <a href="http://developpeur-zend-framework.fr/">Vincent Blanchon</a></li>
-            <li><a href="https://github.com/blanchonvincent/ModuleDefaultRouteListener">ModuleDefaultRouteListener</a> - Provides a module to get default routes with module/controller/action with auto-register controllers, zf1 way. By <a href="http://developpeur-zend-framework.fr/">Vincent Blanchon</a></li>
             <li><a href="https://github.com/blanchonvincent/zf2-lazy-loading-module">ZFModuleLazyLoading</a> - Provides a lazy loading modules. By <a href="http://developpeur-zend-framework.fr/">Vincent Blanchon</a></li>
+            <li><a href="https://github.com/Ocramius/ZfPhpcrOdm">ZfPhpcrOdm</a> - Provides integration of Doctrine PHPCR ODM for ZF2 applications through Doctrine DBAL/Jackrabbit or Midgard 2. By <a href="http://marco-pivetta.com/">Marco Pivetta</a>.</li>
             <li><a href="https://github.com/blanchonvincent/zend-framework-test-phpunit">ZFUnitTest</a> - Provides a library to use PHPUnit with modules/controllers. By <a href="http://developpeur-zend-framework.fr/">Vincent Blanchon</a></li>
-            <li><a href="https://github.com/webino/ZF2NetteDebug">ZF2NetteDebug</a> - User friendly Exception and Error handler ported from Nette Framework. By <a href="http://www.bacinsky.sk/">Peter Bačinský</a>.</li>
-            <li><a href="https://github.com/ZendExperts/ZeTwig">ZeTwig</a> - Integrates <a href="http://twig.sensiolabs.org/">Twig templating engine</a> in ZF2 applications with additional extensions for rendering actions and triggering events from within your templates. By <a href="http://www.zendexperts.com">ZendExperts</a>.</li>
-            <li><a href="https://github.com/ZendExperts/ZeSecurity">ZeSecurity</a> - Provides out of the box security layer currently using only IDS(Intrusion Detection System) based on PHPIDS. By <a href="http://www.zendexperts.com">ZendExperts</a>.</li>
-            <li><a href="https://github.com/ZendExperts/ZeTheme">ZeTheme</a> - Allows you to switch between various themes (created by you or someone else). You can also define on what conditions a theme should be used. By <a href="http://www.zendexperts.com">ZendExperts</a>.</li>
         </ul>
     </div>
 </article>

@@ -8,5 +8,4 @@ This site will eventually be a community site for publishing and sharing Zend Fr
 
 Deployment
 ----------
-The production branch of this repository is automatically deployed live to
-zfmodules.com every 10 minutes.
+The master branch of this repository is automatically deployed live to modules.zendframework.com every 10 minutes.
