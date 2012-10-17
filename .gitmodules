@@ -19,3 +19,6 @@
 [submodule "vendor/Assetic/assetic"]
 	path = vendor/Assetic/assetic
 	url = https://github.com/kriswallsmith/assetic.git
+[submodule "vendor/ZF2"]
+	path = vendor/ZF2
+	url = https://github.com/zendframework/zf2.git
