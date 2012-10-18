@@ -37,7 +37,7 @@
                     <li class="left">&nbsp;</li>
                     <?php if ($userDisplayName = $this->zfcUserDisplayName()): ?>
                     <li class="user-info">
-                        <div class="gravatar-container"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 16)); ?></div> Hello <?=ucfirst($userDisplayName);?></li>
+                        <div class="gravatar-container"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 32)); ?></div> Hello <?=ucfirst($userDisplayName);?></li>
                     <li class="sep">|</li>
                     <li id="toggle">
                         <a id="open" class="open" href="#"><i class="icon icon-github"></i>Open Panel</a>
