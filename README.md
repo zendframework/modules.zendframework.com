@@ -18,11 +18,6 @@ This site will eventually be a community site for publishing and sharing Zend Fr
  * Copy config/autoload/github.local.php.dist to config/autoload/github.local.php and enter the Id and Secret provided during the Application registration on github.
  * Copy config/autoload/database.local.php.dist to config/autoload/database.local.php and enter your database credentials here.
 
-###Current Workarounds
-
-  For ScnSocial to work create a directory called moduledev and clone https://github.com/Hounddog/ScnSocialAuth.git
-  and switch to the branch "bug_fixes". this will only be applicable until fixes have been merged
-
 ## Deployment
 
 The production branch of this repository is automatically deployed live to
