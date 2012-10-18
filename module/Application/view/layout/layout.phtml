@@ -25,8 +25,14 @@
                         <h2>Modules?</h2>
                         <p class="grey">modules modules modules</p>
                     </div>
-                    <div class="left right">
-                        <?=$this->zfcUserLoginWidget();?>
+                    <div class="left right user">
+                        <?php if ($userDisplayName = $this->zfcUserDisplayName()): ?>
+                          <?=$this->userWidget()?>
+                        <?php else: ?>
+                          <h1>No Registration required!</h1>
+                          <p>We want to make it as simple as possible so you just have to sign in using your github account</p>
+                          <p class="socialbutton"><?=$this->socialSignInButton('github');?></p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div> <!-- /login -->
@@ -37,15 +43,17 @@
                     <li class="left">&nbsp;</li>
                     <?php if ($userDisplayName = $this->zfcUserDisplayName()): ?>
                     <li class="user-info">
-                        <div class="gravatar-container"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 16)); ?></div> Hello <?=ucfirst($userDisplayName);?></li>
+                        <div class="gravatar-container"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 23)); ?></div> Hello <?=ucfirst($userDisplayName);?></li>
+                    <li class="sep">|</li>
+                    <li ><a href="user/logout">Logout</a></li>
                     <li class="sep">|</li>
                     <li id="toggle">
-                        <a id="open" class="open" href="#"><i class="icon icon-github"></i>Open Panel</a>
+                        <a id="open" class="open" href="#">Open Panel</a>
                         <a id="close" style="display: none;" class="close" href="#">Close Panel</a>
                     </li>
                     <?php else: ?>
                     <li id="toggle">
-                        <a id="open" class="open" href="#"><i class="icon icon-github"></i>Log In</a>
+                        <a id="open" class="open" href="#">Log In</a>
                         <a id="close" style="display: none;" class="close" href="#">Close Panel</a>
                     </li>
                     <?php endif; ?>
