@@ -59,6 +59,7 @@ CREATE TABLE `user` (
   `email` varchar(255) DEFAULT NULL,
   `display_name` varchar(50) DEFAULT NULL,
   `password` varchar(128) NOT NULL,
+  `photo_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
@@ -67,7 +68,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', null, 'kat@binarykitten.com', null, '$2y$14$mWNsDZFn9PPiKiTGmPkEau4PnXYFz8CO6WstglAp6f3SRPjx/dpQi');
+-- INSERT INTO `user` VALUES ('1', null, 'kat@binarykitten.com', null, '$2y$14$mWNsDZFn9PPiKiTGmPkEau4PnXYFz8CO6WstglAp6f3SRPjx/dpQi');
 
 -- ----------------------------
 -- Table structure for `user_provider`

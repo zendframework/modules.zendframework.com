@@ -11,6 +11,7 @@ return array(
         'AssetManager',
         'Assetic',
         'HybridAuth',
+        'User'
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(
