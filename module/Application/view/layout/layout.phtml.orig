@@ -43,17 +43,21 @@
                     <li class="left">&nbsp;</li>
                     <?php if ($userDisplayName = $this->zfcUserDisplayName()): ?>
                     <li class="user-info">
+<<<<<<< HEAD
+                        <div class="gravatar-container"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 32)); ?></div> Hello <?=ucfirst($userDisplayName);?></li>
+=======
                         <div class="gravatar-container"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 23)); ?></div> Hello <?=ucfirst($userDisplayName);?></li>
                     <li class="sep">|</li>
                     <li ><a href="user/logout">Logout</a></li>
+>>>>>>> feature/updates
                     <li class="sep">|</li>
                     <li id="toggle">
-                        <a id="open" class="open" href="#"><i class="icon icon-github"></i>Open Panel</a>
+                        <a id="open" class="open" href="#">Open Panel</a>
                         <a id="close" style="display: none;" class="close" href="#">Close Panel</a>
                     </li>
                     <?php else: ?>
                     <li id="toggle">
-                        <a id="open" class="open" href="#"><i class="icon icon-github"></i>Log In</a>
+                        <a id="open" class="open" href="#">Log In</a>
                         <a id="close" style="display: none;" class="close" href="#">Close Panel</a>
                     </li>
                     <?php endif; ?>
