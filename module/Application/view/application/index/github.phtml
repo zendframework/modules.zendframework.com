@@ -1,0 +1,6 @@
+  <p>Access Token:<?=$api->getOauthToken()?></p>
+  <p>RemainingLimit:<?=$api->getRateLimitRemaining()?></p>
+  <?php
+  foreach($repositories as $repo) {
+    echo "<h3>$repo->name</h3>";
+  }

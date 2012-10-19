@@ -95,4 +95,9 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'userWidget' => 'Application\View\Helper\UserWidget'
+        ),
+    ),
 );

@@ -90,20 +90,21 @@ Version: 1.0
 }
 
 .gravatar-container {
-    width: 20px;
-    height: 20px;
-    padding: 4px;
+    width: 23px;
+    height: 23px;
+    padding: 1px;
     margin-right: 16px;
     background: white;
     margin-top: 5px;
     margin-left: -8px;
     border: 1px #999 double;
+    float:left;
 }
 
 .gravatar-container img {
-    width:16px;
-    height:16px;
-    line-height: 16px;
+    width:23px;
+    height:23px;
+    line-height: 23px;
     margin: 0 auto;
     vertical-align:top;
 }
@@ -111,16 +112,14 @@ Version: 1.0
 .tab a.open, .tab a.close {
 	height: 20px;
 	line-height: 20px !important;
-	padding-left: 30px !important;
 	cursor: pointer;
 	display: block;
-	width: 100px;
 	position: relative;
 	top: 11px;
-        font-size:12px;
-        font-weight: normal;
-        text-shadow: none;
-        opacity: 1;
+    font-size:12px;
+    font-weight: normal;
+    text-shadow: none;
+    opacity: 1;
 }
 
 /*.tab a.open {background: url(../img/tab/bt_open.png) no-repeat left 0;}
@@ -201,6 +200,10 @@ Version: 1.0
 
 #panel .content .right {
 	border-right: 1px solid #333;
+}
+#panel .content .socialbutton {
+    margin-top:30px;
+    text-align:center;
 }
 
 #panel .content form {
