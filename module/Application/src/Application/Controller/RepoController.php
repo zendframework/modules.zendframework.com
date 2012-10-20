@@ -42,12 +42,10 @@ class RepoController extends AbstractActionController
     }
 
     /**
-     * check if user has access to this repository
-     *
-     * @todo this is a temporary implementation... 
-     * need to check for better ways to get the permissions
+     * Return Repository
+     * 
      * @param  string $repository 
-     * @return boolean
+     * @return EdpGithub\ApiClient\Model\Repo
      */
     public function getRepository($repositoryUrl)
     {
@@ -59,7 +57,7 @@ class RepoController extends AbstractActionController
             }
         }
         
-        return $repo;
+        return $repository;
     }
 
     public function fetchUserRepositories()

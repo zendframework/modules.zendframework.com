@@ -45,7 +45,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
     {
         $select = $this->getSelect()
                        ->from($this->tableName)
-                       ->where(array('user_id' => $id));
+                       ->where(array('module_id' => $id));
 
         $entity = $this->select($select)->current();
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
