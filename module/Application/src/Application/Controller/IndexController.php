@@ -16,8 +16,9 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $this->layout()->foo = 'bar';
-        return new ViewModel();
+        $mapper = $this->getServiceLocator()->get('application_module_mapper');
+        $repositories = $mapper->findAll();
+        return array('repositories' => $repositories);
     }
 
     public function githubAction()

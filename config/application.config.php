@@ -12,7 +12,7 @@ return array(
         'Assetic',
         'HybridAuth',
         'EdpGithub',
-		'User'
+		'User',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

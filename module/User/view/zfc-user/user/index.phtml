@@ -1,0 +1,28 @@
+<div style="float:left; padding-right:16px;"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail()) ?></div>
+<h3>Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
+<a href="<?php echo $this->url('zfcuser/logout') ?>">[Sign Out]</a>
+<div style="clear:both;"></div>
+<h3>My Repositories</h3>
+<?php 
+    $result = $this->userRepositories();
+    foreach($result['repositories'] as $repo) {
+?>
+<div class="module-description" style="float:left">
+    <h4><?=$repo->getName()?></h4>
+    <p><?=$repo->getDescription()?>
+</div>
+<div class="module-administration" style="float:right">
+    <p><strong>Share this repository</strong></p>
+    <form action="/share-module" method="post">
+        <input type="hidden" name="repository" value="<?=$repo->getHtmlUrl()?>" />
+        <input type="submit" />
+    </form>
+</div>
+<br style="clear:both" />
+<hr />
+<?php
+ // echo "<pre>";
+ // print_r($repo);
+ // exit;
+    }
+?>

@@ -4,6 +4,16 @@
     <p><a class="btn btn-success btn-large" href="<?php echo $this->url('scn-social-auth-user/login/provider', array('provider' => 'github')) ?>">Sign in with Github &raquo;</a></p>
   </div>
 
+  <div class="hero-unit">
+    <h2>Available Modules</h2>
+    <?php
+    foreach($this->repositories as $repo) {
+      echo '<p><a href ="' . $repo->getUrl() . '">' . $repo->getName() . '</a></p>';
+      echo '<p>' . $repo->getDescription() . '</p>';
+    }
+    ?>
+  </div>
+
   <div class="row">
     <div class="span4">
       <h2>What is this site?</h2>
@@ -17,7 +27,6 @@
       <p><a class="btn btn-success" href="http://webchat.freenode.net?channels=zftalk.2">Ping us on IRC &raquo;</a></p>
    </div>
    <div class="span4">
-
      <h2>We Need Help!</h2>
      <p>We are actively recruiting volunteers to help build this community site. If you are interested in helping with this project, simply fork the code on GitHub and get started!. Additionally, join us in <a href="irc://irc.freenode.net/zftalk.2">#zftalk.2 on Freenode</a> and ask how you can help.</p>
      <p><a class="btn btn-success" href="https://github.com/zendframework/modules.zendframework.com">Fork this on Github &raquo;</a></p>

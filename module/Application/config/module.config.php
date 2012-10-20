@@ -20,6 +20,16 @@ return array(
                     ),
                 ),
             ),
+            'share-module' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/share-module',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Repo',
+                        'action' => 'share',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -54,7 +64,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Repo' => 'Application\Controller\RepoController'
         ),
     ),
     'service_manager' => array(

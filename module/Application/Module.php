@@ -36,4 +36,22 @@ class Module
             ),
         );
     }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'invokables' => array(
+                'application_module_service'              => 'Application\Service\Module',
+            ),
+            'factories' => array(
+                'application_module_mapper' => function ($sm) {
+                    $mapper = new Mapper\Module();
+                    $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
+                    $mapper->setEntityPrototype(new Entity\Module);
+                    $mapper->setHydrator(new Mapper\ModuleHydrator());
+                    return $mapper;
+                },
+            ),
+        );
+    }
 }
