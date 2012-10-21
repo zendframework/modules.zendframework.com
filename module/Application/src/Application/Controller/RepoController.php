@@ -72,14 +72,14 @@ class RepoController extends AbstractActionController
         $memberRepositories = $service->listRepositories(null, 'member');
        
         foreach($memberRepositories as $repo) {
-            $repoList[$repo->getName()] = $repo;
+            $repoList[$repo->hmlUrl] = $repo;
         }
 
         $allRepositories = $service->listRepositories(null, 'all');
        
         foreach($allRepositories as $repo) {
             if(!$repo->getFork()) {
-                $repoList[$repo->getName()] = $repo;
+                $repoList[$repo->hmlUrl] = $repo;
             }
         }
 
