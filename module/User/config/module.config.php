@@ -7,7 +7,8 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            'UserRepositories' => 'User\View\Helper\UserRepositories'
+            'UserRepositories' => 'User\View\Helper\UserRepositories',
+            'newUsers' => 'User\View\Helper\NewUsers',
         ),
     ),
 );

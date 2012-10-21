@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\View\Helper;
+namespace User\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class NewModules extends AbstractHelper implements ServiceManagerAwareInterface
+class NewUsers extends AbstractHelper implements ServiceManagerAwareInterface
 {
     /**
      * $var string template used for view
@@ -23,7 +23,6 @@ class NewModules extends AbstractHelper implements ServiceManagerAwareInterface
      * __invoke
      *
      * @access public
-     * @param array $options array of options
      * @return string
      */
     public function __invoke()
@@ -32,11 +31,10 @@ class NewModules extends AbstractHelper implements ServiceManagerAwareInterface
 
         //need to fetch top lvl ServiceManager
         $sm = $sm->getServiceLocator();
-        $mapper = $sm->get('application_module_mapper');
-        $modules = $mapper->findAll(10, 'created_at');
+        $mapper = $sm->get('zfcuser_user_mapper');
+        $users = $mapper->findAll(10, 'created_at');
         
-        return $modules;
-
+        return $users;
     }    
 
     /**

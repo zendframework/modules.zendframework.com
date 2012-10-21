@@ -41,6 +41,9 @@ class Module extends EventProvider implements ServiceManagerAwareInterface
         $module->setName($data->name);
         $module->setDescription($data->description);
         $module->setUrl($data->htmlUrl);
+        $owner = $data->owner;
+        $module->setOwner($owner['login']);
+        $module->setPhotoUrl($owner['avatar_url']);
 
         if($update) {
             $this->getModuleMapper()->update($module);

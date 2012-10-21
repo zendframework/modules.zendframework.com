@@ -27,6 +27,8 @@ CREATE TABLE `module` (
   `meta_data` blob,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL,
+  `photo_url` varchar(255) DEFAULT NULL,
+  `owner` varchar(255) NOT NULL,
   PRIMARY KEY (`module_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

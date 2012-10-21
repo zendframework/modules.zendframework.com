@@ -5,6 +5,28 @@ namespace Application\Entity;
 interface ModuleInterface
 {  
     /**
+     * Get Owner
+     * @return string
+     */
+    public function getOwner();
+
+    /**
+     * Set Owner
+     */
+    public function setOwner($owner);
+
+    /**
+     * Get Photo URL
+     * 
+     * @return string
+     */
+    public function getPhotoUrl();
+    /**
+     * Set Photo URL
+     */
+    public function setPhotoUrl($photoUrl);
+
+    /**
      * Get Updated at
      * 
      * @return int

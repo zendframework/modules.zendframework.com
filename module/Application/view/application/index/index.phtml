@@ -1,49 +1,138 @@
-  
-  <div class="row">
-    <div class="span12 box">
-      <div class="well">
-        <h1>Welcome to the ZF2 Modules Site</h1>
-        <p>This website is a work-in-progress. In the future you will be able to use this website to browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.</p>
-      </div>
+<div class="container-fluid landing-intro">
+  <div class="container">
+    <div class="row">
+      <div class="span8">
+        <h1 class="zf-green">
+          Welcome to the ZF2 Modules Site
+          <br />
+          <small>
+            Some awesome sentence about modules
+          </small>
+        </h1>
+        <p>
+         This website is a work-in-progress. In the future you will be able to use this website to browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.
+          <hr />
+        <blockquote>
+          <p>
+            <em>
+              Hell, we might even throw in something cheesy like a hipster quote.
+            </em>
+          </p>
+          <small>
+            Someone idiot 
+            <cite title="Source Title">
+              Hipster
+            </cite>
+          </small>
+        </blockquote>
+      </p>
+    </div>
+    <div class="span4">
+      
+      <img class="attentionimage pull-right" src="img/rsz_logo.png" />
     </div>
   </div>
-<br/>
-  <div class="row">
-    <div class="span8 box">
-      <div class="well">
-        <h2>Find Modules</h2>
-        <h5>Currently <?=count($this->repositories)?> Module for Zend Framework 2</h5>
-        <hr/>
+</div>
+</div>
 
-        <?php foreach($this->repositories as $repo) { ?>
-          <div class="row">
-            <div class="span6">
-              <p><a href="<?=$repo->getUrl()?>"><?=$repo->getName()?></a></p>
-              <p><?=$repo->getDescription()?></p>
-              <p>owner: owner here license: license here </p>
-              <hr />
-            </div>
-            <div class="span1">
-                <a href="#" class="thumbnail" style="margin-top:30px">
-                  <img src="http://placehold.it/36x36" alt="">
-                </a>
+
+
+<div class="container main-content">
+  <div class="row">
+    <div class="span8">
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <form class="navbar-search pull-left span12">
+                <input type="text" class="search-query span12" placeholder="Type to start searching...">
+              </form>
             </div>
           </div>
-        <?php } ?>
+        </div>
       </div>
+
+<?php foreach($this->repositories as $module) { ?>
+      <div class="row-fluid module-row">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="module-info">
+                    <div class="span6 module-author">
+                        <div class="row-fluid">
+                            <div class="span2">
+                                <img src="<?=$module->getPhotoUrl()?>" />
+                            </div>
+                            <div class="span10">
+                                <strong><?=$module->getOwner()?></strong>
+                                <p>
+                                    <span class="author-label">Github:</span> 
+                                    <a href="<?=$module->getUrl()?>"><?=$module->getName()?></a><br />
+                                    <!--
+                                    <span class="author-label">Blog:</span> <a>placeholder</a><br />
+                                    <span class="author-label">Modules:</span> <a>5</a><br /><br />
+                                    <span class="author-label"><a>More info...</a>-->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <strong><?=$module->getName()?></strong>
+                        <p>
+                            <span class="author-label">Version:</span> 1.2.1<br />
+                            <span class="author-label">Created:</span>
+                            <?php
+                            $date = new DateTime($module->getCreatedAt());
+                            echo $date->format('Y-m-d');
+                            ?><br />
+                            <!--<span class="author-label">Edited:</span> <a>15 days ago</a><br />
+                            <span class="author-label">Tags:</span>
+                            <span class="label">zf2</span>
+                            <span class="label">Assetic</span>
+                            <span class="label">Assets</span>
+                            <span class="label">Sx</span>-->
+                        </p>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="module-description">
+                    <div class="span12">
+                        <strong>Description</strong>
+                        <p>
+                            <?=$module->getDescription()?>
+                        </p>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="span4 box">
-      <div class="well">
-        <div class="row">
-          <div class="span4">
-            new Modules here
-          </div>
-        </div>
-        <div class="row">
-          <div class="span4">
-            New Developers here
-          </div>
-        </div>
-      </div>
+<?php } ?>
+
+
+  </div>
+  <div class="span4">
+    <div class="sidebar">
+      <h4>New Modules</h4>
+      <?php 
+        $modules = $this->newModules(); 
+        foreach($modules as $module) {
+      ?>
+      <p>
+        <a href=""><?=$module->getName()?></a>
+      </p>
+      <?php } ?>
+
+      <h4>New Members</h4>
+      <?php 
+        $users = $this->newUsers(); 
+        foreach($users as $user) {
+      ?>
+      <p>
+        <a href=""><?=$user->getDisplayName()?></a>
+      </p>
+      <?php } ?>
     </div>
   </div>
+</div>

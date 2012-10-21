@@ -13,7 +13,99 @@
                 ->appendStylesheet($this->basePath() . '/css/style.css')
                 ->appendStylesheet($this->basePath() . '/css/slide.css')
         ?>
+<style type="text/css">
+            * {
+                font-family: 'Open Sans',Helvetica,Arial,sans-serif !important;
+            }
+            body {
+                background: url(img/light_wool.png) repeat;
+                padding-top: 60px;
+            }
 
+            .landing-intro {
+                background: #f1f1f1;
+                padding: 5px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                margin-top: -20px;
+                padding-top: 15px;
+            }
+
+            .attentionimage {
+                height: 238px;
+            }
+
+            .main-content {
+                margin-top: 20px;
+            }
+
+            .module-row {
+                margin-bottom: 20px;
+            }
+
+            .module-row .module-info {
+
+            }
+
+            .module-row .module-author {
+
+            }
+
+            .module-row .module-info .author-label {
+                width: 100px;
+                display: inline-block;
+            }
+
+            .module-row .module-meta {
+
+            }
+
+            .module-row .module-description {
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-top: none;
+                background:#f8f8f8;
+            }
+
+
+            .module-row .module-info {
+                position: relative;
+                background: #ffffff;
+                border: 1px solid #ddd;
+                padding: 5px;
+            }
+
+            .module-row .module-info:after, .module-row .module-info:before {
+                top: 100%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            .module-row .module-info:after {
+                border-color: rgba(255, 255, 255, 0);
+                border-top-color: #ffffff;
+                border-width: 10px;
+                left: 0%;
+                margin-left: 10px;
+
+            }
+            .module-row .module-info:before {
+                border-color: rgba(221, 221, 221, 0);
+                border-top-color: #ddd;
+                border-width: 11px;
+                left: 0%;
+                margin-left: 9px;
+            }
+
+            .sidebar {
+                background: #f1f1f1;
+                padding: 5px;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+        </style>
     </head>
 
     <body>
@@ -21,11 +113,6 @@
             <div id="panel">
                 <div class="content clearfix">
                     <div class="left">
-                        <h1>ZF2 Modules</h1>
-                        <h2>Modules?</h2>
-                        <p class="grey">modules modules modules</p>
-                    </div>
-                    <div class="left right user">
                         <?php if ($userDisplayName = $this->zfcUserDisplayName()): ?>
                           <?=$this->userWidget()?>
                         <?php else: ?>
@@ -33,6 +120,9 @@
                           <p>We want to make it as simple as possible so you just have to sign in using your github account</p>
                           <p class="socialbutton"><?=$this->socialSignInButton('github');?></p>
                         <?php endif; ?>
+                    </div>
+                    <div class="left right user">
+                        
                     </div>
                 </div>
             </div> <!-- /login -->
@@ -81,14 +171,12 @@
           </div>
           </div> */ ?>
 
-        <div class="container">
             <?php echo $this->content; ?>
             <hr style="clear:both" />
             <footer>
                 <p><?=COPY_MSG;?></p>
             </footer>
 
-        </div> <!-- /container -->
         <?php echo $this->inlineScript()
                 ->appendFile($this->basePath() . '/js/jquery.min.js')
                 ->appendFile($this->basePath() . '/js/bootstrap.min.js')

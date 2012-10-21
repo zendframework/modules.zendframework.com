@@ -30,10 +30,40 @@ class Module implements ModuleInterface
     protected $createdAt = null;
     
     /**
-     * @var iny
+     * @var int
      */
     protected $updatedAt = null;
     
+    /**
+     * @var string
+     */
+    protected $owner = null;
+    
+    /**
+     * @var string
+     */
+    protected $photoUrl = null;
+    
+    public function getPhotoUrl()
+    {
+        return $this->photoUrl;
+    }
+    
+    public function setPhotoUrl($photoUrl)
+    {
+        $this->photoUrl = $photoUrl;
+        return $this;
+    }
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+    
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+        return $this;
+    }
     public function getUpdatedAt()
     {
         return $this->updatedAt;

@@ -108,7 +108,8 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            'userWidget' => 'Application\View\Helper\UserWidget'
+            'userWidget' => 'Application\View\Helper\UserWidget',
+            'newModules' => 'Application\View\Helper\NewModules',
         ),
     ),
 );
