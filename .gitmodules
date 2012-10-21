@@ -1,6 +1,3 @@
-[submodule "vendor/EdpGithub"]
-	path = vendor/EdpGithub
-	url = git://github.com/EvanDotPro/EdpGithub.git
 [submodule "vendor/ZfcUser"]
 	path = vendor/ZfcUser
 	url = git://github.com/ZF-Commons/ZfcUser.git
@@ -10,9 +7,6 @@
 [submodule "vendor/AssetManager"]
 	path = vendor/AssetManager
 	url = https://github.com/RWOverdijk/AssetManager.git
-[submodule "vendor/ScnSocialAuth"]
-	path = vendor/ScnSocialAuth
-	url = https://github.com/SocalNick/ScnSocialAuth.git
 [submodule "vendor/HybridAuth/hybridauth"]
 	path = vendor/HybridAuth/hybridauth
 	url = https://github.com/hybridauth/hybridauth.git
@@ -22,3 +16,9 @@
 [submodule "vendor/ZF2"]
 	path = vendor/ZF2
 	url = https://github.com/zendframework/zf2.git
+[submodule "vendor/EdpGithub"]
+	path = vendor/EdpGithub
+	url = https://github.com/Hounddog/EdpGithub.git
+[submodule "vendor/ScnSocialAuth"]
+	path = vendor/ScnSocialAuth
+	url = https://github.com/Hounddog/ScnSocialAuth.git
