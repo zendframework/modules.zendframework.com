@@ -32,7 +32,8 @@ class RepoController extends AbstractActionController
                 $service = $this->getModuleService();
                 $module = $service->register($repository);
             } else {
-                echo 'no permission';
+                echo 'no permission.. another cool error message with an awesome exit';
+                exit;
             }
         } else {
             echo "wrong values blah... need to change this";
