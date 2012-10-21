@@ -1,6 +1,7 @@
 body {
-    padding-top: 60px;
+    padding-top: 0;
     padding-bottom: 40px;
+    background: url(img/light_wool.png) repeat;
 }
 
 .zf-green {
@@ -34,4 +35,91 @@ div.container a.brand {
     background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
     margin-left: 0;
     padding: 8px 20px 12px 40px;
+}
+* {
+    font-family: 'Open Sans',Helvetica,Arial,sans-serif !important;
+}
+
+.landing-intro {
+    background: #f1f1f1;
+    padding: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: -20px;
+    padding-top: 75px;
+}
+
+.attentionimage {
+    height: 238px;
+}
+
+.main-content {
+    margin-top: 20px;
+}
+
+.module-row {
+    margin-bottom: 20px;
+}
+
+.module-row .module-info {
+
+}
+
+.module-row .module-author {
+
+}
+
+.module-row .module-info .author-label {
+    width: 100px;
+    display: inline-block;
+}
+
+.module-row .module-meta {
+
+}
+
+.module-row .module-description {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-top: none;
+    background:#f8f8f8;
+}
+
+
+.module-row .module-info {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.module-row .module-info:after, .module-row .module-info:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.module-row .module-info:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #ffffff;
+    border-width: 10px;
+    left: 0%;
+    margin-left: 10px;
+
+}
+.module-row .module-info:before {
+    border-color: rgba(221, 221, 221, 0);
+    border-top-color: #ddd;
+    border-width: 11px;
+    left: 0%;
+    margin-left: 9px;
+}
+
+.sidebar {
+    background: #f1f1f1;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
