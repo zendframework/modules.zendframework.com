@@ -25,6 +25,8 @@ CREATE TABLE `module` (
   `description` text NOT NULL,
   `url` varchar(500) NOT NULL,
   `meta_data` blob,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`module_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -60,6 +62,7 @@ CREATE TABLE `user` (
   `display_name` varchar(50) DEFAULT NULL,
   `password` varchar(128) NOT NULL,
   `photo_url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)

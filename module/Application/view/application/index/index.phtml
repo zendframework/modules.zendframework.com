@@ -1,33 +1,49 @@
   
-  <div class="hero-unit">
-    <h1>Welcome to the ZF2 Modules Site</h1>
-    <p>This website is a work-in-progress. In the future you will be able to use this website to browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.</p>
+  <div class="row">
+    <div class="span12 box">
+      <div class="well">
+        <h1>Welcome to the ZF2 Modules Site</h1>
+        <p>This website is a work-in-progress. In the future you will be able to use this website to browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.</p>
+      </div>
+    </div>
   </div>
-  <div class="container">
-    <div class="span6 well">
-      <h2>Find Modules</h2>
-      <h5>Currently <?=count($this->repositories)?> Module for Zend Framework 2</h5>
-      <hr/>
+<br/>
+  <div class="row">
+    <div class="span8 box">
+      <div class="well">
+        <h2>Find Modules</h2>
+        <h5>Currently <?=count($this->repositories)?> Module for Zend Framework 2</h5>
+        <hr/>
 
-      <?php foreach($this->repositories as $repo) { ?>
-        <div style="float:left">
-          <p><a href="<?=$repo->getUrl()?>"><?=$repo->getName()?></a></p>
-          <p><?=$repo->getDescription()?></p>
-          <p>owner: owner here license: license here </p>
-          <hr />
-        </div>
-        <div style="background-color:#000;color:#fff;height:64px;width:64px;float:right">
-          owner picture
-        </div>
-      <?php } ?>
-    </div>
-    <div class="span4 well">
-      <div >
-        new Modules here
+        <?php foreach($this->repositories as $repo) { ?>
+          <div class="row">
+            <div class="span6">
+              <p><a href="<?=$repo->getUrl()?>"><?=$repo->getName()?></a></p>
+              <p><?=$repo->getDescription()?></p>
+              <p>owner: owner here license: license here </p>
+              <hr />
+            </div>
+            <div class="span1">
+                <a href="#" class="thumbnail">
+                  <img src="http://placehold.it/36x36" alt="">
+                </a>
+            </div>
+          </div>
+        <?php } ?>
       </div>
-      <div >
-        New Developers here
+    </div>
+    <div class="span4 box">
+      <div class="well">
+        <div class="row">
+          <div class="span4">
+            new Modules here
+          </div>
+        </div>
+        <div class="row">
+          <div class="span4">
+            New Developers here
+          </div>
+        </div>
       </div>
     </div>
   </div>
- 

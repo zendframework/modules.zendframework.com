@@ -5,6 +5,33 @@ namespace Application\Entity;
 interface ModuleInterface
 {  
     /**
+     * Get Updated at
+     * 
+     * @return int
+     */
+    public function getUpdatedAt();
+    
+    /**
+     * Set Updated at
+     * @param int $updatedAt
+     */
+    public function setUpdatedAt($updatedAt);
+
+    /**
+     * Get Created at
+     * 
+     * @return string
+     */
+    public function getCreatedAt();
+    
+    /**
+     * Set Created at
+     * 
+     * @param int $createdAt
+     */
+    public function setCreatedAt($createdAt);
+
+    /**
      * Get id.
      *
      * @return int

@@ -25,6 +25,39 @@ class Module implements ModuleInterface
     protected $url = null;
     
     /**
+     * @var int
+     */
+    protected $createdAt = null;
+    
+    /**
+     * @var iny
+     */
+    protected $updatedAt = null;
+    
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+    
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    
+    public function setCreatedAt($createdAt)
+    {
+
+        $this->createdAt = $createdAt;
+     
+        return $this;
+    }
+    /**
      * Get id.
      *
      * @return int
