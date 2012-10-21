@@ -9,11 +9,11 @@ class Module extends AbstractDbMapper implements ModuleInterface
 {
     protected $tableName  = 'module';
 
-    public function findAll()
+    public function findAllLimit($limit=10)
     {
         $select = $this->getSelect()
                        ->from($this->tableName);
-
+                       ->limit($limit);
         $entity = $this->select($select);
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
         return $entity;
