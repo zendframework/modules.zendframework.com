@@ -37,8 +37,13 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
         $service = $api->getService('Repo');
         $mapper = $sm->get('application_module_mapper');
 
-        $repositories = $service->listRepositories(null, 'all');
-
+        $params['per_page'] = 100;
+        $params['page'] = 1;
+        $repositories = $service->listRepositories(null, 'all', $params);
+        if($api->getNext() && $api->getNext() != $api->getCurrent()) {
+            $params['page'] = $api->getNext();
+            $this->getAllRepos($repositories, $params);
+        }
         foreach($repositories as $key => $repo) {
             if(!$repo->getFork()) {
                 $module = $mapper->findByName($repo->getName());
@@ -52,6 +57,22 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
 
         return $repositories;
     }    
+
+    public function getAllRepos(&$repos,  $params) {
+        $sm = $this->getServiceManager();
+
+        //need to fetch top lvl ServiceManager
+        $sm = $sm->getServiceLocator();
+        $api = $sm->get('edpgithub_api_factory');
+        $service = $api->getService('Repo');
+
+        $repos = array_merge($repos, $service->listRepositories(null, 'all', $params));
+        if($api->getNext() && $api->getNext() != $params['page']) {
+            $params['page'] = $api->getNext();
+            $this->getAllRepos($repos, $params);
+        }
+       
+    }
 
     /**
      * Retrieve service manager instance
