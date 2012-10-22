@@ -14,23 +14,20 @@ use Zend\View\Model\ViewModel;
 
 class RepoController extends AbstractActionController
 {
-    protected $repoList;
-
     protected $repository = null;
 
     protected $moduleService;
 
-    public function shareAction()
+    public function addAction()
     {
         $request = $this->getRequest();
         if($request->isPost()) {
             $repository = $request->getPost()->get('repository');
-            $this->fetchUserRepositories();
             $repository = $this->getRepository($repository);
-            
             if($repository) {
                 $service = $this->getModuleService();
                 $module = $service->register($repository);
+                $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
             } else {
                 echo 'no permission.. another cool error message with an awesome exit';
                 exit;
@@ -42,6 +39,30 @@ class RepoController extends AbstractActionController
        return $this->redirect()->toRoute('zfcuser');
     }
 
+    public function removeAction()
+    {
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $repository = $request->getPost()->get('repository');
+            $repository = $this->getRepository($repository);
+            if($repository) {
+                $sm = $this->getServiceLocator();
+                $mapper = $sm->get('application_module_mapper');
+                $module = $mapper->findByUrl($repository->getHtmlUrl());
+                $module = $mapper->delete($module);
+                $this->flashMessenger()->addMessage($repository->getName() . ' has been removed from ZF Modules');
+            } else {
+                echo 'no permission.. another cool error message with an awesome exit';
+                exit;
+            }
+        } else {
+            echo "wrong values blah... need to change this";
+            exit;
+        }
+       return $this->redirect()->toRoute('zfcuser');
+
+    }
+
     /**
      * Return Repository
      * 
@@ -50,39 +71,22 @@ class RepoController extends AbstractActionController
      */
     public function getRepository($repositoryUrl)
     {
-        $repository = null;
-        foreach($this->repoList as $repo) {
-            if($repo->htmlUrl == $repositoryUrl) {
-                $repository = $repo;
-                break;
-            }
-        }
-        
-        return $repository;
-    }
-
-    public function fetchUserRepositories()
-    {
         $sm = $this->getServiceLocator();
-
         $api = $sm->get('edpgithub_api_factory');
-
-        $repoList = array();
         $service = $api->getService('Repo');
-        $memberRepositories = $service->listRepositories(null, 'member');
-       
-        foreach($memberRepositories as $repo) {
-            $repoList[$repo->htmlUrl] = $repo;
-        }
-        $allRepositories = $service->listRepositories(null, 'all');
-       
-        foreach($allRepositories as $repo) {
-            if(!$repo->getFork()) {
-                $repoList[$repo->htmlUrl] = $repo;
-            }
+        $repositories = $service->listRepositories(null, 'all');
+
+        $repository = null;
+        foreach($repositories as $repo) {
+            if($repo->getHtmlUrl() == $repositoryUrl) {
+                if(!$repo->getFork()) {
+                    $repository = $repo;
+                }
+                return $repository;
+            } 
         }
 
-        $this->repoList = $repoList;
+        return $repository;
     }
 
     /**

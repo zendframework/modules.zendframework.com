@@ -1,13 +1,13 @@
 <?php
 
-namespace User\View\Helper;
+namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class UserRepositories extends AbstractHelper implements ServiceManagerAwareInterface
+class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
 {
     /**
      * $var string template used for view
@@ -26,31 +26,20 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
      * @param array $options array of options
      * @return string
      */
-    public function __invoke($options = array())
+    public function __invoke($options = null)
     {
         $sm = $this->getServiceManager();
 
         //need to fetch top lvl ServiceManager
         $sm = $sm->getServiceLocator();
-        $api = $sm->get('edpgithub_api_factory');
 
-        $service = $api->getService('Repo');
+        $limit = isset($options['limit'])?$options['limit']:null;
+        
         $mapper = $sm->get('application_module_mapper');
+        $modules = $mapper->findAll($limit, 'created_at');
+        
+        return $modules;
 
-        $repositories = $service->listRepositories(null, 'all');
-
-        foreach($repositories as $key => $repo) {
-            if(!$repo->getFork()) {
-                $module = $mapper->findByName($repo->getName());
-                if($module) {
-                    unset($repositories[$key]);
-                }
-            } else {
-                unset($repositories[$key]);
-            }
-        }
-
-        return $repositories;
     }    
 
     /**

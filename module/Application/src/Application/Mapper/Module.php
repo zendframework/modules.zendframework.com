@@ -75,4 +75,11 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
         return parent::update($entity, $where, $tableName, $hydrator);
     }
+
+    public function delete($entity, $where = null, $tableName = null){
+        if (!$where) {
+            $where = 'module_id = ' . $entity->getId();
+        }
+         return parent::delete($where, $tableName);
+    }
 }

@@ -40,6 +40,7 @@
 <div class="container main-content">
   <div class="row">
     <div class="span8">
+      <!-- hiding until search is implemented
       <div class="row-fluid">
         <div class="span12">
           <div class="navbar">
@@ -51,7 +52,7 @@
           </div>
         </div>
       </div>
-
+    -->
 <?php foreach($this->repositories as $module) { ?>
       <div class="row-fluid module-row">
         <div class="span12">
@@ -122,7 +123,7 @@
           </div>
         </div>
         <?php 
-          $modules = $this->newModules(); 
+          $modules = $this->listModules(array('limit' => 10)); 
           foreach($modules as $module) {
         ?>
         <div class="row-fluid">

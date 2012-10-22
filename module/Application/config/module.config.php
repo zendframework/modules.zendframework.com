@@ -20,13 +20,32 @@ return array(
                     ),
                 ),
             ),
-            'share-module' => array(
+            'module' => array(
                 'type' => 'Literal',
-                'options' => array(
-                    'route' => '/share-module',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Repo',
-                        'action' => 'share',
+                'options' => array ( 
+                    'route' => '/module',
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'add_module' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/add',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Repo',
+                                'action' => 'add',
+                            ),
+                        ),
+                    ),
+                    'remove_module' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/remove',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Repo',
+                                'action' => 'remove',
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -109,7 +128,16 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'userWidget' => 'Application\View\Helper\UserWidget',
-            'newModules' => 'Application\View\Helper\NewModules',
+            'listModules' => 'Application\View\Helper\ListModules',
         ),
+        'factories' => array( 
+          'flashMessenger' => function($sm) { 
+            $sm = $sm->getServiceLocator();
+            $plugin = $sm->get('ControllerPluginManager')->get('flashMessenger'); 
+
+            $helper = new Application\View\Helper\FlashMessenger($plugin); 
+            return $helper; 
+          } 
+        ) 
     ),
 );
