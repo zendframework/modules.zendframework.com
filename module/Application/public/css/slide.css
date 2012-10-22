@@ -141,7 +141,7 @@ Version: 1.0
 
 #panel {
 	width: 100%;
-	height: 270px;
+	height: 220px;
 	color: #999999;
 	background: #272727;
 	overflow: hidden;
@@ -267,3 +267,11 @@ Version: 1.0
 	text-decoration: underline;
 }
 
+#panel .container .row {
+	text-align: left;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+#panel .container .row .module{
+	display : inline-block;
+}

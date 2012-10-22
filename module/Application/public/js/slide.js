@@ -2,13 +2,13 @@ $(document).ready(function() {
 	
 	// Expand Panel
 	$("#open").click(function(){
-		$("div#panel").slideDown("slow");
+		$("div#panel").slideDown("fast");
 	
 	});	
 	
 	// Collapse Panel
 	$("#close").click(function(){
-		$("div#panel").slideUp("slow");	
+		$("div#panel").slideUp("fast");	
 	});		
 	
 	// Switch buttons from "Log In | Register" to "Close Panel" on click
