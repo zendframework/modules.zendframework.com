@@ -40,24 +40,24 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
         if($user) {
             $api = $sm->get('edpgithub_api_factory');
             $service = $api->getService('Repo');
-            $modules = null;
+            $modules = array();
             $repositories = $service->listRepositories(null, 'all');
             foreach($repositories as $key => $repo) {
                 $module = $mapper->findByName($repo->getName());
                 if($module) {
                     $modules[] = $module;
                 }
-            }                                                                   
+            }
         } else {
             $limit = isset($options['limit'])?$options['limit']:null;
 
             $mapper = $sm->get('application_module_mapper');
             $modules = $mapper->findAll($limit, 'created_at');
 
-           
+
         }
         return $modules;
-    }    
+    }
 
     /**
      * Retrieve service manager instance
