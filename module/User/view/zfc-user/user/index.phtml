@@ -69,6 +69,9 @@
       <div class="tab-pane active" id="modules">
       <?php
     $modules = $this->listModules(array('user' => true));
+    if (empty($modules)) { ?>
+    <div class="alert alert-block">No modules was submitted yet</div>
+    <?php }
     foreach($modules as $module) {
     ?>
 
@@ -141,6 +144,9 @@
       <div class="tab-pane" id="repositories">
     <?php
     $repositories = $this->userRepositories();
+    if (empty($repositories)) { ?>
+    <div class="alert alert-block">No public and not forked repositories found</div>
+    <?php }
     foreach($repositories as $module) {
     ?>
 
