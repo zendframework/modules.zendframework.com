@@ -25,10 +25,12 @@
             <div class="tab">
                 <ul class="login">
                     <li class="left">&nbsp;</li>
+                    <li ><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
                     <?php
                         $userDisplayName = $this->zfcUserDisplayName();
                         if ($userDisplayName):
                     ?>
+                    <li class="sep">|</li>
                     <li class="user-info">
                         <div class="gravatar-container"><a class="login" href="<?php
                             echo $this->url('zfcuser');

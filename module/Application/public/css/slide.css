@@ -287,3 +287,8 @@ Version: 1.0
 	height: 24px;
 	margin-right: 5px;
 }
+
+.tab ul.login li i.icon-white {
+	margin-right: 3px;
+	margin-bottom: 3px;
+}
