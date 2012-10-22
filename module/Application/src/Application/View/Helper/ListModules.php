@@ -24,7 +24,7 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
      *
      * @access public
      * @param array $options array of options
-     * @return string
+     * @return array Array of modules
      */
     public function __invoke($options = null)
     {
