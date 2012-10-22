@@ -68,7 +68,7 @@
     <div class="tab-content">
       <div class="tab-pane active" id="modules">
       <?php
-    $modules = $this->listModules();
+    $modules = $this->listModules(array('user' => true));
     foreach($modules as $module) {
     ?>
 
