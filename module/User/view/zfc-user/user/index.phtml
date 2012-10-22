@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-      <?php 
+      <?php
         $flashMessenger = $this->flashMessenger();
         foreach($flashMessenger->getMessages() as $message) {
           echo '<h3 class="zf-green">' . $message . '</h3>';
@@ -61,10 +61,10 @@
       ?>
 
     <ul class="nav nav-tabs">
-      <li><a href="#modules" data-toggle="tab">Submitted Modules</a></li>
+      <li class="active"><a href="#modules" data-toggle="tab">Submitted Modules</a></li>
       <li><a href="#repositories" data-toggle="tab">My Repositories</a></li>
     </ul>
- 
+
     <div class="tab-content">
       <div class="tab-pane active" id="modules">
       <?php
@@ -115,7 +115,7 @@
                           <br />
                           <form action="<?php echo $this->url('module/remove_module')?>" method="post">
                               <input type="hidden" name="repository" value="<?=$module->getUrl()?>" />
-                              <input type="submit" value="Remove" />
+                              <input type="submit" value="Remove" class="btn btn-danger"/>
                           </form>
                       </div>
                       <div style="clear: both;"></div>
@@ -135,7 +135,7 @@
           </div>
       </div>
 <?php } ?>
- 
+
 
       </div>
       <div class="tab-pane" id="repositories">
@@ -188,7 +188,7 @@
                           <br />
                           <form action="<?=$this->url('module/add_module')?>" method="post">
                               <input type="hidden" name="repository" value="<?=$module->getHtmlUrl()?>" />
-                              <input type="submit" />
+                              <input type="submit" class="btn btn-success"/>
                           </form>
                       </div>
                       <div style="clear: both;"></div>
