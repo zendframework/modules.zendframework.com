@@ -39,19 +39,28 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
 
         $params['per_page'] = 100;
         $params['page'] = 1;
-        $repositories = $service->listRepositories(null, 'all', $params);
+        $ownerRepos = $service->listRepositories(null, 'owner', $params);
         if($api->getNext() && $api->getNext() != $api->getCurrent()) {
             $params['page'] = $api->getNext();
-            $this->getAllRepos($repositories, $params);
+            $this->getAllRepos($ownerRepos, $params);
         }
+
+        $memberRepos = $service->listRepositories(null, 'member', $params);
+        if($api->getNext() && $api->getNext() != $api->getCurrent()) {
+            $params['page'] = $api->getNext();
+            $this->getAllRepos($ownerRepos, $params);
+        }
+
+        $repositories = array_merge($ownerRepos, $memberRepos);
+
         foreach($repositories as $key => $repo) {
-            if(!$repo->getFork()) {
+            if($repo->getFork()) {
+                unset($repositories[$key]);
+            } else {
                 $module = $mapper->findByName($repo->getName());
                 if($module) {
                     unset($repositories[$key]);
-                }
-            } else {
-                unset($repositories[$key]);
+                } 
             }
         }
 
@@ -66,7 +75,7 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
         $api = $sm->get('edpgithub_api_factory');
         $service = $api->getService('Repo');
 
-        $repos = array_merge($repos, $service->listRepositories(null, 'all', $params));
+        $repos = array_merge($repos, $service->listRepositories(null, 'owner', $params));
         if($api->getNext() && $api->getNext() != $params['page']) {
             $params['page'] = $api->getNext();
             $this->getAllRepos($repos, $params);

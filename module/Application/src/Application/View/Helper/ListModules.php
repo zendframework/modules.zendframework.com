@@ -41,7 +41,17 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
             $api = $sm->get('edpgithub_api_factory');
             $service = $api->getService('Repo');
             $modules = array();
-            $repositories = $service->listRepositories(null, 'all');
+            $memberRepos = $service->listRepositories(null, 'member');
+            $ownerRepos = $service->listRepositories(null, 'owner');
+
+            foreach($ownerRepos as $key => $repo) {
+                if($repo->getFork()) {
+                    unset($ownerRepos[$key]);
+                }
+            }
+
+            $repositories = array_merge($ownerRepos, $memberRepos);
+
             foreach($repositories as $key => $repo) {
                 $module = $mapper->findByName($repo->getName());
                 if($module) {
