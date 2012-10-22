@@ -22,7 +22,7 @@
             </em>
           </p>
           <small>
-            Someone idiot 
+            Someone idiot
             <cite title="Source Title">
               Hipster
             </cite>
@@ -31,7 +31,7 @@
       </p>
     </div>
     <div class="span4">
-      
+
       <img class="attentionimage pull-right" src="img/rsz_logo.png" />
     </div>
   </div>
@@ -54,11 +54,11 @@
         </div>
       </div>
 
-<?php 
+<?php
     $result = $this->userRepositories();
     foreach($result['repositories'] as $module) {
 ?>
-    
+
       <div class="row-fluid module-row">
         <div class="span12">
             <div class="row-fluid">
@@ -72,7 +72,7 @@
                             <div class="span10">
                                 <strong><?=$owner['login']?></strong>
                                 <p>
-                                    <span class="author-label">Github:</span> 
+                                    <span class="author-label">Github:</span>
                                     <a href="<?=$module->getUrl()?>"><?=$module->getName()?></a><br />
                                     <!--
                                     <span class="author-label">Blog:</span> <a>placeholder</a><br />
@@ -128,8 +128,10 @@
   </div>
   <div class="span4">
     <div class="sidebar">
-      <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
-      <div style="text-align:center"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail()) ?></div>
+      <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName(); ?>!</h3>
+      <img class="thumbnail" src="<?php
+          echo $this->zfcUserIdentity()->getPhotoUrl();
+      ?>" alt="<?php echo $this->zfcUserDisplayName(); ?>"/>
       <br/>
     </div>
   </div>

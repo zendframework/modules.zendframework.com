@@ -14,25 +14,29 @@
                 ->appendStylesheet($this->basePath() . '/css/slide.css')
         ?>
 <style type="text/css">
-            
+
         </style>
     </head>
 
     <body>
         <div id="toppanel">
             <div id="panel">
-                <div class="content clearfix">
-                    <div class="left">
-                        <?php if ($userDisplayName = $this->zfcUserDisplayName()): ?>
-                          <?=$this->userWidget()?>
-                        <?php else: ?>
-                          <h1>No Registration required!</h1>
-                          <p>We want to make it as simple as possible so you just have to sign in using your github account</p>
-                          <p class="socialbutton"><?=$this->socialSignInButton('github');?></p>
-                        <?php endif; ?>
-                    </div>
-                    <div class="left right user">
-                        
+                <div class="container">
+                    <div class="row">
+                        <div class="module">
+                            <?php
+                                $userDisplayName = $this->zfcUserDisplayName();
+                                if ($userDisplayName):
+                                    echo $this->userWidget();
+                                else: ?>
+                              <h1>No Registration required!</h1>
+                              <p>We want to make it as simple as possible so you just have to sign in using your github account</p>
+                              <p class="socialbutton"><?php echo $this->socialSignInButton('github'); ?></p>
+                            <?php endif; ?>
+                        </div>
+                        <div class="left right user">
+
+                        </div>
                     </div>
                 </div>
             </div> <!-- /login -->
@@ -41,9 +45,17 @@
             <div class="tab">
                 <ul class="login">
                     <li class="left">&nbsp;</li>
-                    <?php if ($userDisplayName = $this->zfcUserDisplayName()): ?>
+                    <?php
+                        $userDisplayName = $this->zfcUserDisplayName();
+                        if ($userDisplayName):
+                    ?>
                     <li class="user-info">
-                        <div class="gravatar-container"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 23)); ?></div> Hello <?=ucfirst($userDisplayName);?></li>
+                        <div class="gravatar-container">
+                        <img src="<?php
+                            echo $this->zfcUserIdentity()->getPhotoUrl();
+                        ?>" alt="<?php echo $this->zfcUserDisplayName();
+                        ?>" style="width:23px;height:23px;" />
+                        </div> Hello <?=ucfirst($userDisplayName);?></li>
                     <li class="sep">|</li>
                     <li ><a href="user/logout">Logout</a></li>
                     <li class="sep">|</li>
