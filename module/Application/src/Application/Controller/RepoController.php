@@ -18,75 +18,83 @@ class RepoController extends AbstractActionController
 
     protected $moduleService;
 
+    /**
+     * This function is used to submit a module to the site
+     * @throws Exception\UnexpectedValueException
+     * @return 
+     **/
     public function addAction()
     {
-        $request = $this->getRequest();
-        if($request->isPost()) {
-            $repository = $request->getPost()->get('repository');
-            $repository = $this->getRepository($repository);
-            if($repository) {
-                $service = $this->getModuleService();
-                $module = $service->register($repository);
-                $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
-            } else {
-                echo 'no permission.. another cool error message with an awesome exit';
-                exit;
-            }
+        $repository = $this->getRepository();
+        if($repository) {
+            $service = $this->getModuleService();
+            $module = $service->register($repository);
+            $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
         } else {
-            echo "wrong values blah... need to change this";
-            exit;
+            throw new Exception\UnexpectedValueException(
+                'You have no permission to add this module. The reason might be that you are' .
+                'neither the owner nor a collaborator of this repository.',
+                403
+            );
         }
        return $this->redirect()->toRoute('zfcuser');
     }
 
-    public function removeAction()
+    /**
+     * This function is used to remove a module to the site
+     * @throws Exception\UnexpectedValueException
+     * @return 
+     **/
+   public function removeAction()
     {
-        $request = $this->getRequest();
-        if($request->isPost()) {
-            $repository = $request->getPost()->get('repository');
-            $repository = $this->getRepository($repository);
-            if($repository) {
-                $sm = $this->getServiceLocator();
-                $mapper = $sm->get('application_module_mapper');
-                $module = $mapper->findByUrl($repository->getHtmlUrl());
-                $module = $mapper->delete($module);
-                $this->flashMessenger()->addMessage($repository->getName() . ' has been removed from ZF Modules');
-            } else {
-                echo 'no permission.. another cool error message with an awesome exit';
-                exit;
-            }
+        $repository = $this->getRepository();
+        if($repository) {
+            $sm = $this->getServiceLocator();
+            $mapper = $sm->get('application_module_mapper');
+            $module = $mapper->findByUrl($repository->getHtmlUrl());
+            $module = $mapper->delete($module);
+            $this->flashMessenger()->addMessage($repository->getName() . ' has been removed from ZF Modules');
         } else {
-            echo "wrong values blah... need to change this";
-            exit;
+            throw new Exception\UnexpectedValueException(
+                'You have no permission to add this module. The reason might be that you are' .
+                'neither the owner nor a collaborator of this repository.',
+                403
+            );
         }
        return $this->redirect()->toRoute('zfcuser');
-
     }
 
     /**
      * Return Repository
-     * 
-     * @param  string $repository 
+     * @throws Exception\UnexpectedValueException
      * @return EdpGithub\ApiClient\Model\Repo
      */
-    public function getRepository($repositoryUrl)
+    public function getRepository()
     {
-        $sm = $this->getServiceLocator();
-        $api = $sm->get('edpgithub_api_factory');
-        $service = $api->getService('Repo');
-        $repositories = $service->listRepositories(null, 'all');
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $repositoryUrl = $request->getPost()->get('repository');
+            
+            $sm = $this->getServiceLocator();
+            $api = $sm->get('edpgithub_api_factory');
+            $service = $api->getService('Repo');
+            $repositories = $service->listRepositories(null, 'all');
 
-        $repository = null;
-        foreach($repositories as $repo) {
-            if($repo->getHtmlUrl() == $repositoryUrl) {
-                if(!$repo->getFork()) {
-                    $repository = $repo;
-                }
-                return $repository;
-            } 
+            $repository = null;
+            foreach($repositories as $repo) {
+                if($repo->getHtmlUrl() == $repositoryUrl) {
+                    if(!$repo->getFork()) {
+                        $repository = $repo;
+                    }
+                    return $repository;
+                } 
+            }
+
+            return $repository;
         }
-
-        return $repository;
+        throw new Exception\UnexpectedValueException(
+            'Something went wrong with the post values of the request...'
+        );
     }
 
     /**
