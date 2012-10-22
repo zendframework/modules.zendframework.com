@@ -15,6 +15,11 @@ class Module extends AbstractModule
         $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth','githubToLocalUser', function($e) {
             $localUser = $e->getTarget();
             $userProfile = $e->getParam('userProfile');
+            $nickname = substr(
+                $userProfile->profileURL,
+                (strrpos($userProfile->profileURL, "/") + 1)
+            );
+            $localUser->setUsername($nickname);
             $localUser->setPhotoUrl($userProfile->photoURL);
         });
     }

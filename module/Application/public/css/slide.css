@@ -275,3 +275,15 @@ Version: 1.0
 #panel .container .row .module{
 	display : inline-block;
 }
+
+#toggle {
+	vertical-align: middle;
+}
+
+.icon.icon-github {
+	background-image: url('../img/github-icon.png');
+	background-position: top left;
+	width: 24px;
+	height: 24px;
+	margin-right: 5px;
+}
