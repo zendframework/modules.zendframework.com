@@ -85,7 +85,7 @@ div.container a.brand {
 }
 
 
-.module-row .module-info {
+.module-row .module-info, .new-module {
     position: relative;
     background: #ffffff;
     border: 1px solid #ddd;
@@ -122,4 +122,14 @@ div.container a.brand {
     background: #f1f1f1;
     padding: 5px;
     border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .block {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.sidebar hr {
+    margin:5px 0 5px 0;
 }
