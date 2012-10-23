@@ -30,28 +30,16 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
     {
         $sm = $this->getServiceManager();
 
-        //need to fetch top lvl ServiceManager
         $sm = $sm->getServiceLocator();
-        $api = $sm->get('edpgithub_api_factory');
+        $service = $sm->get('application_service_repository');
 
-        $service = $api->getService('Repo');
-        $mapper = $sm->get('application_module_mapper');
+        $ownerRepos = $service->getAllRepository('owner');
+        $memberRepos = $service->getAllRepository('member');
 
-        $params['per_page'] = 100;
-        $params['page'] = 1;
-        $ownerRepos = $service->listRepositories(null, 'owner', $params);
-        if($api->getNext() && $api->getNext() != $api->getCurrent()) {
-            $params['page'] = $api->getNext();
-            $this->getAllRepos($ownerRepos, $params);
-        }
-
-        $memberRepos = $service->listRepositories(null, 'member', $params);
-        if($api->getNext() && $api->getNext() != $api->getCurrent()) {
-            $params['page'] = $api->getNext();
-            $this->getAllRepos($ownerRepos, $params);
-        }
 
         $repositories = array_merge($ownerRepos, $memberRepos);
+
+        $mapper = $sm->get('application_module_mapper');
 
         foreach($repositories as $key => $repo) {
             if($repo->getFork()) {
@@ -66,22 +54,6 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
 
         return $repositories;
     }    
-
-    public function getAllRepos(&$repos,  $params) {
-        $sm = $this->getServiceManager();
-
-        //need to fetch top lvl ServiceManager
-        $sm = $sm->getServiceLocator();
-        $api = $sm->get('edpgithub_api_factory');
-        $service = $api->getService('Repo');
-
-        $repos = array_merge($repos, $service->listRepositories(null, 'owner', $params));
-        if($api->getNext() && $api->getNext() != $params['page']) {
-            $params['page'] = $api->getNext();
-            $this->getAllRepos($repos, $params);
-        }
-       
-    }
 
     /**
      * Retrieve service manager instance

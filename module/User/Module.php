@@ -38,6 +38,9 @@ class Module extends AbstractModule
                     return $mapper;
                 },
             ),
+            'invokables' => array(
+                'application_service_repository' => 'Application\Service\Repository',
+            ),
         );
     }
 
