@@ -2,32 +2,36 @@
 
 namespace Application\Service;
 
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Zend\ServiceManager\ServiceManager;
+use EdpGithub\ApiClient\ApiClient;
 
-class Repository implements ServiceManagerAwareInterface
+class Repository
 {
-    protected $serviceManager;
-    
+    /**
+     * @var array
+     */
     protected $repository;
 
     /**
+     * @var EdpGithub\ApiClient\ApiFactory
+     */
+    protected $api;
+
+    /**
      * Get All Repositories from github for authenticated user
-     * @param  string $type 
+     * @param  string $type
      * @return array
      */
     public function getAllRepository($type)
     {
         if(!isset($this->repository[$type])) {
-            $sm = $this->getServiceManager();
-            $api = $sm->get('edpgithub_api_factory');
-            $service = $api->getService('Repo');
-
+            echo $this->api->getOauthToken();
+            exit;
+            $service = $this->api->getService('Repo');
             $params['per_page'] = 100;
             $params['page'] = 1;
             $this->repositories[$type] = $service->listRepositories(null, $type, $params);
-            if($api->getNext() && $api->getNext() != $api->getCurrent()) {
-                $params['page'] = $api->getNext();
+            if($this->api->getNext() && $this->api->getNext() != $this->api->getCurrent()) {
+                $params['page'] = $this->api->getNext();
                 $this->getRepositoriesRecursive($this->repositories[$type], $params);
             }
         }
@@ -36,37 +40,20 @@ class Repository implements ServiceManagerAwareInterface
 
     /**
      * Recursively fetch all pages for Repositories
-     * @param  array $repos 
+     * @param  array $repos
      * @param  string $params
      */
     protected function getRepositoriesRecursive(&$repos,  $params) {
-        $sm = $this->getServiceManager();
-        $api = $sm->get('edpgithub_api_factory');
-        $service = $api->getService('Repo');
+        $service = $this->api->getService('Repo');
 
         $repos = array_merge($repos, $service->listRepositories(null, 'owner', $params));
-        if($api->getNext() && $api->getNext() != $params['page']) {
-            $params['page'] = $api->getNext();
+        if($this->api->getNext() && $this->api->getNext() != $params['page']) {
+            $params['page'] = $this->api->getNext();
             $this->getAllRepos($repos, $params);
         }
     }
-
-    /**
-     * Get Service Manager
-     * @return ServiceManager
-     */
-    public function getServiceManager()
+    public function setApi(ApiClient $api)
     {
-        return $this->serviceManager;
-    }
-    
-    /**
-     * Set ServiceManager
-     * @param ServiceManager $serviceManager
-     */
-    public function setServiceManager(ServiceManager $serviceManager)
-    {
-        $this->serviceManager = $serviceManager;
-        return $this;
+        $this->api = $api;
     }
 }

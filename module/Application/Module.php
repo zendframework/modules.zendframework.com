@@ -40,9 +40,6 @@ class Module
     public function getServiceConfig()
     {
         return array(
-            'invokables' => array(
-                'application_module_service'              => 'Application\Service\Module',
-            ),
             'factories' => array(
                 'application_module_mapper' => function ($sm) {
                     $mapper = new Mapper\Module();
@@ -50,6 +47,16 @@ class Module
                     $mapper->setEntityPrototype(new Entity\Module);
                     $mapper->setHydrator(new Mapper\ModuleHydrator());
                     return $mapper;
+                },
+                'application_module_service' => function($sm) {
+                    $service = new  Service\Module;
+                    $service->setApi($sm->get('edpgithub_api_factory'));
+                    return $service;
+                },
+                'application_service_repository' => function($sm) {
+                    $service = new Service\Repository;
+                    $service->setApi($sm->get('edpgithub_api_factory'));
+                    return $service;
                 },
             ),
         );

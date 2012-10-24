@@ -22,7 +22,7 @@ return array(
             ),
             'module' => array(
                 'type' => 'Literal',
-                'options' => array ( 
+                'options' => array (
                     'route' => '/module',
                 ),
                 'may_terminate' => true,
@@ -130,14 +130,14 @@ return array(
             'userWidget' => 'Application\View\Helper\UserWidget',
             'listModules' => 'Application\View\Helper\ListModules',
         ),
-        'factories' => array( 
-          'flashMessenger' => function($sm) { 
+        'factories' => array(
+          'flashMessenger' => function($sm) {
             $sm = $sm->getServiceLocator();
-            $plugin = $sm->get('ControllerPluginManager')->get('flashMessenger'); 
+            $plugin = $sm->get('ControllerPluginManager')->get('flashMessenger');
 
-            $helper = new Application\View\Helper\FlashMessenger($plugin); 
-            return $helper; 
-          } 
-        ) 
+            $helper = new Application\View\Helper\FlashMessenger($plugin);
+            return $helper;
+          }
+        )
     ),
 );
