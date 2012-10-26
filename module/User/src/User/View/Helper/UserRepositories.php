@@ -33,27 +33,34 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
         $sm = $sm->getServiceLocator();
         $service = $sm->get('application_service_repository');
 
+        $repositories = array();
+
         $ownerRepos = $service->getAllRepository('owner');
+        foreach($ownerRepos as $repo) {
+            if(!$repo->fork) {
+                $repositories[] = $repo;
+            }
+        }
+
         $memberRepos = $service->getAllRepository('member');
-
-
-        $repositories = array_merge($ownerRepos, $memberRepos);
+        foreach($memberRepos as $repo) {
+            $repositories[] = $repo;
+        }
 
         $mapper = $sm->get('application_module_mapper');
-
         foreach($repositories as $key => $repo) {
-            if($repo->getFork()) {
+            if($repo->fork) {
                 unset($repositories[$key]);
             } else {
-                $module = $mapper->findByName($repo->getName());
+                $module = $mapper->findByName($repo->name);
                 if($module) {
                     unset($repositories[$key]);
-                } 
+                }
             }
         }
 
         return $repositories;
-    }    
+    }
 
     /**
      * Retrieve service manager instance

@@ -16,6 +16,9 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        $sm = $this->getServiceLocator();
+        $repos = $sm->get('EdpGithub\Client')->api('current_user')->repos();
+
         $mapper = $this->getServiceLocator()->get('application_module_mapper');
         $repositories = $mapper->findAll();
         return array('repositories' => $repositories);

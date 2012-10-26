@@ -35,24 +35,28 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
         $mapper = $sm->get('application_module_mapper');
 
         $user = isset($options['user'])? $options['user']:false;
+        $modules = array();
 
         //limit modules to only user modules
         if($user) {
             $service = $service = $sm->get('application_service_repository');
 
-            $ownerRepos = $service->getAllRepository('owner');
-            $memberRepos = $service->getAllRepository('member');
+            $repositories = array();
 
-            foreach($ownerRepos as $key => $repo) {
-                if($repo->getFork()) {
-                    unset($ownerRepos[$key]);
+            $ownerRepos  = $service->getAllRepository('owner');
+            foreach($ownerRepos as $repo) {
+                if(!$repo->fork) {
+                    $repositories[] = $repo;
                 }
             }
 
-            $repositories = array_merge($ownerRepos, $memberRepos);
+            $memberRepos = $service->getAllRepository('member');
+            foreach($memberRepos as $repo) {
+                $repositories[] = $repo;
+            }
 
             foreach($repositories as $key => $repo) {
-                $module = $mapper->findByName($repo->getName());
+                $module = $mapper->findByName($repo->name);
                 if($module) {
                     $modules[] = $module;
                 }

@@ -7,11 +7,11 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'ScnSocialAuth',
+        'HybridAuth',
+        'EdpGithub',
         'Application',
         'AssetManager',
         'Assetic',
-        'HybridAuth',
-        'EdpGithub',
 		'User',
     ),
     'module_listener_options' => array(

@@ -50,14 +50,23 @@ class Module
                 },
                 'application_module_service' => function($sm) {
                     $service = new  Service\Module;
-                    $service->setApi($sm->get('edpgithub_api_factory'));
+                    $service->setApi($sm->get('EdpGithubClient'));
                     return $service;
                 },
                 'application_service_repository' => function($sm) {
                     $service = new Service\Repository;
-                    $service->setApi($sm->get('edpgithub_api_factory'));
+                    $service->setApi($sm->get('EdpGithubClient'));
                     return $service;
                 },
+                'github_client' => function($sm) {
+                    $hybridAuth = $sm->get('HybridAuth');
+                    $adapter = $hybridAuth->getAdapter('github');
+                    $token = $adapter->getAccessToken();
+
+                    $client = $sm->get('EdpGithubClient');
+                    $client->authenticate('url_token',$token['access_token'], null);
+                    return $client;
+                }
             ),
         );
     }

@@ -11,6 +11,7 @@ class Module extends AbstractModule
     public function bootstrap(ModuleManager $moduleManager, ApplicationInterface $app)
     {
         $em = $app->getEventManager()->getSharedManager();
+        $sm = $app->getServiceManager();
 
         $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth','githubToLocalUser', function($e) {
             $localUser = $e->getTarget();
@@ -22,6 +23,15 @@ class Module extends AbstractModule
             $localUser->setUsername($nickname);
             $localUser->setPhotoUrl($userProfile->photoURL);
         });
+
+        $em->attach('EdpGithub\Client', 'api', function($e) use ($sm) {
+            $hybridAuth = $sm->get('HybridAuth');
+            $adapter = $hybridAuth->getAdapter('github');
+            $token = $adapter->getAccessToken();
+
+            $client = $e->getTarget();
+            $client->authenticate('url_token', $token['access_token']);
+        } );
     }
 
     public function getServiceConfig()

@@ -16,9 +16,6 @@
 [submodule "vendor/ZF2"]
 	path = vendor/ZF2
 	url = https://github.com/zendframework/zf2.git
-[submodule "vendor/EdpGithub"]
-	path = vendor/EdpGithub
-	url = https://github.com/Hounddog/EdpGithub.git
 [submodule "vendor/ScnSocialAuth"]
 	path = vendor/ScnSocialAuth
 	url = https://github.com/Hounddog/ScnSocialAuth.git

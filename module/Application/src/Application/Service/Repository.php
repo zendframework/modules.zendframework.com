@@ -2,14 +2,14 @@
 
 namespace Application\Service;
 
-use EdpGithub\ApiClient\ApiClient;
+use EdpGithub\Client;
 
 class Repository
 {
     /**
      * @var array
      */
-    protected $repository;
+    protected $repositories;
 
     /**
      * @var EdpGithub\ApiClient\ApiFactory
@@ -24,16 +24,9 @@ class Repository
     public function getAllRepository($type)
     {
         if(!isset($this->repository[$type])) {
-            echo $this->api->getOauthToken();
-            exit;
-            $service = $this->api->getService('Repo');
-            $params['per_page'] = 100;
-            $params['page'] = 1;
-            $this->repositories[$type] = $service->listRepositories(null, $type, $params);
-            if($this->api->getNext() && $this->api->getNext() != $this->api->getCurrent()) {
-                $params['page'] = $this->api->getNext();
-                $this->getRepositoriesRecursive($this->repositories[$type], $params);
-            }
+            $client = $this->api;
+
+            $this->repositories[$type] = $client->api('current_user')->repos($type);
         }
         return $this->repositories[$type];
     }
@@ -52,7 +45,7 @@ class Repository
             $this->getAllRepos($repos, $params);
         }
     }
-    public function setApi(ApiClient $api)
+    public function setApi(Client $api)
     {
         $this->api = $api;
     }
