@@ -27,10 +27,12 @@ class Module extends AbstractModule
         $em->attach('EdpGithub\Client', 'api', function($e) use ($sm) {
             $hybridAuth = $sm->get('HybridAuth');
             $adapter = $hybridAuth->getAdapter('github');
-            $token = $adapter->getAccessToken();
 
-            $client = $e->getTarget();
-            $client->authenticate('url_token', $token['access_token']);
+            if($adapter->isUserConnected()) {
+                $token = $adapter->getAccessToken();
+                $client = $e->getTarget();
+                $client->authenticate('url_token', $token['access_token']);
+            }
         } );
     }
 
