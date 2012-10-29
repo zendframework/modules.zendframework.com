@@ -26,7 +26,7 @@ class Repository
         if(!isset($this->repository[$type])) {
             $client = $this->api;
 
-            $this->repositories[$type] = $client->api('current_user')->repos($type);
+            $this->repositories[$type] = $client->api('current_user')->repos();
         }
         return $this->repositories[$type];
     }
