@@ -157,14 +157,14 @@
                       <div class="span5 module-author">
                           <div class="row-fluid">
                               <div class="span2">
-                                  <?php $owner = $module->getOwner(); ?>
-                                  <img src="<?=$owner['avatar_url']?> " />
+                                  <?php $owner = $module->owner; ?>
+                                  <img src="<?=$owner->avatar_url?> " />
                               </div>
                               <div class="span10">
-                                  <strong><?=$owner['login']?></strong>
+                                  <strong><?=$owner->login?></strong>
                                   <p>
                                       <span class="author-label">Github:</span>
-                                      <a href="<?=$module->getUrl()?>"><?=$module->getName()?></a><br />
+                                      <a href="<?=$module->url?>"><?=$module->name?></a><br />
                                       <!--
                                       <span class="author-label">Blog:</span> <a>placeholder</a><br />
                                       <span class="author-label">Modules:</span> <a>5</a><br /><br />
@@ -174,13 +174,13 @@
                           </div>
                       </div>
                       <div class="span5">
-                          <strong><?=$module->getName()?></strong>
+                          <strong><?=$module->name?></strong>
                           <p>
                               <!--<span class="author-label">Version:</span> 1.2.1<br />-->
                               <span class="author-label">Created:</span>
                               <?php
-                              $date = new DateTime($module->getCreatedAt());
-                              echo $date->format('Y-m-d');
+                              //$date = new DateTime($module->getCreatedAt());
+                              //echo $date->format('Y-m-d');
                               ?><br />
                               <!--<span class="author-label">Edited:</span> <a>15 days ago</a><br />
                               <span class="author-label">Tags:</span>
@@ -193,7 +193,7 @@
                       <div class="span1">
                           <br />
                           <form action="<?=$this->url('module/add_module')?>" method="post">
-                              <input type="hidden" name="repository" value="<?=$module->getHtmlUrl()?>" />
+                              <input type="hidden" name="repository" value="<?=$module->html_url?>" />
                               <input type="submit" class="btn btn-success"/>
                           </form>
                       </div>
@@ -205,7 +205,7 @@
                       <div class="span12">
                           <strong>Description</strong>
                           <p>
-                              <?=$module->getDescription()?>
+                              <?=$module->description?>
                           </p>
                       </div>
                       <div style="clear: both;"></div>
