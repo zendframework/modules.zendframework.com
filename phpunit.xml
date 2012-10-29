@@ -12,12 +12,14 @@
         backupGlobals="false"
         syntaxCheck="true"
         >
-    <testsuite name="EdpGithub Module Tests">
-        <directory>./ApplicationTest</directory>
+    <testsuite name="Test all modules">
+        <directory>./module/Application/test/ApplicationTest</directory>
+        <directory>./module/User/test/UserTest</directory>
     </testsuite>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./module/Application/src</directory>
+            <directory suffix=".php">./module/User/src</directory>
         </whitelist>
     </filter>
     <logging>
