@@ -7,7 +7,11 @@ use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class UserRepositories extends AbstractHelper implements ServiceManagerAwareInterface
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
+use Zend\EventManager\EventManager;
+
+class UserRepositories extends AbstractHelper implements ServiceManagerAwareInterface, EventManagerAwareInterface
 {
     /**
      * $var string template used for view
@@ -18,6 +22,8 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
      * @var ServiceManager
      */
     protected $serviceManager;
+
+    protected $events;
 
     /**
      * __invoke
@@ -31,18 +37,18 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
         $sm = $this->getServiceManager();
 
         $sm = $sm->getServiceLocator();
-        $service = $sm->get('application_service_repository');
+        $client = $sm->get('EdpGithub\Client');
 
         $repositories = array();
 
-        $ownerRepos = $service->getAllRepository('owner');
+        $ownerRepos = $client->api('current_user')->repos(array('type' =>'owner'));
         foreach($ownerRepos as $repo) {
             if(!$repo->fork) {
                 $repositories[] = $repo;
             }
         }
 
-        $memberRepos = $service->getAllRepository('member');
+        $memberRepos = $client->api('current_user')->repos(array('type' =>'member'));
         foreach($memberRepos as $repo) {
             $repositories[] = $repo;
         }
@@ -55,6 +61,16 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
                 $module = $mapper->findByName($repo->name);
                 if($module) {
                     unset($repositories[$key]);
+                } else {
+                    $em = $client->getHttpClient()->getEventManager();
+                    $errorListener = $sm->get('EdpGithub\Listener\Error');
+                    $em->detachAggregate($errorListener);
+                    $module = $client->api('repos')->content($repo->full_name, 'Module.php');
+                    $response = $client->getHttpClient()->getResponse();
+                    if(!$response->isSuccess()){
+                        unset($repositories[$key]);
+                    }
+                    $em->attachAggregate($errorListener);
                 }
             }
         }
@@ -82,5 +98,33 @@ class UserRepositories extends AbstractHelper implements ServiceManagerAwareInte
     {
         $this->serviceManager = $serviceManager;
         return $this;
+    }
+
+    /**
+     * Set Event Manager
+     *
+     * @param EventManagerInterface $events
+     * @return Client
+     */
+    public function setEventManager(EventManagerInterface $events)
+    {
+        $events->setIdentifiers(array(
+            __CLASS__,
+            get_called_class(),
+        ));
+        $this->events = $events;
+        return $this;
+    }
+
+    /**
+     * Get Event Manager
+     * @return EventManager
+     */
+    public function getEventManager()
+    {
+        if (null === $this->events) {
+            $this->setEventManager(new EventManager());
+        }
+        return $this->events;
     }
 }
