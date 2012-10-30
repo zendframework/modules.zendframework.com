@@ -1,0 +1,12 @@
+language: php
+php:
+  - "5.3"
+
+before_script:
+- git submodule update --init --recursive
+
+script:
+  - phpunit
+
+notifications:
+  irc: "irc.freenode.org#zftalk.dev.modules"

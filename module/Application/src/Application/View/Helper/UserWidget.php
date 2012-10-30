@@ -20,14 +20,13 @@ class UserWidget extends AbstractHelper
      */
     public function __invoke()
     {
-
         $vm = new ViewModel();
         $vm->setTemplate('user/user-widget.phtml');
-        
+
         return $this->getView()->render($vm);
     }
 
-    
+
     /**
      * @param string $viewTemplate
      * @return ZfcUserLoginWidget
@@ -37,5 +36,4 @@ class UserWidget extends AbstractHelper
         $this->viewTemplate = $viewTemplate;
         return $this;
     }
-    
 }

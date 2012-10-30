@@ -7,31 +7,33 @@ use Application\Service\Repository;
 
 class RepositoryTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        // your code here
-    }
-
-    public function tearDown()
-    {
-        // your code here
-    }
 
     public function testGetAllRepositories()
     {
-        $api = $this->getMock('EdpGithub\ApiClient\ApiClient');
-        $repo =  $this->getMock('EdpGithub\ApiClient\ApiFactory\Service\Repo');
+        $repo = $this->getMock(
+            'EdpGithub\Collection\RepositoryCollection',
+            array(),
+            array($this->getMock('EdpGithub\Http\Client'), 'somePath')
+        );
+
+        $currentUser = $this->getMock('EdpGithub\Api\CurrentUser');
+        $currentUser->expects($this->once())
+            ->method('repos')
+            ->will($this->returnValue($repo));
+
+        $api = $this->getMock('EdpGithub\Client');
 
         $api->expects($this->once())
-            ->method('getService')
-            ->with($this->equalTo('Repo'))
-            ->will($this->returnValue('test'));
+            ->method('api')
+            ->with($this->equalTo('current_user'))
+            ->will($this->returnValue($currentUser));
+
 
         $service = new Repository();
         $service->setApi($api);
 
-        $service->getAllRepository('member');
+        $result = $service->getAllRepository('member');
 
-
+        $this->assertInstanceOf('edpGithub\Collection\RepositoryCollection', $result);
     }
 }

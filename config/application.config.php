@@ -22,7 +22,6 @@ return array(
             'ScnSocialAuth' => '../moduledev/ScnSocialAuth',
             './module',
             './vendor',
-            '../moduledev',
         ),
     ),
 );
