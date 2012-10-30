@@ -50,12 +50,11 @@ class Module
                 },
                 'application_module_service' => function($sm) {
                     $service = new  Service\Module;
-                    $service->setApi($sm->get('EdpGithubClient'));
                     return $service;
                 },
                 'application_service_repository' => function($sm) {
                     $service = new Service\Repository;
-                    $service->setApi($sm->get('EdpGithubClient'));
+                    $service->setApi($sm->get('EdpGithub\Client'));
                     return $service;
                 },
                 'github_client' => function($sm) {

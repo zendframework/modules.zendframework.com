@@ -21,7 +21,7 @@ class RepoController extends AbstractActionController
     /**
      * This function is used to submit a module to the site
      * @throws Exception\UnexpectedValueException
-     * @return 
+     * @return
      **/
     public function addAction()
     {
@@ -43,7 +43,7 @@ class RepoController extends AbstractActionController
     /**
      * This function is used to remove a module to the site
      * @throws Exception\UnexpectedValueException
-     * @return 
+     * @return
      **/
    public function removeAction()
     {
@@ -51,9 +51,9 @@ class RepoController extends AbstractActionController
         if($repository) {
             $sm = $this->getServiceLocator();
             $mapper = $sm->get('application_module_mapper');
-            $module = $mapper->findByUrl($repository->getHtmlUrl());
+            $module = $mapper->findByUrl($repository->html_url);
             $module = $mapper->delete($module);
-            $this->flashMessenger()->addMessage($repository->getName() . ' has been removed from ZF Modules');
+            $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
         } else {
             throw new Exception\UnexpectedValueException(
                 'You have no permission to add this module. The reason might be that you are' .
@@ -74,20 +74,18 @@ class RepoController extends AbstractActionController
         $request = $this->getRequest();
         if($request->isPost()) {
             $repositoryUrl = $request->getPost()->get('repository');
-            
+
             $sm = $this->getServiceLocator();
-            $api = $sm->get('edpgithub_api_factory');
-            $service = $api->getService('Repo');
-            $repositories = $service->listRepositories(null, 'all');
+            $repositories = $sm->get('EdpGithub\Client')->api('current_user')->repos();
 
             $repository = null;
             foreach($repositories as $repo) {
-                if($repo->getHtmlUrl() == $repositoryUrl) {
-                    if(!$repo->getFork()) {
+                if($repo->html_url == $repositoryUrl) {
+                    if(!$repo->fork) {
                         $repository = $repo;
                     }
                     return $repository;
-                } 
+                }
             }
 
             return $repository;
@@ -109,7 +107,7 @@ class RepoController extends AbstractActionController
         return $this->moduleService;
     }
 
-    public function setModuleService($moduleService) 
+    public function setModuleService($moduleService)
     {
         $this->moduleService = $moduleService;
     }

@@ -30,27 +30,27 @@ class Module extends EventProvider implements ServiceManagerAwareInterface
      */
     public function register($data)
     {
-        $url = $data->htmlUrl;
+        $url = $data->html_url;
         $module = $this->getModuleMapper()->findByUrl($url);
         $update = true;
         if(!$module) {
             $module  = new \Application\Entity\Module;
             $update = false;
         }
-        
+
         $module->setName($data->name);
         $module->setDescription($data->description);
-        $module->setUrl($data->htmlUrl);
+        $module->setUrl($data->html_url);
         $owner = $data->owner;
-        $module->setOwner($owner['login']);
-        $module->setPhotoUrl($owner['avatar_url']);
+        $module->setOwner($owner->login);
+        $module->setPhotoUrl($owner->avatar_url);
 
         if($update) {
             $this->getModuleMapper()->update($module);
         } else {
             $this->getModuleMapper()->insert($module);
         }
-        
+
         return $module;
     }
 
