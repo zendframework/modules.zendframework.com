@@ -21,4 +21,4 @@
 	url = https://github.com/Hounddog/ScnSocialAuth.git
 [submodule "vendor/EdpGithub"]
 	path = vendor/EdpGithub
-	url = https://github.com/Hounddog/EdpGithub.git
+	url = https://github.com/EvanDotPro/EdpGithub.git
