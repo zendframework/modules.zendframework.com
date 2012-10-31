@@ -39,18 +39,18 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
 
         //limit modules to only user modules
         if($user) {
-            $service = $service = $sm->get('application_service_repository');
+            $client = $sm->get('EdpGithub\Client');
 
             $repositories = array();
 
-            $ownerRepos  = $service->getAllRepository('owner');
+            $ownerRepos = $client->api('current_user')->repos(array('type' =>'owner'));
             foreach($ownerRepos as $repo) {
                 if(!$repo->fork) {
                     $repositories[] = $repo;
                 }
             }
 
-            $memberRepos = $service->getAllRepository('member');
+            $memberRepos = $client->api('current_user')->repos(array('type' =>'member'));
             foreach($memberRepos as $repo) {
                 $repositories[] = $repo;
             }

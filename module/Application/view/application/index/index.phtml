@@ -9,30 +9,31 @@
             Some awesome sentence about modules
           </small>
         </h1>
-        <p>
-         This website is a work-in-progress. In the future you will be able to use this website to browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.
-          <hr />
-        <blockquote>
+        <div>
           <p>
-            <em>
-              Hell, we might even throw in something cheesy like a hipster quote.
-            </em>
+            This website is a work-in-progress. In the future you will be able to use this website to browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.
           </p>
-          <small>
-            Someone idiot 
-            <cite title="Source Title">
-              Hipster
-            </cite>
-          </small>
-        </blockquote>
-      </p>
-    </div>
-    <div class="span4">
-      
-      <img class="attentionimage pull-right" src="img/rsz_logo.png" />
+          <hr />
+          <blockquote>
+            <p>
+              <em>
+                Hell, we might even throw in something cheesy like a hipster quote.
+              </em>
+            </p>
+            <small>
+              Someone idiot
+              <cite title="Source Title">
+                Hipster
+              </cite>
+            </small>
+          </blockquote>
+        </div>
+      </div>
+      <div class="span4">
+        <img class="attentionimage pull-right" src="img/rsz_logo.png" alt="ZF2 Modules" />
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 
@@ -61,17 +62,17 @@
                     <div class="span6 module-author">
                         <div class="row-fluid">
                             <div class="span2">
-                                <img src="<?=$module->getPhotoUrl()?>" />
+                                <img src="<?=$module->getPhotoUrl()?>" alt="<?=$module->getOwner()?>"/>
                             </div>
                             <div class="span10">
                                 <strong><?=$module->getOwner()?></strong>
                                 <p>
-                                    <span class="author-label">Github:</span> 
-                                    <a href="<?=$module->getUrl()?>"><?=$module->getName()?></a><br />
-                                    <!--
-                                    <span class="author-label">Blog:</span> <a>placeholder</a><br />
-                                    <span class="author-label">Modules:</span> <a>5</a><br /><br />
-                                    <span class="author-label"><a>More info...</a>-->
+                                  <span class="author-label">Github:</span>
+                                  <a href="<?=$module->getUrl()?>"><?=$module->getName()?></a><br />
+                                  <!--
+                                  <span class="author-label">Blog:</span> <a>placeholder</a><br />
+                                  <span class="author-label">Modules:</span> <a>5</a><br /><br />
+                                  <span class="author-label"><a>More info...</a>-->
                                 </p>
                             </div>
                         </div>
@@ -122,8 +123,8 @@
             <hr/>
           </div>
         </div>
-        <?php 
-          $modules = $this->listModules(array('limit' => 10)); 
+        <?php
+          $modules = $this->listModules(array('limit' => 10));
           foreach($modules as $module) {
         ?>
         <div class="row-fluid">
@@ -148,8 +149,8 @@
             <hr/>
           </div>
         </div>
-        <?php 
-          $users = $this->newUsers(); 
+        <?php
+          $users = $this->newUsers();
           foreach($users as $user) {
         ?>
         <div class="row-fluid">
