@@ -1,5 +1,0 @@
-<?php
-    foreach($this->repositories as $repo) {
-        echo $repo-name;
-    }
-?>

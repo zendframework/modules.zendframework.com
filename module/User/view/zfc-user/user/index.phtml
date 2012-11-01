@@ -1,4 +1,4 @@
-<div class="container main-content">
+
   <div class="row">
     <div class="span8">
       <div class="row-fluid">
@@ -40,7 +40,7 @@
                       <div class="span5 module-author">
                           <div class="row-fluid">
                               <div class="span2">
-                                  <img src="<?=$module->getPhotoUrl()?> " />
+                                  <img src="<?=$module->getPhotoUrl()?>" alt="<?php echo $module->getName()?>" />
                               </div>
                               <div class="span10">
                                   <strong><?=$module->getOwner()?></strong>
@@ -100,7 +100,7 @@
 
       </div>
       <div class="tab-pane" id="repositories">
-        <div class="well" style="text-align:center">Synchronizing with Github <img src="/img/ajax-loader.gif" alt"loading" /></div>
+        <div class="well" style="text-align:center">Synchronizing with Github <img src="/img/ajax-loader.gif" alt="loading" /></div>
       </div>
     </div>
 

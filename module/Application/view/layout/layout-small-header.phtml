@@ -4,7 +4,11 @@
 <head>
     <?php echo $this->headTitle('ZF2 Modules')->setSeparator(' - ')->setAutoEscape(false) ?>
 
-    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    <?php
+    echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->setCharset('UTF-8')
+    ?>
 
     <?php
     echo $this->headLink(array('rel' => 'shortcut icon', 'href' => $this->basePath() . '/favicon.ico'))
@@ -59,8 +63,8 @@
     <div class="container">
         <div class="row">
             <div class="span8">
-                <img src="/img/zend-logo_small.png" />
-                <p class="zf-green" >Modules</p>
+                <img src="/img/zend-logo_small.png" alt="ZF Modules"/>
+                <p class="zf-green">Modules</p>
             </div>
             <div class="span4">
 

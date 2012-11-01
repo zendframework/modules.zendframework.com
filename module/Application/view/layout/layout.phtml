@@ -4,7 +4,11 @@
 <head>
     <?php echo $this->headTitle('ZF2 Modules')->setSeparator(' - ')->setAutoEscape(false) ?>
 
-    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    <?php
+    echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->setCharset('UTF-8')
+    ?>
 
     <?php
     echo $this->headLink(array('rel' => 'shortcut icon', 'href' => $this->basePath() . '/favicon.ico'))
@@ -72,7 +76,7 @@
                     </p>
                     <hr />
                     <p>
-                        If you are interested in helping with this project, simply fork the code on <a class="zf-green" href="https://github.com/zendframework/modules.zendframework.com"/>GITHUB</a> and get started!.
+                        If you are interested in helping with this project, simply fork the code on <a class="zf-green" href="https://github.com/zendframework/modules.zendframework.com">GITHUB</a> and get started!.
                         Additionally, join us in #zftalk.modules on Freenode and ask how you can help!
                     </p>
                     <!--
@@ -93,7 +97,7 @@
                 </div>
             </div>
             <div class="span4">
-                <img class="attentionimage pull-right" src="/img/rsz_logo.png" />
+                <img class="attentionimage pull-right" src="/img/rsz_logo.png" alt="ZF Modules"/>
             </div>
         </div>
     </div>
