@@ -20,7 +20,7 @@ class IndexController extends AbstractActionController
         $repos = $sm->get('EdpGithub\Client')->api('current_user')->repos();
 
         $mapper = $this->getServiceLocator()->get('application_module_mapper');
-        $repositories = $mapper->findAll();
+        $repositories = $mapper->findAll(null, 'created_at', 'desc');
         return array('repositories' => $repositories);
     }
 }
