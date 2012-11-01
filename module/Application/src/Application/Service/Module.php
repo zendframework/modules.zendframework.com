@@ -73,7 +73,7 @@ class Module extends EventProvider implements ServiceManagerAwareInterface
      * @param ModuleMapperInterface $moduleMapper
      * @return Module
      */
-    public function setUserMapper(ModuleMapperInterface $moduleMapper)
+    public function setModuleMapper(ModuleMapperInterface $moduleMapper)
     {
         $this->moduleMapper = $moduleMapper;
         return $this;
