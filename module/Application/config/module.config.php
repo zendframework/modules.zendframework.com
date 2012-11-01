@@ -47,7 +47,7 @@ return array(
                             ),
                         ),
                     ),
-                    'remove_module' => array(
+                    'user_module' => array(
                         'type' => 'Literal',
                         'options' => array(
                             'route' => '/user-modules',
