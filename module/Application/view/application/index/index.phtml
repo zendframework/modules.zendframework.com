@@ -18,8 +18,19 @@
             <div class="span12">
                 <div class="row-fluid">
                     <div class="module-info">
+                        <div class="span9">
                             <a href="<?php echo $module->getUrl()?>"><h2><?php echo $module->getName()?><!--<span class="version">1.2.1</span>--></h2></a>
                             <p class="author-small">by&nbsp;<strong><a href="http://www.github.com/<?php echo $module->getOwner()?>"><?php echo $module->getOwner()?></a></strong></p>
+                            </div>
+                            <div class="span3 created-at">
+                            <p>
+                            <i class="icon icon-plus" title="Created"></i>
+                            <?php
+                                $date = new DateTime($module->getCreatedAt());
+                                echo $date->format('Y-m-d');
+                            ?>
+                            </p>
+                        </div>
                         <div style="clear: both;"></div>
                     </div>
                 </div>
@@ -31,16 +42,10 @@
                             </p>
                         </div>
                         
+                 <!--
                     <div class="module-metadata">
                         <div class="row-fluid">
-                        <div class="span3">
-                            <p>
-                            <i class="icon icon-plus" title="Created"></i>
-                            <?php $date = new DateTime($module->getCreatedAt());
-                                                            echo $date->format('Y-m-d');
-                                                            ?>
-                            </p>
-                        </div>
+                        <?php // "Created" should be here when other items shown ?>
                         <div class="span3">
                             <i class="icon icon-time" title="Last update"></i> <a>15 days ago</a>
                         </div>
@@ -53,6 +58,7 @@
                         </div>
                      </div>
                 </div>
+                      -->
                         <div style="clear: both;"></div>
                     </div>
                 </div>
