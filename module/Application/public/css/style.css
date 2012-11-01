@@ -133,3 +133,20 @@ div.container a.brand {
 .sidebar hr {
     margin:5px 0 5px 0;
 }
+
+.small-header img {
+    float:left;
+    height:68px;
+    padding:0;
+    margin:0;
+}
+
+.small-header p {
+    font-size:3em;
+    font-style:italic;
+    margin-top:20px;
+}
+
+.small-header {
+    padding-top:60px;
+}

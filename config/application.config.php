@@ -13,6 +13,7 @@ return array(
         'AssetManager',
         'Assetic',
 		'User',
+        'EdpModuleLayouts',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

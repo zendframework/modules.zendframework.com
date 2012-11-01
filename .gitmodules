@@ -22,3 +22,6 @@
 [submodule "vendor/EdpGithub"]
 	path = vendor/EdpGithub
 	url = https://github.com/EvanDotPro/EdpGithub.git
+[submodule "vendor/EdpModuleLayouts"]
+	path = vendor/EdpModuleLayouts
+	url = https://github.com/EvanDotPro/EdpModuleLayouts.git
