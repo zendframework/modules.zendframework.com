@@ -33,9 +33,9 @@ class NewUsers extends AbstractHelper implements ServiceManagerAwareInterface
         $sm = $sm->getServiceLocator();
         $mapper = $sm->get('zfcuser_user_mapper');
         $users = $mapper->findAll(10, 'created_at');
-        
+
         return $users;
-    }    
+    }
 
     /**
      * Retrieve service manager instance

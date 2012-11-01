@@ -3,7 +3,7 @@
 namespace Application\Entity;
 
 interface ModuleInterface
-{  
+{
     /**
      * Get Owner
      * @return string
@@ -17,7 +17,7 @@ interface ModuleInterface
 
     /**
      * Get Photo URL
-     * 
+     *
      * @return string
      */
     public function getPhotoUrl();
@@ -28,11 +28,11 @@ interface ModuleInterface
 
     /**
      * Get Updated at
-     * 
+     *
      * @return int
      */
     public function getUpdatedAt();
-    
+
     /**
      * Set Updated at
      * @param int $updatedAt
@@ -41,14 +41,14 @@ interface ModuleInterface
 
     /**
      * Get Created at
-     * 
+     *
      * @return string
      */
     public function getCreatedAt();
-    
+
     /**
      * Set Created at
-     * 
+     *
      * @param int $createdAt
      */
     public function setCreatedAt($createdAt);
@@ -70,14 +70,14 @@ interface ModuleInterface
 
     /**
      * Get Url
-     * 
+     *
      * @return string
      */
     public function getUrl();
-    
+
     /**
      * Set Url
-     * 
+     *
      * @param string $url
      * @return ModuleInterface
      */
@@ -85,30 +85,30 @@ interface ModuleInterface
 
     /**
      * Get Description
-     * 
+     *
      * @return string
      */
     public function getDescription();
-    
+
     /**
      * Set Description
-     * 
-     * @param string $description 
+     *
+     * @param string $description
      * @return ModuleInterface
      */
     public function setDescription($description);
 
     /**
      * Get Name
-     * 
+     *
      * @return string
      */
     public function getName();
-    
+
     /**
      * Set Name
-     * 
-     * @param string $name 
+     *
+     * @param string $name
      * @return ModuleInterface
      */
     public function setName($name);

@@ -8,47 +8,47 @@ class Module implements ModuleInterface
      * @var id
      */
     protected $id = null;
-    
+
     /**
      * @var string
      */
     protected $name = null;
-    
+
     /**
      * @var string
      */
     protected $description = null;
-    
+
     /**
      * @var string
      */
     protected $url = null;
-    
+
     /**
      * @var int
      */
     protected $createdAt = null;
-    
+
     /**
      * @var int
      */
     protected $updatedAt = null;
-    
+
     /**
      * @var string
      */
     protected $owner = null;
-    
+
     /**
      * @var string
      */
     protected $photoUrl = null;
-    
+
     public function getPhotoUrl()
     {
         return $this->photoUrl;
     }
-    
+
     public function setPhotoUrl($photoUrl)
     {
         $this->photoUrl = $photoUrl;
@@ -58,7 +58,7 @@ class Module implements ModuleInterface
     {
         return $this->owner;
     }
-    
+
     public function setOwner($owner)
     {
         $this->owner = $owner;
@@ -68,7 +68,7 @@ class Module implements ModuleInterface
     {
         return $this->updatedAt;
     }
-    
+
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
@@ -79,12 +79,12 @@ class Module implements ModuleInterface
         return $this->createdAt;
     }
 
-    
+
     public function setCreatedAt($createdAt)
     {
 
         $this->createdAt = $createdAt;
-     
+
         return $this;
     }
     /**
@@ -111,17 +111,17 @@ class Module implements ModuleInterface
 
     /**
      * Get Url
-     * 
+     *
      * @return string
      */
     public function getUrl()
     {
         return $this->url;
     }
-    
+
     /**
      * Set Url
-     * 
+     *
      * @param string $url
      * @return ModuleInterface
      */
@@ -133,18 +133,18 @@ class Module implements ModuleInterface
 
     /**
      * Get Description
-     * 
+     *
      * @return string
      */
     public function getDescription()
     {
         return $this->description;
     }
-    
+
     /**
      * Set Description
-     * 
-     * @param string $description 
+     *
+     * @param string $description
      * @return ModuleInterface
      */
     public function setDescription($description)
@@ -155,18 +155,18 @@ class Module implements ModuleInterface
 
     /**
      * Get Name
-     * 
+     *
      * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    
+
     /**
      * Set Name
-     * 
-     * @param string $name 
+     *
+     * @param string $name
      * @return ModuleInterface
      */
     public function setName($name)

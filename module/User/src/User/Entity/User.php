@@ -12,12 +12,12 @@ class User extends ZfcUser
     protected $photoUrl;
 
     protected $createdAt;
-    
+
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
-    
+
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;

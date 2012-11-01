@@ -95,7 +95,8 @@ class RepoController extends AbstractActionController
         );
     }
 
-    public function userReposAction() {
+    public function userReposAction()
+    {
         $sm = $this->getServiceLocator();
         $client = $sm->get('EdpGithub\Client');
 
