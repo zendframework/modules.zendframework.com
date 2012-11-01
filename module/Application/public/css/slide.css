@@ -129,8 +129,7 @@ Version: 1.0
 
 /* sliding panel */
 #toppanel {
-    position: absolute;   /*Panel will overlap  content */
-    /*position: relative;*/   /*Panel will "push" the content down */
+    position: fixed;   /*Panel will overlap  content */
     top: 0;
     width: 100%;
     z-index: 999;
