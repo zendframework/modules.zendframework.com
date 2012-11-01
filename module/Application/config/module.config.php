@@ -47,6 +47,16 @@ return array(
                             ),
                         ),
                     ),
+                    'remove_module' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/user-modules',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Repo',
+                                'action' => 'user-repos',
+                            ),
+                        ),
+                    ),
                 ),
             ),
             // The following is a route to simplify getting started creating

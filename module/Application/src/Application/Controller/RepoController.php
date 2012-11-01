@@ -95,6 +95,51 @@ class RepoController extends AbstractActionController
         );
     }
 
+    public function userReposAction() {
+        $sm = $this->getServiceLocator();
+        $client = $sm->get('EdpGithub\Client');
+
+        $repositories = array();
+
+        $ownerRepos = $client->api('current_user')->repos(array('type' =>'owner'));
+        foreach($ownerRepos as $repo) {
+            if(!$repo->fork) {
+                $repositories[] = $repo;
+            }
+        }
+
+        $memberRepos = $client->api('current_user')->repos(array('type' =>'member'));
+        foreach($memberRepos as $repo) {
+            $repositories[] = $repo;
+        }
+
+        $mapper = $sm->get('application_module_mapper');
+        foreach($repositories as $key => $repo) {
+            if($repo->fork) {
+                unset($repositories[$key]);
+            } else {
+                $module = $mapper->findByName($repo->name);
+                if($module) {
+                    unset($repositories[$key]);
+                } else {
+                    $em = $client->getHttpClient()->getEventManager();
+                    $errorListener = $sm->get('EdpGithub\Listener\Error');
+                    $em->detachAggregate($errorListener);
+                    $module = $client->api('repos')->content($repo->full_name, 'Module.php');
+                    $response = $client->getHttpClient()->getResponse();
+                    if(!$response->isSuccess()){
+                        unset($repositories[$key]);
+                    }
+                    $em->attachAggregate($errorListener);
+                }
+            }
+        }
+
+        $viewModel = new ViewModel(array('repositories' => $repositories));
+        $viewModel->setTerminal(true);
+        return $viewModel;
+    }
+
     /**
      * Getters/setters for DI stuff
      */
@@ -111,4 +156,5 @@ class RepoController extends AbstractActionController
     {
         $this->moduleService = $moduleService;
     }
+
 }
