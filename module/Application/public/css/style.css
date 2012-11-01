@@ -149,3 +149,15 @@ div.container a.brand {
 .small-header {
     padding-top:60px;
 }
+
+.module-row .module-metadata {
+    color: gray;
+}
+
+.module-row .module-metadata p {
+    margin: 2px 0;
+}
+
+.module-row .module-info h2, .module-row .module-info p {
+    display: inline;
+}
