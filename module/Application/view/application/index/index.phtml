@@ -35,16 +35,17 @@
                         <div class="row-fluid">
                         <div class="span3">
                             <p>
-                            <span class="author-label">Created:</span>
+                            <i class="icon icon-plus" title="Created"></i>
                             <?php $date = new DateTime($module->getCreatedAt());
                                                             echo $date->format('Y-m-d');
                                                             ?>
                             </p>
                         </div>
                         <div class="span3">
-                            <span class="author-label">Edited:</span> <a>15 days ago</a>
+                            <i class="icon icon-time" title="Last update"></i> <a>15 days ago</a>
                         </div>
                         <div class="span6">
+                            <i class="icon icon-tags" title="Tags"></i>
                             <span class="label">zf2</span>
                             <span class="label">Assetic</span>
                             <span class="label">Assets</span>
