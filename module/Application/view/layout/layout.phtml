@@ -1,74 +1,120 @@
 <?php echo $this->doctype(); ?>
 
 <html lang="en">
-    <head>
-        <?php echo $this->headTitle('ZF2 Modules')->setSeparator(' - ')->setAutoEscape(false) ?>
+<head>
+    <?php echo $this->headTitle('ZF2 Modules')->setSeparator(' - ')->setAutoEscape(false) ?>
 
-        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
-        <?php
-        echo $this->headLink(array('rel' => 'shortcut icon', 'href' => $this->basePath() . '/favicon.ico'))
-                ->appendStylesheet($this->basePath() . '/css/bootstrap.min.css')
-                ->appendStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
-                ->appendStylesheet($this->basePath() . '/css/style.css')
-                ->appendStylesheet($this->basePath() . '/css/slide.css')
-        ?>
-<style type="text/css">
+    <?php
+    echo $this->headLink(array('rel' => 'shortcut icon', 'href' => $this->basePath() . '/favicon.ico'))
+            ->appendStylesheet($this->basePath() . '/css/bootstrap.min.css')
+            ->appendStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+            ->appendStylesheet($this->basePath() . '/css/style.css')
+            ->appendStylesheet($this->basePath() . '/css/slide.css')
+    ?>
+</head>
+<body>
+<a href="https://github.com/zendframework/modules.zendframework.com"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 
-        </style>
-    </head>
+<div id="toppanel">
+    <!-- /login -->
+    <!-- The tab on top -->
+    <div class="tab">
+        <ul class="login">
+            <li class="left">&nbsp;</li>
+            <li ><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
+            <?php
+                $userDisplayName = $this->zfcUserDisplayName();
+                if ($userDisplayName):
+            ?>
+            <li class="sep">|</li>
+            <li class="user-info">
+                <div class="gravatar-container"><a class="login" href="<?php
+                    echo $this->url('zfcuser');
+                ?>" title="My profile">
+                <img src="<?php
+                    echo $this->zfcUserIdentity()->getPhotoUrl();
+                ?>" alt="<?php echo $this->zfcUserDisplayName();
+                ?>" style="width:23px;height:23px;" />
+                </a></div><a class="login" href="<?php
+                    echo $this->url('zfcuser');
+                ?>" title="My profile"> Hello <?=ucfirst($userDisplayName);?></a>
+            </li>
+            <li class="sep">|</li>
+            <li ><a href="user/logout">Logout</a></li>
+            <?php else: ?>
+            <li id="toggle">
+            <a class="login" href="<?php
+                echo $this->url('scn-social-auth-user/login/provider', array('provider' => 'github'));
+            ?>">GitHub Login</a>
+            </li>
+            <?php endif; ?>
+            <li class="right">&nbsp;</li>
+        </ul>
+    </div> <!-- / top -->
+</div>
 
-    <body>
-        <a href="https://github.com/zendframework/modules.zendframework.com"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
-        <div id="toppanel">
-            <!-- /login -->
-            <!-- The tab on top -->
-            <div class="tab">
-                <ul class="login">
-                    <li class="left">&nbsp;</li>
-                    <li ><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
-                    <?php
-                        $userDisplayName = $this->zfcUserDisplayName();
-                        if ($userDisplayName):
-                    ?>
-                    <li class="sep">|</li>
-                    <li class="user-info">
-                        <div class="gravatar-container"><a class="login" href="<?php
-                            echo $this->url('zfcuser');
-                        ?>" title="My profile">
-                        <img src="<?php
-                            echo $this->zfcUserIdentity()->getPhotoUrl();
-                        ?>" alt="<?php echo $this->zfcUserDisplayName();
-                        ?>" style="width:23px;height:23px;" />
-                        </a></div><a class="login" href="<?php
-                            echo $this->url('zfcuser');
-                        ?>" title="My profile"> Hello <?=ucfirst($userDisplayName);?></a>
-                    </li>
-                    <li class="sep">|</li>
-                    <li ><a href="user/logout">Logout</a></li>
-                    <?php else: ?>
-                    <li id="toggle">
-                    <a class="login" href="<?php
-                        echo $this->url('scn-social-auth-user/login/provider', array('provider' => 'github'));
-                    ?>">GitHub Login</a>
-                    </li>
-                    <?php endif; ?>
-                    <li class="right">&nbsp;</li>
-                </ul>
-            </div> <!-- / top -->
-
+<div class="container-fluid landing-intro">
+    <div class="container">
+        <div class="row">
+            <div class="span8">
+                <h1 class="zf-green">
+                    Welcome to the ZF2 Modules Site
+                    <br />
+                    <small>
+                        Find a Module that fits your needs.
+                    </small>
+                </h1>
+                <div>
+                    <p>
+                        This website is a work-in-progress. In the future you will be able to use this website to   browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.
+                    </p>
+                    <hr />
+                    <p>
+                        If you are interested in helping with this project, simply fork the code on <a class="zf-green" href="https://github.com/zendframework/modules.zendframework.com"/>GITHUB</a> and get started!.
+                        Additionally, join us in #zftalk.modules on Freenode and ask how you can help!
+                    </p>
+                    <!--
+                    <blockquote>
+                        <p>
+                            <em>
+                                Hell, we might even throw in something cheesy like a hipster quote.
+                            </em>
+                        </p>
+                        <small>
+                            Someone idiot
+                            <cite title="Source Title">
+                                Hipster
+                            </cite>
+                        </small>
+                    </blockquote>
+                    -->
+                </div>
+            </div>
+            <div class="span4">
+                <img class="attentionimage pull-right" src="/img/rsz_logo.png" />
+            </div>
         </div>
+    </div>
+</div>
 
-            <?php echo $this->content; ?>
-            <hr style="clear:both" />
-            <footer>
-                <p><?=COPY_MSG;?></p>
-            </footer>
 
-        <?php echo $this->inlineScript()
-                ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                ->prependFile($this->basePath() . '/js/jquery.min.js')
+<div class="container main-content">
+    <?php echo $this->content; ?>
+</div>
+<hr style="clear:both" />
+
+<footer class="footer">
+    <div class="container">
+        <p><?=COPY_MSG;?></p>
+    </div>
+</footer>
+
+<?php echo $this->inlineScript()
+    ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+    ->prependFile($this->basePath() . '/js/jquery.min.js')
 //                ->appendFile($this->basePath() . '/js/slide.js')
         ?>
-    </body>
+</body>
 </html>
