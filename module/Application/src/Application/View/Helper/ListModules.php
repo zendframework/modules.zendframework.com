@@ -65,7 +65,7 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
             $limit = isset($options['limit'])?$options['limit']:null;
 
             $mapper = $sm->get('application_module_mapper');
-            $modules = $mapper->findAll($limit, 'created_at');
+            $modules = $mapper->findAll($limit, 'created_at', 'DESC');
 
 
         }
