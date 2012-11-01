@@ -1,0 +1,124 @@
+
+  <div class="row">
+    <div class="span8">
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <h1 class="zf-green">Avilable Modules</h1>
+              <p>Select which module you want to Submit for Listing</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php
+        $flashMessenger = $this->flashMessenger();
+        foreach($flashMessenger->getMessages() as $message) {
+          echo '<h3 class="zf-green">' . $message . '</h3>';
+        }
+      ?>
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#modules" data-toggle="tab">Submitted Modules</a></li>
+      <li><a href="#repositories" data-toggle="tab">My Repositories</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="modules">
+      <?php
+    $modules = $this->listModules(array('user' => true));
+    if (empty($modules)) { ?>
+    <div class="alert alert-block">No modules was submitted yet</div>
+    <?php }
+    foreach($modules as $module) {
+    ?>
+
+        <div class="row-fluid module-row">
+          <div class="span12">
+              <div class="row-fluid">
+                  <div class="module-info">
+                      <div class="span5 module-author">
+                          <div class="row-fluid">
+                              <div class="span2">
+                                  <img src="<?=$module->getPhotoUrl()?>" alt="<?php echo $module->getName()?>" />
+                              </div>
+                              <div class="span10">
+                                  <strong><?=$module->getOwner()?></strong>
+                                  <p>
+                                      <span class="author-label">Github:</span>
+                                      <a href="<?=$module->getUrl()?>"><?=$module->getName()?></a><br />
+                                      <!--
+                                      <span class="author-label">Blog:</span> <a>placeholder</a><br />
+                                      <span class="author-label">Modules:</span> <a>5</a><br /><br />
+                                      <span class="author-label"><a>More info...</a>-->
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="span5">
+                          <strong><?=$module->getName()?></strong>
+                          <p>
+                              <!--<span class="author-label">Version:</span> 1.2.1<br />-->
+                              <span class="author-label">Created:</span>
+                              <?php
+                              $date = new DateTime($module->getCreatedAt());
+                              echo $date->format('Y-m-d');
+                              ?><br />
+                              <!--<span class="author-label">Edited:</span> <a>15 days ago</a><br />
+                              <span class="author-label">Tags:</span>
+                              <span class="label">zf2</span>
+                              <span class="label">Assetic</span>
+                              <span class="label">Assets</span>
+                              <span class="label">Sx</span>-->
+                          </p>
+                      </div>
+                      <div class="span1">
+                          <br />
+                          <form action="<?php echo $this->url('module/remove_module')?>" method="post">
+                              <input type="hidden" name="repository" value="<?=$module->getUrl()?>" />
+                              <input type="submit" value="Remove" class="btn btn-danger"/>
+                          </form>
+                      </div>
+                      <div style="clear: both;"></div>
+                  </div>
+              </div>
+              <div class="row-fluid">
+                  <div class="module-description">
+                      <div class="span12">
+                          <strong>Description</strong>
+                          <p>
+                              <?=$module->getDescription()?>
+                          </p>
+                      </div>
+                      <div style="clear: both;"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+<?php } ?>
+
+
+      </div>
+      <div class="tab-pane" id="repositories">
+        <div class="well" style="text-align:center">Synchronizing with Github <img src="/img/ajax-loader.gif" alt="loading" /></div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="span4">
+    <div class="sidebar">
+      <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName(); ?>!</h3>
+      <img class="thumbnail" src="<?php
+          echo $this->zfcUserIdentity()->getPhotoUrl();
+      ?>" alt="<?php echo $this->zfcUserDisplayName(); ?>"/>
+      <br/>
+    </div>
+  </div>
+</div>
+
+<?php
+$this->inlineScript()->appendScript('
+  $("#repositories").load("module/user-modules");
+');
+?>

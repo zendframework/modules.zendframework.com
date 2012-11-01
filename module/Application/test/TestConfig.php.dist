@@ -1,0 +1,12 @@
+<?php
+return array(
+    'modules' => array(
+        'EdpGithub',
+        'Application',
+    ),
+    'module_listener_options' => array(
+        'module_paths' => array(
+            'moduledev',
+        ),
+    ),
+);

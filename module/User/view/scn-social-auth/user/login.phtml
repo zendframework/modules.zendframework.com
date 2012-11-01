@@ -1,0 +1,15 @@
+<h1 style="text-align:center">Sign in</h1>
+<div class="well" style="text-align:center">
+    <p>
+        There is no sign-up form anymore! Just log in with your github account. All your information will be provided by Github.
+    </p>
+    <?php
+    $socialSignIn = true;
+    foreach ($this->options->getEnabledProviders() as $provider) {
+        if ($socialSignIn) {
+            $socialSignIn = false;
+        }
+        echo '<p>' . $this->socialSignInButton($provider) . '</p>';
+    }
+    ?>
+</div>
