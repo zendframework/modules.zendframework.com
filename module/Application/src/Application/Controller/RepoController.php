@@ -68,6 +68,7 @@ class RepoController extends AbstractActionController
      * Return Repository
      * @throws Exception\UnexpectedValueException
      * @return EdpGithub\ApiClient\Model\Repo
+     * @todo get information for single repository
      */
     public function getRepository()
     {
