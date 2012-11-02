@@ -32,7 +32,7 @@ class NewUsers extends AbstractHelper implements ServiceManagerAwareInterface
         //need to fetch top lvl ServiceManager
         $sm = $sm->getServiceLocator();
         $mapper = $sm->get('zfcuser_user_mapper');
-        $users = $mapper->findAll(10, 'created_at');
+        $users = $mapper->findAll(10, 'created_at', 'DESC');
 
         return $users;
     }
