@@ -16,11 +16,11 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        $page = (int) $this->params()->fromRoute('page', 1);
         $sm = $this->getServiceLocator();
-        $repos = $sm->get('EdpGithub\Client')->api('current_user')->repos();
-
         $mapper = $this->getServiceLocator()->get('application_module_mapper');
-        $repositories = $mapper->findAll();
+        $repositories = $mapper->pagination($page, 15);
+
         return array('repositories' => $repositories);
     }
 }

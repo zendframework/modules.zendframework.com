@@ -20,6 +20,19 @@ return array(
                     ),
                 ),
             ),
+            'home-pagination' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route'    => '/page[/:page]',
+                    'constraints' => array(
+                        'page'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             'module' => array(
                 'type' => 'Literal',
                 'options' => array (
