@@ -18,17 +18,38 @@
             <div class="span12">
                 <div class="row-fluid">
                     <div class="module-info">
-                        <div class="span9">
-                            <a href="<?php echo $module->getUrl()?>"><h2><?php echo $module->getName()?><!--<span class="version">1.2.1</span>--></h2></a>
-                            <p class="author-small">by&nbsp;<strong><a href="http://www.github.com/<?php echo $module->getOwner()?>"><?php echo $module->getOwner()?></a></strong></p>
+                        <div class="span6 module-author">
+                            <div class="row-fluid">
+                                <div class="span2">
+                                    <img src="<?php echo $module->getPhotoUrl()?>" alt="<?php echo $module->getOwner()?>">
+                                </div>
+                                <div class="span10">
+                                    <strong><?php echo $module->getOwner()?></strong>
+                                    <p>
+                                        <span class="author-label">Github:</span>
+                                        <a href="<?php echo $module->getUrl()?>"><?php echo $module->getName()?></a>
+                                        <!--
+                                  <span class="author-label">Blog:</span> <a>placeholder</a><br />
+                                  <span class="author-label">Modules:</span> <a>5</a><br /><br />
+                                  <span class="author-label"><a>More info...</a>-->
+                                    </p>
+                                </div>
                             </div>
-                            <div class="span3 created-at">
+                        </div>
+                        <div class="span6">
+                            <strong><?php echo $module->getName()?></strong>
                             <p>
-                            <i class="icon icon-plus" title="Created"></i>
-                            <?php
-                                $date = new DateTime($module->getCreatedAt());
-                                echo $date->format('Y-m-d');
-                            ?>
+                                <!--<span class="author-label">Version:</span> 1.2.1<br />-->
+                                 <span class="author-label">Created:</span> <?php
+                                                            $date = new DateTime($module->getCreatedAt());
+                                                            echo $date->format('Y-m-d');
+                                                            ?><br>
+                                <!--<span class="author-label">Edited:</span> <a>15 days ago</a><br />
+                            <span class="author-label">Tags:</span>
+                            <span class="label">zf2</span>
+                            <span class="label">Assetic</span>
+                            <span class="label">Assets</span>
+                            <span class="label">Sx</span>-->
                             </p>
                         </div>
                         <div style="clear: both;"></div>
@@ -37,28 +58,11 @@
                 <div class="row-fluid">
                     <div class="module-description">
                         <div class="span12">
+                            <strong>Description</strong>
                             <p>
                                 <?php echo $module->getDescription()?>
                             </p>
                         </div>
-                        
-                 <!--
-                    <div class="module-metadata">
-                        <div class="row-fluid">
-                        <?php // "Created" should be here when other items shown ?>
-                        <div class="span3">
-                            <i class="icon icon-time" title="Last update"></i> <a>15 days ago</a>
-                        </div>
-                        <div class="span6">
-                            <i class="icon icon-tags" title="Tags"></i>
-                            <span class="label">zf2</span>
-                            <span class="label">Assetic</span>
-                            <span class="label">Assets</span>
-                            <span class="label">Sx</span>
-                        </div>
-                     </div>
-                </div>
-                      -->
                         <div style="clear: both;"></div>
                     </div>
                 </div>
