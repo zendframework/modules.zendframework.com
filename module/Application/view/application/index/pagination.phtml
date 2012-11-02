@@ -1,0 +1,40 @@
+<?php if ($this->pageCount): ?>
+<div class="row-fluid module-row ">
+    <div class="span12">
+        <div class="row-fluid">
+            <div class="pagination pull-right">
+                <ul>
+
+                    <!-- First page link -->
+                    <li<?php echo (isset($this->previous)) ? '' : ' class="disabled"'; ?>>
+                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->first)); ?>">&lt;&lt; First</a>
+                    </li>
+
+                    <!-- Previous page link -->
+                    <li<?php echo (isset($this->previous)) ? '' : ' class="disabled"'; ?>>
+                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->previous-9)); ?>">&lt; Previous 10</a>
+                    </li>
+
+                    <!-- Numbered page links -->
+                    <?php foreach ($this->pagesInRange as $page): ?>
+                    <li<?php echo ($page == $this->current) ? ' class="active"' : ''; ?>>
+                        <a href="<?php echo $this->url('home-pagination', array('page' => $page)); ?>"><?php echo $page; ?></a>
+                    </li>
+                    <?php endforeach; ?>
+
+                    <!-- Next page link -->
+                    <li<?php echo (isset($this->next)) ?: ' class="disabled"'; ?>>
+                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->next+9)); ?>">Next 10 &gt;</a>
+                    </li>
+
+                    <!-- Last page link -->
+                    <li<?php echo (isset($this->next)) ?: ' class="disabled"'; ?>>
+                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->last)); ?>">Last &gt;&gt;</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

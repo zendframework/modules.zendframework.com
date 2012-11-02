@@ -10,8 +10,12 @@ class Module extends AbstractDbMapper implements ModuleInterface
 {
     protected $tableName  = 'module';
 
+<<<<<<< HEAD
     public function pagination($page, $limit)
     {
+=======
+    public function pagination($page, $limit) {
+>>>>>>> 784dc1a... Added Pagination
         $sql = $this->getSql();
         $select = $this->getSelect()
             ->from($this->tableName);
