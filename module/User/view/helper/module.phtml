@@ -1,0 +1,68 @@
+<div class="row-fluid module-row">
+    <div class="span12">
+        <div class="row-fluid">
+            <div class="module-info">
+                <div class="span5 module-author">
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <img src="<?=$module['photo_url']?>" alt="<?php echo $module['name']?>" />
+                        </div>
+                        <div class="span10">
+                            <strong><?php echo $module['owner']?></strong>
+                            <p>
+                                <span class="author-label">Github:</span>
+                                <a href="<?php echo $module['url']?>"><?=$module['name']?></a><br />
+                                <!--
+                                <span class="author-label">Blog:</span> <a>placeholder</a><br />
+                                <span class="author-label">Modules:</span> <a>5</a><br /><br />
+                                <span class="author-label"><a>More info...</a>-->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="span5">
+                    <strong><?php echo $module['name']?></strong>
+                    <p>
+                        <!--<span class="author-label">Version:</span> 1.2.1<br />-->
+                        <span class="author-label">Created:</span>
+                        <?php
+                        $date = new DateTime($module['created_at']);
+                        echo $date->format('Y-m-d');
+                        ?><br />
+                        <!--<span class="author-label">Edited:</span> <a>15 days ago</a><br />
+                        <span class="author-label">Tags:</span>
+                        <span class="label">zf2</span>
+                        <span class="label">Assetic</span>
+                        <span class="label">Assets</span>
+                        <span class="label">Sx</span>-->
+                    </p>
+                </div>
+                <div class="span1">
+                    <br />
+                    <?php if($button == 'submit') { ?>
+                    <form action="<?=$this->url('module/add_module')?>" method="post">
+                        <input type="hidden" name="repository" value="<?=$module['url']?>" />
+                        <input type="submit" class="btn btn-success"/>
+                    </form>
+                    <?php } else { ?>
+                    <form action="<?php echo $this->url('module/remove_module')?>" method="post">
+                        <input type="hidden" name="repository" value="<?=$module['url']?>" />
+                        <input type="submit" value="Remove" class="btn btn-danger"/>
+                    </form>
+                    <?php }?>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="module-description">
+                <div class="span12">
+                    <p>
+                        <?=$module['description']?>
+                    </p>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+    </div>
+</div>
