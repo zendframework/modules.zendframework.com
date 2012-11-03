@@ -158,5 +158,4 @@ class RepoController extends AbstractActionController
     {
         $this->moduleService = $moduleService;
     }
-
 }
