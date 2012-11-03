@@ -12,7 +12,7 @@
 
                     <!-- Previous page link -->
                     <li<?php echo (isset($this->previous)) ? '' : ' class="disabled"'; ?>>
-                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->previous-9)); ?>">&lt; Previous 10</a>
+                        <a href="<?php echo $this->url('home-pagination', array('page' => ($this->previous-9 < 1) ? 1 : $this->previous-9)); ?>">&lt; Previous 10</a>
                     </li>
 
                     <!-- Numbered page links -->
@@ -24,7 +24,7 @@
 
                     <!-- Next page link -->
                     <li<?php echo (isset($this->next)) ?: ' class="disabled"'; ?>>
-                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->next+9)); ?>">Next 10 &gt;</a>
+                        <a href="<?php echo $this->url('home-pagination', array('page' => ($this->next+9 > $this->last) ? $this->last : $this->last+9)); ?>">Next 10 &gt;</a>
                     </li>
 
                     <!-- Last page link -->
