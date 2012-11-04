@@ -152,6 +152,7 @@ return array(
         'invokables' => array(
             'userWidget' => 'Application\View\Helper\UserWidget',
             'listModules' => 'Application\View\Helper\ListModules',
+            'newModules' => 'Application\View\Helper\NewModules'
         ),
         'factories' => array(
           'flashMessenger' => function($sm) {
