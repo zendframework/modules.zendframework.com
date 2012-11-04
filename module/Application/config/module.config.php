@@ -10,6 +10,19 @@
 return array(
     'router' => array(
         'routes' => array(
+            'ajax-search' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/search/:query',
+                    'constraints' => array(
+                        'query' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Search',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -107,7 +120,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Repo' => 'Application\Controller\RepoController'
+            'Application\Controller\Repo' => 'Application\Controller\RepoController',
+            'Application\Controller\Search' => 'Application\Controller\SearchController',
         ),
     ),
     'service_manager' => array(

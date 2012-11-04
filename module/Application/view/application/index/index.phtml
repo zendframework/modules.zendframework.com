@@ -1,18 +1,21 @@
 <div class="row">
     <div class="span8">
-        <!-- hiding until search is implemented
       <div class="row-fluid">
         <div class="span12">
           <div class="navbar">
-            <div class="navbar-inner">
-              <form class="navbar-search pull-left span12">
-                <input type="text" class="search-query span12" placeholder="Type to start searching...">
+            <div class="navbar-inner" >
+              <form class="navbar-search pull-left span12" action="<?php echo $this->url('home')?>">
+                <input type="text" id="live-search" name="q" class="search-query span12" placeholder="Type to start searching...">
               </form>
             </div>
+            <?php
+            $this->inlineScript()->appendScript('
+              $("#live-search").liveSearch({url: "search/"});
+            ');?>
+
           </div>
         </div>
       </div>
-    -->
         <?php foreach($this->repositories as $module) { ?>
         <div class="row-fluid module-row">
             <div class="span12">
@@ -68,7 +71,7 @@
                 </div>
             </div>
         </div><?php } ?>
-        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination.phtml'); ?>
+        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination.phtml', array('search' =>$search)); ?>
     </div>
     <div class="span4">
         <div class="sidebar">

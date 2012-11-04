@@ -29,6 +29,29 @@ class Module extends AbstractDbMapper implements ModuleInterface
         return $paginator;
     }
 
+    public function paginationSearch($page, $limit, $query) {
+        $sql = $this->getSql();
+        $select = $this->getSelect()
+            ->from($this->tableName);
+
+        $spec = function ( $where) use ($query) {
+            $where->like('name', '%'.$query.'%')->or->like('description', '%'.$query.'%');
+        };
+        $select->where($spec);
+
+        $adapter = new \Zend\Paginator\Adapter\DbSelect(
+            $select,
+            $this->getSql(),
+            new HydratingResultSet($this->getHydrator(), $this->getEntityPrototype())
+        );
+        $paginator = new \Zend\Paginator\Paginator($adapter);
+
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setItemCountPerPage($limit);
+
+        return $paginator;
+    }
+
     public function findAll($limit= null, $orderBy = null, $sort = 'ASC')
     {
         $select = $this->getSelect()
@@ -41,6 +64,29 @@ class Module extends AbstractDbMapper implements ModuleInterface
         if($limit) {
             $select->limit($limit);
         }
+
+        $entity = $this->select($select);
+        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        return $entity;
+    }
+
+    public function findByLike($query, $limit = null, $orderBy = null, $sort = 'ASC')
+    {
+        $select = $this->getSelect()
+                       ->from($this->tableName);
+
+        if($orderBy) {
+            $select->order($orderBy . ' ' . $sort);
+        }
+
+        if($limit) {
+            $select->limit($limit);
+        }
+
+        $spec = function ( $where) use ($query) {
+            $where->like('name', '%'.$query.'%')->or->like('description', '%'.$query.'%');
+        };
+        $select->where($spec);
 
         $entity = $this->select($select);
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));

@@ -16,11 +16,24 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        $query =  $this->params()->fromQuery('q', false);
+
         $page = (int) $this->params()->fromRoute('page', 1);
         $sm = $this->getServiceLocator();
         $mapper = $this->getServiceLocator()->get('application_module_mapper');
-        $repositories = $mapper->pagination($page, 15);
 
-        return array('repositories' => $repositories);
+        $search = null;
+        if($query) {
+            $search = "?q=" . $query;
+            $repositories = $mapper->paginationSearch($page, 15, $query);
+        } else {
+           $repositories = $mapper->pagination($page, 15);
+        }
+
+
+        return array(
+            'repositories' => $repositories,
+            'search' => $search,
+        );
     }
 }
