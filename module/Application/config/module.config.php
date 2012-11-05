@@ -141,6 +141,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'listModules' => 'Application\View\Helper\ListModules',
+            'newModules' => 'Application\View\Helper\NewModules'
         ),
         'factories' => array(
           'flashMessenger' => function($sm) {
