@@ -29,7 +29,8 @@ class Module extends AbstractDbMapper implements ModuleInterface
         return $paginator;
     }
 
-    public function paginationSearch($page, $limit, $query) {
+    public function paginationSearch($page, $limit, $query)
+    {
         $sql = $this->getSql();
         $select = $this->getSelect()
             ->from($this->tableName);
