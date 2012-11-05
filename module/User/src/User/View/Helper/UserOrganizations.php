@@ -7,7 +7,7 @@ use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class NewUsers extends AbstractHelper implements ServiceManagerAwareInterface
+class UserOrganizations extends AbstractHelper implements ServiceManagerAwareInterface
 {
     /**
      * $var string template used for view
@@ -31,25 +31,15 @@ class NewUsers extends AbstractHelper implements ServiceManagerAwareInterface
 
         //need to fetch top lvl ServiceManager
         $sm = $sm->getServiceLocator();
-        $mapper = $sm->get('zfcuser_user_mapper');
-        $users = $mapper->findAll(16, 'created_at', 'DESC');
+        $client = $sm->get('EdpGithub\Client');
 
+        $orgs = $client->api('current_user')->orgs();
         $vm = new ViewModel(array(
-            'users' => $users,
+            'orgs' => $orgs
         ));
-        $vm->setTemplate('user/helper/new-users.phtml');
+        $vm->setTemplate('helper/user-organizations.phtml');
 
         return $this->getView()->render($vm);
-    }
-
-    /**
-     * @param string $viewTemplate
-     * @return NewUsers
-     */
-    public function setViewTemplate($viewTemplate)
-    {
-        $this->viewTemplate = $viewTemplate;
-        return $this;
     }
 
     /**

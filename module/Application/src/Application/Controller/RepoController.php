@@ -127,7 +127,7 @@ class RepoController extends AbstractActionController
                     $em = $client->getHttpClient()->getEventManager();
                     $errorListener = $sm->get('EdpGithub\Listener\Error');
                     $em->detachAggregate($errorListener);
-                    $module = $client->api('repos')->content($repo->full_name, 'Module.php');
+                    $module = $client->api('repos')->content($repo->owner->login, $repo->name, 'Module.php');
                     $response = $client->getHttpClient()->getResponse();
                     if(!$response->isSuccess()){
                         unset($repositories[$key]);
@@ -158,5 +158,4 @@ class RepoController extends AbstractActionController
     {
         $this->moduleService = $moduleService;
     }
-
 }
