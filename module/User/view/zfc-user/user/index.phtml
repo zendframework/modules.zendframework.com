@@ -21,6 +21,7 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#modules" data-toggle="tab">Registered Modules</a></li>
       <li><a href="#repositories" data-toggle="tab">My Modules</a></li>
+      <li><a href="#organizations" data-toggle="tab">My Organizations</a></li>
     </ul>
 
     <div class="tab-content">
@@ -29,82 +30,27 @@
     $modules = $this->listModules(array('user' => true));
     if (empty($modules)) { ?>
     <div class="alert alert-block">No modules was submitted yet</div>
-    <?php }
-    foreach($modules as $module) {
-    ?>
-
-        <div class="row-fluid module-row">
-          <div class="span12">
-              <div class="row-fluid">
-                  <div class="module-info">
-                      <div class="span5 module-author">
-                          <div class="row-fluid">
-                              <div class="span2">
-                                  <img src="<?=$module->getPhotoUrl()?>" alt="<?php echo $module->getName()?>" />
-                              </div>
-                              <div class="span10">
-                                  <strong><?=$module->getOwner()?></strong>
-                                  <p>
-                                      <span class="author-label">Github:</span>
-                                      <a href="<?=$module->getUrl()?>"><?=$module->getName()?></a><br />
-                                      <!--
-                                      <span class="author-label">Blog:</span> <a>placeholder</a><br />
-                                      <span class="author-label">Modules:</span> <a>5</a><br /><br />
-                                      <span class="author-label"><a>More info...</a>-->
-                                  </p>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="span5">
-                          <strong><?=$module->getName()?></strong>
-                          <p>
-                              <!--<span class="author-label">Version:</span> 1.2.1<br />-->
-                              <span class="author-label">Created:</span>
-                              <?php
-                              $date = new DateTime($module->getCreatedAt());
-                              echo $date->format('Y-m-d');
-                              ?><br />
-                              <!--<span class="author-label">Edited:</span> <a>15 days ago</a><br />
-                              <span class="author-label">Tags:</span>
-                              <span class="label">zf2</span>
-                              <span class="label">Assetic</span>
-                              <span class="label">Assets</span>
-                              <span class="label">Sx</span>-->
-                          </p>
-                      </div>
-                      <div class="span1">
-                          <br />
-                          <form action="<?php echo $this->url('module/remove_module')?>" method="post">
-                              <input type="hidden" name="repository" value="<?=$module->getUrl()?>" />
-                              <input type="submit" value="Remove" class="btn btn-danger"/>
-                          </form>
-                      </div>
-                      <div style="clear: both;"></div>
-                  </div>
-              </div>
-              <div class="row-fluid">
-                  <div class="module-description">
-                      <div class="span12">
-                          <strong>Description</strong>
-                          <p>
-                              <?=$module->getDescription()?>
-                          </p>
-                      </div>
-                      <div style="clear: both;"></div>
-                  </div>
-              </div>
-          </div>
-      </div>
-<?php } ?>
-
-
+        <?php }
+        foreach($modules as $module) {
+            echo $this->moduleView(array(
+              'owner' => $module->getOwner(),
+              'name' => $module->getName(),
+              'created_at' => $module->getCreatedAt(),
+              'url' => $module->getUrl(),
+              'photo_url' => $module->getPhotoUrl(),
+              'description' => $module->getDescription()
+            ), 'remove');
+        }
+        ?>
       </div>
       <div class="tab-pane" id="repositories">
         <div class="well" style="text-align:center">Synchronizing with Github <img src="/img/ajax-loader.gif" alt="loading" /></div>
       </div>
+
+      <div class="tab-pane" id="organizations">
+        <?php echo $this->userOrganizations();?>
+      </div>
     </div>
-
-
   </div>
   <div class="span4">
     <div class="sidebar">
@@ -119,6 +65,7 @@
 
 <?php
 $this->inlineScript()->appendScript('
-  $("#repositories").load("module/user-modules");
+  $("#repositories").load("user/module/repos");
 ');
+
 ?>

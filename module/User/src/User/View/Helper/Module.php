@@ -1,31 +1,34 @@
 <?php
 
-namespace Application\View\Helper;
+namespace User\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
 
-class UserWidget extends AbstractHelper
+class Module extends AbstractHelper
 {
     /**
      * $var string template used for view
      */
     protected $viewTemplate;
+
     /**
      * __invoke
      *
      * @access public
-     * @param array $options array of options
      * @return string
      */
-    public function __invoke()
+    public function __invoke($module, $button = 'submit')
     {
-        $vm = new ViewModel();
-        $vm->setTemplate('user/user-widget.phtml');
+        $vm = new ViewModel(array(
+            'module' => $module,
+            'button' => $button,
+        ));
+        $vm->setTemplate('helper/module.phtml');
+
 
         return $this->getView()->render($vm);
     }
-
 
     /**
      * @param string $viewTemplate

@@ -60,16 +60,6 @@ return array(
                             ),
                         ),
                     ),
-                    'user_module' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/user-modules',
-                            'defaults' => array(
-                                'controller' => 'Application\Controller\Repo',
-                                'action' => 'user-repos',
-                            ),
-                        ),
-                    ),
                 ),
             ),
             // The following is a route to simplify getting started creating
@@ -150,7 +140,6 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            'userWidget' => 'Application\View\Helper\UserWidget',
             'listModules' => 'Application\View\Helper\ListModules',
         ),
         'factories' => array(
