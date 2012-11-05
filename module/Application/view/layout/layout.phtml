@@ -16,6 +16,7 @@
             ->appendStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
             ->appendStylesheet($this->basePath() . '/css/style.css')
             ->appendStylesheet($this->basePath() . '/css/slide.css')
+            ->appendStylesheet($this->basePath() . '/css/jquery.livesearch.css')
     ?>
 </head>
 <body>
@@ -116,8 +117,10 @@
 </footer>
 
 <?php echo $this->inlineScript()
+    ->prependFile($this->basePath() . '/js/jquery.livesearch.js')
     ->prependFile($this->basePath() . '/js/bootstrap.min.js')
     ->prependFile($this->basePath() . '/js/jquery.min.js')
+
 //                ->appendFile($this->basePath() . '/js/slide.js')
         ?>
 </body>
