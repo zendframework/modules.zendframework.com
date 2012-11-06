@@ -10,36 +10,18 @@ class Module extends AbstractDbMapper implements ModuleInterface
 {
     protected $tableName  = 'module';
 
-    public function pagination($page, $limit)
+    public function pagination($page, $limit, $query = null)
     {
         $sql = $this->getSql();
         $select = $this->getSelect()
             ->from($this->tableName);
 
-        $adapter = new \Zend\Paginator\Adapter\DbSelect(
-            $select,
-            $this->getSql(),
-            new HydratingResultSet($this->getHydrator(), $this->getEntityPrototype())
-        );
-        $paginator = new \Zend\Paginator\Paginator($adapter);
-
-        $paginator->setCurrentPageNumber($page);
-        $paginator->setItemCountPerPage($limit);
-
-        return $paginator;
-    }
-
-    public function paginationSearch($page, $limit, $query)
-    {
-        $sql = $this->getSql();
-        $select = $this->getSelect()
-            ->from($this->tableName);
-
-        $spec = function ( $where) use ($query) {
-            $where->like('name', '%'.$query.'%')->or->like('description', '%'.$query.'%');
-        };
-        $select->where($spec);
-
+        if(null !== $query) {
+            $spec = function ( $where) use ($query) {
+                $where->like('name', '%'.$query.'%')->or->like('description', '%'.$query.'%');
+            };
+            $select->where($spec);
+        }
         $adapter = new \Zend\Paginator\Adapter\DbSelect(
             $select,
             $this->getSql(),

@@ -16,8 +16,7 @@ class SearchController extends AbstractActionController
 {
     public function indexAction()
     {
-        $query =  $this->params()->fromRoute('query', null);
-        //$query = mysql_real_escape_string($query);
+        $query =  $this->params()->fromQuery('query', null);
 
         $sm = $this->getServiceLocator();
         $mapper = $sm->get('application_module_mapper');

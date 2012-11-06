@@ -4,13 +4,13 @@
         <div class="span12">
           <div class="navbar">
             <div class="navbar-inner" >
-              <form class="navbar-search pull-left span12" action="<?php echo $this->url('home')?>">
-                <input type="text" id="live-search" name="q" class="search-query span12" placeholder="Type to start searching...">
+              <form class="navbar-search pull-left span12" id="live-search">
+                <input type="text" name="query" class="search-query span12" placeholder="Type to start searching...">
               </form>
             </div>
             <?php
             $this->inlineScript()->appendScript('
-              $("#live-search").liveSearch({url: "/search/"});
+                $(\'#live-search input[name="query"]\').liveSearch({url: "/live-search?query="});
             ');?>
 
           </div>
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div><?php } ?>
-        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination.phtml', array('search' =>$search)); ?>
+        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination.phtml', array('query' =>$query)); ?>
     </div>
     <div class="span4">
         <div class="sidebar">

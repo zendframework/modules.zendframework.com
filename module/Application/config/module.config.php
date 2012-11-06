@@ -10,33 +10,25 @@
 return array(
     'router' => array(
         'routes' => array(
-            'ajax-search' => array(
-                'type'    => 'Segment',
+            'live-search' => array(
+                'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/search/:query',
-                    'constraints' => array(
-                        'query' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
+                    'route'    => '/live-search',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Search',
                         'action'     => 'index',
                     ),
                 ),
-            ),
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
-                        'action'     => 'index',
+                'child_routes' => array(
+                    'query' => array(
+                        'type' => 'Query',
                     ),
                 ),
             ),
-            'home-pagination' => array(
+            'home' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route'    => '/page[/:page]',
+                    'route'    => '/[page/:page]',
                     'constraints' => array(
                         'page'     => '[0-9]+',
                     ),
@@ -45,6 +37,12 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'query' => array(
+                        'type' => 'Query',
+                    ),
+                )
             ),
             'module' => array(
                 'type' => 'Literal',
