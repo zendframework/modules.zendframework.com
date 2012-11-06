@@ -4,34 +4,37 @@
         <div class="row-fluid">
             <div class="pagination pull-right">
                 <ul>
-
+                    <?php if(isset($this->previous)): ?>
                     <!-- First page link -->
-                    <li<?php echo (isset($this->previous)) ? '' : ' class="disabled"'; ?>>
-                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->first)); ?><?=$this->search?>">&lt;&lt; First</a>
+                    <li>
+                        <a href="<?php echo $this->url('home/query', array('page' => $this->first, 'query' => $query)); ?>">&lt;&lt; First</a>
                     </li>
 
                     <!-- Previous page link -->
-                    <li<?php echo (isset($this->previous)) ? '' : ' class="disabled"'; ?>>
-                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->previous)); ?><?=$this->search?>">&lt; Previous</a>
+                    <li>
+                        <a href="<?php echo $this->url('home/query', array('page' => $this->previous,'query' => $query)); ?>">Previous &gt;</a>
                     </li>
+                    <?php endif; ?>
+
 
                     <!-- Numbered page links -->
                     <?php foreach ($this->pagesInRange as $page): ?>
                     <li<?php echo ($page == $this->current) ? ' class="active"' : ''; ?>>
-                        <a href="<?php echo $this->url('home-pagination', array('page' => $page)); ?><?=$this->search?>"><?php echo $page; ?></a>
+                        <a href="<?php echo $this->url('home/query', array('page' => $page, 'query' => $query)); ?>"><?php echo $page; ?></a>
                     </li>
                     <?php endforeach; ?>
 
+                    <?php if(isset($this->next)): ?>
                     <!-- Next page link -->
-                    <li<?php echo (isset($this->next)) ?: ' class="disabled"'; ?>>
-                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->next)); ?><?=$this->search?>">Next &gt;</a>
+                    <li>
+                        <a href="<?php echo $this->url('home/query', array('page' => $this->next,'query' => $query)); ?>">Next &gt;</a>
                     </li>
 
                     <!-- Last page link -->
-                    <li<?php echo (isset($this->next)) ?: ' class="disabled"'; ?>>
-                        <a href="<?php echo $this->url('home-pagination', array('page' => $this->last)); ?><?=$this->search?>">Last &gt;&gt;</a>
+                    <li>
+                        <a href="<?php echo $this->url('home/query', array('page' => $this->last, 'query' => $query)); ?>">Last &gt;&gt;</a>
                     </li>
-
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
