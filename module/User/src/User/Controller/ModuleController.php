@@ -71,7 +71,6 @@ class ModuleController extends AbstractActionController
         $errorListener = $sm->get('EdpGithub\Listener\Error');
         $em->detachAggregate($errorListener);
         $module = $client->api('repos')->content($repo->owner->login, $repo->name, 'Module.php');
-        $module = $client->api('repos')->content($repo->owner->login, $repo->name, 'Module.php');
         $response = $client->getHttpClient()->getResponse();
         $em->attachAggregate($errorListener);
         if(!$response->isSuccess()){
