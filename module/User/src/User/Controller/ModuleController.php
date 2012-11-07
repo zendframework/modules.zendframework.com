@@ -10,6 +10,10 @@ class ModuleController extends AbstractActionController
 {
     public function orgsAction()
     {
+        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->redirect()->toRoute('zfcuser/login');
+        }
+
         $org = $this->params()->fromRoute('org');
 
         $sm = $this->getServiceLocator();
@@ -19,7 +23,7 @@ class ModuleController extends AbstractActionController
         $repos = $client->api('user')->repos($org);
         $repositories = array();
         foreach($repos as $repo) {
-            if(!$repo->fork) {
+            if(!$repo->fork && $repo->permissions->push) {
                 $module = $mapper->findByName($repo->name);
                 if(!$module && $this->isModule($repo)) {
                    $repositories[] = $repo;
@@ -46,8 +50,8 @@ class ModuleController extends AbstractActionController
 
         $ownerRepos = $client->api('current_user')->repos(array('type' =>'all', 'per_page' => 100));
         foreach($ownerRepos as $repo) {
-            if(!$repo->fork) {
-                 $module = $mapper->findByName($repo->name);
+            if(!$repo->fork && $repo->permissions->push) {
+                $module = $mapper->findByName($repo->name);
                 if(!$module && $this->isModule($repo)) {
                    $repositories[] = $repo;
                 }

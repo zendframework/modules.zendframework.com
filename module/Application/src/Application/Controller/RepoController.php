@@ -19,87 +19,112 @@ class RepoController extends AbstractActionController
     protected $moduleService;
 
     /**
-     * This function is used to submit a module to the site
+     * This function is used to submit a module from the site
      * @throws Exception\UnexpectedValueException
      * @return
      **/
     public function addAction()
     {
-        $repository = $this->getRepository();
-        if($repository) {
-            $service = $this->getModuleService();
-            $module = $service->register($repository);
-            $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $repo = $request->getPost()->get('repo');
+            $owner  = $request->getPost()->get('owner');
+
+            $sm = $this->getServiceLocator();
+            $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
+            $repository = json_decode($repository);
+
+            if(!$repository->fork && $repository->permissions->push) {
+                if($this->isModule($repository)) {
+                    $service = $this->getModuleService();
+                    $module = $service->register($repository);
+                    $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
+                } else {
+                    throw new Exception\UnexpectedValueException(
+                        $repository->name . ' is not a Zend Framework Module',
+                        403
+                    );
+                }
+            }else {
+                throw new Exception\UnexpectedValueException(
+                    'You have no permission to add this module. The reason might be that you are' .
+                    'neither the owner nor a collaborator of this repository.',
+                    403
+                );
+            }
         } else {
             throw new Exception\UnexpectedValueException(
-                'You have no permission to add this module. The reason might be that you are' .
-                'neither the owner nor a collaborator of this repository.',
-                403
+                'Something went wrong with the post values of the request...'
             );
         }
+
        return $this->redirect()->toRoute('zfcuser');
     }
 
     /**
-     * This function is used to remove a module to the site
+     * This function is used to remove a module from the site
      * @throws Exception\UnexpectedValueException
      * @return
      **/
    public function removeAction()
     {
-        $repository = $this->getRepository();
-        if($repository) {
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $repo = $request->getPost()->get('repo');
+            $owner  = $request->getPost()->get('owner');
+
             $sm = $this->getServiceLocator();
-            $mapper = $sm->get('application_module_mapper');
-            $module = $mapper->findByUrl($repository->html_url);
-            $module = $mapper->delete($module);
-            $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
+            $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
+            $repository = json_decode($repository);
+
+            if(!$repository->fork && $repository->permissions->push) {
+                $mapper = $sm->get('application_module_mapper');
+                $module = $mapper->findByUrl($repository->html_url);
+                $module = $mapper->delete($module);
+                $this->flashMessenger()->addMessage($repository->name .' has been removed from ZF Modules');
+            }else {
+                throw new Exception\UnexpectedValueException(
+                    'You have no permission to add this module. The reason might be that you are' .
+                    'neither the owner nor a collaborator of this repository.',
+                    403
+                );
+            }
         } else {
             throw new Exception\UnexpectedValueException(
-                'You have no permission to add this module. The reason might be that you are' .
-                'neither the owner nor a collaborator of this repository.',
-                403
+                'Something went wrong with the post values of the request...'
             );
         }
+
        return $this->redirect()->toRoute('zfcuser');
     }
 
     /**
-     * Return Repository
-     * @throws Exception\UnexpectedValueException
-     * @return EdpGithub\ApiClient\Model\Repo
-     * @todo get information for single repository
+     * Check if Repo is a ZF Module
+     * @param  array  $repo
+     * @return boolean
      */
-    public function getRepository()
+    public function isModule($repo)
     {
-        $request = $this->getRequest();
-        if($request->isPost()) {
-            $repositoryUrl = $request->getPost()->get('repository');
-
-            $sm = $this->getServiceLocator();
-            $repositories = $sm->get('EdpGithub\Client')->api('current_user')->repos();
-
-            $repository = null;
-            foreach($repositories as $repo) {
-                if($repo->html_url == $repositoryUrl) {
-                    if(!$repo->fork) {
-                        $repository = $repo;
-                    }
-                    return $repository;
-                }
-            }
-
-            return $repository;
+        $sm = $this->getServiceLocator();
+        $client = $sm->get('EdpGithub\Client');
+        $em = $client->getHttpClient()->getEventManager();
+        $errorListener = $sm->get('EdpGithub\Listener\Error');
+        $em->detachAggregate($errorListener);
+        $module = $client->api('repos')->content($repo->owner->login, $repo->name, 'Module.php');
+        $module = $client->api('repos')->content($repo->owner->login, $repo->name, 'Module.php');
+        $response = $client->getHttpClient()->getResponse();
+        $em->attachAggregate($errorListener);
+        if(!$response->isSuccess()){
+            return false;
         }
-        throw new Exception\UnexpectedValueException(
-            'Something went wrong with the post values of the request...'
-        );
+
+        return true;
     }
+
 
     /**
      * Getters/setters for DI stuff
      */
-
     public function getModuleService()
     {
         if (!$this->moduleService) {
