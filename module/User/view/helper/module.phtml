@@ -39,14 +39,17 @@
                 </div>
                 <div class="span1">
                     <br />
-                    <?php if($button == 'submit') { ?>
+                    <?php if($button == 'submit') {
+                    ?>
                     <form action="<?=$this->url('module/add_module')?>" method="post">
-                        <input type="hidden" name="repository" value="<?=$module['url']?>" />
+                        <input type="hidden" name="owner" value="<?=$module['owner']?>" />
+                        <input type="hidden" name="repo" value="<?=$module['name']?>" />
                         <input type="submit" class="btn btn-success"/>
                     </form>
                     <?php } else { ?>
                     <form action="<?php echo $this->url('module/remove_module')?>" method="post">
-                        <input type="hidden" name="repository" value="<?=$module['url']?>" />
+                        <input type="hidden" name="owner" value="<?=$module['owner']?>" />
+                        <input type="hidden" name="repo" value="<?=$module['name']?>" />
                         <input type="submit" value="Remove" class="btn btn-danger"/>
                     </form>
                     <?php }?>
