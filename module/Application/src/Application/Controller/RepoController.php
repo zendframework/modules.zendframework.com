@@ -129,7 +129,7 @@ class RepoController extends AbstractActionController
         $sm = $this->getServiceLocator();
         $client = $sm->get('EdpGithub\Client');
         try{
-            $module = $client->api('repos')->content('someone', 'someRepo', 'Module.php');
+            $module = $client->api('repos')->content($repo->owner->login, $repo->name, 'Module.php');
         } catch(\Exception $e) {
             return false;
         }
