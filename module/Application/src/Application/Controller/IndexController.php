@@ -22,7 +22,7 @@ class IndexController extends AbstractActionController
         $sm = $this->getServiceLocator();
         $mapper = $this->getServiceLocator()->get('application_module_mapper');
 
-        $repositories = $mapper->pagination($page, 15, $query);
+        $repositories = $mapper->pagination($page, 15, $query, 'created_at', 'DESC');
 
         return array(
             'repositories' => $repositories,
