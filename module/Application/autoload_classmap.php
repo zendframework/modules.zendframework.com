@@ -31,3 +31,4 @@ return array(
     'Application\Mapper\ModuleInterface'                        => __DIR__ . '/src/Application/Mapper/ModuleInterface.php',
     'Application\Mapper\ModuleHydrator'                         => __DIR__ . '/src/Application/Mapper/ModuleHydrator.php',
 );
+
