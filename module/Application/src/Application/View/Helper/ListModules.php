@@ -4,20 +4,20 @@ namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
+class ListModules extends AbstractHelper implements ServiceLocatorAwareInterface
 {
     /**
      * $var string template used for view
      */
     protected $viewTemplate;
 
-        /**
-     * @var ServiceManager
+    /**
+     * @var ServiceLocator
      */
-    protected $serviceManager;
+    protected $serviceLocator;
 
     /**
      * __invoke
@@ -28,18 +28,18 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
      */
     public function __invoke($options = null)
     {
-        $sm = $this->getServiceManager();
+        $sl = $this->getServiceLocator();
 
-        //need to fetch top lvl ServiceManager
-        $sm = $sm->getServiceLocator();
-        $mapper = $sm->get('application_module_mapper');
+        //need to fetch top lvl ServiceLocator
+        $sl = $sl->getServiceLocator();
+        $mapper = $sl->get('application_module_mapper');
 
         $user = isset($options['user'])? $options['user']:false;
         $modules = array();
 
         //limit modules to only user modules
         if($user) {
-            $client = $sm->get('EdpGithub\Client');
+            $client = $sl->get('EdpGithub\Client');
 
             $repositories = array();
 
@@ -64,7 +64,7 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
         } else {
             $limit = isset($options['limit'])?$options['limit']:null;
 
-            $mapper = $sm->get('application_module_mapper');
+            $mapper = $sl->get('application_module_mapper');
             $modules = $mapper->findAll($limit, 'created_at', 'DESC');
 
 
@@ -73,24 +73,19 @@ class ListModules extends AbstractHelper implements ServiceManagerAwareInterface
     }
 
     /**
-     * Retrieve service manager instance
-     *
-     * @return ServiceManager
+     * {@inheritdoc}
      */
-    public function getServiceManager()
+    public function getServiceLocator()
     {
-        return $this->serviceManager;
+        return $this->serviceLocator;
     }
 
     /**
-     * Set service manager instance
-     *
-     * @param ServiceManager $locator
-     * @return User
+     * {@inheritdoc}
      */
-    public function setServiceManager(ServiceManager $serviceManager)
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
-        $this->serviceManager = $serviceManager;
+        $this->serviceLocator = $serviceLocator;
         return $this;
     }
 }

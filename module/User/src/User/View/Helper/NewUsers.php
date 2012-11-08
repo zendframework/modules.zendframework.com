@@ -4,20 +4,20 @@ namespace User\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class NewUsers extends AbstractHelper implements ServiceManagerAwareInterface
+class NewUsers extends AbstractHelper implements ServiceLocatorAwareInterface
 {
     /**
      * $var string template used for view
      */
     protected $viewTemplate;
 
-        /**
-     * @var ServiceManager
+    /**
+     * @var ServiceLocator
      */
-    protected $serviceManager;
+    protected $serviceLocator;
 
     /**
      * __invoke
@@ -27,11 +27,11 @@ class NewUsers extends AbstractHelper implements ServiceManagerAwareInterface
      */
     public function __invoke()
     {
-        $sm = $this->getServiceManager();
+        $sl = $this->getServiceLocator();
 
-        //need to fetch top lvl ServiceManager
-        $sm = $sm->getServiceLocator();
-        $mapper = $sm->get('zfcuser_user_mapper');
+        //need to fetch top lvl ServiceLocator
+        $sl = $sl->getServiceLocator();
+        $mapper = $sl->get('zfcuser_user_mapper');
         $users = $mapper->findAll(16, 'created_at', 'DESC');
 
         $vm = new ViewModel(array(
@@ -53,24 +53,20 @@ class NewUsers extends AbstractHelper implements ServiceManagerAwareInterface
     }
 
     /**
-     * Retrieve service manager instance
-     *
-     * @return ServiceManager
+     * {@inheritdoc}
      */
-    public function getServiceManager()
+    public function getServiceLocator()
     {
-        return $this->serviceManager;
+        return $this->serviceLocator;
     }
 
     /**
-     * Set service manager instance
-     *
-     * @param ServiceManager $locator
-     * @return User
+     * {@inheritdoc}
      */
-    public function setServiceManager(ServiceManager $serviceManager)
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
-        $this->serviceManager = $serviceManager;
+        $this->serviceLocator = $serviceLocator;
         return $this;
     }
+
 }
