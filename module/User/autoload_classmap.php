@@ -11,4 +11,3 @@ return array(
     'User\Mapper\User'                   => __DIR__ . '/src/User/Mapper/User.php',
     'User\Mapper\UserHydrator'           => __DIR__ . '/src/User/Mapper/UserHydrator.php',
 );
-
