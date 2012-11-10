@@ -10,11 +10,15 @@ class Module extends AbstractDbMapper implements ModuleInterface
 {
     protected $tableName  = 'module';
 
-    public function pagination($page, $limit, $query = null)
+    public function pagination($page, $limit, $query = null, $orderBy = null, $sort = 'ASC')
     {
         $sql = $this->getSql();
         $select = $this->getSelect()
             ->from($this->tableName);
+
+        if($orderBy) {
+            $select->order($orderBy . ' ' . $sort);
+        }
 
         if(null !== $query) {
             $spec = function ( $where) use ($query) {
