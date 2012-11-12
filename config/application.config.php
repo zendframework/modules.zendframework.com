@@ -14,6 +14,7 @@ return array(
         'Assetic',
 		'User',
         'EdpModuleLayouts',
+        'ZfModule',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

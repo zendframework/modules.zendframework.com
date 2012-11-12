@@ -27,7 +27,7 @@
     <div class="tab-content">
       <div class="tab-pane active" id="modules">
       <?php
-    $modules = $this->listModules(array('user' => true));
+    $modules = $this->listModule(array('user' => true));
     if (empty($modules)) { ?>
     <div class="alert alert-block">No modules was submitted yet</div>
         <?php }
@@ -64,8 +64,10 @@
 </div>
 
 <?php
-$this->inlineScript()->appendScript('
-  $("#repositories").load("user/module/repos");
-');
+$url = $this->url('zf-module');
+$this->inlineScript()->appendScript(<<<EOT
 
-?>
+$("#repositories").load("$url");
+
+EOT
+);

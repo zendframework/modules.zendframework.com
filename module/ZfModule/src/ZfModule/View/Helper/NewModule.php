@@ -1,13 +1,13 @@
 <?php
 
-namespace User\View\Helper;
+namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class UserOrganizations extends AbstractHelper implements ServiceLocatorAwareInterface
+class NewModule extends AbstractHelper implements ServiceLocatorAwareInterface
 {
     /**
      * $var string template used for view
@@ -23,23 +23,36 @@ class UserOrganizations extends AbstractHelper implements ServiceLocatorAwareInt
      * __invoke
      *
      * @access public
-     * @return string
+     * @param array $options array of options
+     * @return array Array of modules
      */
-    public function __invoke()
+    public function __invoke($options = null)
     {
         $sl = $this->getServiceLocator();
 
-        //need to fetch top lvl ServiceLocator
+        //need to fetch top lvl serviceLocator
         $sl = $sl->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
 
-        $orgs = $client->api('current_user')->orgs();
+        $mapper = $sl->get('zfmodule_mapper_module');
+        $modules = $mapper->findAll(10, 'created_at', 'DESC');
+
+        //return $modules;
         $vm = new ViewModel(array(
-            'orgs' => $orgs
+            'modules' => $modules,
         ));
-        $vm->setTemplate('user/helper/user-organizations.phtml');
+        $vm->setTemplate('zf-module/helper/new-module.phtml');
 
         return $this->getView()->render($vm);
+    }
+
+    /**
+     * @param string $viewTemplate
+     * @return NewModules
+     */
+    public function setViewTemplate($viewTemplate)
+    {
+        $this->viewTemplate = $viewTemplate;
+        return $this;
     }
 
     /**
