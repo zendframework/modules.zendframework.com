@@ -13,7 +13,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
     public function pagination($page, $limit, $query = null, $orderBy = null, $sort = 'ASC')
     {
         $sql = $this->getSql();
-        $select = $this->getSelect()
+        $select = $sql->select()
             ->from($this->tableName);
 
         if($orderBy) {
@@ -41,7 +41,8 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findAll($limit= null, $orderBy = null, $sort = 'ASC')
     {
-        $select = $this->getSelect()
+        $sql = $this->getSql();
+        $select = $sql->select()
                        ->from($this->tableName);
 
         if($orderBy) {
@@ -59,7 +60,8 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findByLike($query, $limit = null, $orderBy = null, $sort = 'ASC')
     {
-        $select = $this->getSelect()
+        $sql = $this->getSql();
+        $select = $sql->select()
                        ->from($this->tableName);
 
         if($orderBy) {
@@ -82,7 +84,8 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findByName($name)
     {
-        $select = $this->getSelect()
+        $sql = $this->getSql();
+        $select = $sql->select()
                        ->from($this->tableName)
                        ->where(array('name' => $name));
 
@@ -93,7 +96,8 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findByUrl($url)
     {
-        $select = $this->getSelect()
+        $sql = $this->getSql();
+        $select = $sql->select()
                        ->from($this->tableName)
                        ->where(array('url' => $url));
 
@@ -104,7 +108,8 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findById($id)
     {
-        $select = $this->getSelect()
+        $sql = $this->getSql();
+        $select = $sql->select()
                        ->from($this->tableName)
                        ->where(array('module_id' => $id));
 

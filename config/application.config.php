@@ -21,7 +21,6 @@ return array(
             'config/autoload/{,*.}{global,local}.php',
         ),
         'module_paths' => array(
-            'ScnSocialAuth' => '../moduledev/ScnSocialAuth',
             './module',
             './vendor',
         ),
