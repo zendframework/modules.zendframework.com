@@ -14,13 +14,13 @@ return array(
         'Assetic',
 		'User',
         'EdpModuleLayouts',
+        'ZfModule',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(
             'config/autoload/{,*.}{global,local}.php',
         ),
         'module_paths' => array(
-            'ScnSocialAuth' => '../moduledev/ScnSocialAuth',
             './module',
             './vendor',
         ),

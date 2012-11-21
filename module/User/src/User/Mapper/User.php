@@ -8,7 +8,8 @@ class User extends ZfcUserMapper
 {
     public function findAll($limit= null, $orderBy = null, $sort = 'ASC')
     {
-        $select = $this->getSelect()
+        $sql = $this->getSql();
+        $select = $sql->select()
                        ->from($this->tableName);
 
         if($orderBy) {

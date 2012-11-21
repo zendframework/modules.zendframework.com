@@ -1,0 +1,49 @@
+<div class="accordion" id="org-accordion">
+    <?php
+    foreach($orgs as $org) {
+    ?>
+    <div class="row-fluid module-row">
+        <div class="span12">
+            <div class="accordion-group">
+                <div class="row-fluid ">
+                    <div class="module-info">
+                        <div class="span11 module-author">
+                            <div class="row-fluid">
+                                <div class="span1">
+                                    <img src="<?php echo $org->avatar_url ?>" alt="<?php echo $org->login?>" />
+                                </div>
+                                <div class="span10">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#org-accordion" href="#org-<?php echo $org->login ?>">
+                                      <?php echo $org->login?>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div class="row-fluid accordion-body collapse" id="org-<?php echo $org->login ?>">
+                    <div class="module-description">
+                        <div class="span12" id="org-content-<?php echo $org->login ?>">
+                            <div class="well" style="text-align:center">Synchronizing with Github <img src="/img/ajax-loader.gif" alt="loading" /></div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+$url = $this->url('zf-module/list', array('owner' => $org->login));
+$this->inlineScript()->appendScript(<<<EOT
+
+    $('#org-$org->login').on("show", function () {
+        $('#org-content-$org->login').load("$url");
+    });
+
+EOT
+
+);
+    }
+    ?>
+</div>

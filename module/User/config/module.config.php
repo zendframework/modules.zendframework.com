@@ -13,57 +13,6 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
-    'router' => array(
-        'routes' => array(
-            'zfcuser' => array(
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'module' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/module',
-                            'defaults' => array(
-                                'controller' => 'User\Controller\Module',
-                                'action'     => 'organizations',
-                            ),
-                        ),
-                        'child_routes' => array(
-                            'repos' => array(
-                                'type' => 'Literal',
-                                'options' => array(
-                                    'route' => '/repos',
-                                    'defaults' => array(
-                                        'action' => 'repos',
-                                    ),
-                                ),
-                            ),
-                            'owner' => array(
-                                'type' => 'Literal',
-                                'options' => array(
-                                    'route' => '/owner',
-                                    'defaults' => array(
-                                        'action' => 'owner',
-                                    ),
-                                ),
-                            ),
-                            'orgs' => array(
-                                'type' => 'Segment',
-                                'options' => array(
-                                    'route' => '/orgs/:org',
-                                    'defaults' => array(
-                                        'action' => 'orgs'
-                                    ),
-                                    'constrains' => array(
-                                        'orgs' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
     'controllers' => array(
         'invokables' => array(
             'User\Controller\Module' => 'User\Controller\ModuleController',
@@ -74,7 +23,6 @@ return array(
             'UserRepositories' => 'User\View\Helper\UserRepositories',
             'newUsers' => 'User\View\Helper\NewUsers',
             'userOrganizations' => 'User\View\Helper\UserOrganizations',
-            'moduleView' => 'User\View\Helper\Module',
         ),
     ),
 );

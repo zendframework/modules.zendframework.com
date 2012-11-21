@@ -44,35 +44,6 @@ return array(
                     ),
                 )
             ),
-            'module' => array(
-                'type' => 'Literal',
-                'options' => array (
-                    'route' => '/module',
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'add_module' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/add',
-                            'defaults' => array(
-                                'controller' => 'Application\Controller\Repo',
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-                    'remove_module' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/remove',
-                            'defaults' => array(
-                                'controller' => 'Application\Controller\Repo',
-                                'action' => 'remove',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -108,7 +79,6 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Repo' => 'Application\Controller\RepoController',
             'Application\Controller\Search' => 'Application\Controller\SearchController',
         ),
     ),
@@ -154,10 +124,6 @@ return array(
         ),
     ),
     'view_helpers' => array(
-        'invokables' => array(
-            'listModules' => 'Application\View\Helper\ListModules',
-            'newModules' => 'Application\View\Helper\NewModules'
-        ),
         'factories' => array(
           'flashMessenger' => function($sm) {
             $sm = $sm->getServiceLocator();

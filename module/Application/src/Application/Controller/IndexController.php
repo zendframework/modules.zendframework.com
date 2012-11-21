@@ -20,7 +20,7 @@ class IndexController extends AbstractActionController
 
         $page = (int) $this->params()->fromRoute('page', 1);
         $sm = $this->getServiceLocator();
-        $mapper = $this->getServiceLocator()->get('application_module_mapper');
+        $mapper = $this->getServiceLocator()->get('zfmodule_mapper_module');
 
         $repositories = $mapper->pagination($page, 15, $query, 'created_at', 'DESC');
 

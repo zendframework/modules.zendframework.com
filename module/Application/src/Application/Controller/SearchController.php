@@ -19,7 +19,7 @@ class SearchController extends AbstractActionController
         $query =  $this->params()->fromQuery('query', null);
 
         $sm = $this->getServiceLocator();
-        $mapper = $sm->get('application_module_mapper');
+        $mapper = $sm->get('zfmodule_mapper_module');
 
         $results = $mapper->findByLike($query);
 
