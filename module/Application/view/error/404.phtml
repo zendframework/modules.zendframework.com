@@ -1,5 +1,4 @@
-<h1><?php echo $this->translate('A 404 error occurred') ?></h1>
-<h2><?php echo $this->message ?></h2>
+<?php $this->layout()->single = true; ?>
 
 <?php if (isset($this->reason) && $this->reason): ?>
 
@@ -7,38 +6,52 @@
 $reasonMessage= '';
 switch ($this->reason) {
     case 'error-controller-cannot-dispatch':
-        $reasonMessage = $this->translate('The requested controller was unable to dispatch the request.');
+        $reasonMessage = 'The requested controller was unable to dispatch the request.';
         break;
     case 'error-controller-not-found':
-        $reasonMessage = $this->translate('The requested controller could not be mapped to an existing controller class.');
+        $reasonMessage = 'The requested controller could not be mapped to an existing controller class.';
         break;
     case 'error-controller-invalid':
-        $reasonMessage = $this->translate('The requested controller was not dispatchable.');
+        $reasonMessage = 'The requested controller was not dispatchable.';
         break;
     case 'error-router-no-match':
-        $reasonMessage = $this->translate('The requested URL could not be matched by routing.');
+        $reasonMessage = 'The requested URL could not be matched by routing.';
         break;
     default:
-        $reasonMessage = $this->translate('We cannot determine at this time why a 404 was generated.');
+        $reasonMessage = 'We cannot determine at this time why a 404 was generated.';
         break;
 }
+$errorText = array(
+    "NO, Zend Framework is <strong>not</strong> to blame for this!",
+    "We hear Symfony doesn't have this problem.",
+    $reasonMessage,
+);
 ?>
 
-<p><?php echo $reasonMessage ?></p>
+<div class="error-404">
+    <div class="error-404-speech-bubble">
+        <h1>A 404 error occurred</h1>
+
+        <h2><?php echo $this->message ?></h2>
+
+        <p><?php echo $errorText[array_rand($errorText)]; ?></p>
+    </div>
+</div>
+
 
 <?php endif ?>
 
 <?php if (isset($this->controller) && $this->controller): ?>
 
 <dl>
-    <dt><?php echo $this->translate('Controller') ?>:</dt>
+    <dt>Controller:</dt>
     <dd><?php echo $this->escapeHtml($this->controller) ?>
 <?php
 if (isset($this->controller_class)
     && $this->controller_class
     && $this->controller_class != $this->controller
 ) {
-    echo '(' . sprintf($this->translate('resolves to %s'), $this->escapeHtml($this->controller_class)) . ')';
+    echo '(' . sprintf('resolves to %s', $this->escapeHtml($this->controller_class)) . ')';
 }
 ?>
 </dd>
@@ -48,11 +61,11 @@ if (isset($this->controller_class)
 
 <?php if (isset($this->exception) && $this->exception): ?>
 
-<h2><?php echo $this->translate('Exception') ?>:</h2>
+<h2>Exception:</h2>
 
 <p><b><?php echo $this->escapeHtml($this->exception->getMessage()) ?></b></p>
 
-<h3><?php echo $this->translate('Stack trace') ?>:</h3>
+<h3>Stack trace:</h3>
 
 <pre>
 <?php echo $this->exception->getTraceAsString() ?>
