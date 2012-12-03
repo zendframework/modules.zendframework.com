@@ -40,7 +40,7 @@ class NewModule extends AbstractHelper implements ServiceLocatorAwareInterface
         $vm = new ViewModel(array(
             'modules' => $modules,
         ));
-        $vm->setTemplate('zf-module/helper/new-module.phtml');
+        $vm->setTemplate('zf-module/helper/new-module');
 
         return $this->getView()->render($vm);
     }
