@@ -1,0 +1,22 @@
+<h3><?php echo $this->vendor ?> / <?php echo $this->module ?> </h3>
+
+<div class="row">
+    <div class="span8">
+        <p class="well"><?php echo $this->repository->description; ?></p>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active hero-unit" id="readme">
+            <?php echo  $this->markdown($this->readme);?>
+          </div>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="sidebar">
+            something here!
+        </div>
+    </div>
+</div>
+

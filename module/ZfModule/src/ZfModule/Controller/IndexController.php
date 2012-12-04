@@ -10,6 +10,26 @@ class IndexController extends AbstractActionController
 {
     protected $moduleService;
 
+    public function viewAction()
+    {
+        $sl = $this->getServiceLocator();
+        $client = $sl->get('EdpGithub\Client');
+
+        $vendor = $this->params()->fromRoute('vendor', null);
+        $module = $this->params()->fromRoute('module', null);
+
+        $readme = $client->api('repos')->readme($vendor, $module);
+        $readme = json_decode($readme);
+        $repository = json_decode($client->api('repos')->show($vendor, $module));
+
+        return array(
+            'vendor' => $vendor,
+            'module' => $module,
+            'repository' => $repository,
+            'readme' => base64_decode($readme->content),
+        );
+    }
+
     public function indexAction()
     {
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
