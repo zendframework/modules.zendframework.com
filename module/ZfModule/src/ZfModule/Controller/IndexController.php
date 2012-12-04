@@ -14,20 +14,45 @@ class IndexController extends AbstractActionController
     {
         $sl = $this->getServiceLocator();
         $client = $sl->get('EdpGithub\Client');
+        /* @var $cache StorageInterface */
+        $cache = $sl->get('zfmodule_cache');
 
         $vendor = $this->params()->fromRoute('vendor', null);
         $module = $this->params()->fromRoute('module', null);
+
+        $cacheKey = 'module-view-' . $vendor . '-' . $module;
+
+        $repository = json_decode($client->api('repos')->show($vendor, $module));
+        $httpClient = $client->getHttpClient();
+        $response= $httpClient->getResponse();
+        if($response->getStatusCode() == 304 && $cache->hasItem($cacheKey)) {
+            return $cache->getItem($cacheKey);
+        }
 
         $readme = $client->api('repos')->readme($vendor, $module);
         $readme = json_decode($readme);
         $repository = json_decode($client->api('repos')->show($vendor, $module));
 
-        return array(
+        try{
+            $license = $client->api('repos')->content($vendor, $module, 'LICENSE');
+            $license = json_decode($license);
+            $license = base64_decode($license->content);
+        } catch(\Exception $e) {
+            $licencse = 'No license file found for this Module';
+        }
+
+
+        $viewModel = new ViewModel(array(
             'vendor' => $vendor,
             'module' => $module,
             'repository' => $repository,
             'readme' => base64_decode($readme->content),
-        );
+            'license' => $license,
+        ));
+
+        $cache->setItem($cacheKey , $viewModel);
+
+        return $viewModel;
     }
 
     public function indexAction()

@@ -5,11 +5,15 @@
         <p class="well"><?php echo $this->repository->description; ?></p>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
+          <li ><a href="#license" data-toggle="tab">LICENSE</a></li>
         </ul>
 
         <div class="tab-content">
-          <div class="tab-pane active hero-unit" id="readme">
+          <div class="tab-pane active" id="readme">
             <?php echo  $this->markdown($this->readme);?>
+          </div>
+          <div class="tab-pane" id="license">
+            <?php echo  $license;?>
           </div>
         </div>
     </div>
@@ -19,4 +23,3 @@
         </div>
     </div>
 </div>
-
