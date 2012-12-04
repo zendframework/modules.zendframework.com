@@ -82,6 +82,26 @@ class Module extends AbstractDbMapper implements ModuleInterface
         return $entity;
     }
 
+    public function findByOwner($owner, $limit= null, $orderBy = null, $sort = 'ASC')
+    {
+        $sql = $this->getSql();
+        $select = $sql->select()
+                       ->from($this->tableName)
+                       ->where(array('owner' => $owner));
+
+        if($orderBy) {
+            $select->order($orderBy . ' ' . $sort);
+        }
+
+        if($limit) {
+            $select->limit($limit);
+        }
+
+        $entity = $this->select($select);
+        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        return $entity;
+    }
+
     public function findByName($name)
     {
         $sql = $this->getSql();
