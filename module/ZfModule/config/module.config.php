@@ -8,17 +8,13 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'home' => array(
-                'child_routes' => array(
-                    'view-module' => array(
-                        'type' => 'Segment',
-                        'options' => array(
-                            'route' => ':vendor/:module',
-                            'defaults' => array(
-                                'controller' => 'ZfModule\Controller\Index',
-                                'action' => 'view',
-                            ),
-                        ),
+            'view-module' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/:vendor/:module',
+                    'defaults' => array(
+                        'controller' => 'ZfModule\Controller\Index',
+                        'action' => 'view',
                     ),
                 ),
             ),

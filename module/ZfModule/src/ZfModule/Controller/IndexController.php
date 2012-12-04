@@ -12,13 +12,22 @@ class IndexController extends AbstractActionController
 
     public function viewAction()
     {
+        $vendor = $this->params()->fromRoute('vendor', null);
+        $module = $this->params()->fromRoute('module', null);
+
         $sl = $this->getServiceLocator();
+        $mapper = $sl->get('zfmodule_mapper_module');
+
+        //check if module is existing in database otherwise return 404 page
+        $result = $mapper->findByName($module);
+        if(!$result) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
         $client = $sl->get('EdpGithub\Client');
         /* @var $cache StorageInterface */
         $cache = $sl->get('zfmodule_cache');
-
-        $vendor = $this->params()->fromRoute('vendor', null);
-        $module = $this->params()->fromRoute('module', null);
 
         $cacheKey = 'module-view-' . $vendor . '-' . $module;
 
@@ -38,7 +47,7 @@ class IndexController extends AbstractActionController
             $license = json_decode($license);
             $license = base64_decode($license->content);
         } catch(\Exception $e) {
-            $licencse = 'No license file found for this Module';
+            $license = 'No license file found for this Module';
         }
 
 

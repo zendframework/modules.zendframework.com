@@ -30,7 +30,13 @@
                                     <strong><?php echo $module->getOwner()?></strong>
                                     <p>
                                         <span class="author-label">Github:</span>
-                                        <a href="<?php echo $module->getUrl()?>"><?php echo $module->getName()?></a>
+                                        <a href="<?php
+                                            echo
+                                            $this->url('view-module', array(
+                                                    'vendor' => $module->getOwner(),
+                                                    'module' =>  $module->getName(),
+                                                )
+                                            );?>"><?php echo $module->getName()?></a>
                                         <!--
                                   <span class="author-label">Blog:</span> <a>placeholder</a><br />
                                   <span class="author-label">Modules:</span> <a>5</a><br /><br />
@@ -61,7 +67,6 @@
                 <div class="row-fluid">
                     <div class="module-description">
                         <div class="span12">
-                            <strong>Description</strong>
                             <p>
                                 <?php echo $module->getDescription()?>
                             </p>
