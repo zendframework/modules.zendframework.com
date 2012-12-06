@@ -47,7 +47,7 @@
                 ?>" title="My profile"> Hello <?=ucfirst($userDisplayName);?></a>
             </li>
             <li class="sep">|</li>
-            <li ><a href="user/logout">Logout</a></li>
+            <li ><a href="<?php echo $this->url('zfcuser/logout'); ?>">Logout</a></li>
             <?php else: ?>
             <li id="toggle">
             <a class="login" href="<?php
