@@ -16,31 +16,95 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $owner = $this->params()->fromRoute('owner', null);
+        $sl = $this->getServiceLocator();
+        $client = $sl->get('EdpGithub\Client');
 
-        $sm = $this->getServiceLocator();
-        $client = $sm->get('EdpGithub\Client');
-        $mapper = $sm->get('zfmodule_mapper_module');
+        $repos = $client->api('current_user')->repos(array('type' =>'all', 'per_page' => 100));
 
-        $repositories = array();
+        $identity = $this->zfcUserAuthentication()->getIdentity();
+        $cacheKey = 'modules-user-' . $identity->getId();
 
-        if($owner) {
-            $repos = $client->api('user')->repos($owner);
-        } else {
-            $repos = $client->api('current_user')->repos(array('type' =>'all', 'per_page' => 100));
+        $repositories = $this->fetchModules($repos, $cacheKey);
+
+        $viewModel = new ViewModel(array('repositories' => $repositories));
+        $viewModel->setTerminal(true);
+        return $viewModel;
+    }
+
+    public function organizationAction()
+    {
+        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->redirect()->toRoute('zfcuser/login');
         }
 
+        $sl = $this->getServiceLocator();
+        $client = $sl->get('EdpGithub\Client');
+
+        $owner = $this->params()->fromRoute('owner', null);
+        $repos = $client->api('user')->repos($owner);
+
+        $identity = $this->zfcUserAuthentication()->getIdentity();
+        $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
+
+        $repositories = $this->fetchModules($repos, $cacheKey);
+        $viewModel = new ViewModel(array('repositories' => $repositories));
+        $viewModel->setTerminal(true);
+        $viewModel->setTemplate('zf-module/index/index.phtml');
+        return $viewModel;
+    }
+
+    public function fetchModules($repos, $cacheKey)
+    {
+        $sl = $this->getServiceLocator();
+        $mapper = $sl->get('zfmodule_mapper_module');
+        $client = $sl->get('EdpGithub\Client');
+        /* @var $cache StorageInterface */
+        $cache = $sl->get('zfmodule_cache');
+
+        $repositories = array();
+        //fetch only modules from github
         foreach($repos as $repo) {
+            //Need to see first if any repository has been updated
+            $httpClient = $client->getHttpClient();
+            $response= $httpClient->getResponse();
+            if($response->getStatusCode() == 304) {
+                if($cache->hasItem($cacheKey . '-github')) {
+                    $repositories =  $cache->getItem($cacheKey . '-github');
+                    break;
+                }
+            }
             if(!$repo->fork && $repo->permissions->push) {
-                $module = $mapper->findByName($repo->name);
-                if(!$module && $this->getModuleService()->isModule($repo)) {
+                if($this->getModuleService()->isModule($repo)) {
                    $repositories[] = $repo;
                 }
             }
         }
-        $viewModel = new ViewModel(array('repositories' => $repositories));
-        $viewModel->setTerminal(true);
-        return $viewModel;
+        //save list of modules to cache
+        if(!$cache->hasItem($cacheKey . '-github')) {
+            $cache->setItem($cacheKey . '-github', $repositories);
+        }
+
+        //check if cache for modules exist
+        if(!$cache->hasItem($cacheKey)) {
+            //check if module is in database
+            foreach($repositories as $key => $repo) {
+                $module = $mapper->findByName($repo->name);
+                if($module) {
+                    unset($repositories[$key]);
+                }
+            }
+            //save database mapped list to cache
+            $cache->setItem($cacheKey , $repositories);
+            // create cache tags
+            $identity = $this->zfcUserAuthentication()->getIdentity();
+
+            $tags = array($identity->getUsername() . '-' . $identity->getId());
+            $cache->setTags($cacheKey, $tags);
+        } else {
+            $repositories = $cache->getItem($cacheKey);
+        }
+
+        return $repositories;
     }
 
     /**
@@ -94,7 +158,19 @@ class IndexController extends AbstractActionController
             );
         }
 
-       return $this->redirect()->toRoute('zfcuser');
+        $this->clearModuleCache();
+
+        return $this->redirect()->toRoute('zfcuser');
+    }
+
+    public function clearModuleCache()
+    {
+        $sl = $this->getServiceLocator();
+        $cache = $sl->get('zfmodule_cache');
+        $identity = $this->zfcUserAuthentication()->getIdentity();
+
+        $tags = array($identity->getUsername() . '-' . $identity->getId());
+        $cache->clearByTags($tags);
     }
 
     /**
@@ -149,7 +225,8 @@ class IndexController extends AbstractActionController
             );
         }
 
-       return $this->redirect()->toRoute('zfcuser');
+        $this->clearModuleCache();
+        return $this->redirect()->toRoute('zfcuser');
     }
 
     /**

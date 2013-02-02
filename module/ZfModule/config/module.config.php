@@ -26,6 +26,9 @@ return array(
                             'constrains' => array(
                                 'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
+                            'defaults' => array(
+                                'action' => 'organization',
+                            ),
                         ),
                     ),
                     'add' => array(
@@ -62,5 +65,24 @@ return array(
             'listModule' => 'ZfModule\View\Helper\ListModule',
             'moduleView' => 'ZfModule\View\Helper\ModuleView',
         ),
+    ),
+    'zfmodule' => array(
+        /**
+         * Cache configuration
+         */
+        'cache' => array(
+            'adapter'   => array(
+                'name' => 'filesystem',
+                'options' => array(
+                    'cache_dir' => realpath('./data/cache'),
+                    'writable' => false,
+                ),
+            ),
+            'plugins' => array(
+                'exception_handler' => array('throw_exceptions' => true),
+                'serializer'
+            )
+        ),
+        'cache_key' => 'zfmodule_app',
     ),
 );

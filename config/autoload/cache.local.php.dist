@@ -1,0 +1,41 @@
+<?php
+return array(
+    'zfmodule' => array(
+        /**
+         * Cache configuration
+         */
+        'cache' => array(
+            'adapter'   => array(
+                'name' => 'filesystem',
+                'options' => array(
+                    'cache_dir' => realpath('./data/cache'),
+                    'writable' => true,
+                ),
+            ),
+            'plugins' => array(
+                'exception_handler' => array('throw_exceptions' => true),
+                'serializer'
+            )
+        ),
+        'cache_key' => 'zfmodule_app',
+    ),
+    'edpgithub' => array(
+        /**
+         * Cache configuration
+         */
+        'cache' => array(
+            'adapter'   => array(
+                'name' => 'filesystem',
+                'options' => array(
+                    'cache_dir' => realpath('./data/cache'),
+                    'writable' => true,
+                ),
+            ),
+            'plugins' => array(
+                'exception_handler' => array('throw_exceptions' => true),
+                'serializer'
+            )
+        ),
+        'cache_key' => 'github_api',
+    ),
+);
