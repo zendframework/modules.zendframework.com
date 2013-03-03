@@ -12,13 +12,12 @@
         backupGlobals="false"
         syntaxCheck="true"
         >
-    <testsuite name="Test all modules">
-        <directory>./module/Application/test/ApplicationTest</directory>
-        <directory>./module/ZfModule/test/ZfModuleTest</directory>
+    <testsuite name="ZfModuleTest">
+        <directory>./ZfModuleTest</directory>
     </testsuite>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./module/Application/src</directory>
+            <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
     <logging>
