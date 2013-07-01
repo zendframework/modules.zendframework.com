@@ -54,7 +54,14 @@ class IndexController extends AbstractActionController
         foreach ($repositories as $module) {
             $entry = $feed->createEntry();
             $entry->setTitle($module->getName());
-            $entry->setDescription($module->getDescription());
+
+            if($module->getDescription() == '') {
+                $moduleDescription = "No Description available";
+            } else {
+                $moduleDescription = $module->getDescription();
+            }
+
+            $entry->setDescription($moduleDescription);
             $entry->setLink($module->getUrl());
             $entry->setDateCreated(strtotime($module->getCreatedAt()));
 
