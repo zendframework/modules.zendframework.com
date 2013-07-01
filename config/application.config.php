@@ -4,6 +4,7 @@ require(__DIR__.'/constants.php');
 
 return array(
     'modules' => array(
+        'LfjErrorLayout',
         'ZfcBase',
         'ZfcUser',
         'ScnSocialAuth',

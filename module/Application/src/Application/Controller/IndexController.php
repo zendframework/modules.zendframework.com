@@ -11,6 +11,8 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Feed\Writer\Feed;
+use Zend\View\Model\FeedModel;
 
 class IndexController extends AbstractActionController
 {
@@ -29,4 +31,41 @@ class IndexController extends AbstractActionController
             'query' => $query,
         );
     }
+
+    /**
+     * RSS feed for recently added modules
+     * @return FeedModel
+     */
+    public function feedAction()
+    {
+        // Prepare the feed
+        $feed = new Feed();
+        $feed->setTitle('ZF2 Modules');
+        $feed->setDescription('Recently added modules.');
+        $feed->setFeedLink('http://modules.zendframework.com/feed', 'atom');
+        $feed->setLink('http://modules.zendframework.com');
+
+        // Get the recent modules
+        $page = 1;
+        $mapper = $this->getServiceLocator()->get('zfmodule_mapper_module');
+        $repositories = $mapper->pagination($page, 15, null, 'created_at', 'DESC');
+
+        // Load them into the feed
+        foreach ($repositories as $module) {
+            $entry = $feed->createEntry();
+            $entry->setTitle($module->getName());
+            $entry->setDescription($module->getDescription());
+            $entry->setLink($module->getUrl());
+            $entry->setDateCreated(strtotime($module->getCreatedAt()));
+
+            $feed->addEntry($entry);
+        }
+
+        // Render the feed
+        $feedmodel = new FeedModel();
+        $feedmodel->setFeed($feed);
+
+        return $feedmodel;
+    }
+
 }

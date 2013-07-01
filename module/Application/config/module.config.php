@@ -44,6 +44,17 @@ return array(
                     ),
                 )
             ),
+            'feed' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/feed',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action' => 'feed',
+                    ),
+                ),
+            ),
+
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -111,6 +122,7 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
+            'layout/error'                      => __DIR__ . '/../view/layout/layout-small-header.phtml',
             'layout/layout'                     => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index'           => __DIR__ . '/../view/application/index/index.phtml',
             'application/index/pagination'      => __DIR__ . '/../view/application/index/pagination.phtml',
@@ -122,16 +134,19 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewFeedStrategy',
+        ),
     ),
     'view_helpers' => array(
         'factories' => array(
-          'flashMessenger' => function($sm) {
-            $sm = $sm->getServiceLocator();
-            $plugin = $sm->get('ControllerPluginManager')->get('flashMessenger');
+            'flashMessenger' => function($sm) {
+                $sm = $sm->getServiceLocator();
+                $plugin = $sm->get('ControllerPluginManager')->get('flashMessenger');
 
-            $helper = new Application\View\Helper\FlashMessenger($plugin);
-            return $helper;
-          }
+                $helper = new Application\View\Helper\FlashMessenger($plugin);
+                return $helper;
+            }
         )
     ),
 );
