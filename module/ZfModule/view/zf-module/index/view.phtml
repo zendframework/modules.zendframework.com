@@ -18,20 +18,16 @@
         </div>
     </div>
     <div class="span4">
-        <div class="sidebar"><?php		
+        <div class="sidebar"><?php
             // infos
-			echo $this->moduleView(array(
-				'owner' => $module->owner->login,
-				'name' => $module->name,
-				'created_at' => $module->created_at,
-				'url' => $module->html_url,
-				'photo_url' => $module->owner->avatar_url,
-				'description' => $module->description
+			echo $this->moduleDescription(array(
+				'owner' => $repository->owner->login,
+				'name' => $repository->name,
+				'created_at' => $repository->created_at,
+				'url' => $repository->html_url,
+				'photo_url' => $repository->owner->avatar_url,
+				'description' => $repository->description
 				));
-			// list of other modules from same owner
-			// keywords
-			// ratings
-			// activity
         ?></div>
     </div>
 </div>

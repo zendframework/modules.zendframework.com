@@ -74,6 +74,7 @@ return array(
             'newModule' => 'ZfModule\View\Helper\NewModule',
             'listModule' => 'ZfModule\View\Helper\ListModule',
             'moduleView' => 'ZfModule\View\Helper\ModuleView',
+            'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
         ),
     ),
     'zfmodule' => array(
