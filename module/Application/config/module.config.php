@@ -37,6 +37,7 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
+                'priority' => 1,
                 'may_terminate' => true,
                 'child_routes' => array(
                     'query' => array(
