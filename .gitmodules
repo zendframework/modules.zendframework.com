@@ -25,6 +25,10 @@
 [submodule "vendor/EdpModuleLayouts"]
 	path = vendor/EdpModuleLayouts
 	url = https://github.com/EvanDotPro/EdpModuleLayouts.git
+[submodule "vendor/EdpMarkdown"]
+	path = vendor/EdpMarkdown
+	url = https://github.com/EvanDotPro/EdpMarkdown.git
 [submodule "vendor/LfjErrorLayout"]
 	path = vendor/LfjErrorLayout
 	url = https://github.com/lorenzoferrarajr/LfjErrorLayout.git
+

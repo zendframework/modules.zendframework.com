@@ -8,6 +8,16 @@ return array(
     ),
     'router' => array(
         'routes' => array(
+            'view-module' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/:vendor/:module',
+                    'defaults' => array(
+                        'controller' => 'ZfModule\Controller\Index',
+                        'action' => 'view',
+                    ),
+                ),
+            ),
             'zf-module' => array(
                 'type' => 'Segment',
                 'options' => array (
@@ -64,6 +74,7 @@ return array(
             'newModule' => 'ZfModule\View\Helper\NewModule',
             'listModule' => 'ZfModule\View\Helper\ListModule',
             'moduleView' => 'ZfModule\View\Helper\ModuleView',
+            'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
         ),
     ),
     'zfmodule' => array(

@@ -16,6 +16,7 @@ return array(
 		'User',
         'EdpModuleLayouts',
         'ZfModule',
+        'EdpMarkdown',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

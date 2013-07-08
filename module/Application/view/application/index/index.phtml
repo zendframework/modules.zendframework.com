@@ -40,7 +40,13 @@
                             </div>
                         </div>
                         <div class="span6">
-                            <strong><?php echo $module->getName()?></strong>
+                            <strong><a href="<?php
+                                            echo
+                                            $this->url('view-module', array(
+                                                    'vendor' => $module->getOwner(),
+                                                    'module' =>  $module->getName(),
+                                                )
+                                            );?>"><?php echo $module->getName()?></a></strong>
                             <p>
                                 <!--<span class="author-label">Version:</span> 1.2.1<br />-->
                                  <span class="author-label">Created:</span> <?php
@@ -61,7 +67,6 @@
                 <div class="row-fluid">
                     <div class="module-description">
                         <div class="span12">
-                            <strong>Description</strong>
                             <p>
                                 <?php echo $module->getDescription()?>
                             </p>
