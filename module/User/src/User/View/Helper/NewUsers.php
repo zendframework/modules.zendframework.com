@@ -37,7 +37,7 @@ class NewUsers extends AbstractHelper implements ServiceLocatorAwareInterface
         $vm = new ViewModel(array(
             'users' => $users,
         ));
-        $vm->setTemplate('user/helper/new-users.phtml');
+        $vm->setTemplate('user/helper/new-users');
 
         return $this->getView()->render($vm);
     }
