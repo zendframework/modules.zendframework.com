@@ -4,30 +4,34 @@
     <div class="span8">
         <p class="well"><?php echo $this->repository->description; ?></p>
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
-          <li ><a href="#license" data-toggle="tab">LICENSE</a></li>
+            <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
+            <li><a href="#composer" data-toggle="tab">COMPOSER</a></li>
+            <li ><a href="#license" data-toggle="tab">LICENSE</a></li>
         </ul>
 
         <div class="tab-content">
-          <div class="tab-pane active" id="readme">
-            <?php echo  $this->markdown($this->readme);?>
-          </div>
-          <div class="tab-pane" id="license">
-            <?php echo  $license;?>
-          </div>
+            <div class="tab-pane active" id="readme">
+                <?php echo  $this->markdown($this->readme);?>
+            </div>
+            <div class="tab-pane" id="composer">
+                <?php echo $this->composerView($this->composerConf);?>
+            </div>
+            <div class="tab-pane" id="license">
+                <?php echo  $license;?>
+            </div>
         </div>
     </div>
     <div class="span4">
         <div class="sidebar"><?php
             // infos
-			echo $this->moduleDescription(array(
-				'owner' => $repository->owner->login,
-				'name' => $repository->name,
-				'created_at' => $repository->created_at,
-				'url' => $repository->html_url,
-				'photo_url' => $repository->owner->avatar_url,
-				'description' => $repository->description
-				));
-        ?></div>
+            echo $this->moduleDescription(array(
+                'owner' => $repository->owner->login,
+                'name' => $repository->name,
+                'created_at' => $repository->created_at,
+                'url' => $repository->html_url,
+                'photo_url' => $repository->owner->avatar_url,
+                'description' => $repository->description
+            ));
+            ?></div>
     </div>
 </div>
