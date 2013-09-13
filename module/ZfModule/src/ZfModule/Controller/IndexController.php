@@ -54,8 +54,9 @@ class IndexController extends AbstractActionController
             $composerJson = $client->api('repos')->content($vendor, $module, 'composer.json');
             $composerConf = json_decode($composerJson);
             $composerConf = base64_decode($composerConf->content);
+            $composerConf = json_decode($composerConf, true);
         } catch(\Exception $e) {
-            $composerConf = 'No license file found for this Module';
+            $composerConf = 'No composer.json file found for this Module';
         }
 
         $viewModel = new ViewModel(array(
@@ -63,7 +64,7 @@ class IndexController extends AbstractActionController
             'module' => $module,
             'repository' => $repository,
             'readme' => base64_decode($readme->content),
-            'composerConf' => json_decode($composerConf, true),
+            'composerConf' => $composerConf,
             'license' => $license,
         ));
 

@@ -14,7 +14,12 @@
                 <?php echo  $this->markdown($this->readme);?>
             </div>
             <div class="tab-pane" id="composer">
-                <?php echo $this->composerView($this->composerConf);?>
+                <?php if(is_array($composerConf)){
+                    echo $this->composerView($this->composerConf);
+                } else {
+                    echo $this->composerConf;
+                }
+                ?>
             </div>
             <div class="tab-pane" id="license">
                 <?php echo  $license;?>
