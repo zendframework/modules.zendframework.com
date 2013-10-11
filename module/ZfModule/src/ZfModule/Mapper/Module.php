@@ -5,6 +5,7 @@ namespace ZfModule\Mapper;
 use ZfcBase\Mapper\AbstractDbMapper;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
+use Zend\Db\Sql\Expression;
 
 class Module extends AbstractDbMapper implements ModuleInterface
 {
@@ -12,9 +13,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function pagination($page, $limit, $query = null, $orderBy = null, $sort = 'ASC')
     {
-        $sql = $this->getSql();
-        $select = $sql->select()
-            ->from($this->tableName);
+        $select = $this->getSelect();
 
         if($orderBy) {
             $select->order($orderBy . ' ' . $sort);
@@ -41,9 +40,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findAll($limit= null, $orderBy = null, $sort = 'ASC')
     {
-        $sql = $this->getSql();
-        $select = $sql->select()
-                       ->from($this->tableName);
+        $select = $this->getSelect();
 
         if($orderBy) {
             $select->order($orderBy . ' ' . $sort);
@@ -60,9 +57,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findByLike($query, $limit = null, $orderBy = null, $sort = 'ASC')
     {
-        $sql = $this->getSql();
-        $select = $sql->select()
-                       ->from($this->tableName);
+        $select = $this->getSelect();
 
         if($orderBy) {
             $select->order($orderBy . ' ' . $sort);
@@ -84,10 +79,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findByOwner($owner, $limit= null, $orderBy = null, $sort = 'ASC')
     {
-        $sql = $this->getSql();
-        $select = $sql->select()
-                       ->from($this->tableName)
-                       ->where(array('owner' => $owner));
+        $select = $this->getSelect();
 
         if($orderBy) {
             $select->order($orderBy . ' ' . $sort);
@@ -104,9 +96,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findByName($name)
     {
-        $sql = $this->getSql();
-        $select = $sql->select()
-                       ->from($this->tableName)
+        $select = $this->getSelect()
                        ->where(array('name' => $name));
 
         $entity = $this->select($select)->current();
@@ -116,9 +106,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findByUrl($url)
     {
-        $sql = $this->getSql();
-        $select = $sql->select()
-                       ->from($this->tableName)
+        $select = $this->getSelect()
                        ->where(array('url' => $url));
 
         $entity = $this->select($select)->current();
@@ -128,9 +116,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     public function findById($id)
     {
-        $sql = $this->getSql();
-        $select = $sql->select()
-                       ->from($this->tableName)
+        $select = $this->getSelect()
                        ->where(array('module_id' => $id));
 
         $entity = $this->select($select)->current();
@@ -160,5 +146,16 @@ class Module extends AbstractDbMapper implements ModuleInterface
             $where = 'module_id = ' . $entity->getId();
         }
          return parent::delete($where, $tableName);
+    }
+
+    public function getTotal()
+    {
+        $select = $this->getSelect();
+        $select->columns(array('num' => new Expression('COUNT(*)')));
+
+        $stmt = $this->getSlaveSql()->prepareStatementForSqlObject($select);
+
+        $row = $stmt->execute()->current();
+        return $row['num'];
     }
 }

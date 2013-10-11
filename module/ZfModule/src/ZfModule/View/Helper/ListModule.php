@@ -3,7 +3,6 @@
 namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

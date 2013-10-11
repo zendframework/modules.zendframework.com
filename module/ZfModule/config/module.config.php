@@ -73,6 +73,7 @@ return array(
         'invokables' => array(
             'newModule' => 'ZfModule\View\Helper\NewModule',
             'listModule' => 'ZfModule\View\Helper\ListModule',
+            'totalModules' => 'ZfModule\View\Helper\TotalModules',
             'moduleView' => 'ZfModule\View\Helper\ModuleView',
             'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
         ),
