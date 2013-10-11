@@ -16,6 +16,7 @@ This site will eventually be a community site for publishing and sharing Zend Fr
     * Main URL and CALLBACK url must be the same without any routing. e.g. http://modules.zendframework.com
  * Copy config/autoload/github.local.php.dist to config/autoload/github.local.php and enter the Id and Secret provided during the Application registration on github.
  * Copy config/autoload/database.local.php.dist to config/autoload/database.local.php and enter your database credentials here.
+ * Copy config/autoload/cache.local.php.dist to config/autoload/cache.local.php. It's optional
 
 ## Deployment
 
