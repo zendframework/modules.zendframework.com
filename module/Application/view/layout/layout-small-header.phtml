@@ -16,6 +16,7 @@
             ->appendStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
             ->appendStylesheet($this->basePath() . '/css/style.css')
             ->appendStylesheet($this->basePath() . '/css/slide.css')
+            ->appendAlternate($this->url('feed'),  'application/rss+xml', 'RSS Feed for ZF2 Modules')
     ?>
 </head>
 <body>
