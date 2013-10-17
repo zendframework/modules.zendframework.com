@@ -181,3 +181,7 @@ div.container a.brand {
 
     background: url(../img/speech-bubble-arrow.png) no-repeat;
 }
+
+img.avatar {
+    max-width: 80px;
+}
