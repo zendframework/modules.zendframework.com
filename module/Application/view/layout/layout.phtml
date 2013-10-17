@@ -17,9 +17,9 @@
             ->appendStylesheet($this->basePath() . '/css/style.css')
             ->appendStylesheet($this->basePath() . '/css/slide.css')
             ->appendStylesheet($this->basePath() . '/css/jquery.livesearch.css')
+            ->appendAlternate($this->url('feed'),  'application/rss+xml', 'RSS Feed for ZF2 Modules')
     ?>
 
-    <link rel="alternate" type="application/rss+xml" title="RSS Feed for ZF2 Modules" href="/feed" />
 </head>
 <body>
 <a href="https://github.com/zendframework/modules.zendframework.com"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
@@ -80,7 +80,7 @@
                     <hr />
                     <p>
                         If you are interested in helping with this project, simply fork the code on <a class="zf-green" href="https://github.com/zendframework/modules.zendframework.com">GITHUB</a> and get started!.
-                        Additionally, join us in #zftalk.modules on Freenode and ask how you can help!
+                        Additionally, join us in #zftalk.modules on Freenode and ask how you can help! Grab latest modules using <a class="zf-green" href="<?php echo $this->url('feed') ?>">RSS Feed</a>.
                     </p>
                     <!--
                     <blockquote>
