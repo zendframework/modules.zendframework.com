@@ -126,7 +126,7 @@ class IndexController extends AbstractActionController
                     $repositories =  $cache->getItem($cacheKey . '-github');
                     break;
                 }
-            } else if ($cache->hasItem($cacheKey . '-github')) {
+            } elseif ($cache->hasItem($cacheKey . '-github')) {
                 $cache->removeItem($cacheKey . '-github');
             }
 

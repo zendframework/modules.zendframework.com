@@ -48,7 +48,7 @@ class Module implements AutoloaderProviderInterface
     {
         return array(
             'factories' => array(
-                'zfmodule_cache' => function($sm) {
+                'zfmodule_cache' => function ($sm) {
                     $config = $sm->get('Config');
                     $storage = StorageFactory::factory($config['zfmodule']['cache']);
 
@@ -61,16 +61,16 @@ class Module implements AutoloaderProviderInterface
                     $mapper->setHydrator(new Mapper\ModuleHydrator());
                     return $mapper;
                 },
-                'zfmodule_service_module' => function($sm) {
+                'zfmodule_service_module' => function ($sm) {
                     $service = new  Service\Module;
                     return $service;
                 },
-                'zfmodule_service_repository' => function($sm) {
+                'zfmodule_service_repository' => function ($sm) {
                     $service = new Service\Repository;
                     $service->setApi($sm->get('EdpGithub\Client'));
                     return $service;
                 },
-                /*'github_client' => function($sm) {
+                /*'github_client' => function ($sm) {
                     $hybridAuth = $sm->get('HybridAuth');
                     $adapter = $hybridAuth->getAdapter('github');
                     $token = $adapter->getAccessToken();
