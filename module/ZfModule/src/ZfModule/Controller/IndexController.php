@@ -116,47 +116,34 @@ class IndexController extends AbstractActionController
         $cache = $sl->get('zfmodule_cache');
 
         $repositories = array();
-        //fetch only modules from github
-        foreach($repos as $repo) {
-            //Need to see first if any repository has been updated
+
+        foreach($repos as $key => $repo) {
+            //Verify if repos have been modified
             $httpClient = $client->getHttpClient();
-            $response= $httpClient->getResponse();
+            $response = $httpClient->getResponse();
             if($response->getStatusCode() == 304) {
                 if($cache->hasItem($cacheKey . '-github')) {
                     $repositories =  $cache->getItem($cacheKey . '-github');
                     break;
                 }
+            } else if ($cache->hasItem($cacheKey . '-github')) {
+                $cache->removeItem($cacheKey . '-github');
             }
-            if(!$repo->fork && $repo->permissions->push) {
-                if($this->getModuleService()->isModule($repo)) {
-                   $repositories[] = $repo;
-                }
+
+            if($repo->fork || !$repo->permissions->push || !$this->getModuleService()->isModule($repo) ) {
+                continue;
             }
+
+            $module = $mapper->findByName($repo->name);
+            if($module) {
+                continue;
+            }
+
+            $repositories[] = $repo;
         }
+
         //save list of modules to cache
-        if(!$cache->hasItem($cacheKey . '-github')) {
-            $cache->setItem($cacheKey . '-github', $repositories);
-        }
-
-        //check if cache for modules exist
-        if(!$cache->hasItem($cacheKey)) {
-            //check if module is in database
-            foreach($repositories as $key => $repo) {
-                $module = $mapper->findByName($repo->name);
-                if($module) {
-                    unset($repositories[$key]);
-                }
-            }
-            //save database mapped list to cache
-            $cache->setItem($cacheKey , $repositories);
-            // create cache tags
-            $identity = $this->zfcUserAuthentication()->getIdentity();
-
-            $tags = array($identity->getUsername() . '-' . $identity->getId());
-            $cache->setTags($cacheKey, $tags);
-        } else {
-            $repositories = $cache->getItem($cacheKey);
-        }
+        $cache->setItem($cacheKey . '-github', $repositories);
 
         return $repositories;
     }
