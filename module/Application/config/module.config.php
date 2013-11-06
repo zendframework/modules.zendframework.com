@@ -141,7 +141,7 @@ return array(
     ),
     'view_helpers' => array(
         'factories' => array(
-            'flashMessenger' => function($sm) {
+            'flashMessenger' => function ($sm) {
                 $sm = $sm->getServiceLocator();
                 $plugin = $sm->get('ControllerPluginManager')->get('flashMessenger');
 

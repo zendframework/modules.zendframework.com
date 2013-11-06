@@ -13,7 +13,7 @@ class Module extends AbstractModule
         $em = $app->getEventManager()->getSharedManager();
         $sm = $app->getServiceManager();
 
-        $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth','githubToLocalUser', function($e) {
+        $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth','githubToLocalUser', function ($e) {
             $localUser = $e->getTarget();
             $userProfile = $e->getParam('userProfile');
             $nickname = substr(
@@ -24,7 +24,7 @@ class Module extends AbstractModule
             $localUser->setPhotoUrl($userProfile->photoURL);
         });
 
-        $em->attach('EdpGithub\Client', 'api', function($e) use ($sm) {
+        $em->attach('EdpGithub\Client', 'api', function ($e) use ($sm) {
             $hybridAuth = $sm->get('HybridAuth');
             $adapter = $hybridAuth->getAdapter('github');
 

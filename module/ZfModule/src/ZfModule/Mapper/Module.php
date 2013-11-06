@@ -21,7 +21,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
         }
 
         if(null !== $query) {
-            $spec = function ( $where) use ($query) {
+            $spec = function ($where) use ($query) {
                 $where->like('name', '%'.$query.'%')->or->like('description', '%'.$query.'%');
             };
             $select->where($spec);
@@ -72,7 +72,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
             $select->limit($limit);
         }
 
-        $spec = function ( $where) use ($query) {
+        $spec = function ($where) use ($query) {
             $where->like('name', '%'.$query.'%')->or->like('description', '%'.$query.'%');
         };
         $select->where($spec);
