@@ -150,7 +150,7 @@ class IndexController extends AbstractActionController
 
             $hasCache = $cache->hasItem($cacheKey);
 
-            if ($response->getStatusCode() == 304 && $hasCache && count($repositories) === 0) {
+            if ($response->getStatusCode() == 304 && $hasCache) {
                 $repositories = $cache->getItem($cacheKey);
                 break;
             } elseif ($hasCache) {
