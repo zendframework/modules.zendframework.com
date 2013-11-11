@@ -153,12 +153,11 @@ class IndexController extends AbstractActionController
             if ($response->getStatusCode() == 304 && $hasCache) {
                 $repositories = $cache->getItem($cacheKey);
                 break;
-            } elseif ($hasCache) {
-                $cache->removeItem($cacheKey);
             }
 
             if (!$repo->fork && $repo->permissions->push && $isModule && !$mapper->findByName($repo->name)) {
                 $repositories[] = $repo;
+                $cache->removeItem($cacheKey);
             }
         }
 
