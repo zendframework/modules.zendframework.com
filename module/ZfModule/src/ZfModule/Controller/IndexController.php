@@ -82,7 +82,14 @@ class IndexController extends AbstractActionController
         $sl = $this->getServiceLocator();
         $client = $sl->get('EdpGithub\Client');
 
-        $repos = $client->api('current_user')->repos(array('type' =>'all', 'per_page' => 100));
+        $params = array(
+            'type'      => 'all',
+            'per_page'  => 100,
+            'sort'      => 'updated',
+            'direction' => 'desc',
+        );
+
+        $repos = $client->api('current_user')->repos($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-user-' . $identity->getId();
@@ -104,7 +111,13 @@ class IndexController extends AbstractActionController
         $client = $sl->get('EdpGithub\Client');
 
         $owner = $this->params()->fromRoute('owner', null);
-        $repos = $client->api('user')->repos($owner);
+        $params = array(
+            'type'      => 'all',
+            'per_page'  => 100,
+            'sort'      => 'updated',
+            'direction' => 'desc',
+        );
+        $repos = $client->api('user')->repos($owner, $params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
@@ -116,43 +129,40 @@ class IndexController extends AbstractActionController
         return $viewModel;
     }
 
-    public function fetchModules($repos, $cacheKey)
+    public function fetchModules ($repos, $cacheKey)
     {
+        $cacheKey .= '-github';
         $sl = $this->getServiceLocator();
         $mapper = $sl->get('zfmodule_mapper_module');
+        /* @var $client \EdpGithub\Client */
         $client = $sl->get('EdpGithub\Client');
         /* @var $cache StorageInterface */
         $cache = $sl->get('zfmodule_cache');
 
         $repositories = array();
 
-        foreach($repos as $key => $repo) {
+        foreach ($repos as $repo) {
+            $isModule = $this->getModuleService()->isModule($repo);
             //Verify if repos have been modified
             $httpClient = $client->getHttpClient();
+            /* @var $response \Zend\Http\Response */
             $response = $httpClient->getResponse();
-            if($response->getStatusCode() == 304) {
-                if($cache->hasItem($cacheKey . '-github')) {
-                    $repositories =  $cache->getItem($cacheKey . '-github');
-                    break;
-                }
-            } elseif ($cache->hasItem($cacheKey . '-github')) {
-                $cache->removeItem($cacheKey . '-github');
+
+            $hasCache = $cache->hasItem($cacheKey);
+
+            if ($response->getStatusCode() == 304 && $hasCache) {
+                $repositories = $cache->getItem($cacheKey);
+                break;
             }
 
-            if($repo->fork || !$repo->permissions->push || !$this->getModuleService()->isModule($repo) ) {
-                continue;
+            if (!$repo->fork && $repo->permissions->push && $isModule && !$mapper->findByName($repo->name)) {
+                $repositories[] = $repo;
+                $cache->removeItem($cacheKey);
             }
-
-            $module = $mapper->findByName($repo->name);
-            if($module) {
-                continue;
-            }
-
-            $repositories[] = $repo;
         }
 
         //save list of modules to cache
-        $cache->setItem($cacheKey . '-github', $repositories);
+        $cache->setItem($cacheKey, $repositories);
 
         return $repositories;
     }
