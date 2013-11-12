@@ -50,12 +50,21 @@ class IndexController extends AbstractActionController
             $license = 'No license file found for this Module';
         }
 
+        try{
+            $composerJson = $client->api('repos')->content($vendor, $module, 'composer.json');
+            $composerConf = json_decode($composerJson);
+            $composerConf = base64_decode($composerConf->content);
+            $composerConf = json_decode($composerConf, true);
+        } catch(\Exception $e) {
+            $composerConf = 'No composer.json file found for this Module';
+        }
 
         $viewModel = new ViewModel(array(
             'vendor' => $vendor,
             'module' => $module,
             'repository' => $repository,
             'readme' => base64_decode($readme->content),
+            'composerConf' => $composerConf,
             'license' => $license,
         ));
 
@@ -73,7 +82,14 @@ class IndexController extends AbstractActionController
         $sl = $this->getServiceLocator();
         $client = $sl->get('EdpGithub\Client');
 
-        $repos = $client->api('current_user')->repos(array('type' =>'all', 'per_page' => 100));
+        $params = array(
+            'type'      => 'all',
+            'per_page'  => 100,
+            'sort'      => 'updated',
+            'direction' => 'desc',
+        );
+
+        $repos = $client->api('current_user')->repos($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-user-' . $identity->getId();
@@ -95,7 +111,13 @@ class IndexController extends AbstractActionController
         $client = $sl->get('EdpGithub\Client');
 
         $owner = $this->params()->fromRoute('owner', null);
-        $repos = $client->api('user')->repos($owner);
+        $params = array(
+            'type'      => 'all',
+            'per_page'  => 100,
+            'sort'      => 'updated',
+            'direction' => 'desc',
+        );
+        $repos = $client->api('user')->repos($owner, $params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
@@ -107,56 +129,40 @@ class IndexController extends AbstractActionController
         return $viewModel;
     }
 
-    public function fetchModules($repos, $cacheKey)
+    public function fetchModules ($repos, $cacheKey)
     {
+        $cacheKey .= '-github';
         $sl = $this->getServiceLocator();
         $mapper = $sl->get('zfmodule_mapper_module');
+        /* @var $client \EdpGithub\Client */
         $client = $sl->get('EdpGithub\Client');
         /* @var $cache StorageInterface */
         $cache = $sl->get('zfmodule_cache');
 
         $repositories = array();
-        //fetch only modules from github
-        foreach($repos as $repo) {
-            //Need to see first if any repository has been updated
+
+        foreach ($repos as $repo) {
+            $isModule = $this->getModuleService()->isModule($repo);
+            //Verify if repos have been modified
             $httpClient = $client->getHttpClient();
-            $response= $httpClient->getResponse();
-            if($response->getStatusCode() == 304) {
-                if($cache->hasItem($cacheKey . '-github')) {
-                    $repositories =  $cache->getItem($cacheKey . '-github');
-                    break;
-                }
+            /* @var $response \Zend\Http\Response */
+            $response = $httpClient->getResponse();
+
+            $hasCache = $cache->hasItem($cacheKey);
+
+            if ($response->getStatusCode() == 304 && $hasCache) {
+                $repositories = $cache->getItem($cacheKey);
+                break;
             }
-            if(!$repo->fork && $repo->permissions->push) {
-                if($this->getModuleService()->isModule($repo)) {
-                   $repositories[] = $repo;
-                }
+
+            if (!$repo->fork && $repo->permissions->push && $isModule && !$mapper->findByName($repo->name)) {
+                $repositories[] = $repo;
+                $cache->removeItem($cacheKey);
             }
         }
+
         //save list of modules to cache
-        if(!$cache->hasItem($cacheKey . '-github')) {
-            $cache->setItem($cacheKey . '-github', $repositories);
-        }
-
-        //check if cache for modules exist
-        if(!$cache->hasItem($cacheKey)) {
-            //check if module is in database
-            foreach($repositories as $key => $repo) {
-                $module = $mapper->findByName($repo->name);
-                if($module) {
-                    unset($repositories[$key]);
-                }
-            }
-            //save database mapped list to cache
-            $cache->setItem($cacheKey , $repositories);
-            // create cache tags
-            $identity = $this->zfcUserAuthentication()->getIdentity();
-
-            $tags = array($identity->getUsername() . '-' . $identity->getId());
-            $cache->setTags($cacheKey, $tags);
-        } else {
-            $repositories = $cache->getItem($cacheKey);
-        }
+        $cache->setItem($cacheKey, $repositories);
 
         return $repositories;
     }
