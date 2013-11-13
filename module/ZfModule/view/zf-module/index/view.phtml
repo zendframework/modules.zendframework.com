@@ -1,8 +1,11 @@
-<h3><?php echo $this->vendor ?> / <?php echo $this->module ?> </h3>
+<?php $this->headTitle($module . ' module by ' . $vendor) ?>
+<?php $this->headMeta()->appendName('description', $repository->description); ?>
+
+<h3><?php echo $vendor ?> / <?php echo $module ?> </h3>
 
 <div class="row">
     <div class="span8">
-        <p class="well"><?php echo $this->repository->description; ?></p>
+        <p class="well"><?php echo $repository->description; ?></p>
         <ul class="nav nav-tabs">
             <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
             <li><a href="#composer" data-toggle="tab">COMPOSER</a></li>
@@ -11,18 +14,17 @@
 
         <div class="tab-content">
             <div class="tab-pane active" id="readme">
-                <?php echo  $this->markdown($this->readme);?>
+                <?php echo $this->markdown($this->readme); ?>
             </div>
             <div class="tab-pane" id="composer">
-                <?php if(is_array($composerConf)){
-                    echo $this->composerView($this->composerConf);
-                } else {
-                    echo $this->composerConf;
-                }
-                ?>
+                <?php if (is_array($composerConf)): ?>
+                    <?php echo $this->composerView($this->composerConf); ?>
+                <?php else: ?>
+                    <?php echo $this->composerConf; ?>
+                <?php endif; ?>
             </div>
             <div class="tab-pane" id="license">
-                <pre><?php echo $license;?></pre>
+                <pre><?php echo $license; ?></pre>
             </div>
         </div>
     </div>
@@ -30,11 +32,11 @@
         <div class="sidebar"><?php
             // infos
             echo $this->moduleDescription(array(
-                'owner' => $repository->owner->login,
-                'name' => $repository->name,
-                'created_at' => $repository->created_at,
-                'url' => $repository->html_url,
-                'photo_url' => $repository->owner->avatar_url,
+                'owner'       => $repository->owner->login,
+                'name'        => $repository->name,
+                'created_at'  => $repository->created_at,
+                'url'         => $repository->html_url,
+                'photo_url'   => $repository->owner->avatar_url,
                 'description' => $repository->description
             ));
             ?></div>
