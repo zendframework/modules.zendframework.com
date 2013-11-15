@@ -8,7 +8,7 @@
         <p class="well"><?php echo $repository->description; ?></p>
         <ul class="nav nav-tabs">
             <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
-            <li><a href="#composer" data-toggle="tab">COMPOSER</a></li>
+            <!--<li><a href="#composer" data-toggle="tab">COMPOSER</a></li>-->
             <li ><a href="#license" data-toggle="tab">LICENSE</a></li>
         </ul>
 
@@ -16,13 +16,13 @@
             <div class="tab-pane active" id="readme">
                 <?php echo $this->markdown($this->readme); ?>
             </div>
-            <div class="tab-pane" id="composer">
+            <!--<div class="tab-pane" id="composer">
                 <?php if (is_array($composerConf)): ?>
                     <?php echo $this->composerView($this->composerConf); ?>
                 <?php else: ?>
                     <?php echo $this->composerConf; ?>
                 <?php endif; ?>
-            </div>
+            </div>-->
             <div class="tab-pane" id="license">
                 <pre><?php echo $license; ?></pre>
             </div>
