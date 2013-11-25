@@ -70,7 +70,7 @@
                     Welcome to the ZF2 Modules Site
                     <br />
                     <small>
-                        Find a Module that fits your needs.
+                        Find one of <strong><?php echo $this->totalModules() ?></strong> modules that fits your needs.
                     </small>
                 </h1>
                 <div>
@@ -79,7 +79,7 @@
                     </p>
                     <hr />
                     <p>
-                        If you are interested in helping with this project, simply fork the code on <a class="zf-green" href="https://github.com/zendframework/modules.zendframework.com">GITHUB</a> and get started!.
+                        If you are interested in helping with this project, simply fork the code on <a class="zf-green" href="https://github.com/zendframework/modules.zendframework.com">GITHUB</a> and get started!
                         Additionally, join us in #zftalk.modules on Freenode and ask how you can help! Grab latest modules using <a class="zf-green" href="<?php echo $this->url('feed') ?>">RSS Feed</a>.
                     </p>
                     <!--
@@ -122,8 +122,6 @@
     ->prependFile($this->basePath() . '/js/jquery.livesearch.js')
     ->prependFile($this->basePath() . '/js/bootstrap.min.js')
     ->prependFile($this->basePath() . '/js/jquery.min.js')
-
-//                ->appendFile($this->basePath() . '/js/slide.js')
         ?>
 </body>
 </html>
