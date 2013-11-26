@@ -1,0 +1,50 @@
+{
+    "name": "zendframework/modules-site",
+    "description": "ZF2 Modules Site",
+    "license": "BSD-3-Clause",
+    "homepage": "https://modules.zendframework.com",
+    "require": {
+        "php": ">=5.5.0",
+        "zendframework/zendframework": "2.3.*",
+        "rwoverdijk/assetmanager": "1.3.*",
+        "evandotpro/edp-github": "0.1.*",
+        "evandotpro/edp-markdown": "0.1.*",
+        "evandotpro/edp-module-layouts": "1.0.*",
+        "lorenzoferrarajr/lfj-error-layout": "1.0.*",
+        "zf-commons/zfc-user": "0.1.*",
+        "zf-commons/zfc-base": "0.1.*",
+        "socalnick/scn-social-auth": "1.10.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "repositories" : [
+        {
+            "type": "package",
+            "package": {
+                "name": "evandotpro/edp-markdown",
+                "version": "0.1.0",
+                "source" : {
+                    "type" : "git",
+                    "url": "https://github.com/EvanDotPro/EdpMarkdown.git",
+                    "reference" : "origin/master"
+                },
+                "autoload": {
+                    "psr-0": {
+                        "EdpMarkdown": "src/"
+                    },
+                    "classmap": [
+                        "./Module.php"
+                    ]
+                }
+            }
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Hybrid": "./vendor/hybridauth/hybridauth/hybridauth/"
+        }
+    },
+    "minimum-stability": "dev"
+}
+
