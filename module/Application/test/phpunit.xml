@@ -12,7 +12,7 @@
         backupGlobals="false"
         syntaxCheck="true"
         >
-    <testsuite name="EdpGithub Module Tests">
+    <testsuite name="ApplicationTest">
         <directory>./ApplicationTest</directory>
     </testsuite>
     <filter>
