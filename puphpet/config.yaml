@@ -10,6 +10,12 @@ vagrantfile-local:
                 nU41IVdCiAYU:
                     host: '6161'
                     guest: '22'
+                apache2:
+                    host: '8082'
+                    guest: '80'
+                mysql:
+                    host: '3308'
+                    guest: '3306'
         provider:
             virtualbox:
                 modifyvm:
