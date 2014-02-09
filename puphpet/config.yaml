@@ -37,6 +37,9 @@ vagrantfile-local:
                 source: ./
                 target: /var/www
                 nfs: 'false'
+                owner: 'www-data'
+                group: 'www-data'
+                extra: 'dmode=775,fmode=775'
         usable_port_range: 2200..2250
     ssh:
         host: null
@@ -94,6 +97,7 @@ php:
             - cli
             - intl
             - mcrypt
+            - curl
         pear: {  }
         pecl:
             - pecl_http
@@ -127,7 +131,7 @@ mysql:
             host: localhost
             user: modules
             password: modules
-            sql_file: ''
+            sql_file: '/var/www/data/sql/0.sql'
 mongodb:
     install: 0
     auth: 1
