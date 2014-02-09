@@ -74,9 +74,9 @@ apache:
         - rewrite
     vhosts:
         7Gmk0kdGsiLL:
-            servername: modules.zendframework
+            servername: modules.zendframework.dev
             serveraliases:
-                - modules.zendframework
+                - www.modules.zendframework.dev
             docroot: /var/www/public
             port: '80'
             setenv:
