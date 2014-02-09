@@ -18,18 +18,16 @@ This site will eventually be a community site for publishing and sharing Zend Fr
  * Copy config/autoload/database.local.php.dist to config/autoload/database.local.php and enter your database credentials here.
 
 ###Vagrant Setup
- * Install Latest Vagrant and Virtualbox
- * Clone this project
- * Run git submodule update --init to initialize your vendors
- * Create a new Application in github here. https://github.com/settings/applications/new
- 	 * Main URL and CALLBACK url must be the same without any routing. e.g. http://modules.zendframework.com
- * Copy /puppet/hieradata/dev.yaml.dist to /puppet/hieradata/dev.yaml and enter the Id and Secret provided during the Application registration on github
- * Run "vagrant up"
 
- Ip: 192.168.56.101
- Virtual Host: www.modules.zendframework.dev
-
- Enter these deailts also in you hosts file
+ * Clone this project: `git clone git://github.com/zendframework/modules.zendframework.com.git`
+ * Run `git submodule update --init` to initialize dependencies
+ * Create a new Application in github [here](https://github.com/settings/applications/new)
+ * Main URL and CALLBACK url must be the same without any routing. e.g. http://modules.zendframework.com
+ * Remove the `.dist` suffix from the files in `config/autoload` and edit them according to your own credentials
+ * Run `vagrant up` (You will need [Vagrant](http://www.vagrantup.com/))
+ * Add an entry in your hosts (`/etc/hosts` or `C:\Windows\system32\drivers\etc\hosts`):
+    - `192.168.56.101 modules.zendframework.dev`
+ * Browse to http://modules.zendframework.dev/
 
 ## Deployment
 
