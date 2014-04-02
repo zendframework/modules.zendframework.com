@@ -5,7 +5,22 @@
     "homepage": "https://modules.zendframework.com",
     "require": {
         "php": ">=5.5.0",
-        "zendframework/zendframework": "2.3.*",
+        "bshaffer/oauth2-server-php": "dev-develop",
+        
+        "zendframework/zendframework": "~2.3",
+        "zfcampus/zf-apigility": "~1.0.0",
+        "zfcampus/zf-apigility-provider": "~1.0.0",
+        "zfcampus/zf-apigility-documentation": "~1.0.0",
+        "zfcampus/zf-api-problem": "~1.0.0",
+        "zfcampus/zf-content-negotiation": "~1.0.0",
+        "zfcampus/zf-content-validation": "~1.0.0",
+        "zfcampus/zf-development-mode": "~2.0",
+        "zfcampus/zf-hal": "~1.0.0",
+        "zfcampus/zf-mvc-auth": "~1.0.0",
+        "zfcampus/zf-oauth2": "~1.0.0",
+        "zfcampus/zf-rest": "~1.0.0",
+        "zfcampus/zf-rpc": "~1.0.0",
+        "zfcampus/zf-versioning": "~1.0.0",
         "rwoverdijk/assetmanager": "1.3.*",
         "evandotpro/edp-github": "0.1.*",
         "evandotpro/edp-markdown": "0.1.*",
@@ -16,7 +31,12 @@
         "socalnick/scn-social-auth": "1.10.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "4.0.*",
+        "zendframework/zftool": "dev-master",
+        "zendframework/zend-developer-tools": "dev-master",
+        "zfcampus/zf-apigility-admin": "~1.0-dev",
+        "zfcampus/zf-configuration": "~1.0-dev",
+        "zfcampus/zf-apigility-welcome": "~1.0-dev"
     },
     "repositories" : [
         {
