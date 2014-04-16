@@ -23,7 +23,7 @@
         "zfcampus/zf-versioning": "~1.0.0",
         "rwoverdijk/assetmanager": "1.3.*",
         "evandotpro/edp-github": "0.1.*",
-        "evandotpro/edp-markdown": "0.1.*",
+        "evandotpro/edp-markdown": "0.2.*",
         "evandotpro/edp-module-layouts": "1.0.*",
         "lorenzoferrarajr/lfj-error-layout": "1.0.*",
         "zf-commons/zfc-user": "0.1.*",
@@ -38,28 +38,6 @@
         "zfcampus/zf-configuration": "~1.0-dev",
         "zfcampus/zf-apigility-welcome": "~1.0-dev"
     },
-    "repositories" : [
-        {
-            "type": "package",
-            "package": {
-                "name": "evandotpro/edp-markdown",
-                "version": "0.1.0",
-                "source" : {
-                    "type" : "git",
-                    "url": "https://github.com/EvanDotPro/EdpMarkdown.git",
-                    "reference" : "origin/master"
-                },
-                "autoload": {
-                    "psr-0": {
-                        "EdpMarkdown": "src/"
-                    },
-                    "classmap": [
-                        "./Module.php"
-                    ]
-                }
-            }
-        }
-    ],
     "autoload": {
         "psr-0": {
             "Hybrid": "./vendor/hybridauth/hybridauth/hybridauth/"
