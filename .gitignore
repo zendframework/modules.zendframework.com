@@ -1,3 +1,5 @@
 index.html
+clover.xml
 .vagrant
 vendor
+config/development.config.php
