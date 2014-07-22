@@ -18,7 +18,7 @@
         <?php } ?>
             <div class="span3">
                 <a href="https://github.com/<?php echo $user->getUserName()?>" data-delay="0" rel="tooltip" title="<?php echo $user->getUserName()?>" class="thumbnail">
-                 <img src="<?php echo $user->getPhotoUrl()?>" alt="<?php echo $user->getUserName()?>" class="avatar">
+                 <img src="<?php echo $user->getPhotoUrl()?>" alt="<?php echo $user->getUserName()?>">
                 </a>
             </div>
     <?php if($count%4 ==3){ ?>
