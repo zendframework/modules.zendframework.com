@@ -20,6 +20,7 @@ return array(
         'ZF\Rpc',
         'ZF\Versioning',
         /* Old Modules may be replaced integrating Apigility */
+        'AssetManager',
         'LfjErrorLayout',
         'ZfcBase',
         'ZfcUser',
