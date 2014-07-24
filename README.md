@@ -9,8 +9,8 @@ This site will eventually be a community site for publishing and sharing Zend Fr
 
 ###Main Setup
 
- * Clone this project into your ./vendor/ directory and enable it in your application.config.php file.
- * Run **git submodule update --init** to initialize your vendors
+ * Clone this project git clone git://github.com/zendframework/modules.zendframework.com.git.
+ * Run **composer install** to initialize your vendors
  * Import data/0.sql into your database
  * Create a new Application in github here. https://github.com/settings/applications/new
     * Main URL and CALLBACK url must be the same without any routing. e.g. http://modules.zendframework.com
@@ -20,7 +20,6 @@ This site will eventually be a community site for publishing and sharing Zend Fr
 ###Vagrant Setup
 
  * Clone this project: `git clone git://github.com/zendframework/modules.zendframework.com.git`
- * Run `git submodule update --init` to initialize dependencies
  * Create a new Application in github [here](https://github.com/settings/applications/new)
  * Main URL and CALLBACK url must be the same without any routing. e.g. http://modules.zendframework.com
  * Remove the `.dist` suffix from the files in `config/autoload` and edit them according to your own credentials
