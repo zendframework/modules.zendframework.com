@@ -26,7 +26,7 @@ This site will eventually be a community site for publishing and sharing Zend Fr
     - The database information for vagrant is:
     - Username: modules
     - Database name: modules
-    - Password: 123
+    - Password: modules
  * Run `vagrant up` (You will need [Vagrant](http://www.vagrantup.com/))
  * Add an entry in your hosts (`/etc/hosts` or `C:\Windows\system32\drivers\etc\hosts`):
     - `192.168.56.101 modules.zendframework.dev`
