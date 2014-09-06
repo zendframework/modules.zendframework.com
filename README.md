@@ -23,6 +23,10 @@ This site will eventually be a community site for publishing and sharing Zend Fr
  * Create a new Application in github [here](https://github.com/settings/applications/new)
  * Main URL and CALLBACK url must be the same without any routing. e.g. http://modules.zendframework.com
  * Remove the `.dist` suffix from the files in `config/autoload` and edit them according to your own credentials
+    - The database information for vagrant is:
+    - Username: modules
+    - Database name: modules
+    - Password: 123
  * Run `vagrant up` (You will need [Vagrant](http://www.vagrantup.com/))
  * Add an entry in your hosts (`/etc/hosts` or `C:\Windows\system32\drivers\etc\hosts`):
     - `192.168.56.101 modules.zendframework.dev`
