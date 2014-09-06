@@ -12,6 +12,9 @@ vagrantfile-local:
                 DvqhfFYBgUqn:
                     host: '5711'
                     guest: '22'
+                GcwhzF2GbKcs:
+                    host: '8594'
+                    guest: '80'
         provider:
             virtualbox:
                 modifyvm:
