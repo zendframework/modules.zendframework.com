@@ -41,7 +41,10 @@
     "autoload": {
         "psr-0": {
             "Hybrid": "./vendor/hybridauth/hybridauth/hybridauth/"
-        }
+        },
+        "classmap": [
+            "./vendor/hybridauth/hybridauth/additional-providers"
+        ]
     },
     "minimum-stability": "dev"
 }
