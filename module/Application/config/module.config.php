@@ -19,11 +19,6 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-                'child_routes' => array(
-                    'query' => array(
-                        'type' => 'Query',
-                    ),
-                ),
             ),
             'home' => array(
                 'type' => 'Segment',
@@ -39,11 +34,6 @@ return array(
                 ),
                 'priority' => 1,
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'query' => array(
-                        'type' => 'Query',
-                    ),
-                )
             ),
             'feed' => array(
                 'type' => 'Literal',
