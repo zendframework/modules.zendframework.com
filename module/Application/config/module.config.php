@@ -23,7 +23,7 @@ return array(
             'home' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route'    => '/[page/:page]',
+                    'route'    => '/[page/:page][?query=:query]',
                     'constraints' => array(
                         'page'     => '[0-9]+',
                     ),
