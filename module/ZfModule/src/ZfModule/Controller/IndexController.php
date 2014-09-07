@@ -112,7 +112,6 @@ class IndexController extends AbstractActionController
 
         $owner = $this->params()->fromRoute('owner', null);
         $params = array(
-            'type'      => 'all',
             'per_page'  => 100,
             'sort'      => 'updated',
             'direction' => 'desc',
