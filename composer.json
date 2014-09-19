@@ -3,17 +3,11 @@
     "description": "ZF2 Modules Site",
     "license": "BSD-3-Clause",
     "homepage": "https://modules.zendframework.com",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Eye4web/EdpGithub"
-        }
-    ],
     "require": {
         "php": ">=5.5.0",
         "bshaffer/oauth2-server-php": "dev-develop",
         
-        "zendframework/zendframework": "~2.3",
+        "zendframework/zendframework": "~2.3.0",
         "zfcampus/zf-apigility": "~1.0.0",
         "zfcampus/zf-apigility-provider": "~1.0.0",
         "zfcampus/zf-apigility-documentation": "~1.0.0",
@@ -28,7 +22,7 @@
         "zfcampus/zf-rpc": "~1.0.0",
         "zfcampus/zf-versioning": "~1.0.0",
         "rwoverdijk/assetmanager": "1.3.*",
-        "evandotpro/edp-github": "dev-header-fix",
+        "evandotpro/edp-github": "dev-master",
         "evandotpro/edp-markdown": "0.2.*",
         "evandotpro/edp-module-layouts": "1.0.*",
         "lorenzoferrarajr/lfj-error-layout": "1.0.*",
