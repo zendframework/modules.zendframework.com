@@ -20,7 +20,7 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $query =  $this->params()->fromQuery('query', null);
-        $page = (int) $this->params()->fromRoute('page', 1);
+        $page = (int) $this->params('page', 1);
 
         $mapper = $this->getServiceLocator()->get('zfmodule_mapper_module');
 

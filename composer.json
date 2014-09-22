@@ -7,7 +7,7 @@
         "php": ">=5.5.0",
         "bshaffer/oauth2-server-php": "dev-develop",
         
-        "zendframework/zendframework": "~2.3",
+        "zendframework/zendframework": "~2.3.0",
         "zfcampus/zf-apigility": "~1.0.0",
         "zfcampus/zf-apigility-provider": "~1.0.0",
         "zfcampus/zf-apigility-documentation": "~1.0.0",
@@ -22,7 +22,7 @@
         "zfcampus/zf-rpc": "~1.0.0",
         "zfcampus/zf-versioning": "~1.0.0",
         "rwoverdijk/assetmanager": "1.3.*",
-        "evandotpro/edp-github": "0.1.*",
+        "evandotpro/edp-github": "dev-master",
         "evandotpro/edp-markdown": "0.2.*",
         "evandotpro/edp-module-layouts": "1.0.*",
         "lorenzoferrarajr/lfj-error-layout": "1.0.*",
@@ -41,7 +41,10 @@
     "autoload": {
         "psr-0": {
             "Hybrid": "./vendor/hybridauth/hybridauth/hybridauth/"
-        }
+        },
+        "classmap": [
+            "./vendor/hybridauth/hybridauth/additional-providers"
+        ]
     },
     "minimum-stability": "dev"
 }

@@ -12,6 +12,9 @@ vagrantfile-local:
                 DvqhfFYBgUqn:
                     host: '5711'
                     guest: '22'
+                GcwhzF2GbKcs:
+                    host: '8594'
+                    guest: '80'
         provider:
             virtualbox:
                 modifyvm:
@@ -76,7 +79,7 @@ apache:
     settings:
         user: www-data
         group: www-data
-        default_vhost: true
+        default_vhost: false
         manage_user: false
         manage_group: false
         sendfile: 0
