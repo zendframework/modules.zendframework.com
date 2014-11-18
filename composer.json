@@ -41,11 +41,17 @@
     },
     "autoload": {
         "psr-0": {
-            "Hybrid": "./vendor/hybridauth/hybridauth/hybridauth/"
-        },
-        "classmap": [
-            "./vendor/hybridauth/hybridauth/additional-providers"
-        ]
+            "Application": "./module/Application/src/",
+            "Hybrid": "./vendor/hybridauth/hybridauth/hybridauth/",
+            "User": "./module/User/src/",
+            "ZfModule": "./module/ZfModule/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "ApplicationTest": "./module/Application/test/",
+            "ZfModuleTest": "./module/ZfModule/test/"
+        }
     },
     "minimum-stability": "dev"
 }
