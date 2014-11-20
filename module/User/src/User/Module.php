@@ -53,6 +53,11 @@ class Module extends AbstractModule
         );
     }
 
+    public function getAutoloaderConfig()
+    {
+        return array();
+    }
+
     public function getDir()
     {
         return __DIR__;
