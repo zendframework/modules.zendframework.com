@@ -70,7 +70,7 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
             return false;
         }
 
-        if(!json_decode($module) instanceOf \stdClass) {
+        if(!json_decode($module) instanceof \stdClass) {
             return false;
         }
 
