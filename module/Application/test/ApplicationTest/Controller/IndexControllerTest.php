@@ -11,7 +11,7 @@ use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 use PHPUnit_Framework_TestCase;
 
-class ApplicationControllerTest extends PHPUnit_Framework_TestCase
+class IndexControllerTest extends PHPUnit_Framework_TestCase
 {
     protected $controller;
     protected $request;
