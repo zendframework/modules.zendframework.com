@@ -129,7 +129,7 @@ class IndexController extends AbstractActionController
         return $viewModel;
     }
 
-    public function fetchModules ($repos, $cacheKey)
+    public function fetchModules($repos, $cacheKey)
     {
         $cacheKey .= '-github';
         $sl = $this->getServiceLocator();
