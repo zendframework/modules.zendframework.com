@@ -37,17 +37,17 @@ class ListModule extends AbstractHelper implements ServiceLocatorAwareInterface
         $modules = array();
 
         //limit modules to only user modules
-        if($user) {
+        if ($user) {
             $client = $sl->get('EdpGithub\Client');
 
             $repos = $client->api('current_user')->repos(array('type' =>'all', 'per_page' => 100));
 
             $modules = array();
-            foreach($repos as $repo) {
-                if(!$repo->fork && $repo->permissions->push) {
+            foreach ($repos as $repo) {
+                if (!$repo->fork && $repo->permissions->push) {
                     $module = $mapper->findByName($repo->name);
-                    if($module) {
-                       $modules[] = $module;
+                    if ($module) {
+                        $modules[] = $module;
                     }
                 }
             }

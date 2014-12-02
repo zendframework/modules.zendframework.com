@@ -15,11 +15,11 @@ class Module extends AbstractDbMapper implements ModuleInterface
     {
         $select = $this->getSelect();
 
-        if($orderBy) {
+        if ($orderBy) {
             $select->order($orderBy . ' ' . $sort);
         }
 
-        if(null !== $query) {
+        if (null !== $query) {
             $spec = function ($where) use ($query) {
                 $where->like('name', '%'.$query.'%')->or->like('description', '%'.$query.'%');
             };
@@ -38,15 +38,15 @@ class Module extends AbstractDbMapper implements ModuleInterface
         return $paginator;
     }
 
-    public function findAll($limit= null, $orderBy = null, $sort = 'ASC')
+    public function findAll($limit = null, $orderBy = null, $sort = 'ASC')
     {
         $select = $this->getSelect();
 
-        if($orderBy) {
+        if ($orderBy) {
             $select->order($orderBy . ' ' . $sort);
         }
 
-        if($limit) {
+        if ($limit) {
             $select->limit($limit);
         }
 
@@ -59,11 +59,11 @@ class Module extends AbstractDbMapper implements ModuleInterface
     {
         $select = $this->getSelect();
 
-        if($orderBy) {
+        if ($orderBy) {
             $select->order($orderBy . ' ' . $sort);
         }
 
-        if($limit) {
+        if ($limit) {
             $select->limit($limit);
         }
 
@@ -77,15 +77,15 @@ class Module extends AbstractDbMapper implements ModuleInterface
         return $entity;
     }
 
-    public function findByOwner($owner, $limit= null, $orderBy = null, $sort = 'ASC')
+    public function findByOwner($owner, $limit = null, $orderBy = null, $sort = 'ASC')
     {
         $select = $this->getSelect();
 
-        if($orderBy) {
+        if ($orderBy) {
             $select->order($orderBy . ' ' . $sort);
         }
 
-        if($limit) {
+        if ($limit) {
             $select->limit($limit);
         }
 

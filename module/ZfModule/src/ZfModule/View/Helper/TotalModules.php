@@ -53,5 +53,4 @@ class TotalModules extends AbstractHelper implements ServiceLocatorAwareInterfac
         $this->serviceLocator = $serviceLocator;
         return $this;
     }
-
 }

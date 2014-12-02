@@ -20,7 +20,7 @@ class IndexController extends AbstractActionController
 
         //check if module is existing in database otherwise return 404 page
         $result = $mapper->findByName($module);
-        if(!$result) {
+        if (!$result) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
@@ -34,7 +34,7 @@ class IndexController extends AbstractActionController
         $repository = json_decode($client->api('repos')->show($vendor, $module));
         $httpClient = $client->getHttpClient();
         $response= $httpClient->getResponse();
-        if($response->getStatusCode() == 304 && $cache->hasItem($cacheKey)) {
+        if ($response->getStatusCode() == 304 && $cache->hasItem($cacheKey)) {
             return $cache->getItem($cacheKey);
         }
 
@@ -42,20 +42,20 @@ class IndexController extends AbstractActionController
         $readme = json_decode($readme);
         $repository = json_decode($client->api('repos')->show($vendor, $module));
 
-        try{
+        try {
             $license = $client->api('repos')->content($vendor, $module, 'LICENSE');
             $license = json_decode($license);
             $license = base64_decode($license->content);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $license = 'No license file found for this Module';
         }
 
-        try{
+        try {
             $composerJson = $client->api('repos')->content($vendor, $module, 'composer.json');
             $composerConf = json_decode($composerJson);
             $composerConf = base64_decode($composerConf->content);
             $composerConf = json_decode($composerConf, true);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $composerConf = 'No composer.json file found for this Module';
         }
 
@@ -68,7 +68,7 @@ class IndexController extends AbstractActionController
             'license' => $license,
         ));
 
-        $cache->setItem($cacheKey , $viewModel);
+        $cache->setItem($cacheKey, $viewModel);
 
         return $viewModel;
     }
@@ -178,7 +178,7 @@ class IndexController extends AbstractActionController
         }
 
         $request = $this->getRequest();
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
@@ -186,7 +186,7 @@ class IndexController extends AbstractActionController
             $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
             $repository = json_decode($repository);
 
-            if(!($repository instanceof \stdClass)) {
+            if (!($repository instanceof \stdClass)) {
                 throw new Exception\RuntimeException(
                     'Not able to fetch the repository from github due to an unknown error.',
                     500
@@ -194,8 +194,8 @@ class IndexController extends AbstractActionController
             }
 
             $service = $this->getModuleService();
-            if(!$repository->fork && $repository->permissions->push) {
-                if($service->isModule($repository)) {
+            if (!$repository->fork && $repository->permissions->push) {
+                if ($service->isModule($repository)) {
                     $module = $service->register($repository);
                     $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
                 } else {
@@ -204,7 +204,7 @@ class IndexController extends AbstractActionController
                         403
                     );
                 }
-            }else {
+            } else {
                 throw new Exception\UnexpectedValueException(
                     'You have no permission to add this module. The reason might be that you are' .
                     'neither the owner nor a collaborator of this repository.',
@@ -244,7 +244,7 @@ class IndexController extends AbstractActionController
         }
 
         $request = $this->getRequest();
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
@@ -252,17 +252,17 @@ class IndexController extends AbstractActionController
             $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
             $repository = json_decode($repository);
 
-            if(!$repository instanceof \stdClass) {
+            if (!$repository instanceof \stdClass) {
                 throw new Exception\RuntimeException(
                     'Not able to fetch the repository from github due to an unknown error.',
                     500
                 );
             }
 
-            if(!$repository->fork && $repository->permissions->push) {
+            if (!$repository->fork && $repository->permissions->push) {
                 $mapper = $sm->get('zfmodule_mapper_module');
                 $module = $mapper->findByUrl($repository->html_url);
-                if($module instanceof \ZfModule\Entity\Module) {
+                if ($module instanceof \ZfModule\Entity\Module) {
                     $module = $mapper->delete($module);
                     $this->flashMessenger()->addMessage($repository->name .' has been removed from ZF Modules');
                 } else {
@@ -271,7 +271,7 @@ class IndexController extends AbstractActionController
                         403
                     );
                 }
-            }else {
+            } else {
                 throw new Exception\UnexpectedValueException(
                     'You have no permission to add this module. The reason might be that you are' .
                     'neither the owner nor a collaborator of this repository.',

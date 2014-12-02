@@ -3,7 +3,7 @@
 namespace ZfModule\Service;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use ZfcBase\EventManager\EventProvider;
 use ZfModule\Mapper\ModuleInterface as ModuleMapperInterface;
@@ -33,7 +33,7 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
         $url = $data->html_url;
         $module = $this->getModuleMapper()->findByUrl($url);
         $update = true;
-        if(!$module) {
+        if (!$module) {
             $module  = new \ZfModule\Entity\Module;
             $update = false;
         }
@@ -45,7 +45,7 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
         $module->setOwner($owner->login);
         $module->setPhotoUrl($owner->avatar_url);
 
-        if($update) {
+        if ($update) {
             $this->getModuleMapper()->update($module);
         } else {
             $this->getModuleMapper()->insert($module);
@@ -65,6 +65,9 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
         $sm = $this->getServiceLocator();
         $client = $sm->get('EdpGithub\Client');
 
+        if (!json_decode($module) instanceof \stdClass) {
+            return false;
+        }
         $query = 'repo:' . $repo->owner->login . '/' . $repo->name . ' filename:Module.php "class Module"';
         $response = $client->getHttpClient()->request('search/code?q=' . $query);
         $result = json_decode($response->getbody(), true);

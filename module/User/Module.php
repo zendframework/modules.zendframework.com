@@ -13,7 +13,7 @@ class Module extends AbstractModule
         $em = $app->getEventManager()->getSharedManager();
         $sm = $app->getServiceManager();
 
-        $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth','githubToLocalUser', function ($e) {
+        $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth', 'githubToLocalUser', function ($e) {
             $localUser = $e->getTarget();
             $userProfile = $e->getParam('userProfile');
             $nickname = substr(
@@ -28,12 +28,12 @@ class Module extends AbstractModule
             $hybridAuth = $sm->get('HybridAuth');
             $adapter = $hybridAuth->getAdapter('github');
 
-            if($adapter->isUserConnected()) {
+            if ($adapter->isUserConnected()) {
                 $token = $adapter->getAccessToken();
                 $client = $e->getTarget();
                 $client->authenticate('url_token', $token['access_token']);
             }
-        } );
+        });
     }
 
     public function getServiceConfig()
