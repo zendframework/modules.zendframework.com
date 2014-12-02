@@ -1,5 +1,5 @@
 <?php
-namespace EdpGithubTest;
+namespace ApplicationTest;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
