@@ -64,17 +64,18 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
     {
         $sm = $this->getServiceLocator();
         $client = $sm->get('EdpGithub\Client');
-        try{
-            $module = $client->api('repos')->content($repo->owner->login, $repo->name, 'Module.php');
-        } catch(\Exception $e) {
-            return false;
-        }
 
         if(!json_decode($module) instanceof \stdClass) {
             return false;
+        $query = 'repo:' . $repo->owner->login . '/' . $repo->name . ' filename:Module.php "class Module"';
+        $response = $client->getHttpClient()->request('search/code?q=' . $query);
+        $result = json_decode($response->getbody(), true);
+
+        if (isset($result['total_count']) && $result['total_count'] > 0) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
