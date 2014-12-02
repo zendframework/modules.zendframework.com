@@ -11,17 +11,28 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use ZfModule\Mapper;
 
 class SearchController extends AbstractActionController
 {
+    /**
+     * @var Mapper\Module
+     */
+    private $moduleMapper;
+
+    /**
+     * @param Mapper\Module $moduleMapper
+     */
+    public function __construct(Mapper\Module $moduleMapper)
+    {
+        $this->moduleMapper = $moduleMapper;
+    }
+
     public function indexAction()
     {
         $query =  $this->params()->fromQuery('query', null);
 
-        $sm = $this->getServiceLocator();
-        $mapper = $sm->get('zfmodule_mapper_module');
-
-        $results = $mapper->findByLike($query);
+        $results = $this->moduleMapper->findByLike($query);
 
         $viewModel = new ViewModel(array(
             'results' => $results,

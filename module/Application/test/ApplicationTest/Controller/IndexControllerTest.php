@@ -6,6 +6,7 @@ use ApplicationTest\Bootstrap;
 use Application\Controller\IndexController;
 use Zend\Http\Request;
 use Zend\Http\Response;
+use Zend\Mvc\Controller\ControllerManager;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
@@ -22,7 +23,11 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $serviceManager = Bootstrap::getServiceManager();
-        $this->controller = new IndexController();
+
+        /* @var ControllerManager $controllerManager */
+        $controllerManager = $serviceManager->get('ControllerManager');
+        $this->controller = $controllerManager->get('Application\Controller\Index');
+
         $this->request = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
         $this->event = new MvcEvent();
