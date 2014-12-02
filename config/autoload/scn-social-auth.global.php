@@ -15,6 +15,14 @@ $settings = array(
     //'zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
 
     /**
+     * Zend\Session\SessionManager DI Alias
+     *
+     * Please specify the DI alias for the configured Zend\Session\SessionManager
+     * instance that ScnSocialAuth should use.
+     */
+    //'zend_session_manager' => 'Zend\Session\SessionManager',
+
+    /**
      * User Provider Entity Class
      *
      * Name of Entity class to use. Useful for using your own entity class
@@ -78,7 +86,7 @@ $settings = array(
      * See he Github docs for a full list of the available permissions:
      * http://developer.github.com/v3/oauth/#scopes
      */
-    //'github_scope' => '',
+    'github_scope' => 'user, public_repo, ',
 
     /**
      * Google Enabled
@@ -120,6 +128,19 @@ $settings = array(
     //'yahoo_enabled' => true,
 
     /**
+     * tumblr Enabled
+     *
+     * Please specify if tumblr is enabled
+     */
+    //'tumblr_enabled' => true,
+
+    /**
+     * Set to true if you want to display only the social login buttons without
+     * the username/password etc. from ZfcUser.
+     */
+    //'social_login_only' => false,
+
+    /**
      * End of ScnSocialAuth configuration
      */
 );
@@ -132,6 +153,7 @@ return array(
     'service_manager' => array(
         'aliases' => array(
             'ScnSocialAuth_ZendDbAdapter' => (isset($settings['zend_db_adapter'])) ? $settings['zend_db_adapter']: 'Zend\Db\Adapter\Adapter',
+            'ScnSocialAuth_ZendSessionManager' => (isset($settings['zend_session_manager'])) ? $settings['zend_session_manager']: 'Zend\Session\SessionManager',
         ),
     ),
 );

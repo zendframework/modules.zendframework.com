@@ -44,7 +44,7 @@
                 ?>" style="width:23px;height:23px;" />
                 </a></div><a class="login" href="<?php
                     echo $this->url('zfcuser');
-                ?>" title="My profile"> Hello <?=ucfirst($userDisplayName);?></a>
+                ?>" title="My profile"> Hello <?php echo ucfirst($userDisplayName);?></a>
             </li>
             <li class="sep">|</li>
             <li ><a href="user/logout">Logout</a></li>
@@ -84,7 +84,7 @@
 
 <footer class="footer">
     <div class="container">
-        <p><?=COPY_MSG;?></p>
+        <p><?php echo COPY_MSG;?></p>
     </div>
 </footer>
 

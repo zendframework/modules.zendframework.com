@@ -1,3 +1,11 @@
 .idea/
 clover.xml
 php-cs-fixer.phar
+index.html
+clover.xml
+.vagrant
+vendor
+config/development.config.php
+.vagrant
+puphpet/files/dot/ssh
+!puphpet/files/dot/ssh/insecure_private_key

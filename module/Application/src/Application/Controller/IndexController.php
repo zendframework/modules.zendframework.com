@@ -10,20 +10,22 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 use Zend\Feed\Writer\Feed;
 use Zend\View\Model\FeedModel;
 
 class IndexController extends AbstractActionController
 {
+    const MODULES_PER_PAGE = 15;
+
     public function indexAction()
     {
         $query =  $this->params()->fromQuery('query', null);
+        $page = (int) $this->params('page', 1);
 
         $page = (int) $this->params()->fromRoute('page', 1);
         $mapper = $this->getServiceLocator()->get('zfmodule_mapper_module');
 
-        $repositories = $mapper->pagination($page, 15, $query, 'created_at', 'DESC');
+        $repositories = $mapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
 
         return array(
             'repositories' => $repositories,
@@ -47,7 +49,7 @@ class IndexController extends AbstractActionController
         // Get the recent modules
         $page = 1;
         $mapper = $this->getServiceLocator()->get('zfmodule_mapper_module');
-        $repositories = $mapper->pagination($page, 15, null, 'created_at', 'DESC');
+        $repositories = $mapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC');
 
         // Load them into the feed
         foreach ($repositories as $module) {

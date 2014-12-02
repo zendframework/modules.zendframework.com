@@ -1,0 +1,218 @@
+---
+vagrantfile-local:
+    vm:
+        box: puphpet/debian75-x64
+        box_url: puphpet/debian75-x64
+        hostname: null
+        memory: '512'
+        chosen_provider: virtualbox
+        network:
+            private_network: 192.168.56.101
+            forwarded_port:
+                DvqhfFYBgUqn:
+                    host: '5711'
+                    guest: '22'
+                GcwhzF2GbKcs:
+                    host: '8594'
+                    guest: '80'
+        provider:
+            virtualbox:
+                modifyvm:
+                    natdnshostresolver1: on
+                setextradata:
+                    VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root: 1
+            vmware:
+                numvcpus: 1
+            parallels:
+                cpus: 1
+        provision:
+            puppet:
+                manifests_path: puphpet/puppet
+                manifest_file: manifest.pp
+                module_path: puphpet/puppet/modules
+                options:
+                    - '--verbose'
+                    - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
+                    - '--parser future'
+        synced_folder:
+            0xr37sC2h0HJ:
+                source: ./
+                target: /var/www
+                sync_type: default
+                rsync:
+                    args: '-z'
+                    exclude: .vagrant/
+                    auto: 'false'
+        usable_port_range: 2200..2250
+    ssh:
+        host: null
+        port: null
+        private_key_path: null
+        username: vagrant
+        guest_port: null
+        keep_alive: true
+        forward_agent: false
+        forward_x11: false
+        shell: 'bash -l'
+    vagrant:
+        host: detect
+server:
+    packages: {  }
+    dot_files:
+        -
+            bash_aliases: null
+    _prevent_empty: ''
+mailcatcher:
+    install: 0
+    settings:
+        smtp_ip: 0.0.0.0
+        smtp_port: 1025
+        http_ip: 0.0.0.0
+        http_port: '1080'
+        mailcatcher_path: /usr/local/bin
+        log_path: /var/log/mailcatcher/mailcatcher.log
+firewall:
+    install: '1'
+    rules: null
+apache:
+    install: '1'
+    settings:
+        user: www-data
+        group: www-data
+        default_vhost: false
+        manage_user: false
+        manage_group: false
+        sendfile: 0
+    modules:
+        - php
+        - rewrite
+    vhosts:
+        f9djKUZ5w3AV:
+            servername: modules.zendframework.dev
+            serveraliases:
+                - www.modules.zendframework.dev
+            docroot: /var/www/public
+            port: '80'
+            setenv:
+                - 'APP_ENV dev'
+            override:
+                - All
+            options:
+                - Indexes
+                - FollowSymLinks
+                - MultiViews
+            custom_fragment: ''
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
+    mod_pagespeed: 0
+    mod_spdy: 0
+nginx:
+    install: 0
+    settings:
+        default_vhost: 1
+        proxy_buffer_size: 128k
+        proxy_buffers: '4 256k'
+    vhosts:
+        7HqbqDc5fVlv:
+            server_name: awesome.dev
+            server_aliases:
+                - www.awesome.dev
+            www_root: /var/www/awesome.dev
+            listen_port: '80'
+            index_files:
+                - index.html
+                - index.htm
+                - index.php
+            envvars:
+                - 'APP_ENV dev'
+            ssl_cert: ''
+            ssl_key: ''
+php:
+    install: '1'
+    version: '55'
+    composer: '1'
+    composer_home: ''
+    modules:
+        php:
+            - cli
+            - intl
+            - mcrypt
+            - curl
+        pear: {  }
+        pecl:
+            - pecl_http
+    ini:
+        display_errors: On
+        error_reporting: '-1'
+        session.save_path: /var/lib/php/session
+    timezone: America/Chicago
+xdebug:
+    install: 0
+    settings:
+        xdebug.default_enable: '1'
+        xdebug.remote_autostart: '0'
+        xdebug.remote_connect_back: '1'
+        xdebug.remote_enable: '1'
+        xdebug.remote_handler: dbgp
+        xdebug.remote_port: '9000'
+drush:
+    install: 0
+    settings:
+        drush.tag_branch: 6.x
+mysql:
+    install: '1'
+    root_password: '123'
+    adminer: 0
+    databases:
+        SztBhhhc4pMj:
+            grant:
+                - ALL
+            name: modules
+            host: localhost
+            user: modules
+            password: 'modules'
+            sql_file: '/var/www/data/sql/0.sql'
+postgresql:
+    install: 0
+    settings:
+        root_password: '123'
+        user_group: postgres
+        encoding: UTF8
+        version: '9.3'
+    databases: {  }
+    adminer: 0
+mariadb:
+    install: 0
+    root_password: '123'
+    adminer: 0
+    databases: {  }
+    version: '10.0'
+mongodb:
+    install: 0
+    settings:
+        auth: 1
+        port: '27017'
+    databases: {  }
+redis:
+    install: 0
+    settings:
+        conf_port: '6379'
+beanstalkd:
+    install: 0
+    settings:
+        listenaddress: 0.0.0.0
+        listenport: '13000'
+        maxjobsize: '65535'
+        maxconnections: '1024'
+        binlogdir: /var/lib/beanstalkd/binlog
+        binlogfsync: null
+        binlogsize: '10485760'
+    beanstalk_console: 0
+    binlogdir: /var/lib/beanstalkd/binlog
+rabbitmq:
+    install: 0
+    settings:
+        port: '5672'
+

@@ -1,9 +1,9 @@
 language: php
 php:
-  - "5.3"
+  - 5.5
 
 before_script:
-  - git submodule update --init --recursive
+  - composer update --prefer-source
   - wget http://cs.sensiolabs.org/get/php-cs-fixer.phar
 
 script:
