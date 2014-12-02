@@ -129,7 +129,7 @@ class IndexController extends AbstractActionController
         return $viewModel;
     }
 
-    public function fetchModules ($repos, $cacheKey)
+    public function fetchModules($repos, $cacheKey)
     {
         $cacheKey .= '-github';
         $sl = $this->getServiceLocator();
@@ -187,7 +187,7 @@ class IndexController extends AbstractActionController
             $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
             $repository = json_decode($repository);
 
-            if(!($repository instanceOf \stdClass)) {
+            if(!($repository instanceof \stdClass)) {
                 throw new Exception\RuntimeException(
                     'Not able to fetch the repository from github due to an unknown error.',
                     500
@@ -253,7 +253,7 @@ class IndexController extends AbstractActionController
             $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
             $repository = json_decode($repository);
 
-            if(!$repository instanceOf \stdClass) {
+            if(!$repository instanceof \stdClass) {
                 throw new Exception\RuntimeException(
                     'Not able to fetch the repository from github due to an unknown error.',
                     500
@@ -263,7 +263,7 @@ class IndexController extends AbstractActionController
             if(!$repository->fork && $repository->permissions->push) {
                 $mapper = $sm->get('zfmodule_mapper_module');
                 $module = $mapper->findByUrl($repository->html_url);
-                if($module instanceOf \ZfModule\Entity\Module) {
+                if($module instanceof \ZfModule\Entity\Module) {
                     $module = $mapper->delete($module);
                     $this->flashMessenger()->addMessage($repository->name .' has been removed from ZF Modules');
                 } else {
