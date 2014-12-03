@@ -79,9 +79,9 @@ return array(
         ),
     ),
     'controllers' => array(
-        'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Search' => 'Application\Controller\SearchController',
+        'factories' => array(
+            'Application\Controller\Index' => 'Application\Controller\IndexControllerFactory',
+            'Application\Controller\Search' => 'Application\Controller\SearchControllerFactory',
         ),
     ),
     'service_manager' => array(

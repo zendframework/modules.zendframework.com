@@ -27,6 +27,9 @@ class Bootstrap
         static::$serviceManager = $serviceManager;
     }
 
+    /**
+     * @return ServiceManager
+     */
     public static function getServiceManager()
     {
         return static::$serviceManager;
