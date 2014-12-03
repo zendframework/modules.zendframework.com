@@ -56,7 +56,7 @@ class IndexController extends AbstractActionController
             $entry = $feed->createEntry();
             $entry->setTitle($module->getName());
 
-            if($module->getDescription() == '') {
+            if ($module->getDescription() == '') {
                 $moduleDescription = "No Description available";
             } else {
                 $moduleDescription = $module->getDescription();
@@ -75,5 +75,4 @@ class IndexController extends AbstractActionController
 
         return $feedmodel;
     }
-
 }

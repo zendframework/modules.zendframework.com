@@ -75,6 +75,4 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('http://www.example.com/photo.jpg', $this->module->getPhotoUrl());
     }
-
-
 }

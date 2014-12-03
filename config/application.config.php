@@ -27,7 +27,7 @@ return array(
         'ScnSocialAuth',
         'EdpGithub',
         'Application',
-		'User',
+        'User',
         'EdpModuleLayouts',
         'ZfModule',
         'EdpMarkdown',

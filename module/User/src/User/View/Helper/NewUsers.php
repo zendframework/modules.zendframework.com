@@ -68,5 +68,4 @@ class NewUsers extends AbstractHelper implements ServiceLocatorAwareInterface
         $this->serviceLocator = $serviceLocator;
         return $this;
     }
-
 }
