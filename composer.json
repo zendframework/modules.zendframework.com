@@ -42,10 +42,13 @@
     "autoload": {
         "psr-0": {
             "Application": "./module/Application/src/",
-            "Hybrid": "./vendor/hybridauth/hybridauth/hybridauth/",
             "User": "./module/User/src/",
             "ZfModule": "./module/ZfModule/src/"
-        }
+        },
+        "classmap": [
+            "./vendor/hybridauth/hybridauth/hybridauth/Hybrid",
+            "./vendor/hybridauth/hybridauth/additional-providers/hybridauth-github/Providers"
+        ]
     },
     "autoload-dev": {
         "psr-0": {
