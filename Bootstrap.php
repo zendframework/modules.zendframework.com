@@ -37,17 +37,7 @@ class Bootstrap
 
     protected static function initAutoloader()
     {
-        $loader = include __DIR__ . '/init_autoloader.php';
-
-        AutoloaderFactory::factory(array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'autoregister_zf' => true,
-                'namespaces' => array(
-                    'ApplicationTest' => __DIR__ . '/module/Application/test/ApplicationTest',
-                    'UserTest' => __DIR__ . '/module/User/test/UserTest',
-                ),
-            ),
-        ));
+        include __DIR__ . '/init_autoloader.php';
     }
 }
 
