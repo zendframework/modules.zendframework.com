@@ -60,7 +60,7 @@ class Module extends AbstractModule
 
     public function getDir()
     {
-        return __DIR__;
+        return __DIR__ . '/../..';
     }
 
     public function getNamespace()
