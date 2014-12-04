@@ -7,7 +7,6 @@
 
 namespace Application\Service;
 
-
 use Zend\Log\Logger;
 
 class ErrorHandlingService
