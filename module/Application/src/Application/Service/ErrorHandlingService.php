@@ -18,12 +18,12 @@ class ErrorHandlingService
      */
     protected $logger;
 
-    function __construct(Logger $logger)
+    public function __construct(Logger $logger)
     {
         $this->logger = $logger;
     }
 
-    function logException(\Exception $e)
+    public function logException(\Exception $e)
     {
         $trace = $e->getTraceAsString();
         $i     = 1;
