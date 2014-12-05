@@ -57,18 +57,18 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
     /**
      * Check if Repo is a ZF Module
      *
-     * @param  array  $repo
+     * @param  array  $repository
      * @return boolean
      */
-    public function isModule($repo)
+    public function isModule($repository)
     {
         $sm = $this->getServiceLocator();
         $client = $sm->get('EdpGithub\Client');
 
-        if (!json_decode($module) instanceof \stdClass) {
+        if (!json_decode($repository) instanceof \stdClass) {
             return false;
         }
-        $query = 'repo:' . $repo->owner->login . '/' . $repo->name . ' filename:Module.php "class Module"';
+        $query = 'repo:' . $repository->owner->login . '/' . $repository->name . ' filename:Module.php "class Module"';
         $response = $client->getHttpClient()->request('search/code?q=' . $query);
         $result = json_decode($response->getbody(), true);
 
