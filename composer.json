@@ -26,9 +26,8 @@
         "evandotpro/edp-markdown": "0.2.*",
         "evandotpro/edp-module-layouts": "1.0.*",
         "lorenzoferrarajr/lfj-error-layout": "1.0.*",
-        "zf-commons/zfc-user": "0.1.*",
-        "zf-commons/zfc-base": "0.1.*",
-        "socalnick/scn-social-auth": "1.10.0"
+        "zf-commons/zfc-user": "1.0.*",
+        "socalnick/scn-social-auth": "1.14.1"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
