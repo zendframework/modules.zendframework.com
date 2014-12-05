@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7befd3bd3dfd4b4f5c95fd6bb7e34df8",
+    "hash": "a424182c4e36e255265d4e1faaf888b1",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
@@ -198,16 +198,16 @@
         },
         {
             "name": "hybridauth/hybridauth",
-            "version": "dev-master",
+            "version": "v2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "7dfbf2d8679174d1c75b2ebff70a9030fbe288ef"
+                "reference": "b32c4bf14007c80118a88c5e249f4e3151585732"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/7dfbf2d8679174d1c75b2ebff70a9030fbe288ef",
-                "reference": "7dfbf2d8679174d1c75b2ebff70a9030fbe288ef",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/b32c4bf14007c80118a88c5e249f4e3151585732",
+                "reference": "b32c4bf14007c80118a88c5e249f4e3151585732",
                 "shasum": ""
             },
             "require": {
@@ -243,7 +243,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2014-11-25 18:30:08"
+            "time": "2014-07-11 20:25:12"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -469,27 +469,27 @@
         },
         {
             "name": "socalnick/scn-social-auth",
-            "version": "1.10.0",
+            "version": "1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocalNick/ScnSocialAuth.git",
-                "reference": "d8e1f9570082eafc63ae1d613554328f0d929ef8"
+                "reference": "cbb85fe49355eb76148e1b62b3cc41fd6b7d98ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocalNick/ScnSocialAuth/zipball/d8e1f9570082eafc63ae1d613554328f0d929ef8",
-                "reference": "d8e1f9570082eafc63ae1d613554328f0d929ef8",
+                "url": "https://api.github.com/repos/SocalNick/ScnSocialAuth/zipball/cbb85fe49355eb76148e1b62b3cc41fd6b7d98ea",
+                "reference": "cbb85fe49355eb76148e1b62b3cc41fd6b7d98ea",
                 "shasum": ""
             },
             "require": {
-                "hybridauth/hybridauth": "dev-master",
+                "hybridauth/hybridauth": "2.2.*",
                 "php": ">=5.3.3",
                 "zendframework/zendframework": "2.*",
-                "zf-commons/zfc-base": "0.*",
-                "zf-commons/zfc-user": "0.*"
+                "zf-commons/zfc-base": "0.1.*",
+                "zf-commons/zfc-user": "1.0.*"
             },
             "require-dev": {
-                "mockery/mockery": ">=0.7.2"
+                "mockery/mockery": "0.8.0"
             },
             "type": "library",
             "autoload": {
@@ -502,6 +502,9 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
             "authors": [
                 {
                     "name": "Nicholas Calugar",
@@ -515,7 +518,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-07-29 17:46:15"
+            "time": "2014-06-06 01:43:05"
         },
         {
             "name": "symfony/process",
@@ -524,12 +527,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "4be1a9b7be76e10e779ae3f7ce46385ae1748aff"
+                "reference": "2ec66cdae9ac7fd8da352fa86358639cb6f76ad2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/4be1a9b7be76e10e779ae3f7ce46385ae1748aff",
-                "reference": "4be1a9b7be76e10e779ae3f7ce46385ae1748aff",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/2ec66cdae9ac7fd8da352fa86358639cb6f76ad2",
+                "reference": "2ec66cdae9ac7fd8da352fa86358639cb6f76ad2",
                 "shasum": ""
             },
             "require": {
@@ -562,7 +565,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-11-29 12:59:17"
+            "time": "2014-12-02 20:19:50"
         },
         {
             "name": "zendframework/zendframework",
@@ -570,12 +573,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "5b557b2b23107e2b95d8f321293097be5a9fc591"
+                "reference": "edbc12b85d820113452b651991bc1038d5b83d0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/5b557b2b23107e2b95d8f321293097be5a9fc591",
-                "reference": "5b557b2b23107e2b95d8f321293097be5a9fc591",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/edbc12b85d820113452b651991bc1038d5b83d0e",
+                "reference": "edbc12b85d820113452b651991bc1038d5b83d0e",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +683,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-11-30 15:39:36"
+            "time": "2014-12-02 23:49:52"
         },
         {
             "name": "zendframework/zendxml",
@@ -782,7 +785,7 @@
         },
         {
             "name": "zf-commons/zfc-user",
-            "version": "0.1.3",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcUser.git",
@@ -1721,12 +1724,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "7ce9da20f96964bb7a4033f53834df13328dbeab"
+                "reference": "0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/7ce9da20f96964bb7a4033f53834df13328dbeab",
-                "reference": "7ce9da20f96964bb7a4033f53834df13328dbeab",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5",
+                "reference": "0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5",
                 "shasum": ""
             },
             "require": {
@@ -1778,7 +1781,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-12-02 13:17:01"
+            "time": "2014-12-03 06:41:44"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2296,16 +2299,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "2.0.0RC4",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "bf803199c1a0973dee174f06cf0366ed2c9710b0"
+                "reference": "5b63fd3fe960e2020770c845e04254e5ca2b722a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/bf803199c1a0973dee174f06cf0366ed2c9710b0",
-                "reference": "bf803199c1a0973dee174f06cf0366ed2c9710b0",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/5b63fd3fe960e2020770c845e04254e5ca2b722a",
+                "reference": "5b63fd3fe960e2020770c845e04254e5ca2b722a",
                 "shasum": ""
             },
             "require": {
@@ -2365,7 +2368,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2014-11-06 21:18:20"
+            "time": "2014-12-05 00:14:12"
         },
         {
             "name": "symfony/yaml",
@@ -2374,12 +2377,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "db39f8dc540b80eaf62cf60e02659e681e79d98b"
+                "reference": "610f01968f2cd731fdf59dfeae904ed930afc35f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/db39f8dc540b80eaf62cf60e02659e681e79d98b",
-                "reference": "db39f8dc540b80eaf62cf60e02659e681e79d98b",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/610f01968f2cd731fdf59dfeae904ed930afc35f",
+                "reference": "610f01968f2cd731fdf59dfeae904ed930afc35f",
                 "shasum": ""
             },
             "require": {
@@ -2412,7 +2415,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-11-29 14:04:31"
+            "time": "2014-12-02 20:19:50"
         },
         {
             "name": "zendframework/zend-developer-tools",
@@ -2783,7 +2786,7 @@
     },
     "prefer-stable": false,
     "platform": {
-        "php": ">=5.5.0"
+        "php": "~5.4"
     },
     "platform-dev": []
 }
