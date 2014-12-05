@@ -5,6 +5,7 @@ namespace ZfModule\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use ZfModule\Service;
 
 class IndexController extends AbstractActionController
 {
@@ -289,13 +290,14 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * Getters/setters for DI stuff
+     * @return Service\Module
      */
     public function getModuleService()
     {
         if (!$this->moduleService) {
             $this->moduleService = $this->getServiceLocator()->get('zfmodule_service_module');
         }
+
         return $this->moduleService;
     }
 
