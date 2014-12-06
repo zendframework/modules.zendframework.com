@@ -1,8 +1,8 @@
 language: php
 php:
-  - 5.5
   - 5.4
-  - hhvm 
+  - 5.5
+  - hhvm
 
 before_script:
   - composer update --prefer-source
