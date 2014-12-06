@@ -2,6 +2,7 @@
 
 namespace ZfModule\Service;
 
+use stdClass;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\Hydrator\ClassMethods;
@@ -57,18 +58,15 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
     /**
      * Check if Repo is a ZF Module
      *
-     * @param  array  $repo
-     * @return boolean
+     * @param stdClass $repository
+     * @return bool
      */
-    public function isModule($repo)
+    public function isModule(stdClass $repository)
     {
         $sm = $this->getServiceLocator();
         $client = $sm->get('EdpGithub\Client');
 
-        if (!json_decode($module) instanceof \stdClass) {
-            return false;
-        }
-        $query = 'repo:' . $repo->owner->login . '/' . $repo->name . ' filename:Module.php "class Module"';
+        $query = 'repo:' . $repository->owner->login . '/' . $repository->name . ' filename:Module.php "class Module"';
         $response = $client->getHttpClient()->request('search/code?q=' . $query);
         $result = json_decode($response->getbody(), true);
 
