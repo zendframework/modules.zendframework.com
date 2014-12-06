@@ -2,6 +2,7 @@
 
 namespace ZfModule\Controller;
 
+use EdpGithub\Collection\RepositoryCollection;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -90,6 +91,7 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         );
 
+        /* @var RepositoryCollection $repos */
         $repos = $client->api('current_user')->repos($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
@@ -117,6 +119,8 @@ class IndexController extends AbstractActionController
             'sort'      => 'updated',
             'direction' => 'desc',
         );
+
+        /* @var RepositoryCollection $repos */
         $repos = $client->api('user')->repos($owner, $params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
@@ -129,7 +133,12 @@ class IndexController extends AbstractActionController
         return $viewModel;
     }
 
-    public function fetchModules($repos, $cacheKey)
+    /**
+     * @param RepositoryCollection $repos
+     * @param string $cacheKey
+     * @return array
+     */
+    public function fetchModules(RepositoryCollection $repos, $cacheKey)
     {
         $cacheKey .= '-github';
         $sl = $this->getServiceLocator();
