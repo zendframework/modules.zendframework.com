@@ -8,8 +8,6 @@ return array(
     // Development time modules
     'modules' => array(
         'ZFTool',
-        'ZF\Apigility\Admin',
-        'ZF\Configuration',
         'AssetManager',
     ),
     // development time configuration globbing
