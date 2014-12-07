@@ -5,7 +5,7 @@ php:
   - hhvm 
 
 install:
-  - composer update --prefer-source
+  - composer install --prefer-source
 
 script:
   - ./vendor/bin/phpcs --standard=./phpcs.xml -np --report=summary .
