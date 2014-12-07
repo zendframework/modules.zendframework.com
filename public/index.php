@@ -7,14 +7,10 @@ chdir(dirname(__DIR__));
 // Setup autoloading
 include 'init_autoloader.php';
 
-if (!defined('APPLICATION_PATH')) {
-    define('APPLICATION_PATH', realpath(__DIR__ . '/../'));
-}
+$appConfig = include 'config/application.config.php';
 
-$appConfig = include APPLICATION_PATH . '/config/application.config.php';
-
-if (file_exists(APPLICATION_PATH . '/config/development.config.php')) {
-    $appConfig = Zend\Stdlib\ArrayUtils::merge($appConfig, include APPLICATION_PATH . '/config/development.config.php');
+if (file_exists('config/development.config.php')) {
+    $appConfig = Zend\Stdlib\ArrayUtils::merge($appConfig, include 'config/development.config.php');
 }
 
 // Run the application!
