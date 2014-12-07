@@ -4,8 +4,8 @@ php:
   - 5.5
   - hhvm
 
-before_script:
-  - composer update --prefer-source
+install:
+  - composer install --prefer-source
 
 script:
   - ./vendor/bin/phpcs --standard=./phpcs.xml -np --report=summary .
