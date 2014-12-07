@@ -9,7 +9,7 @@ install:
 
 script:
   - ./vendor/bin/phpcs --standard=./phpcs.xml -np --report=summary .
-  - phpunit
+  - ./vendor/bin/phpunit --configuration phpunit.xml
 
 notifications:
   irc: "irc.freenode.org#zftalk.modules"
