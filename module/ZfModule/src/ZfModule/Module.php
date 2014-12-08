@@ -45,10 +45,6 @@ class Module
                     $mapper->setHydrator(new Mapper\ModuleHydrator());
                     return $mapper;
                 },
-                'zfmodule_service_module' => function ($sm) {
-                    $service = new  Service\Module;
-                    return $service;
-                },
                 'zfmodule_service_repository' => function ($sm) {
                     $service = new Service\Repository;
                     $service->setApi($sm->get('EdpGithub\Client'));
@@ -63,6 +59,9 @@ class Module
                     $client->authenticate('url_token',$token['access_token'], null);
                     return $client;
                 }*/
+            ),
+            'invokables' => array(
+                'zfmodule_service_module' => 'ZfModule\Service\Module',
             ),
         );
     }
