@@ -17,7 +17,10 @@ class IndexController extends AbstractActionController
      */
     private $moduleMapper;
 
-    protected $moduleService;
+    /**
+     * @var Service\Module
+     */
+    private $moduleService;
 
     /**
      * @var Client
@@ -26,11 +29,13 @@ class IndexController extends AbstractActionController
 
     /**
      * @param Mapper\Module $moduleMapper
+     * @param Service\Module $moduleService
      * @param Client $githubClient
      */
-    public function __construct(Mapper\Module $moduleMapper, Client $githubClient)
+    public function __construct(Mapper\Module $moduleMapper, Service\Module $moduleService, Client $githubClient)
     {
         $this->moduleMapper = $moduleMapper;
+        $this->moduleService = $moduleService;
         $this->githubClient = $githubClient;
     }
 
@@ -162,7 +167,7 @@ class IndexController extends AbstractActionController
         $repositories = array();
 
         foreach ($repos as $repo) {
-            $isModule = $this->getModuleService()->isModule($repo);
+            $isModule = $this->moduleService->isModule($repo);
             //Verify if repos have been modified
             $httpClient = $this->githubClient->getHttpClient();
             /* @var $response \Zend\Http\Response */
@@ -213,10 +218,9 @@ class IndexController extends AbstractActionController
                 );
             }
 
-            $service = $this->getModuleService();
             if (!$repository->fork && $repository->permissions->push) {
-                if ($service->isModule($repository)) {
-                    $module = $service->register($repository);
+                if ($this->moduleService->isModule($repository)) {
+                    $module = $this->moduleService->register($repository);
                     $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
                 } else {
                     throw new Exception\UnexpectedValueException(
