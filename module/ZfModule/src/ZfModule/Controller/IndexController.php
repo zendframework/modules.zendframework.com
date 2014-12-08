@@ -2,6 +2,7 @@
 
 namespace ZfModule\Controller;
 
+use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -19,11 +20,18 @@ class IndexController extends AbstractActionController
     protected $moduleService;
 
     /**
-     * @param Mapper\Module $moduleMapper
+     * @var Client
      */
-    public function __construct(Mapper\Module $moduleMapper)
+    private $githubClient;
+
+    /**
+     * @param Mapper\Module $moduleMapper
+     * @param Client $githubClient
+     */
+    public function __construct(Mapper\Module $moduleMapper, Client $githubClient)
     {
         $this->moduleMapper = $moduleMapper;
+        $this->githubClient = $githubClient;
     }
 
     public function viewAction()
@@ -39,25 +47,24 @@ class IndexController extends AbstractActionController
             return;
         }
 
-        $client = $sl->get('EdpGithub\Client');
         /* @var $cache StorageInterface */
         $cache = $sl->get('zfmodule_cache');
 
         $cacheKey = 'module-view-' . $vendor . '-' . $module;
 
-        $repository = json_decode($client->api('repos')->show($vendor, $module));
-        $httpClient = $client->getHttpClient();
+        $repository = json_decode($this->githubClient->api('repos')->show($vendor, $module));
+        $httpClient = $this->githubClient->getHttpClient();
         $response= $httpClient->getResponse();
         if ($response->getStatusCode() == 304 && $cache->hasItem($cacheKey)) {
             return $cache->getItem($cacheKey);
         }
 
-        $readme = $client->api('repos')->readme($vendor, $module);
+        $readme = $this->githubClient->api('repos')->readme($vendor, $module);
         $readme = json_decode($readme);
-        $repository = json_decode($client->api('repos')->show($vendor, $module));
+        $repository = json_decode($this->githubClient->api('repos')->show($vendor, $module));
 
         try {
-            $license = $client->api('repos')->content($vendor, $module, 'LICENSE');
+            $license = $this->githubClient->api('repos')->content($vendor, $module, 'LICENSE');
             $license = json_decode($license);
             $license = base64_decode($license->content);
         } catch (\Exception $e) {
@@ -65,7 +72,7 @@ class IndexController extends AbstractActionController
         }
 
         try {
-            $composerJson = $client->api('repos')->content($vendor, $module, 'composer.json');
+            $composerJson = $this->githubClient->api('repos')->content($vendor, $module, 'composer.json');
             $composerConf = json_decode($composerJson);
             $composerConf = base64_decode($composerConf->content);
             $composerConf = json_decode($composerConf, true);
@@ -93,9 +100,6 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $sl = $this->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
-
         $params = array(
             'type'      => 'all',
             'per_page'  => 100,
@@ -104,7 +108,7 @@ class IndexController extends AbstractActionController
         );
 
         /* @var RepositoryCollection $repos */
-        $repos = $client->api('current_user')->repos($params);
+        $repos = $this->githubClient->api('current_user')->repos($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-user-' . $identity->getId();
@@ -122,9 +126,6 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $sl = $this->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
-
         $owner = $this->params()->fromRoute('owner', null);
         $params = array(
             'per_page'  => 100,
@@ -133,7 +134,7 @@ class IndexController extends AbstractActionController
         );
 
         /* @var RepositoryCollection $repos */
-        $repos = $client->api('user')->repos($owner, $params);
+        $repos = $this->githubClient->api('user')->repos($owner, $params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
@@ -154,8 +155,7 @@ class IndexController extends AbstractActionController
     {
         $cacheKey .= '-github';
         $sl = $this->getServiceLocator();
-        /* @var $client \EdpGithub\Client */
-        $client = $sl->get('EdpGithub\Client');
+
         /* @var $cache StorageInterface */
         $cache = $sl->get('zfmodule_cache');
 
@@ -164,7 +164,7 @@ class IndexController extends AbstractActionController
         foreach ($repos as $repo) {
             $isModule = $this->getModuleService()->isModule($repo);
             //Verify if repos have been modified
-            $httpClient = $client->getHttpClient();
+            $httpClient = $this->githubClient->getHttpClient();
             /* @var $response \Zend\Http\Response */
             $response = $httpClient->getResponse();
 
@@ -203,8 +203,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $sm = $this->getServiceLocator();
-            $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
+            $repository = $this->githubClient->api('repos')->show($owner, $repo);
             $repository = json_decode($repository);
 
             if (!($repository instanceof \stdClass)) {
@@ -269,8 +268,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $sm = $this->getServiceLocator();
-            $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
+            $repository = $this->githubClient->api('repos')->show($owner, $repo);
             $repository = json_decode($repository);
 
             if (!$repository instanceof \stdClass) {

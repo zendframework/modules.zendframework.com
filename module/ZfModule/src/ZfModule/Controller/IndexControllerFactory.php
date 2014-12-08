@@ -2,6 +2,7 @@
 
 namespace ZfModule\Controller;
 
+use EdpGithub\Client;
 use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -21,6 +22,12 @@ class IndexControllerFactory implements FactoryInterface
         /* @var Mapper\Module $moduleMapper */
         $moduleMapper = $serviceManager->get('zfmodule_mapper_module');
 
-        return new IndexController($moduleMapper);
+        /* @var Client $githubClient */
+        $githubClient = $serviceManager->get('EdpGithub\Client');
+
+        return new IndexController(
+            $moduleMapper,
+            $githubClient
+        );
     }
 }
