@@ -309,21 +309,4 @@ class IndexController extends AbstractActionController
         $this->clearModuleCache();
         return $this->redirect()->toRoute('zfcuser');
     }
-
-    /**
-     * @return Service\Module
-     */
-    public function getModuleService()
-    {
-        if (!$this->moduleService) {
-            $this->moduleService = $this->getServiceLocator()->get('zfmodule_service_module');
-        }
-
-        return $this->moduleService;
-    }
-
-    public function setModuleService($moduleService)
-    {
-        $this->moduleService = $moduleService;
-    }
 }
