@@ -6,11 +6,25 @@ use EdpGithub\Collection\RepositoryCollection;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use ZfModule\Mapper;
 use ZfModule\Service;
 
 class IndexController extends AbstractActionController
 {
+    /**
+     * @var Mapper\Module
+     */
+    private $moduleMapper;
+
     protected $moduleService;
+
+    /**
+     * @param Mapper\Module $moduleMapper
+     */
+    public function __construct(Mapper\Module $moduleMapper)
+    {
+        $this->moduleMapper = $moduleMapper;
+    }
 
     public function viewAction()
     {
@@ -18,10 +32,8 @@ class IndexController extends AbstractActionController
         $module = $this->params()->fromRoute('module', null);
 
         $sl = $this->getServiceLocator();
-        $mapper = $sl->get('zfmodule_mapper_module');
 
-        //check if module is existing in database otherwise return 404 page
-        $result = $mapper->findByName($module);
+        $result = $this->moduleMapper->findByName($module);
         if (!$result) {
             $this->getResponse()->setStatusCode(404);
             return;
@@ -142,7 +154,6 @@ class IndexController extends AbstractActionController
     {
         $cacheKey .= '-github';
         $sl = $this->getServiceLocator();
-        $mapper = $sl->get('zfmodule_mapper_module');
         /* @var $client \EdpGithub\Client */
         $client = $sl->get('EdpGithub\Client');
         /* @var $cache StorageInterface */
@@ -164,7 +175,7 @@ class IndexController extends AbstractActionController
                 break;
             }
 
-            if (!$repo->fork && $repo->permissions->push && $isModule && !$mapper->findByName($repo->name)) {
+            if (!$repo->fork && $repo->permissions->push && $isModule && !$this->moduleMapper->findByName($repo->name)) {
                 $repositories[] = $repo;
                 $cache->removeItem($cacheKey);
             }
@@ -270,10 +281,9 @@ class IndexController extends AbstractActionController
             }
 
             if (!$repository->fork && $repository->permissions->push) {
-                $mapper = $sm->get('zfmodule_mapper_module');
-                $module = $mapper->findByUrl($repository->html_url);
+                $module = $this->moduleMapper->findByUrl($repository->html_url);
                 if ($module instanceof \ZfModule\Entity\Module) {
-                    $module = $mapper->delete($module);
+                    $module = $this->moduleMapper->delete($module);
                     $this->flashMessenger()->addMessage($repository->name .' has been removed from ZF Modules');
                 } else {
                     throw new Exception\UnexpectedValueException(
