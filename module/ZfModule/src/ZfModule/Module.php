@@ -46,20 +46,6 @@ class Module
                     return $mapper;
                 },
                 'ModuleService' => 'ZfModule\Service\ModuleFactory',
-                'zfmodule_service_repository' => function ($sm) {
-                    $service = new Service\Repository;
-                    $service->setApi($sm->get('EdpGithub\Client'));
-                    return $service;
-                },
-                /*'github_client' => function ($sm) {
-                    $hybridAuth = $sm->get('HybridAuth');
-                    $adapter = $hybridAuth->getAdapter('github');
-                    $token = $adapter->getAccessToken();
-
-                    $client = $sm->get('EdpGithubClient');
-                    $client->authenticate('url_token',$token['access_token'], null);
-                    return $client;
-                }*/
             ),
             'aliases' => array(
                 'zfmodule_service_module' => 'ModuleService'

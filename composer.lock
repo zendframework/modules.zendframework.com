@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "596114952f914dad9aa407bba5f07ce0",
+    "hash": "90dbdd8e3e9bd3a28a410fbc912cfc96",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
@@ -573,12 +573,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "9f0aa15683724f10f7b4a482702fedf627e8a58b"
+                "reference": "edbc12b85d820113452b651991bc1038d5b83d0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/9f0aa15683724f10f7b4a482702fedf627e8a58b",
-                "reference": "9f0aa15683724f10f7b4a482702fedf627e8a58b",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/edbc12b85d820113452b651991bc1038d5b83d0e",
+                "reference": "edbc12b85d820113452b651991bc1038d5b83d0e",
                 "shasum": ""
             },
             "require": {
@@ -683,7 +683,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-12-06 02:36:42"
+            "time": "2014-12-02 23:49:52"
         },
         {
             "name": "zendframework/zendxml",
@@ -925,6 +925,52 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bjyoungblood/BjyProfiler",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bjyoungblood/BjyProfiler.git",
+                "reference": "420b392f6fafff7eefca5e9615c347706ce8d8e7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bjyoungblood/BjyProfiler/zipball/420b392f6fafff7eefca5e9615c347706ce8d8e7",
+                "reference": "420b392f6fafff7eefca5e9615c347706ce8d8e7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "zendframework/zendframework": ">=2.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "BjyProfiler": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Ben Youngblood",
+                    "email": "bx.youngblood@gmail.com",
+                    "homepage": "http://bjyoungblood.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Database profiler for Zend\\Db (also plugin for ZendDeveloperTools)",
+            "homepage": "https://github.com/bjyoungblood/BjyProfiler",
+            "keywords": [
+                "db",
+                "profiler",
+                "zdt",
+                "zf2"
+            ],
+            "time": "2014-03-11 13:42:24"
+        },
         {
             "name": "phpunit/php-code-coverage",
             "version": "2.0.x-dev",
