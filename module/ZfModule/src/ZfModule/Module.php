@@ -45,10 +45,7 @@ class Module
                     $mapper->setHydrator(new Mapper\ModuleHydrator());
                     return $mapper;
                 },
-                'zfmodule_service_module' => function ($sm) {
-                    $service = new  Service\Module;
-                    return $service;
-                },
+                'ModuleService' => 'ZfModule\Service\ModuleFactory',
                 'zfmodule_service_repository' => function ($sm) {
                     $service = new Service\Repository;
                     $service->setApi($sm->get('EdpGithub\Client'));
@@ -64,6 +61,9 @@ class Module
                     return $client;
                 }*/
             ),
+            'aliases' => array(
+                'zfmodule_service_module' => 'ModuleService'
+            )
         );
     }
 }
