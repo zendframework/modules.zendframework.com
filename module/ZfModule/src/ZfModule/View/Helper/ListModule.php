@@ -9,10 +9,10 @@ use ZfModule\Mapper\Module;
 class ListModule extends AbstractHelper
 {
     /** @var Module */
-    protected $moduleMapper;
+    private $moduleMapper;
 
     /** @var Client */
-    protected $githubClient;
+    private $githubClient;
 
     /**
      * Constructor
@@ -31,7 +31,7 @@ class ListModule extends AbstractHelper
      *
      * @return Module
      */
-    public function getModuleMapper()
+    protected function getModuleMapper()
     {
         return $this->moduleMapper;
     }
@@ -41,7 +41,7 @@ class ListModule extends AbstractHelper
      *
      * @return Client
      */
-    public function getGithubClient()
+    protected function getGithubClient()
     {
         return $this->githubClient;
     }

@@ -9,7 +9,7 @@ use ZfModule\Mapper\Module;
 class NewModule extends AbstractHelper
 {
     /** @var Module */
-    protected $moduleMapper;
+    private $moduleMapper;
 
     /**
      * Constructor
@@ -26,7 +26,7 @@ class NewModule extends AbstractHelper
      *
      * @return Module
      */
-    public function getModuleMapper()
+    protected function getModuleMapper()
     {
         return $this->moduleMapper;
     }
