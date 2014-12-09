@@ -76,9 +76,9 @@ return array(
             'composerView' => 'ZfModule\View\Helper\ComposerView',
         ),
         'factories' => array(
-            'listModule' => 'ZfModule\Factory\View\Helper\ListModuleFactory',
-            'newModule' => 'ZfModule\Factory\View\Helper\NewModuleFactory',
-            'totalModules' => 'ZfModule\Factory\View\Helper\TotalModulesFactory',
+            'listModule' => 'ZfModule\View\Helper\ListModuleFactory',
+            'newModule' => 'ZfModule\View\Helper\NewModuleFactory',
+            'totalModules' => 'ZfModule\View\Helper\TotalModulesFactory',
 
         )
     ),
