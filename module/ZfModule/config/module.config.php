@@ -71,7 +71,6 @@ return array(
 
     'view_helpers' => array(
         'invokables' => array(
-            'totalModules' => 'ZfModule\View\Helper\TotalModules',
             'moduleView' => 'ZfModule\View\Helper\ModuleView',
             'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
             'composerView' => 'ZfModule\View\Helper\ComposerView',
@@ -79,6 +78,8 @@ return array(
         'factories' => array(
             'listModule' => 'ZfModule\Factory\View\Helper\ListModuleFactory',
             'newModule' => 'ZfModule\Factory\View\Helper\NewModuleFactory',
+            'totalModules' => 'ZfModule\Factory\View\Helper\TotalModulesFactory',
+
         )
     ),
     'zfmodule' => array(
