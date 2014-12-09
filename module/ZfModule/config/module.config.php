@@ -71,14 +71,14 @@ return array(
 
     'view_helpers' => array(
         'invokables' => array(
-            'newModule' => 'ZfModule\View\Helper\NewModule',
             'totalModules' => 'ZfModule\View\Helper\TotalModules',
             'moduleView' => 'ZfModule\View\Helper\ModuleView',
             'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
             'composerView' => 'ZfModule\View\Helper\ComposerView',
         ),
         'factories' => array(
-            'listModule' => 'ZfModule\Factory\View\Helper\ListModuleFactory'
+            'listModule' => 'ZfModule\Factory\View\Helper\ListModuleFactory',
+            'newModule' => 'ZfModule\Factory\View\Helper\NewModuleFactory',
         )
     ),
     'zfmodule' => array(
