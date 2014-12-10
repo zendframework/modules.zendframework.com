@@ -1,8 +1,10 @@
 <?php
 return array(
     'controllers' => array(
+        'factories' => array(
+            'ZfModule\Controller\Index' => 'ZfModule\Controller\IndexControllerFactory',
+        ),
         'invokables' => array(
-            'ZfModule\Controller\Index' => 'ZfModule\Controller\IndexController',
             'ZfModule\Controller\Repo' => 'ZfModule\Controller\RepoController',
         ),
     ),
