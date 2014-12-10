@@ -5,11 +5,11 @@ namespace ZfModule\Service;
 use EdpGithub\Client;
 use stdClass;
 use ZfcBase\EventManager\EventProvider;
-use ZfModule\Mapper\Module as ModuleMapper;
+use ZfModule\Mapper;
 
 class Module extends EventProvider
 {
-    /** @var Module */
+    /** @var Mapper\Module */
     private $moduleMapper;
 
     /** @var Client */
@@ -18,10 +18,10 @@ class Module extends EventProvider
     /**
      * Constructor
      *
-     * @param ModuleMapper $moduleMapper
+     * @param Mapper\Module $moduleMapper
      * @param Client $githubClient
      */
-    public function __construct(ModuleMapper $moduleMapper, Client $githubClient)
+    public function __construct(Mapper\Module $moduleMapper, Client $githubClient)
     {
         $this->moduleMapper = $moduleMapper;
         $this->githubClient = $githubClient;

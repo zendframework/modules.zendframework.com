@@ -8,7 +8,7 @@ use ZfModule\Mapper;
 
 class ListModule extends AbstractHelper
 {
-    /** @var Module */
+    /** @var Mapper\Module */
     private $moduleMapper;
 
     /** @var Client */
