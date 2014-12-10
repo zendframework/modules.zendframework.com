@@ -4,9 +4,6 @@ return array(
         'factories' => array(
             'ZfModule\Controller\Index' => 'ZfModule\Controller\IndexControllerFactory',
         ),
-        'invokables' => array(
-            'ZfModule\Controller\Repo' => 'ZfModule\Controller\RepoController',
-        ),
     ),
     'router' => array(
         'routes' => array(
