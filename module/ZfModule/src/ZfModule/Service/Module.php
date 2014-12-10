@@ -28,26 +28,6 @@ class Module extends EventProvider
     }
 
     /**
-     * Return Module Db Mapper
-     *
-     * @return Module
-     */
-    protected function getModuleMapper()
-    {
-        return $this->moduleMapper;
-    }
-
-    /**
-     * Return GithubClient
-     *
-     * @return Client
-     */
-    protected function getGithubClient()
-    {
-        return $this->githubClient;
-    }
-
-    /**
      * createFromForm
      *
      * @param array $data
@@ -57,7 +37,7 @@ class Module extends EventProvider
     public function register($data)
     {
         $url = $data->html_url;
-        $module = $this->getModuleMapper()->findByUrl($url);
+        $module = $this->moduleMapper->findByUrl($url);
         $update = true;
         if (!$module) {
             $module  = new \ZfModule\Entity\Module;
@@ -72,9 +52,9 @@ class Module extends EventProvider
         $module->setPhotoUrl($owner->avatar_url);
 
         if ($update) {
-            $this->getModuleMapper()->update($module);
+            $this->moduleMapper->update($module);
         } else {
-            $this->getModuleMapper()->insert($module);
+            $this->moduleMapper->insert($module);
         }
 
         return $module;
@@ -89,7 +69,7 @@ class Module extends EventProvider
     public function isModule(stdClass $repository)
     {
         $query = 'repo:' . $repository->owner->login . '/' . $repository->name . ' filename:Module.php "class Module"';
-        $response = $this->getGithubClient()->getHttpClient()->request('search/code?q=' . $query);
+        $response = $this->githubClient->getHttpClient()->request('search/code?q=' . $query);
         $result = json_decode($response->getbody(), true);
 
         if (isset($result['total_count']) && $result['total_count'] > 0) {
