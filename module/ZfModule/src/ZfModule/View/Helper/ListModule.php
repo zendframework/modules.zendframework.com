@@ -4,7 +4,7 @@ namespace ZfModule\View\Helper;
 
 use EdpGithub\Client;
 use Zend\View\Helper\AbstractHelper;
-use ZfModule\Mapper\Module;
+use ZfModule\Mapper;
 
 class ListModule extends AbstractHelper
 {
@@ -17,33 +17,13 @@ class ListModule extends AbstractHelper
     /**
      * Constructor
      *
-     * @param Module $moduleMapper
+     * @param Mapper\Module $moduleMapper
      * @param Client $githubClient
      */
-    public function __construct(Module $moduleMapper, Client $githubClient)
+    public function __construct(Mapper\Module $moduleMapper, Client $githubClient)
     {
         $this->moduleMapper = $moduleMapper;
         $this->githubClient = $githubClient;
-    }
-
-    /**
-     * Return Module Db Mapper
-     *
-     * @return Module
-     */
-    protected function getModuleMapper()
-    {
-        return $this->moduleMapper;
-    }
-
-    /**
-     * Return GithubClient
-     *
-     * @return Client
-     */
-    protected function getGithubClient()
-    {
-        return $this->githubClient;
     }
 
     /**
@@ -60,13 +40,17 @@ class ListModule extends AbstractHelper
 
         //limit modules to only user modules
         if ($user) {
-            $client = $this->getGithubClient();
-            $repositories = $client->api('current_user')->repos(array('type' =>'all', 'per_page' => 100));
+            $repositories = $this->githubClient->api('current_user')->repos(
+                array(
+                    'type' =>'all',
+                    'per_page' => 100
+                )
+            );
 
             $modules = array();
             foreach ($repositories as $repository) {
                 if (!$repository->fork && $repository->permissions->push) {
-                    $module = $this->getModuleMapper()->findByName($repository->name);
+                    $module = $this->moduleMapper->findByName($repository->name);
                     if ($module) {
                         $modules[] = $module;
                     }
@@ -74,7 +58,7 @@ class ListModule extends AbstractHelper
             }
         } else {
             $limit = isset($options['limit'])?$options['limit']:null;
-            $modules = $this->getModuleMapper()->findAll($limit, 'created_at', 'DESC');
+            $modules = $this->moduleMapper->findAll($limit, 'created_at', 'DESC');
         }
         return $modules;
     }

@@ -3,7 +3,7 @@
 namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use ZfModule\Mapper\Module;
+use ZfModule\Mapper;
 
 class TotalModules extends AbstractHelper
 {
@@ -18,21 +18,11 @@ class TotalModules extends AbstractHelper
     /**
      * Constructor
      *
-     * @param Module $moduleMapper
+     * @param Mapper\Module $moduleMapper
      */
-    public function __construct(Module $moduleMapper)
+    public function __construct(Mapper\Module $moduleMapper)
     {
         $this->moduleMapper = $moduleMapper;
-    }
-
-    /**
-     * Return Module Db Mapper
-     *
-     * @return Module
-     */
-    protected function getModuleMapper()
-    {
-        return $this->moduleMapper;
     }
 
     /**
@@ -44,7 +34,7 @@ class TotalModules extends AbstractHelper
     public function __invoke()
     {
         if ($this->total === null) {
-            $this->total = $this->getModuleMapper()->getTotal();
+            $this->total = $this->moduleMapper->getTotal();
         }
         return $this->total;
     }

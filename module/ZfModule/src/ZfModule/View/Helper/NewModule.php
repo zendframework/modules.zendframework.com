@@ -4,7 +4,7 @@ namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
-use ZfModule\Mapper\Module;
+use ZfModule\Mapper;
 
 class NewModule extends AbstractHelper
 {
@@ -14,21 +14,11 @@ class NewModule extends AbstractHelper
     /**
      * Constructor
      *
-     * @param Module $moduleMapper
+     * @param Mapper\Module $moduleMapper
      */
-    public function __construct(Module $moduleMapper)
+    public function __construct(Mapper\Module $moduleMapper)
     {
         $this->moduleMapper = $moduleMapper;
-    }
-
-    /**
-     * Return Module Db Mapper
-     *
-     * @return Module
-     */
-    protected function getModuleMapper()
-    {
-        return $this->moduleMapper;
     }
 
     /**
@@ -40,7 +30,7 @@ class NewModule extends AbstractHelper
      */
     public function __invoke($options = null)
     {
-        $modules = $this->getModuleMapper()->findAll(10, 'created_at', 'DESC');
+        $modules = $this->moduleMapper->findAll(10, 'created_at', 'DESC');
 
         //return $modules;
         $vm = new ViewModel(array(
