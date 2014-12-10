@@ -1,5 +1,4 @@
 <?php
-
 namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
