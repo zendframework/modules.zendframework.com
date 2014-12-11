@@ -7,14 +7,22 @@ use Zend\ServiceManager\ServiceManager;
 
 class Bootstrap
 {
-    protected static $serviceManager;
+    /**
+     * @var ServiceManager
+     */
+    private static $serviceManager;
 
-    public static function init($config)
+    /**
+     * @var mixed
+     */
+    private static $config;
+
+    /**
+     * @param mixed $config
+     */
+    public static function setConfig($config)
     {
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
-        $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
-        static::$serviceManager = $serviceManager;
+        static::$config = $config;
     }
 
     /**
@@ -22,6 +30,13 @@ class Bootstrap
      */
     public static function getServiceManager()
     {
+        if (null === static::$serviceManager) {
+            $serviceManager = new ServiceManager(new ServiceManagerConfig());
+            $serviceManager->setService('ApplicationConfig', static::$config);
+            $serviceManager->get('ModuleManager')->loadModules();
+            static::$serviceManager = $serviceManager;
+        }
+
         return static::$serviceManager;
     }
 }
