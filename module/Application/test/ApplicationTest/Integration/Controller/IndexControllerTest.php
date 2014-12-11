@@ -1,8 +1,8 @@
 <?php
 
-namespace ApplicationTest\Controller;
+namespace ApplicationTest\Integration\Controller;
 
-use ApplicationTest\Util\Bootstrap;
+use ApplicationTest\Integration\Util\Bootstrap;
 use Application\Controller\IndexController;
 use Zend\Http\Request;
 use Zend\Http\Response;
