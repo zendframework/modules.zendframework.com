@@ -10,11 +10,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class OwnerModuleList extends AbstractHelper implements ServiceLocatorAwareInterface
 {
     /**
-     * $var string template used for view
-     */
-    protected $viewTemplate;
-
-    /**
      * @var ServiceLocator
      */
     protected $serviceLocator;
@@ -43,16 +38,6 @@ class OwnerModuleList extends AbstractHelper implements ServiceLocatorAwareInter
         $vm->setTemplate('zf-module/helper/new-module.phtml');
 
         return $this->getView()->render($vm);
-    }
-
-    /**
-     * @param string $viewTemplate
-     * @return NewModules
-     */
-    public function setViewTemplate($viewTemplate)
-    {
-        $this->viewTemplate = $viewTemplate;
-        return $this;
     }
 
     /**
