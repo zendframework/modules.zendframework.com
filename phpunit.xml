@@ -1,17 +1,16 @@
 <?xml version="1.0"?>
-<!-- works fine with PHPUnit-3.6.10 -->
 <phpunit
-        bootstrap="./bootstrap.php"
-        colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        verbose="true"
-        stopOnFailure="false"
-        processIsolation="false"
-        backupGlobals="false"
-        syntaxCheck="true"
-        >
+    bootstrap="./bootstrap.php"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    verbose="true"
+    stopOnFailure="false"
+    processIsolation="false"
+    backupGlobals="false"
+    syntaxCheck="true"
+>
     <testsuite name="Test all modules">
         <directory>./module/Application/test/ApplicationTest</directory>
         <directory>./module/ZfModule/test/ZfModuleTest</directory>
@@ -22,9 +21,6 @@
         </whitelist>
     </filter>
     <logging>
-        <log
-            type="coverage-clover"
-            target="./clover.xml"
-        />
+        <log type="coverage-clover" target="./clover.xml" />
     </logging>
 </phpunit>
