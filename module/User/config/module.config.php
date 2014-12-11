@@ -21,10 +21,10 @@ return array(
     'view_helpers' => array(
         'factories' => array(
             'newUsers' => 'User\View\Helper\NewUsersFactory',
+            'userOrganizations' => 'User\View\Helper\UserOrganizationsFactory',
         ),
         'invokables' => array(
             'UserRepositories' => 'User\View\Helper\UserRepositories',
-            'userOrganizations' => 'User\View\Helper\UserOrganizations',
         ),
     ),
 );
