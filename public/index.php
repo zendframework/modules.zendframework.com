@@ -4,8 +4,8 @@
 * to the application root now.
 */
 chdir(dirname(__DIR__));
-// Setup autoloading
-include 'init_autoloader.php';
+
+require_once 'vendor/autoload.php';
 
 $appConfig = include 'config/application.config.php';
 
