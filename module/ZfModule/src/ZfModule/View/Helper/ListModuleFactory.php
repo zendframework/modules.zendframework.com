@@ -2,17 +2,32 @@
 
 namespace ZfModule\View\Helper;
 
+use EdpGithub\Client;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\View\HelperPluginManager;
+use ZfModule\Mapper;
 
 class ListModuleFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    /**
+     * @param ServiceLocatorInterface $helperPluginManager
+     * @return ListModule
+     */
+    public function createService(ServiceLocatorInterface $helperPluginManager)
     {
-        $sm = $serviceLocator->getServiceLocator();
-        $moduleMapper = $sm->get('zfmodule_mapper_module');
-        $githubClient = $sm->get('EdpGithub\Client');
+        /* @var HelperPluginManager $helperPluginManager */
+        $serviceManager = $helperPluginManager->getServiceLocator();
 
-        return new ListModule($moduleMapper, $githubClient);
+        /* @var Mapper\Module $moduleMapper */
+        $moduleMapper = $serviceManager->get('zfmodule_mapper_module');
+
+        /* @var Client $githubClient */
+        $githubClient = $serviceManager->get('EdpGithub\Client');
+
+        return new ListModule(
+            $moduleMapper,
+            $githubClient
+        );
     }
 }

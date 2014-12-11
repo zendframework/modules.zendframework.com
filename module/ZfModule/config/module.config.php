@@ -70,17 +70,16 @@ return array(
     ),
 
     'view_helpers' => array(
+        'factories' => array(
+            'listModule' => 'ZfModule\View\Helper\ListModuleFactory',
+            'newModule' => 'ZfModule\View\Helper\NewModuleFactory',
+            'totalModules' => 'ZfModule\View\Helper\TotalModulesFactory',
+        ),
         'invokables' => array(
             'moduleView' => 'ZfModule\View\Helper\ModuleView',
             'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
             'composerView' => 'ZfModule\View\Helper\ComposerView',
         ),
-        'factories' => array(
-            'listModule' => 'ZfModule\View\Helper\ListModuleFactory',
-            'newModule' => 'ZfModule\View\Helper\NewModuleFactory',
-            'totalModules' => 'ZfModule\View\Helper\TotalModulesFactory',
-
-        )
     ),
     'zfmodule' => array(
         /**

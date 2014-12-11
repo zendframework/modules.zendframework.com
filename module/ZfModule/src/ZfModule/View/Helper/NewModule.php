@@ -8,12 +8,12 @@ use ZfModule\Mapper;
 
 class NewModule extends AbstractHelper
 {
-    /** @var Mapper\Module */
+    /**
+     * @var Mapper\Module
+     */
     private $moduleMapper;
 
     /**
-     * Constructor
-     *
      * @param Mapper\Module $moduleMapper
      */
     public function __construct(Mapper\Module $moduleMapper)
@@ -39,5 +39,15 @@ class NewModule extends AbstractHelper
         $vm->setTemplate('zf-module/helper/new-module');
 
         return $this->getView()->render($vm);
+    }
+
+    /**
+     * @param string $viewTemplate
+     * @return NewModules
+     */
+    public function setViewTemplate($viewTemplate)
+    {
+        $this->viewTemplate = $viewTemplate;
+        return $this;
     }
 }

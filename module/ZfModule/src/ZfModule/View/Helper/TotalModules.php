@@ -7,7 +7,9 @@ use ZfModule\Mapper;
 
 class TotalModules extends AbstractHelper
 {
-    /** @var Mapper\Module */
+    /**
+     * @var Mapper\Module
+     */
     private $moduleMapper;
 
     /**
@@ -16,8 +18,6 @@ class TotalModules extends AbstractHelper
     protected $total;
 
     /**
-     * Constructor
-     *
      * @param Mapper\Module $moduleMapper
      */
     public function __construct(Mapper\Module $moduleMapper)

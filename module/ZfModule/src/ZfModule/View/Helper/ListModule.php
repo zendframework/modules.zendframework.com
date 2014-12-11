@@ -8,15 +8,17 @@ use ZfModule\Mapper;
 
 class ListModule extends AbstractHelper
 {
-    /** @var Mapper\Module */
+    /**
+     * @var Mapper\Module
+     */
     private $moduleMapper;
 
-    /** @var Client */
+    /**
+     * @var Client
+     */
     private $githubClient;
 
     /**
-     * Constructor
-     *
      * @param Mapper\Module $moduleMapper
      * @param Client $githubClient
      */
@@ -40,12 +42,10 @@ class ListModule extends AbstractHelper
 
         //limit modules to only user modules
         if ($user) {
-            $repositories = $this->githubClient->api('current_user')->repos(
-                array(
-                    'type' =>'all',
-                    'per_page' => 100
-                )
-            );
+            $repositories = $this->githubClient->api('current_user')->repos([
+                'type' =>'all',
+                'per_page' => 100
+            ]);
 
             $modules = array();
             foreach ($repositories as $repository) {
