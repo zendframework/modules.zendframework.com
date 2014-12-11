@@ -69,10 +69,12 @@ return array(
     ),
 
     'view_helpers' => array(
+        'factories' => array(
+            'listModule' => 'ZfModule\View\Helper\ListModuleFactory',
+            'newModule' => 'ZfModule\View\Helper\NewModuleFactory',
+            'totalModules' => 'ZfModule\View\Helper\TotalModulesFactory',
+        ),
         'invokables' => array(
-            'newModule' => 'ZfModule\View\Helper\NewModule',
-            'listModule' => 'ZfModule\View\Helper\ListModule',
-            'totalModules' => 'ZfModule\View\Helper\TotalModules',
             'moduleView' => 'ZfModule\View\Helper\ModuleView',
             'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
             'composerView' => 'ZfModule\View\Helper\ComposerView',

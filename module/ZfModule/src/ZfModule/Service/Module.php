@@ -2,25 +2,32 @@
 
 namespace ZfModule\Service;
 
+use EdpGithub\Client;
 use stdClass;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\Hydrator\ClassMethods;
 use ZfcBase\EventManager\EventProvider;
-use ZfModule\Mapper\ModuleInterface as ModuleMapperInterface;
+use ZfModule\Mapper;
 
-class Module extends EventProvider implements ServiceLocatorAwareInterface
+class Module extends EventProvider
 {
+    /**
+     * @var Mapper\Module
+     */
+    private $moduleMapper;
 
     /**
-     * @var ModuleMapperInterface
+     * @var Client
      */
-    protected $moduleMapper;
+    private $githubClient;
 
     /**
-     * @var ServiceLocator
+     * @param Mapper\Module $moduleMapper
+     * @param Client $githubClient
      */
-    protected $serviceLocator;
+    public function __construct(Mapper\Module $moduleMapper, Client $githubClient)
+    {
+        $this->moduleMapper = $moduleMapper;
+        $this->githubClient = $githubClient;
+    }
 
     /**
      * createFromForm
@@ -32,7 +39,7 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
     public function register($data)
     {
         $url = $data->html_url;
-        $module = $this->getModuleMapper()->findByUrl($url);
+        $module = $this->moduleMapper->findByUrl($url);
         $update = true;
         if (!$module) {
             $module  = new \ZfModule\Entity\Module;
@@ -47,9 +54,9 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
         $module->setPhotoUrl($owner->avatar_url);
 
         if ($update) {
-            $this->getModuleMapper()->update($module);
+            $this->moduleMapper->update($module);
         } else {
-            $this->getModuleMapper()->insert($module);
+            $this->moduleMapper->insert($module);
         }
 
         return $module;
@@ -63,11 +70,8 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
      */
     public function isModule(stdClass $repository)
     {
-        $sm = $this->getServiceLocator();
-        $client = $sm->get('EdpGithub\Client');
-
         $query = 'repo:' . $repository->owner->login . '/' . $repository->name . ' filename:Module.php "class Module"';
-        $response = $client->getHttpClient()->request('search/code?q=' . $query);
+        $response = $this->githubClient->getHttpClient()->request('search/code?q=' . $query);
         $result = json_decode($response->getbody(), true);
 
         if (isset($result['total_count']) && $result['total_count'] > 0) {
@@ -75,52 +79,5 @@ class Module extends EventProvider implements ServiceLocatorAwareInterface
         }
 
         return false;
-    }
-
-    /**
-     * getModuleMapper
-     *
-     * @return ModuleMapperInterface
-     */
-    public function getModuleMapper()
-    {
-        if (null === $this->moduleMapper) {
-            $this->moduleMapper = $this->getServiceLocator()->get('zfmodule_mapper_module');
-        }
-        return $this->moduleMapper;
-    }
-
-    /**
-     * setModuleMapper
-     *
-     * @param ModuleMapperInterface $moduleMapper
-     * @return Module
-     */
-    public function setModuleMapper(ModuleMapperInterface $moduleMapper)
-    {
-        $this->moduleMapper = $moduleMapper;
-        return $this;
-    }
-
-    /**
-     * Retrieve Service Locator instance
-     *
-     * @return ServiceLocator
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * Set Service Locator instance
-     *
-     * @param ServiceLocator $locator
-     * @return User
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
     }
 }

@@ -45,10 +45,8 @@ class Module
                     $mapper->setHydrator(new Mapper\ModuleHydrator());
                     return $mapper;
                 },
-            ),
-            'invokables' => array(
-                'zfmodule_service_module' => 'ZfModule\Service\Module',
-            ),
+                'zfmodule_service_module' => 'ZfModule\Service\ModuleFactory',
+            )
         );
     }
 }

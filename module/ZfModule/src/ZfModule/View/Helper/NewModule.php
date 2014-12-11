@@ -4,20 +4,22 @@ namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfModule\Mapper;
 
-class NewModule extends AbstractHelper implements ServiceLocatorAwareInterface
+class NewModule extends AbstractHelper
 {
     /**
-     * $var string template used for view
+     * @var Mapper\Module
      */
-    protected $viewTemplate;
+    private $moduleMapper;
 
     /**
-     * @var ServiceLocator
+     * @param Mapper\Module $moduleMapper
      */
-    protected $serviceLocator;
+    public function __construct(Mapper\Module $moduleMapper)
+    {
+        $this->moduleMapper = $moduleMapper;
+    }
 
     /**
      * __invoke
@@ -28,13 +30,7 @@ class NewModule extends AbstractHelper implements ServiceLocatorAwareInterface
      */
     public function __invoke($options = null)
     {
-        $sl = $this->getServiceLocator();
-
-        //need to fetch top lvl serviceLocator
-        $sl = $sl->getServiceLocator();
-
-        $mapper = $sl->get('zfmodule_mapper_module');
-        $modules = $mapper->findAll(10, 'created_at', 'DESC');
+        $modules = $this->moduleMapper->findAll(10, 'created_at', 'DESC');
 
         //return $modules;
         $vm = new ViewModel(array(
@@ -52,23 +48,6 @@ class NewModule extends AbstractHelper implements ServiceLocatorAwareInterface
     public function setViewTemplate($viewTemplate)
     {
         $this->viewTemplate = $viewTemplate;
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
         return $this;
     }
 }

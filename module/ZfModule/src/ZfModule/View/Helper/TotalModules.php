@@ -3,20 +3,27 @@
 namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfModule\Mapper;
 
-class TotalModules extends AbstractHelper implements ServiceLocatorAwareInterface
+class TotalModules extends AbstractHelper
 {
     /**
-     * @var ServiceLocator
+     * @var Mapper\Module
      */
-    protected $serviceLocator;
+    private $moduleMapper;
 
     /**
      * @var int
      */
     protected $total;
+
+    /**
+     * @param Mapper\Module $moduleMapper
+     */
+    public function __construct(Mapper\Module $moduleMapper)
+    {
+        $this->moduleMapper = $moduleMapper;
+    }
 
     /**
      * __invoke
@@ -27,30 +34,8 @@ class TotalModules extends AbstractHelper implements ServiceLocatorAwareInterfac
     public function __invoke()
     {
         if ($this->total === null) {
-            $sl = $this->getServiceLocator();
-
-            //need to fetch top lvl ServiceLocator: ServiceManager
-            $sm = $sl->getServiceLocator();
-            $mapper = $sm->get('zfmodule_mapper_module');
-            $this->total = $mapper->getTotal();
+            $this->total = $this->moduleMapper->getTotal();
         }
         return $this->total;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
     }
 }
