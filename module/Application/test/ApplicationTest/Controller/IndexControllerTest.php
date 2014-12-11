@@ -2,7 +2,7 @@
 
 namespace ApplicationTest\Controller;
 
-use ApplicationTest\Bootstrap;
+use ApplicationTest\Util\Bootstrap;
 use Application\Controller\IndexController;
 use Zend\Http\Request;
 use Zend\Http\Response;
