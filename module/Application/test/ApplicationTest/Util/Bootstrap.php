@@ -15,8 +15,6 @@ class Bootstrap
         // Load the user-defined test configuration file, if it exists; otherwise, load
         $config = include __DIR__ . '/../../../../../config/application.config.php';
 
-        static::initAutoloader();
-
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', $config);
         $serviceManager->get('ModuleManager')->loadModules();
@@ -29,10 +27,5 @@ class Bootstrap
     public static function getServiceManager()
     {
         return static::$serviceManager;
-    }
-
-    protected static function initAutoloader()
-    {
-        include __DIR__ . '/init_autoloader.php';
     }
 }
