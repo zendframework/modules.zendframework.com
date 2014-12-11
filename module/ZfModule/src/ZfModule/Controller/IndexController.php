@@ -2,28 +2,52 @@
 
 namespace ZfModule\Controller;
 
+use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
+use Zend\Cache;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Zend\View\Model\JsonModel;
 use ZfModule\Mapper;
 use ZfModule\Service;
 
 class IndexController extends AbstractActionController
 {
     /**
+     * @var Cache\Storage\StorageInterface
+     */
+    private $moduleCache;
+
+    /**
      * @var Mapper\Module
      */
     private $moduleMapper;
 
-    protected $moduleService;
+    /**
+     * @var Service\Module
+     */
+    private $moduleService;
 
     /**
-     * @param Mapper\Module $moduleMapper
+     * @var Client
      */
-    public function __construct(Mapper\Module $moduleMapper)
-    {
+    private $githubClient;
+
+    /**
+     * @param Cache\Storage\StorageInterface $moduleCache
+     * @param Mapper\Module $moduleMapper
+     * @param Service\Module $moduleService
+     * @param Client $githubClient
+     */
+    public function __construct(
+        Cache\Storage\StorageInterface $moduleCache,
+        Mapper\Module $moduleMapper,
+        Service\Module $moduleService,
+        Client $githubClient
+    ) {
+        $this->moduleCache = $moduleCache;
         $this->moduleMapper = $moduleMapper;
+        $this->moduleService = $moduleService;
+        $this->githubClient = $githubClient;
     }
 
     public function viewAction()
@@ -31,33 +55,27 @@ class IndexController extends AbstractActionController
         $vendor = $this->params()->fromRoute('vendor', null);
         $module = $this->params()->fromRoute('module', null);
 
-        $sl = $this->getServiceLocator();
-
         $result = $this->moduleMapper->findByName($module);
         if (!$result) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
 
-        $client = $sl->get('EdpGithub\Client');
-        /* @var $cache StorageInterface */
-        $cache = $sl->get('zfmodule_cache');
-
         $cacheKey = 'module-view-' . $vendor . '-' . $module;
 
-        $repository = json_decode($client->api('repos')->show($vendor, $module));
-        $httpClient = $client->getHttpClient();
+        $repository = json_decode($this->githubClient->api('repos')->show($vendor, $module));
+        $httpClient = $this->githubClient->getHttpClient();
         $response= $httpClient->getResponse();
-        if ($response->getStatusCode() == 304 && $cache->hasItem($cacheKey)) {
-            return $cache->getItem($cacheKey);
+        if ($response->getStatusCode() == 304 && $this->moduleCache->hasItem($cacheKey)) {
+            return $this->moduleCache->getItem($cacheKey);
         }
 
-        $readme = $client->api('repos')->readme($vendor, $module);
+        $readme = $this->githubClient->api('repos')->readme($vendor, $module);
         $readme = json_decode($readme);
-        $repository = json_decode($client->api('repos')->show($vendor, $module));
+        $repository = json_decode($this->githubClient->api('repos')->show($vendor, $module));
 
         try {
-            $license = $client->api('repos')->content($vendor, $module, 'LICENSE');
+            $license = $this->githubClient->api('repos')->content($vendor, $module, 'LICENSE');
             $license = json_decode($license);
             $license = base64_decode($license->content);
         } catch (\Exception $e) {
@@ -65,7 +83,7 @@ class IndexController extends AbstractActionController
         }
 
         try {
-            $composerJson = $client->api('repos')->content($vendor, $module, 'composer.json');
+            $composerJson = $this->githubClient->api('repos')->content($vendor, $module, 'composer.json');
             $composerConf = json_decode($composerJson);
             $composerConf = base64_decode($composerConf->content);
             $composerConf = json_decode($composerConf, true);
@@ -82,7 +100,7 @@ class IndexController extends AbstractActionController
             'license' => $license,
         ));
 
-        $cache->setItem($cacheKey, $viewModel);
+        $this->moduleCache->setItem($cacheKey, $viewModel);
 
         return $viewModel;
     }
@@ -93,9 +111,6 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $sl = $this->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
-
         $params = array(
             'type'      => 'all',
             'per_page'  => 100,
@@ -104,7 +119,7 @@ class IndexController extends AbstractActionController
         );
 
         /* @var RepositoryCollection $repos */
-        $repos = $client->api('current_user')->repos($params);
+        $repos = $this->githubClient->api('current_user')->repos($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-user-' . $identity->getId();
@@ -122,9 +137,6 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $sl = $this->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
-
         $owner = $this->params()->fromRoute('owner', null);
         $params = array(
             'per_page'  => 100,
@@ -133,7 +145,7 @@ class IndexController extends AbstractActionController
         );
 
         /* @var RepositoryCollection $repos */
-        $repos = $client->api('user')->repos($owner, $params);
+        $repos = $this->githubClient->api('user')->repos($owner, $params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
@@ -153,36 +165,31 @@ class IndexController extends AbstractActionController
     public function fetchModules(RepositoryCollection $repos, $cacheKey)
     {
         $cacheKey .= '-github';
-        $sl = $this->getServiceLocator();
-        /* @var $client \EdpGithub\Client */
-        $client = $sl->get('EdpGithub\Client');
-        /* @var $cache StorageInterface */
-        $cache = $sl->get('zfmodule_cache');
 
         $repositories = array();
 
         foreach ($repos as $repo) {
-            $isModule = $this->getModuleService()->isModule($repo);
+            $isModule = $this->moduleService->isModule($repo);
             //Verify if repos have been modified
-            $httpClient = $client->getHttpClient();
+            $httpClient = $this->githubClient->getHttpClient();
             /* @var $response \Zend\Http\Response */
             $response = $httpClient->getResponse();
 
-            $hasCache = $cache->hasItem($cacheKey);
+            $hasCache = $this->moduleCache->hasItem($cacheKey);
 
             if ($response->getStatusCode() == 304 && $hasCache) {
-                $repositories = $cache->getItem($cacheKey);
+                $repositories = $this->moduleCache->getItem($cacheKey);
                 break;
             }
 
             if (!$repo->fork && $repo->permissions->push && $isModule && !$this->moduleMapper->findByName($repo->name)) {
                 $repositories[] = $repo;
-                $cache->removeItem($cacheKey);
+                $this->moduleCache->removeItem($cacheKey);
             }
         }
 
         //save list of modules to cache
-        $cache->setItem($cacheKey, $repositories);
+        $this->moduleCache->setItem($cacheKey, $repositories);
 
         return $repositories;
     }
@@ -203,8 +210,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $sm = $this->getServiceLocator();
-            $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
+            $repository = $this->githubClient->api('repos')->show($owner, $repo);
             $repository = json_decode($repository);
 
             if (!($repository instanceof \stdClass)) {
@@ -214,10 +220,9 @@ class IndexController extends AbstractActionController
                 );
             }
 
-            $service = $this->getModuleService();
             if (!$repository->fork && $repository->permissions->push) {
-                if ($service->isModule($repository)) {
-                    $module = $service->register($repository);
+                if ($this->moduleService->isModule($repository)) {
+                    $module = $this->moduleService->register($repository);
                     $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
                 } else {
                     throw new Exception\UnexpectedValueException(
@@ -245,12 +250,10 @@ class IndexController extends AbstractActionController
 
     public function clearModuleCache()
     {
-        $sl = $this->getServiceLocator();
-        $cache = $sl->get('zfmodule_cache');
         $identity = $this->zfcUserAuthentication()->getIdentity();
 
         $tags = array($identity->getUsername() . '-' . $identity->getId());
-        $cache->clearByTags($tags);
+        $this->moduleCache->clearByTags($tags);
     }
 
     /**
@@ -269,8 +272,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $sm = $this->getServiceLocator();
-            $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
+            $repository = $this->githubClient->api('repos')->show($owner, $repo);
             $repository = json_decode($repository);
 
             if (!$repository instanceof \stdClass) {
@@ -306,22 +308,5 @@ class IndexController extends AbstractActionController
 
         $this->clearModuleCache();
         return $this->redirect()->toRoute('zfcuser');
-    }
-
-    /**
-     * @return Service\Module
-     */
-    public function getModuleService()
-    {
-        if (!$this->moduleService) {
-            $this->moduleService = $this->getServiceLocator()->get('zfmodule_service_module');
-        }
-
-        return $this->moduleService;
-    }
-
-    public function setModuleService($moduleService)
-    {
-        $this->moduleService = $moduleService;
     }
 }
