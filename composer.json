@@ -38,6 +38,7 @@
     "autoload-dev": {
         "psr-0": {
             "ApplicationTest": "./module/Application/test/",
+            "UserTest": "./module/User/test/",
             "ZfModuleTest": "./module/ZfModule/test/"
         }
     },
