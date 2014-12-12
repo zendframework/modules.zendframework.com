@@ -72,7 +72,6 @@ class IndexController extends AbstractActionController
 
         $readme = $this->githubClient->api('repos')->readme($vendor, $module);
         $readme = json_decode($readme);
-        $repository = json_decode($this->githubClient->api('repos')->show($vendor, $module));
 
         try {
             $license = $this->githubClient->api('repos')->content($vendor, $module, 'LICENSE');
