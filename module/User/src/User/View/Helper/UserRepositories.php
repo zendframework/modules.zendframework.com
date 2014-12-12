@@ -2,26 +2,35 @@
 
 namespace User\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
-use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-
+use EdpGithub\Client;
+use EdpGithub\Listener;
+use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\EventManager;
+use Zend\View\Helper\AbstractHelper;
+use ZfModule\Mapper;
 
-class UserRepositories extends AbstractHelper implements ServiceLocatorAwareInterface, EventManagerAwareInterface
+class UserRepositories extends AbstractHelper implements EventManagerAwareInterface
 {
+    /**
+     * @var Mapper\Module
+     */
+    private $moduleMapper;
+
+    /**
+     * @var Client
+     */
+    private $githubClient;
+
+    /**
+     * @var Listener\Error
+     */
+    private $errorListener;
+
     /**
      * $var string template used for view
      */
     protected $viewTemplate;
-
-    /**
-     * @var ServiceLocator
-     */
-    protected $serviceLocator;
 
     /**
      * @var EventManager
@@ -29,70 +38,57 @@ class UserRepositories extends AbstractHelper implements ServiceLocatorAwareInte
     protected $events;
 
     /**
+     * @param Mapper\Module $moduleMapper
+     * @param Client $githubClient
+     * @param Listener\Error $errorListener
+     */
+    public function __construct(Mapper\Module $moduleMapper, Client $githubClient, Listener\Error $errorListener)
+    {
+        $this->moduleMapper = $moduleMapper;
+        $this->githubClient = $githubClient;
+        $this->errorListener = $errorListener;
+    }
+
+    /**
      * @return array
      */
     public function __invoke()
     {
-        $sl = $this->getServiceLocator();
-
-        //fetch top lvl ServiceLocator
-        $sl = $sl->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
-
         $repositories = array();
 
-        $ownerRepos = $client->api('current_user')->repos(array('type' =>'owner'));
+        $ownerRepos = $this->githubClient->api('current_user')->repos(array('type' =>'owner'));
         foreach ($ownerRepos as $repo) {
             if (!$repo->fork) {
                 $repositories[] = $repo;
             }
         }
 
-        $memberRepos = $client->api('current_user')->repos(array('type' =>'member'));
+        $memberRepos = $this->githubClient->api('current_user')->repos(array('type' =>'member'));
         foreach ($memberRepos as $repo) {
             $repositories[] = $repo;
         }
 
-        $mapper = $sl->get('zfmodule_mapper_module');
         foreach ($repositories as $key => $repo) {
             if ($repo->fork) {
                 unset($repositories[$key]);
             } else {
-                $module = $mapper->findByName($repo->name);
+                $module = $this->moduleMapper->findByName($repo->name);
                 if ($module) {
                     unset($repositories[$key]);
                 } else {
-                    $em = $client->getHttpClient()->getEventManager();
-                    $errorListener = $sl->get('EdpGithub\Listener\Error');
-                    $em->detachAggregate($errorListener);
-                    $module = $client->api('repos')->content($repo->full_name, 'Module.php');
-                    $response = $client->getHttpClient()->getResponse();
+                    $em = $this->githubClient->getHttpClient()->getEventManager();
+                    $em->detachAggregate($this->errorListener);
+                    $module = $this->githubClient->api('repos')->content($repo->full_name, 'Module.php');
+                    $response = $this->githubClient->getHttpClient()->getResponse();
                     if (!$response->isSuccess()) {
                         unset($repositories[$key]);
                     }
-                    $em->attachAggregate($errorListener);
+                    $em->attachAggregate($this->errorListener);
                 }
             }
         }
 
         return $repositories;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
     }
 
     /**

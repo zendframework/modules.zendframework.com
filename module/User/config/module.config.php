@@ -22,9 +22,7 @@ return array(
         'factories' => array(
             'newUsers' => 'User\View\Helper\NewUsersFactory',
             'userOrganizations' => 'User\View\Helper\UserOrganizationsFactory',
-        ),
-        'invokables' => array(
-            'UserRepositories' => 'User\View\Helper\UserRepositories',
+            'userRepositories' => 'User\View\Helper\UserRepositoriesFactory',
         ),
     ),
 );
