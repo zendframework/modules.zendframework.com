@@ -22,13 +22,9 @@ class NewModule extends AbstractHelper
     }
 
     /**
-     * __invoke
-     *
-     * @access public
-     * @param array $options array of options
-     * @return array Array of modules
+     * @return string
      */
-    public function __invoke($options = null)
+    public function __invoke()
     {
         $modules = $this->moduleMapper->findAll(10, 'created_at', 'DESC');
 
