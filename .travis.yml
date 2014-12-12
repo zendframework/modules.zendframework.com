@@ -13,9 +13,9 @@ before_script:
   - mysql -uroot zfmodules < data/sql/0.sql
 
 script:
-  - ./vendor/bin/phpcs --standard=./phpcs.xml -np --report=summary .
-  - ./vendor/bin/phpmd . text codesize,unusedcode --exclude data,puphpet,vendor
-  - ./vendor/bin/phpunit --configuration phpunit.xml
+  - vendor/bin/phpcs --standard=phpcs.xml -np --report=summary .
+  - vendor/bin/phpmd . text codesize,unusedcode --exclude data,puphpet,vendor
+  - vendor/bin/phpunit --configuration phpunit.xml
 
 notifications:
   irc: "irc.freenode.org#zftalk.modules"
