@@ -8,6 +8,10 @@ php:
 install:
   - composer install --prefer-source
 
+before_script:
+  - mysql -uroot -e 'create database zfmodules;'
+  - mysql -uroot zfmodules < data/sql/0.sql
+
 script:
   - ./vendor/bin/phpcs --standard=./phpcs.xml -np --report=summary .
   - ./vendor/bin/phpmd . text codesize,unusedcode --exclude data,puphpet,vendor
