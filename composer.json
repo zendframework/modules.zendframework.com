@@ -26,20 +26,20 @@
     },
     "autoload": {
         "psr-0": {
-            "Application": "./module/Application/src/",
-            "User": "./module/User/src/",
-            "ZfModule": "./module/ZfModule/src/"
+            "Application": "module/Application/src/",
+            "User": "module/User/src/",
+            "ZfModule": "module/ZfModule/src/"
         },
         "classmap": [
-            "./vendor/hybridauth/hybridauth/hybridauth/Hybrid",
-            "./vendor/hybridauth/hybridauth/additional-providers/hybridauth-github/Providers"
+            "vendor/hybridauth/hybridauth/hybridauth/Hybrid",
+            "vendor/hybridauth/hybridauth/additional-providers/hybridauth-github/Providers"
         ]
     },
     "autoload-dev": {
         "psr-0": {
-            "ApplicationTest": "./module/Application/test/",
-            "UserTest": "./module/User/test/",
-            "ZfModuleTest": "./module/ZfModule/test/"
+            "ApplicationTest": "module/Application/test/",
+            "UserTest": "module/User/test/",
+            "ZfModuleTest": "module/ZfModule/test/"
         }
     },
     "minimum-stability": "dev"
