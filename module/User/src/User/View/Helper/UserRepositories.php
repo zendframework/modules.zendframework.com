@@ -57,7 +57,7 @@ class UserRepositories extends AbstractHelper implements ServiceLocatorAwareInte
             $repositories[] = $repo;
         }
 
-        $mapper = $sl->get('application_module_mapper');
+        $mapper = $sl->get('zfmodule_mapper_module');
         foreach ($repositories as $key => $repo) {
             if ($repo->fork) {
                 unset($repositories[$key]);
