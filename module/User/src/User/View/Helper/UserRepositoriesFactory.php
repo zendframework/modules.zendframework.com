@@ -12,7 +12,8 @@ use ZfModule\Mapper;
 class UserRepositoriesFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $helperPluginManager
+     * {@inheritDoc}
+     *
      * @return UserRepositories
      */
     public function createService(ServiceLocatorInterface $helperPluginManager)

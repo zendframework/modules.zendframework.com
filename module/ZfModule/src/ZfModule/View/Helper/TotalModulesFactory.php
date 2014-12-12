@@ -10,7 +10,8 @@ use ZfModule\Mapper;
 class TotalModulesFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $helperPluginManager
+     * {@inheritDoc}
+     *
      * @return TotalModules
      */
     public function createService(ServiceLocatorInterface $helperPluginManager)

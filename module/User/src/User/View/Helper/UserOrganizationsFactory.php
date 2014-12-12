@@ -10,7 +10,8 @@ use Zend\View\HelperPluginManager;
 class UserOrganizationsFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $helperPluginManager
+     * {@inheritDoc}
+     *
      * @return UserOrganizations
      */
     public function createService(ServiceLocatorInterface $helperPluginManager)

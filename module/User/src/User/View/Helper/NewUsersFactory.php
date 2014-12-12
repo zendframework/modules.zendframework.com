@@ -10,7 +10,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class NewUsersFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $helperPluginManager
+     * {@inheritDoc}
+     *
      * @return NewUsers
      */
     public function createService(ServiceLocatorInterface $helperPluginManager)
