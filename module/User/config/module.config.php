@@ -22,7 +22,6 @@ return array(
         'factories' => array(
             'newUsers' => 'User\View\Helper\NewUsersFactory',
             'userOrganizations' => 'User\View\Helper\UserOrganizationsFactory',
-            'userRepositories' => 'User\View\Helper\UserRepositoriesFactory',
         ),
     ),
 );
