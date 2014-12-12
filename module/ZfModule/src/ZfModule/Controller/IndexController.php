@@ -5,6 +5,7 @@ namespace ZfModule\Controller;
 use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
 use Zend\Cache;
+use Zend\Http;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfModule\Mapper;
@@ -57,7 +58,7 @@ class IndexController extends AbstractActionController
 
         $result = $this->moduleMapper->findByName($module);
         if (!$result) {
-            $this->getResponse()->setStatusCode(404);
+            $this->getResponse()->setStatusCode(Http\Response::STATUS_CODE_404);
             return;
         }
 
@@ -66,7 +67,7 @@ class IndexController extends AbstractActionController
         $repository = json_decode($this->githubClient->api('repos')->show($vendor, $module));
         $httpClient = $this->githubClient->getHttpClient();
         $response= $httpClient->getResponse();
-        if ($response->getStatusCode() == 304 && $this->moduleCache->hasItem($cacheKey)) {
+        if ($response->getStatusCode() == Http\Response::STATUS_CODE_304 && $this->moduleCache->hasItem($cacheKey)) {
             return $this->moduleCache->getItem($cacheKey);
         }
 
@@ -177,7 +178,7 @@ class IndexController extends AbstractActionController
 
             $hasCache = $this->moduleCache->hasItem($cacheKey);
 
-            if ($response->getStatusCode() == 304 && $hasCache) {
+            if ($response->getStatusCode() == Http\Response::STATUS_CODE_304 && $hasCache) {
                 $repositories = $this->moduleCache->getItem($cacheKey);
                 break;
             }
@@ -216,7 +217,7 @@ class IndexController extends AbstractActionController
             if (!($repository instanceof \stdClass)) {
                 throw new Exception\RuntimeException(
                     'Not able to fetch the repository from github due to an unknown error.',
-                    500
+                    Http\Response::STATUS_CODE_500
                 );
             }
 
@@ -227,14 +228,14 @@ class IndexController extends AbstractActionController
                 } else {
                     throw new Exception\UnexpectedValueException(
                         $repository->name . ' is not a Zend Framework Module',
-                        403
+                        Http\Response::STATUS_CODE_403
                     );
                 }
             } else {
                 throw new Exception\UnexpectedValueException(
                     'You have no permission to add this module. The reason might be that you are' .
                     'neither the owner nor a collaborator of this repository.',
-                    403
+                    Http\Response::STATUS_CODE_403
                 );
             }
         } else {
@@ -278,7 +279,7 @@ class IndexController extends AbstractActionController
             if (!$repository instanceof \stdClass) {
                 throw new Exception\RuntimeException(
                     'Not able to fetch the repository from github due to an unknown error.',
-                    500
+                    Http\Response::STATUS_CODE_500
                 );
             }
 
@@ -290,14 +291,14 @@ class IndexController extends AbstractActionController
                 } else {
                     throw new Exception\UnexpectedValueException(
                         $repository->name . ' was not found',
-                        403
+                        Http\Response::STATUS_CODE_403
                     );
                 }
             } else {
                 throw new Exception\UnexpectedValueException(
                     'You have no permission to add this module. The reason might be that you are' .
                     'neither the owner nor a collaborator of this repository.',
-                    403
+                    Http\Response::STATUS_CODE_403
                 );
             }
         } else {

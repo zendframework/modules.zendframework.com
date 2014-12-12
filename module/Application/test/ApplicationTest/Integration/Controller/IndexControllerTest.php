@@ -3,9 +3,7 @@
 namespace ApplicationTest\Integration\Controller;
 
 use ApplicationTest\Integration\Util\Bootstrap;
-use Application\Controller\IndexController;
-use Zend\Http\Request;
-use Zend\Http\Response;
+use Zend\Http;
 use Zend\Mvc\Controller\ControllerManager;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
@@ -28,7 +26,7 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         $controllerManager = $serviceManager->get('ControllerManager');
         $this->controller = $controllerManager->get('Application\Controller\Index');
 
-        $this->request = new Request();
+        $this->request = new Http\Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
         $this->event = new MvcEvent();
         $config = $serviceManager->get('Config');
@@ -47,6 +45,6 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         //$result = $this->controller->dispatch($this->request);
         //$response = $this->controller->getResponse();
 
-        //$this->assertEquals(200, $response->getStatusCode());
+        //$this->assertEquals(Http\Response::STATUS_CODE_200, $response->getStatusCode());
     }
 }
