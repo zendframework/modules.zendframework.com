@@ -29,13 +29,9 @@ class UserRepositories extends AbstractHelper implements ServiceLocatorAwareInte
     protected $events;
 
     /**
-     * __invoke
-     *
-     * @access public
-     * @param array $options array of options
-     * @return string
+     * @return array
      */
-    public function __invoke($options = array())
+    public function __invoke()
     {
         $sl = $this->getServiceLocator();
 

@@ -8,6 +8,12 @@ use Zend\Mvc\ApplicationInterface;
 
 class Module extends AbstractModule
 {
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     *
+     * @param ModuleManager $moduleManager
+     * @param ApplicationInterface $app
+     */
     public function bootstrap(ModuleManager $moduleManager, ApplicationInterface $app)
     {
         $em = $app->getEventManager()->getSharedManager();

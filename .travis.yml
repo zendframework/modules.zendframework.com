@@ -9,6 +9,7 @@ install:
 
 script:
   - ./vendor/bin/phpcs --standard=./phpcs.xml -np --report=summary .
+  - ./vendor/bin/phpmd . text codesize,unusedcode --exclude data,puphpet,vendor
   - ./vendor/bin/phpunit --configuration phpunit.xml
 
 notifications:
