@@ -9,8 +9,9 @@ install:
   - composer install --prefer-source
 
 before_script:
-  - mysql -uroot -e 'create database zfmodules;'
-  - mysql -uroot zfmodules < data/sql/0.sql
+  - cp config/autoload/travis.php.local.dist config/autoload/travis.local.php
+  - mysql -uroot -e 'create database modules_test;'
+  - mysql -uroot modules_test < data/sql/0.sql
 
 script:
   - vendor/bin/phpcs --standard=phpcs.xml -np --report=summary .
