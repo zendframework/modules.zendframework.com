@@ -17,7 +17,8 @@ use ZfModule\Mapper;
 class SearchControllerFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $controllerManager
+     * {@inheritDoc}
+     *
      * @return SearchController
      */
     public function createService(ServiceLocatorInterface $controllerManager)

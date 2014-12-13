@@ -11,7 +11,8 @@ use ZfModule\Mapper;
 class ListModuleFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $helperPluginManager
+     * {@inheritDoc}
+     *
      * @return ListModule
      */
     public function createService(ServiceLocatorInterface $helperPluginManager)

@@ -19,10 +19,9 @@ return array(
         ),
     ),
     'view_helpers' => array(
-        'invokables' => array(
-            'UserRepositories' => 'User\View\Helper\UserRepositories',
-            'newUsers' => 'User\View\Helper\NewUsers',
-            'userOrganizations' => 'User\View\Helper\UserOrganizations',
+        'factories' => array(
+            'newUsers' => 'User\View\Helper\NewUsersFactory',
+            'userOrganizations' => 'User\View\Helper\UserOrganizationsFactory',
         ),
     ),
 );

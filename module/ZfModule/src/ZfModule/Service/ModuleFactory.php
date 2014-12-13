@@ -10,7 +10,8 @@ use ZfModule\Mapper;
 class ModuleFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $serviceLocator
+     * {@inheritDoc}
+     *
      * @return Module
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

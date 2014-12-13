@@ -13,6 +13,7 @@
 >
     <testsuite name="Test all modules">
         <directory>./module/Application/test/ApplicationTest</directory>
+        <directory>./module/User/test/UserTest</directory>
         <directory>./module/ZfModule/test/ZfModuleTest</directory>
     </testsuite>
     <filter>
