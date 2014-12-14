@@ -112,11 +112,8 @@
 </div>
 <hr style="clear:both" />
 
-<footer class="footer">
-    <div class="container">
-        <p><?php echo COPY_MSG;?></p>
-    </div>
-</footer>
+<?php /* @var Zend\View\Renderer\PhpRenderer $this */ ?>
+<?php echo $this->partial('layout/footer'); ?>
 
 <?php echo $this->inlineScript()
     ->prependFile($this->basePath() . '/js/jquery.livesearch.js')
