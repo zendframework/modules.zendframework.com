@@ -19,8 +19,14 @@ class Module extends AbstractModule
         $em = $app->getEventManager()->getSharedManager();
         $sm = $app->getServiceManager();
 
-        $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth', 'githubToLocalUser', function ($e) {
-            $localUser = $e->getTarget();
+        $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth', 'registerViaProvider', function ($e) {
+            $provider = $e->getParam('provider');
+
+            if ('github' !== $provider) {
+                return;
+            }
+
+            $localUser = $e->getParam('user');
             $userProfile = $e->getParam('userProfile');
             $nickname = substr(
                 $userProfile->profileURL,
