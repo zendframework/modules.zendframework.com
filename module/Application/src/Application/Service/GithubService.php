@@ -43,7 +43,6 @@ class GithubService
      *
      * @param $user
      * @param array $params
-     * @return bool
      */
     public function getUserRepositories($user, $params = array())
     {
