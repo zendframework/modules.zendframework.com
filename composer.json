@@ -4,7 +4,7 @@
     "license": "BSD-3-Clause",
     "homepage": "https://modules.zendframework.com",
     "require": {
-        "php": "~5.4",
+        "php": "~5.5",
         "bshaffer/oauth2-server-php": "dev-develop",
         "zendframework/zendframework": "~2.3.0",
         "rwoverdijk/assetmanager": "1.3.*",
