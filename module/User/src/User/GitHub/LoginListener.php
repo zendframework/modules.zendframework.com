@@ -45,7 +45,7 @@ final class LoginListener implements ListenerAggregateInterface
      * @param EventInterface $event
      * @return bool
      */
-    protected function isEventValid(EventInterface $event)
+    private function isEventValid(EventInterface $event)
     {
         if (!$event->getParam('provider')) {
             return false;
@@ -74,7 +74,7 @@ final class LoginListener implements ListenerAggregateInterface
      * @param Hybrid_User_Profile $profile
      * @return User
      */
-    protected function updateLocalUser(User $user, Hybrid_User_Profile $profile)
+    private function updateLocalUser(User $user, Hybrid_User_Profile $profile)
     {
         $user->setUsername($this->getUsernameFromProfileUrl($profile->profileURL));
         $user->setPhotoUrl($profile->photoURL);
@@ -86,7 +86,7 @@ final class LoginListener implements ListenerAggregateInterface
      * @param string $url GitHub profile URL
      * @return string
      */
-    protected function getUsernameFromProfileUrl($url)
+    private function getUsernameFromProfileUrl($url)
     {
         return substr($url, (strrpos($url, '/') + 1));
     }
