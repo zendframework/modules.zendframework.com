@@ -60,55 +60,6 @@ class IndexController extends AbstractActionController
         $this->githubService = $githubService;
     }
 
-    private function getRepositoryCacheKey($user, $module)
-    {
-        return 'module-view-' . $user . '-' . $module;
-    }
-
-    private function getRepositoryMetadata($user, $module)
-    {
-        Try {
-            $apiResponse = $this->githubClient->api('repos')->show($user, $module);
-            return json_decode($apiResponse);
-        } Catch(\Exception $e)
-        {
-            return false;
-        }
-    }
-
-    private function getUserRepositories($user, $params = array())
-    {
-        return $this->githubClient->api('user')->repos($user, $params);
-    }
-
-    private function getRepositoryFileContent($user, $module, $filePath)
-    {
-        $contentResponse = $this->getRepositoryFileMetadata($user, $module, $filePath);
-
-        if( !isset($contentResponse->content) ){
-            return false;
-        }
-
-        return base64_decode($contentResponse->content);
-    }
-
-    private function getRepositoryFileMetadata($user, $module, $filePath)
-    {
-        Try {
-            $apiResponse = $this->githubClient->api('repos')->content($user, $module, $filePath);
-            $apiResponse = json_decode($apiResponse);
-            return $apiResponse;
-
-        } Catch(\Exception $e) {
-            return false;
-        }
-    }
-
-    private function getAuthUserRepositories($params = array())
-    {
-        return $this->githubClient->api('current_user')->repos($params);
-    }
-
     public function viewAction()
     {
         $vendor = $this->params()->fromRoute('vendor', null);
