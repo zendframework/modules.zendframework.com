@@ -154,11 +154,11 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * @param RepositoryCollection $repos
+     * @param \Generator $repos
      * @param string $cacheKey
      * @return array
      */
-    public function fetchModules(RepositoryCollection $repos, $cacheKey)
+    public function fetchModules(\Generator $repos, $cacheKey)
     {
         $cacheKey .= '-github';
 

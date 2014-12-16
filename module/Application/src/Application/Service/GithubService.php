@@ -3,6 +3,7 @@
 namespace Application\Service;
 
 use EdpGithub\Client;
+use EdpGithub\Collection\RepositoryCollection;
 use EdpGithub\Listener\Exception\RuntimeException;
 
 class GithubService
@@ -38,15 +39,22 @@ class GithubService
     }
 
     /**
-     * Get all User Repositories
+     * Get all Repositories from GitHub User
      *
      * @param $user
      * @param array $params
-     * @return mixed
+     * @return bool
      */
     public function getUserRepositories($user, $params = array())
     {
-        return $this->githubClient->api('user')->repos($user, $params);
+        $repositoryCollection = $this->githubClient->api('user')->repos($user, $params);
+        if( $repositoryCollection instanceof RepositoryCollection )
+        {
+            foreach($repositoryCollection as $repository)
+            {
+                yield $repository;
+            }
+        }
     }
 
     /**
@@ -89,13 +97,19 @@ class GithubService
     }
 
     /**
-     * Return all Repositories from Auth User
+     * Return all Repositories from current authenticated GitHub User
      *
      * @param array $params
-     * @return mixed
      */
     public function getAuthUserRepositories($params = array())
     {
-        return $this->githubClient->api('current_user')->repos($params);
+        $repositoryCollection = $this->githubClient->api('current_user')->repos($params);
+        if( $repositoryCollection instanceof RepositoryCollection )
+        {
+            foreach($repositoryCollection as $repository)
+            {
+                yield $repository;
+            }
+        }
     }
 }
