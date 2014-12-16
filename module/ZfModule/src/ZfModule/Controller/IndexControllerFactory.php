@@ -33,11 +33,15 @@ class IndexControllerFactory implements FactoryInterface
         /* @var Client $githubClient */
         $githubClient = $serviceManager->get('EdpGithub\Client');
 
+        /* @var Client $githubClient */
+        $githubService = $serviceManager->get('GithubService');
+
         return new IndexController(
             $moduleCache,
             $moduleMapper,
             $moduleService,
-            $githubClient
+            $githubClient,
+            $githubService
         );
     }
 }

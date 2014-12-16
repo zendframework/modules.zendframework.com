@@ -2,6 +2,7 @@
 
 namespace ZfModule\Controller;
 
+use Application\Service\GithubService;
 use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
 use Zend\Cache;
@@ -34,21 +35,29 @@ class IndexController extends AbstractActionController
     private $githubClient;
 
     /**
+     * @var GithubService
+     */
+    private $githubService;
+
+    /**
      * @param Cache\Storage\StorageInterface $moduleCache
      * @param Mapper\Module $moduleMapper
      * @param Service\Module $moduleService
      * @param Client $githubClient
+     * @param GithubService $githubService
      */
     public function __construct(
         Cache\Storage\StorageInterface $moduleCache,
         Mapper\Module $moduleMapper,
         Service\Module $moduleService,
-        Client $githubClient
+        Client $githubClient,
+        GithubService $githubService
     ) {
         $this->moduleCache = $moduleCache;
         $this->moduleMapper = $moduleMapper;
         $this->moduleService = $moduleService;
         $this->githubClient = $githubClient;
+        $this->githubService = $githubService;
     }
 
     private function getRepositoryCacheKey($user, $module)
