@@ -20,18 +20,6 @@ class GithubService
     }
 
     /**
-     * Return the Repository Cache Key
-     *
-     * @param $user
-     * @param $module
-     * @return string
-     */
-    public function getRepositoryCacheKey($user, $module)
-    {
-        return 'module-view-' . $user . '-' . $module;
-    }
-
-    /**
      * Return MetaData from User Repository
      *
      * @param $user

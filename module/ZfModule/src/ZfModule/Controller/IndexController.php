@@ -71,7 +71,7 @@ class IndexController extends AbstractActionController
             return;
         }
 
-        $repositoryCacheKey = $this->githubService->getRepositoryCacheKey($vendor, $module);
+        $repositoryCacheKey = 'module-view-' . $vendor . '-' . $module;
         $repository = $this->githubService->getRepositoryMetadata($vendor, $module);
 
         $httpClient = $this->githubClient->getHttpClient();
