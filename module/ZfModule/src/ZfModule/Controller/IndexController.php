@@ -72,7 +72,7 @@ class IndexController extends AbstractActionController
         }
 
         $repositoryCacheKey = 'module-view-' . $vendor . '-' . $module;
-        $repository = $this->githubService->getRepositoryMetadata($vendor, $module);
+        $repository = $this->githubService->getUserRepositoryMetadata($vendor, $module);
 
         $httpClient = $this->githubClient->getHttpClient();
         $response= $httpClient->getResponse();
@@ -206,7 +206,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $repository = $this->githubService->getRepositoryMetadata($owner, $repo);
+            $repository = $this->githubService->getUserRepositoryMetadata($owner, $repo);
 
             if (!($repository instanceof \stdClass)) {
                 throw new Exception\RuntimeException(
@@ -267,7 +267,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $repository = $this->githubService->getRepositoryMetadata($owner, $repo);
+            $repository = $this->githubService->getUserRepositoryMetadata($owner, $repo);
 
             if (!$repository instanceof \stdClass) {
                 throw new Exception\RuntimeException(

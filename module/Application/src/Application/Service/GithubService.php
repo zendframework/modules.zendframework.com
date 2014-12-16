@@ -3,6 +3,7 @@
 namespace Application\Service;
 
 use EdpGithub\Client;
+use EdpGithub\Listener\Exception\RuntimeException;
 
 class GithubService
 {
@@ -26,12 +27,12 @@ class GithubService
      * @param $module
      * @return bool|mixed
      */
-    public function getRepositoryMetadata($user, $module)
+    public function getUserRepositoryMetadata($user, $module)
     {
         try {
             $apiResponse = $this->githubClient->api('repos')->show($user, $module);
             return json_decode($apiResponse);
-        } catch (\Exception $e) {
+        } catch (RuntimeException $e) {
             return false;
         }
     }
@@ -82,7 +83,7 @@ class GithubService
             $apiResponse = json_decode($apiResponse);
             return $apiResponse;
 
-        } catch (\Exception $e) {
+        } catch (RuntimeException $e) {
             return false;
         }
     }
