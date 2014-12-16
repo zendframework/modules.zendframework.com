@@ -2,7 +2,7 @@
 
 namespace ZfModule\Controller;
 
-use Application\Service\GithubService;
+use Application\Service\RepositoryRetriever;
 use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
 use Zend\Cache;
@@ -35,29 +35,29 @@ class IndexController extends AbstractActionController
     private $githubClient;
 
     /**
-     * @var GithubService
+     * @var RepositoryRetriever
      */
-    private $githubService;
+    private $repositoryRetriever;
 
     /**
      * @param Cache\Storage\StorageInterface $moduleCache
      * @param Mapper\Module $moduleMapper
      * @param Service\Module $moduleService
      * @param Client $githubClient
-     * @param GithubService $githubService
+     * @param RepositoryRetriever $repositoryRetriever
      */
     public function __construct(
         Cache\Storage\StorageInterface $moduleCache,
         Mapper\Module $moduleMapper,
         Service\Module $moduleService,
         Client $githubClient,
-        GithubService $githubService
+        RepositoryRetriever $repositoryRetriever
     ) {
         $this->moduleCache = $moduleCache;
         $this->moduleMapper = $moduleMapper;
         $this->moduleService = $moduleService;
         $this->githubClient = $githubClient;
-        $this->githubService = $githubService;
+        $this->repositoryRetriever = $repositoryRetriever;
     }
 
     public function viewAction()
@@ -72,7 +72,7 @@ class IndexController extends AbstractActionController
         }
 
         $repositoryCacheKey = 'module-view-' . $vendor . '-' . $module;
-        $repository = $this->githubService->getUserRepositoryMetadata($vendor, $module);
+        $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
 
         $httpClient = $this->githubClient->getHttpClient();
         $response= $httpClient->getResponse();
@@ -80,11 +80,11 @@ class IndexController extends AbstractActionController
             return $this->moduleCache->getItem($repositoryCacheKey);
         }
 
-        $readme = $this->githubService->getRepositoryFileContent($vendor, $module, 'README.md');
-        $license = $this->githubService->getRepositoryFileContent($vendor, $module, 'LICENSE');
+        $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
+        $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
         $license = $license === false ? 'No license file found for this Module' : $license;
 
-        $composerConf = $this->githubService->getRepositoryFileContent($vendor, $module, 'composer.json');
+        $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
         $composerConf = $composerConf === false ? 'No composer.json file found for this Module' : json_decode($composerConf, true);
 
         $viewModel = new ViewModel(array(
@@ -115,7 +115,7 @@ class IndexController extends AbstractActionController
         );
 
         /* @var RepositoryCollection $repos */
-        $repos = $this->githubService->getAuthUserRepositories($params);
+        $repos = $this->repositoryRetriever->getAuthUserRepositories($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-user-' . $identity->getId();
@@ -141,7 +141,7 @@ class IndexController extends AbstractActionController
         );
 
         /* @var RepositoryCollection $repos */
-        $repos = $this->githubService->getUserRepositories($owner, $params);
+        $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
@@ -206,7 +206,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $repository = $this->githubService->getUserRepositoryMetadata($owner, $repo);
+            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
             if (!($repository instanceof \stdClass)) {
                 throw new Exception\RuntimeException(
@@ -267,7 +267,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $repository = $this->githubService->getUserRepositoryMetadata($owner, $repo);
+            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
             if (!$repository instanceof \stdClass) {
                 throw new Exception\RuntimeException(

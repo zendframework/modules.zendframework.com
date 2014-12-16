@@ -2,6 +2,7 @@
 
 namespace ZfModule\Controller;
 
+use Application\Service\RepositoryRetriever;
 use EdpGithub\Client;
 use Zend\Cache;
 use Zend\Mvc\Controller\ControllerManager;
@@ -33,15 +34,15 @@ class IndexControllerFactory implements FactoryInterface
         /* @var Client $githubClient */
         $githubClient = $serviceManager->get('EdpGithub\Client');
 
-        /* @var Client $githubClient */
-        $githubService = $serviceManager->get('GithubService');
+        /* @var RepositoryRetriever $repositoryRetriever */
+        $repositoryRetriever = $serviceManager->get('RepositoryRetriever');
 
         return new IndexController(
             $moduleCache,
             $moduleMapper,
             $moduleService,
             $githubClient,
-            $githubService
+            $repositoryRetriever
         );
     }
 }

@@ -6,7 +6,7 @@ use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
 use EdpGithub\Listener\Exception\RuntimeException;
 
-class GithubService
+class RepositoryRetriever
 {
     /**
      * @var Client
