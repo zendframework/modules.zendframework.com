@@ -14,7 +14,8 @@ class GithubService
     /**
      * @param Client $githubClient
      */
-    public function __construct(Client $githubClient) {
+    public function __construct(Client $githubClient)
+    {
         $this->githubClient = $githubClient;
     }
 
@@ -39,11 +40,10 @@ class GithubService
      */
     public function getRepositoryMetadata($user, $module)
     {
-        Try {
+        try {
             $apiResponse = $this->githubClient->api('repos')->show($user, $module);
             return json_decode($apiResponse);
-        } Catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -72,7 +72,7 @@ class GithubService
     {
         $contentResponse = $this->getRepositoryFileMetadata($user, $module, $filePath);
 
-        if( !isset($contentResponse->content) ){
+        if (!isset($contentResponse->content)) {
             return false;
         }
 
@@ -89,12 +89,12 @@ class GithubService
      */
     public function getRepositoryFileMetadata($user, $module, $filePath)
     {
-        Try {
+        try {
             $apiResponse = $this->githubClient->api('repos')->content($user, $module, $filePath);
             $apiResponse = json_decode($apiResponse);
             return $apiResponse;
 
-        } Catch(\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
