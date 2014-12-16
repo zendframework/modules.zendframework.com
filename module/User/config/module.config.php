@@ -24,4 +24,9 @@ return [
             'userOrganizations' => 'User\View\Helper\UserOrganizationsFactory',
         ],
     ],
+    'service_manager' => [
+        'invokables' => [
+            'User\GitHub\LoginListener' => 'User\GitHub\LoginListener',
+        ],
+    ],
 ];

@@ -19,22 +19,7 @@ class Module extends AbstractModule
         $em = $app->getEventManager()->getSharedManager();
         $sm = $app->getServiceManager();
 
-        $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth', 'registerViaProvider', function ($e) {
-            $provider = $e->getParam('provider');
-
-            if ('github' !== $provider) {
-                return;
-            }
-
-            $localUser = $e->getParam('user');
-            $userProfile = $e->getParam('userProfile');
-            $nickname = substr(
-                $userProfile->profileURL,
-                (strrpos($userProfile->profileURL, "/") + 1)
-            );
-            $localUser->setUsername($nickname);
-            $localUser->setPhotoUrl($userProfile->photoURL);
-        });
+        $app->getEventManager()->attach($sm->get('User\GitHub\LoginListener'));
 
         $em->attach('EdpGithub\Client', 'api', function ($e) use ($sm) {
             $hybridAuth = $sm->get('HybridAuth');
