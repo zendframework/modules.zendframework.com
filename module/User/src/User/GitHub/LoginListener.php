@@ -6,24 +6,38 @@ use Hybrid_User_Profile;
 use User\Entity\User;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\ListenerAggregateTrait;
+use Zend\EventManager\SharedEventManagerInterface;
+use Zend\EventManager\SharedListenerAggregateInterface;
 
-final class LoginListener implements ListenerAggregateInterface
+final class LoginListener implements SharedListenerAggregateInterface
 {
-    use ListenerAggregateTrait;
+    /**
+     * @var array
+     */
+    protected $listeners = [];
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
-    public function attach(EventManagerInterface $events)
+    public function attachShared(SharedEventManagerInterface $events)
     {
-        $sharedEvents      = $events->getSharedManager();
-        $this->listeners[] = $sharedEvents->attach(
+        $this->listeners[] = $events->attach(
             'ScnSocialAuth\Authentication\Adapter\HybridAuth',
             'registerViaProvider',
             [$this, 'onRegister']
         );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function detachShared(SharedEventManagerInterface $events)
+    {
+        foreach ($this->listeners as $id => $listener) {
+            if ($events->detach($id, $listener)) {
+                unset($this->listeners[$id]);
+            }
+        }
     }
 
     /**

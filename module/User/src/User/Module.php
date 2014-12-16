@@ -19,8 +19,7 @@ class Module extends AbstractModule
         $em = $app->getEventManager()->getSharedManager();
         $sm = $app->getServiceManager();
 
-        $app->getEventManager()->attach($sm->get('User\GitHub\LoginListener'));
-
+        $em->attachAggregate($sm->get('User\GitHub\LoginListener'));
         $em->attach('EdpGithub\Client', 'api', function ($e) use ($sm) {
             $hybridAuth = $sm->get('HybridAuth');
             $adapter = $hybridAuth->getAdapter('github');

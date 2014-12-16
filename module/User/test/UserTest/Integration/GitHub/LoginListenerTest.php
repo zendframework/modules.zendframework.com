@@ -83,13 +83,13 @@ class LoginListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testEventIsTriggered()
     {
+        $triggered = false;
         $serviceManager = $this->getServiceManager();
-        $eventManager = $this->getMockBuilder('Zend\EventManager\EventManagerInterface')->getMockForAbstractClass();
-        $eventManager->expects($this->atLeastOnce())
-            ->method('trigger')
-            ->will($this->returnValueMap([
-                ['registerViaProvider', null, null, null],
-            ]));
+        $eventManager = new EventManager();
+        $eventManager->attach('registerViaProvider', function ($e) use (&$triggered) {
+            $triggered = true;
+        });
+
         $mapper = $this->getMockBuilder('ZfcUser\Mapper\UserInterface')->getMockForAbstractClass();
 
         $hybridAuth = new HybridAuth();
@@ -101,5 +101,7 @@ class LoginListenerTest extends PHPUnit_Framework_TestCase
         $method = $class->getMethod('githubToLocalUser');
         $method->setAccessible(true);
         $method->invokeArgs($hybridAuth, [new Hybrid_User_Profile()]);
+
+        $this->assertTrue($triggered);
     }
 }

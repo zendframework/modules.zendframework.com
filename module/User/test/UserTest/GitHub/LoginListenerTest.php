@@ -24,12 +24,12 @@ class LoginListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \User\GitHub\LoginListener::attach
+     * @covers \User\GitHub\LoginListener::attachShared
      */
     public function testAttach()
     {
         $eventManager = new EventManager();
-        $this->listener->attach($eventManager);
+        $this->listener->attachShared($eventManager->getSharedManager());
 
         $listeners = $eventManager->getSharedManager()
             ->getListeners('ScnSocialAuth\Authentication\Adapter\HybridAuth', 'registerViaProvider');
