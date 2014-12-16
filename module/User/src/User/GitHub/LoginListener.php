@@ -57,12 +57,12 @@ final class LoginListener implements ListenerAggregateInterface
         }
 
         // check if there is an User entity
-        if (!$event->getParam('user') || !($event->getParam('user') instanceof User)) {
+        if (!$event->getParam('user') instanceof User) {
             return false;
         }
 
         // check if there is a Hybrid_User_Profile entity
-        if (!$event->getParam('userProfile') || !($event->getParam('userProfile') instanceof Hybrid_User_Profile)) {
+        if (!$event->getParam('userProfile') instanceof Hybrid_User_Profile) {
             return false;
         }
 
