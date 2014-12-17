@@ -86,7 +86,7 @@ class LoginListenerTest extends PHPUnit_Framework_TestCase
         $triggered = false;
         $serviceManager = $this->getServiceManager();
         $eventManager = new EventManager();
-        $eventManager->attach('registerViaProvider', function ($e) use (&$triggered) {
+        $eventManager->attach('registerViaProvider', function () use (&$triggered) {
             $triggered = true;
         });
 
