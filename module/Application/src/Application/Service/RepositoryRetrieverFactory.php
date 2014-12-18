@@ -16,7 +16,7 @@ class RepositoryRetrieverFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         /* @var Client $githubClient */
-        $githubClient = $serviceLocator->get('EdpGithub\Client');
+        $githubClient = $serviceLocator->get(Client::class);
 
         return new RepositoryRetriever($githubClient);
     }

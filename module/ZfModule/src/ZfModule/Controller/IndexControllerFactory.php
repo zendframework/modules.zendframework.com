@@ -32,10 +32,10 @@ class IndexControllerFactory implements FactoryInterface
         $moduleService = $serviceManager->get('zfmodule_service_module');
 
         /* @var Client $githubClient */
-        $githubClient = $serviceManager->get('EdpGithub\Client');
+        $githubClient = $serviceManager->get(Client::class);
 
         /* @var RepositoryRetriever $repositoryRetriever */
-        $repositoryRetriever = $serviceManager->get('RepositoryRetriever');
+        $repositoryRetriever = $serviceManager->get(RepositoryRetriever::class);
 
         return new IndexController(
             $moduleCache,

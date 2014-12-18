@@ -87,7 +87,7 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
-            'RepositoryRetriever' => 'Application\Service\RepositoryRetrieverFactory',
+            \Application\Service\RepositoryRetriever::class => \Application\Service\RepositoryRetrieverFactory::class,
         ),
     ),
     'translator' => array(
