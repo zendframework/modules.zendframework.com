@@ -47,10 +47,8 @@ class RepositoryRetriever
     public function getUserRepositories($user, $params = array())
     {
         $repositoryCollection = $this->githubClient->api('user')->repos($user, $params);
-        if( $repositoryCollection instanceof RepositoryCollection )
-        {
-            foreach($repositoryCollection as $repository)
-            {
+        if ($repositoryCollection instanceof RepositoryCollection) {
+            foreach ($repositoryCollection as $repository) {
                 yield $repository;
             }
         }
@@ -100,13 +98,11 @@ class RepositoryRetriever
      *
      * @param array $params
      */
-    public function getAuthUserRepositories($params = array())
+    public function getAuthenticatedUserRepositories($params = array())
     {
         $repositoryCollection = $this->githubClient->api('current_user')->repos($params);
-        if( $repositoryCollection instanceof RepositoryCollection )
-        {
-            foreach($repositoryCollection as $repository)
-            {
+        if ($repositoryCollection instanceof RepositoryCollection) {
+            foreach ($repositoryCollection as $repository) {
                 yield $repository;
             }
         }
