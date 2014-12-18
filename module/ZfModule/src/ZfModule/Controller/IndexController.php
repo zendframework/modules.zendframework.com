@@ -115,7 +115,7 @@ class IndexController extends AbstractActionController
         );
 
         /* @var RepositoryCollection $repos */
-        $repos = $this->repositoryRetriever->getAuthUserRepositories($params);
+        $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-user-' . $identity->getId();
@@ -158,7 +158,7 @@ class IndexController extends AbstractActionController
      * @param string $cacheKey
      * @return array
      */
-    public function fetchModules(\Generator $repos, $cacheKey)
+    public function fetchModules($repos, $cacheKey)
     {
         $cacheKey .= '-github';
 
