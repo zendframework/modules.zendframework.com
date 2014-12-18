@@ -137,6 +137,17 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($payload, (array)$metadata);
     }
 
+    public function testErrorOnRetrieveRepositoryFileMetadata()
+    {
+        $this->client->expects($this->once())
+            ->method('api')
+            ->willThrowException(new RuntimeException);
+
+        $instance = new RepositoryRetriever($this->client);
+        $response = $instance->getRepositoryFileMetadata('foo', 'bar', 'baz');
+        $this->assertFalse($response);
+    }
+
     public function testCanRetrieveAuthenticatedUserRepositories()
     {
         $payload = [
