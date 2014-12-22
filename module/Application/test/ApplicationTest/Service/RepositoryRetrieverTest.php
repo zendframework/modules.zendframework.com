@@ -57,7 +57,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         return $this->client;
     }
 
-    private function getRepositoryRetrieverInstance(Api\AbstractApi $apiInstance, $result)
+    private function prepareService(Api\AbstractApi $apiInstance, $result)
     {
         return new RepositoryRetriever(
             $this->getClientMock($apiInstance, $result)
@@ -72,9 +72,9 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
             ['name' => 'baz']
         ];
 
-        $instance = $this->getRepositoryRetrieverInstance(new Api\User, json_encode($payload));
+        $service = $this->prepareService(new Api\User, json_encode($payload));
 
-        $repositories = $instance->getUserRepositories('foo');
+        $repositories = $service->getUserRepositories('foo');
         $this->assertInstanceOf('EdpGithub\Collection\RepositoryCollection', $repositories);
 
         $count = 0;
@@ -94,8 +94,8 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
             'url' => 'http://foo.com'
         ];
 
-        $instance = $this->getRepositoryRetrieverInstance(new Api\Repos, json_encode($payload));
-        $metadata = $instance->getUserRepositoryMetadata('foo', 'bar');
+        $service = $this->prepareService(new Api\Repos, json_encode($payload));
+        $metadata = $service->getUserRepositoryMetadata('foo', 'bar');
 
         $this->assertInstanceOf('stdClass', $metadata);
         $this->assertEquals($payload, (array)$metadata);
@@ -106,8 +106,8 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $payload = [
             'content' => base64_encode('foo')
         ];
-        $instance = $this->getRepositoryRetrieverInstance(new Api\Repos, json_encode($payload));
-        $response = $instance->getRepositoryFileContent('foo', 'bar', 'foo.baz');
+        $service = $this->prepareService(new Api\Repos, json_encode($payload));
+        $response = $service->getRepositoryFileContent('foo', 'bar', 'foo.baz');
 
         $this->assertEquals('foo', $response);
     }
@@ -115,8 +115,8 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
     public function testResponseContentMissingOnGetRepositoryFileContent()
     {
         $payload = [];
-        $instance = $this->getRepositoryRetrieverInstance(new Api\Repos, json_encode($payload));
-        $response = $instance->getRepositoryFileContent('foo', 'bar', 'baz');
+        $service = $this->prepareService(new Api\Repos, json_encode($payload));
+        $response = $service->getRepositoryFileContent('foo', 'bar', 'baz');
 
         $this->assertNull($response);
     }
@@ -128,8 +128,8 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
             'url' => 'http://foo.com'
         ];
 
-        $instance = $this->getRepositoryRetrieverInstance(new Api\Repos, json_encode($payload));
-        $metadata = $instance->getRepositoryFileMetadata('foo', 'bar', 'baz');
+        $service = $this->prepareService(new Api\Repos, json_encode($payload));
+        $metadata = $service->getRepositoryFileMetadata('foo', 'bar', 'baz');
 
         $this->assertInstanceOf('stdClass', $metadata);
         $this->assertEquals($payload, (array)$metadata);
@@ -143,9 +143,9 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
             ['name' => 'baz']
         ];
 
-        $instance = $this->getRepositoryRetrieverInstance(new Api\CurrentUser, json_encode($payload));
+        $service = $this->prepareService(new Api\CurrentUser, json_encode($payload));
 
-        $repositories = $instance->getAuthenticatedUserRepositories();
+        $repositories = $service->getAuthenticatedUserRepositories();
         $this->assertInstanceOf('EdpGithub\Collection\RepositoryCollection', $repositories);
 
         $count = 0;
