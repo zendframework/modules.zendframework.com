@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3438a9bc24e18b7689d04be820c8e75a",
+    "hash": "73a589c5891db0099bbf41a27466d20f",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
@@ -317,44 +317,6 @@
             "time": "2014-12-12 05:37:00"
         },
         {
-            "name": "lorenzoferrarajr/lfj-error-layout",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lorenzoferrarajr/LfjErrorLayout.git",
-                "reference": "ca0989ff33ad5d92992130ee06c22ce1bf98deb6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lorenzoferrarajr/LfjErrorLayout/zipball/ca0989ff33ad5d92992130ee06c22ce1bf98deb6",
-                "reference": "ca0989ff33ad5d92992130ee06c22ce1bf98deb6",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "./Module.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Lorenzo Ferrara Junior",
-                    "email": "lorenzoferrarajr@gmail.com",
-                    "homepage": "http://www.lorenzoferrara.net/"
-                }
-            ],
-            "description": "LfjErrorLayout is a ZF2 module that allows you to use an alternative layout when a dispatch errors occur.",
-            "homepage": "https://github.com/lorenzoferrarajr/LfjErrorLayout",
-            "keywords": [
-                "zf2"
-            ],
-            "time": "2014-02-04 19:39:39"
-        },
-        {
             "name": "michelf/php-markdown",
             "version": "dev-lib",
             "source": {
@@ -573,12 +535,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "a621bde29d9af7f0ea876d29a56905fc428a6b9e"
+                "reference": "27bb93c39607b0cede1b4955747d01dc81a6091c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/a621bde29d9af7f0ea876d29a56905fc428a6b9e",
-                "reference": "a621bde29d9af7f0ea876d29a56905fc428a6b9e",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/27bb93c39607b0cede1b4955747d01dc81a6091c",
+                "reference": "27bb93c39607b0cede1b4955747d01dc81a6091c",
                 "shasum": ""
             },
             "require": {
@@ -683,7 +645,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-12-11 04:37:06"
+            "time": "2014-12-16 20:57:27"
         },
         {
             "name": "zendframework/zendxml",
@@ -1482,12 +1444,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "6e6c71d918088c251b181ba8b3088af4ac336dd7"
+                "reference": "a4420fdad8ef5e525cdeb66adbb5ed9e873e6128"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6e6c71d918088c251b181ba8b3088af4ac336dd7",
-                "reference": "6e6c71d918088c251b181ba8b3088af4ac336dd7",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/a4420fdad8ef5e525cdeb66adbb5ed9e873e6128",
+                "reference": "a4420fdad8ef5e525cdeb66adbb5ed9e873e6128",
                 "shasum": ""
             },
             "require": {
@@ -1524,7 +1486,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2014-10-25 08:00:45"
+            "time": "2014-12-15 10:20:32"
         },
         {
             "name": "sebastian/exporter",
@@ -1754,12 +1716,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "a47b7f75ca68d97207e41c16cdfb60604cfc8f73"
+                "reference": "3e682d5c87de786a8cde828f8ff65df684d621aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/a47b7f75ca68d97207e41c16cdfb60604cfc8f73",
-                "reference": "a47b7f75ca68d97207e41c16cdfb60604cfc8f73",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/3e682d5c87de786a8cde828f8ff65df684d621aa",
+                "reference": "3e682d5c87de786a8cde828f8ff65df684d621aa",
                 "shasum": ""
             },
             "require": {
@@ -1767,8 +1729,8 @@
             },
             "require-dev": {
                 "symfony/config": "~2.2",
-                "symfony/expression-language": "~2.4",
-                "symfony/yaml": "~2.0"
+                "symfony/expression-language": "~2.4,>=2.4.10",
+                "symfony/yaml": "~2.1"
             },
             "suggest": {
                 "symfony/config": "",
@@ -1802,7 +1764,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-12 06:02:03"
+            "time": "2014-12-16 15:17:56"
         },
         {
             "name": "symfony/filesystem",

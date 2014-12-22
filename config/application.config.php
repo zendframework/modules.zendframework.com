@@ -6,7 +6,6 @@ return array(
         'Application',
         'ZF\DevelopmentMode',
         'AssetManager',
-        'LfjErrorLayout',
         'ZfcBase',
         'ZfcUser',
         'ScnSocialAuth',
