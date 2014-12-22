@@ -9,12 +9,12 @@ use PHPUnit_Framework_TestCase;
 
 class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 {
-    public $response;
-    public $headers;
-    public $httpClient;
-    public $client;
+    private $response;
+    private $headers;
+    private $httpClient;
+    private $client;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->response = $this->getMock('Zend\Http\Response');
         $this->headers = $this->getMock('Zend\Http\Headers');
@@ -22,7 +22,15 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->client = $this->getMock('EdpGithub\Client');
     }
 
-    public function getClientMock(Api\AbstractApi $apiInstance, $result)
+    protected function tearDown()
+    {
+        $this->response = null;
+        $this->headers = null;
+        $this->httpClient = null;
+        $this->client = null;
+    }
+
+    private function getClientMock(Api\AbstractApi $apiInstance, $result)
     {
         $this->response->expects($this->any())
             ->method('getBody')
@@ -49,10 +57,11 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         return $this->client;
     }
 
-    public function getRepositoryRetrieverInstance(Api\AbstractApi $apiInstance, $result)
+    private function getRepositoryRetrieverInstance(Api\AbstractApi $apiInstance, $result)
     {
-        $clientMock = $this->getClientMock($apiInstance, $result);
-        return new RepositoryRetriever($clientMock);
+        return new RepositoryRetriever(
+            $this->getClientMock($apiInstance, $result)
+        );
     }
 
     public function testCanRetrieveUserRepositories()
@@ -66,7 +75,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $instance = $this->getRepositoryRetrieverInstance(new Api\User, json_encode($payload));
 
         $repositories = $instance->getUserRepositories('foo');
-        $this->assertInstanceOf('Generator', $repositories);
+        $this->assertInstanceOf('EdpGithub\Collection\RepositoryCollection', $repositories);
 
         $count = 0;
         foreach ($repositories as $repository) {
@@ -92,17 +101,6 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($payload, (array)$metadata);
     }
 
-    public function testErrorOnRetreiveUserRepositoryMetadata()
-    {
-        $this->client->expects($this->once())
-            ->method('api')
-            ->willThrowException(new RuntimeException);
-
-        $instance = new RepositoryRetriever($this->client);
-        $response = $instance->getUserRepositoryMetadata('foo', 'bar');
-        $this->assertFalse($response);
-    }
-
     public function testCanRetrieveRepositoryFileContent()
     {
         $payload = [
@@ -120,7 +118,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $instance = $this->getRepositoryRetrieverInstance(new Api\Repos, json_encode($payload));
         $response = $instance->getRepositoryFileContent('foo', 'bar', 'baz');
 
-        $this->assertFalse($response);
+        $this->assertNull($response);
     }
 
     public function testCanRetrieveRepositoryFileMetadata()
@@ -137,17 +135,6 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($payload, (array)$metadata);
     }
 
-    public function testErrorOnRetrieveRepositoryFileMetadata()
-    {
-        $this->client->expects($this->once())
-            ->method('api')
-            ->willThrowException(new RuntimeException);
-
-        $instance = new RepositoryRetriever($this->client);
-        $response = $instance->getRepositoryFileMetadata('foo', 'bar', 'baz');
-        $this->assertFalse($response);
-    }
-
     public function testCanRetrieveAuthenticatedUserRepositories()
     {
         $payload = [
@@ -159,7 +146,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $instance = $this->getRepositoryRetrieverInstance(new Api\CurrentUser, json_encode($payload));
 
         $repositories = $instance->getAuthenticatedUserRepositories();
-        $this->assertInstanceOf('Generator', $repositories);
+        $this->assertInstanceOf('EdpGithub\Collection\RepositoryCollection', $repositories);
 
         $count = 0;
         foreach ($repositories as $repository) {
