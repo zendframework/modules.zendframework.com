@@ -4,7 +4,6 @@ namespace ApplicationTest\Service;
 
 use Application\Service\RepositoryRetriever;
 use EdpGithub\Api;
-use EdpGithub\Listener\Exception\RuntimeException;
 use PHPUnit_Framework_TestCase;
 
 class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
@@ -59,9 +58,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
     private function prepareService(Api\AbstractApi $apiInstance, $result)
     {
-        return new RepositoryRetriever(
-            $this->getClientMock($apiInstance, $result)
-        );
+        return new RepositoryRetriever($this->getClientMock($apiInstance, $result));
     }
 
     public function testCanRetrieveUserRepositories()
@@ -75,7 +72,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $service = $this->prepareService(new Api\User, json_encode($payload));
 
         $repositories = $service->getUserRepositories('foo');
-        $this->assertInstanceOf('EdpGithub\Collection\RepositoryCollection', $repositories);
+        $this->assertInstanceOf(\EdpGithub\Collection\RepositoryCollection::class, $repositories);
 
         $count = 0;
         foreach ($repositories as $repository) {
@@ -146,7 +143,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $service = $this->prepareService(new Api\CurrentUser, json_encode($payload));
 
         $repositories = $service->getAuthenticatedUserRepositories();
-        $this->assertInstanceOf('EdpGithub\Collection\RepositoryCollection', $repositories);
+        $this->assertInstanceOf(\EdpGithub\Collection\RepositoryCollection::class, $repositories);
 
         $count = 0;
         foreach ($repositories as $repository) {
