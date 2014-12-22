@@ -23,51 +23,39 @@ class RepositoryRetriever
 
     /**
      * Return MetaData from User Repository
-     *
      * @param $user
      * @param $module
-     * @return bool|mixed
+     * @return array|null
      */
     public function getUserRepositoryMetadata($user, $module)
     {
-        try {
-            $apiResponse = $this->githubClient->api('repos')->show($user, $module);
-            return json_decode($apiResponse);
-        } catch (RuntimeException $e) {
-            return false;
-        }
+        return json_decode($this->githubClient->api('repos')->show($user, $module));
     }
 
     /**
      * Get all Repositories from GitHub User
-     *
      * @param $user
      * @param array $params
+     * @return RepositoryCollection
      */
     public function getUserRepositories($user, $params = array())
     {
-        $repositoryCollection = $this->githubClient->api('user')->repos($user, $params);
-        if ($repositoryCollection instanceof RepositoryCollection) {
-            foreach ($repositoryCollection as $repository) {
-                yield $repository;
-            }
-        }
+        return $this->githubClient->api('user')->repos($user, $params);
     }
 
     /**
      * Get File Content from User Repository
-     *
      * @param $user
      * @param $module
      * @param $filePath
-     * @return bool|string
+     * @return string|null
      */
     public function getRepositoryFileContent($user, $module, $filePath)
     {
         $contentResponse = $this->getRepositoryFileMetadata($user, $module, $filePath);
 
         if (!isset($contentResponse->content)) {
-            return false;
+            return null;
         }
 
         return base64_decode($contentResponse->content);
@@ -75,36 +63,23 @@ class RepositoryRetriever
 
     /**
      * Return File MetaData from User Repository
-     *
      * @param $user
      * @param $module
      * @param $filePath
-     * @return bool|mixed
+     * @return mixed
      */
     public function getRepositoryFileMetadata($user, $module, $filePath)
     {
-        try {
-            $apiResponse = $this->githubClient->api('repos')->content($user, $module, $filePath);
-            $apiResponse = json_decode($apiResponse);
-            return $apiResponse;
-
-        } catch (RuntimeException $e) {
-            return false;
-        }
+        return json_decode($this->githubClient->api('repos')->content($user, $module, $filePath));
     }
 
     /**
      * Return all Repositories from current authenticated GitHub User
-     *
      * @param array $params
+     * @return RepositoryCollection
      */
     public function getAuthenticatedUserRepositories($params = array())
     {
-        $repositoryCollection = $this->githubClient->api('current_user')->repos($params);
-        if ($repositoryCollection instanceof RepositoryCollection) {
-            foreach ($repositoryCollection as $repository) {
-                yield $repository;
-            }
-        }
+        return $this->githubClient->api('current_user')->repos($params);
     }
 }
