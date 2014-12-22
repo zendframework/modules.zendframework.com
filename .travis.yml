@@ -11,10 +11,15 @@ php:
 install:
   - composer install --prefer-source
 
+before_script:
+  - cp config/autoload/travis.php.local.dist config/autoload/travis.local.php
+  - mysql -uroot -e 'create database modules_test;'
+  - mysql -uroot modules_test < data/sql/0.sql
+
 script:
-  - ./vendor/bin/phpcs --standard=./phpcs.xml -np --report=summary .
-  - ./vendor/bin/phpmd . text codesize,unusedcode --exclude data,puphpet,vendor
-  - ./vendor/bin/phpunit --configuration phpunit.xml
+  - vendor/bin/phpcs --standard=phpcs.xml -np --report=summary .
+  - vendor/bin/phpmd . text codesize,unusedcode --exclude data,puphpet,vendor
+  - vendor/bin/phpunit --configuration phpunit.xml
 
 notifications:
   irc: "irc.freenode.org#zftalk.modules"
