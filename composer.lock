@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "73a589c5891db0099bbf41a27466d20f",
+    "hash": "cf7d2e5c39ec7caf6232f55bfbc1ca3d",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
@@ -489,12 +489,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "e48a06acc112f2b76d6e5ac7e7eaa01a9305d146"
+                "reference": "8e48bf549751897a3316faaaa8c50afe3cb11d6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/e48a06acc112f2b76d6e5ac7e7eaa01a9305d146",
-                "reference": "e48a06acc112f2b76d6e5ac7e7eaa01a9305d146",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/8e48bf549751897a3316faaaa8c50afe3cb11d6b",
+                "reference": "8e48bf549751897a3316faaaa8c50afe3cb11d6b",
                 "shasum": ""
             },
             "require": {
@@ -527,7 +527,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-12 16:23:01"
+            "time": "2014-12-20 16:07:09"
         },
         {
             "name": "zendframework/zendframework",
@@ -1668,12 +1668,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "b349eea3271d2d94cf2faa158c10a8faa2de11eb"
+                "reference": "df804fab58b70fab37ce019a0bb90c1383472adb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/b349eea3271d2d94cf2faa158c10a8faa2de11eb",
-                "reference": "b349eea3271d2d94cf2faa158c10a8faa2de11eb",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/df804fab58b70fab37ce019a0bb90c1383472adb",
+                "reference": "df804fab58b70fab37ce019a0bb90c1383472adb",
                 "shasum": ""
             },
             "require": {
@@ -1707,7 +1707,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-11 19:53:06"
+            "time": "2014-12-22 16:29:52"
         },
         {
             "name": "symfony/dependency-injection",
@@ -1716,12 +1716,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "3e682d5c87de786a8cde828f8ff65df684d621aa"
+                "reference": "1578bc3bf860dac17be5d161aedde7475d94c01b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/3e682d5c87de786a8cde828f8ff65df684d621aa",
-                "reference": "3e682d5c87de786a8cde828f8ff65df684d621aa",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/1578bc3bf860dac17be5d161aedde7475d94c01b",
+                "reference": "1578bc3bf860dac17be5d161aedde7475d94c01b",
                 "shasum": ""
             },
             "require": {
@@ -1764,7 +1764,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-16 15:17:56"
+            "time": "2014-12-22 16:29:52"
         },
         {
             "name": "symfony/filesystem",
@@ -1773,12 +1773,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "7bfdd323d2edce70de08dab635313240bd926e23"
+                "reference": "8697e291d6f1135c5a32909e6cc4dc3c0b69cb5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/7bfdd323d2edce70de08dab635313240bd926e23",
-                "reference": "7bfdd323d2edce70de08dab635313240bd926e23",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/8697e291d6f1135c5a32909e6cc4dc3c0b69cb5d",
+                "reference": "8697e291d6f1135c5a32909e6cc4dc3c0b69cb5d",
                 "shasum": ""
             },
             "require": {
@@ -1811,7 +1811,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-12 15:58:22"
+            "time": "2014-12-22 16:29:52"
         },
         {
             "name": "symfony/yaml",
@@ -1866,12 +1866,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendDeveloperTools.git",
-                "reference": "5e38d0889a34bfbfccef2acb93ca9f4df40dfe31"
+                "reference": "23fbb79b72e9d6a7090158f47f462faeb512733d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/5e38d0889a34bfbfccef2acb93ca9f4df40dfe31",
-                "reference": "5e38d0889a34bfbfccef2acb93ca9f4df40dfe31",
+                "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/23fbb79b72e9d6a7090158f47f462faeb512733d",
+                "reference": "23fbb79b72e9d6a7090158f47f462faeb512733d",
                 "shasum": ""
             },
             "require": {
@@ -1919,7 +1919,7 @@
                 "module",
                 "zf2"
             ],
-            "time": "2014-10-23 18:27:03"
+            "time": "2014-12-21 18:23:56"
         },
         {
             "name": "zendframework/zenddiagnostics",
@@ -2045,6 +2045,7 @@
         "zendframework/zend-developer-tools": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": "~5.4"
     },
