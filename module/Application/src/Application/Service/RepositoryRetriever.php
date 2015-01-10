@@ -45,9 +45,9 @@ class RepositoryRetriever
 
     /**
      * Get File Content from User Repository
-     * @param $user
-     * @param $module
-     * @param $filePath
+     * @param string $user
+     * @param string $module
+     * @param string $filePath
      * @return string|null
      */
     public function getRepositoryFileContent($user, $module, $filePath)
