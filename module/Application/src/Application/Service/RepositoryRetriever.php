@@ -23,9 +23,9 @@ class RepositoryRetriever
 
     /**
      * Return MetaData from User Repository
-     * @param $user
-     * @param $module
-     * @return array|null
+     * @param string $user
+     * @param string $module
+     * @return mixed
      */
     public function getUserRepositoryMetadata($user, $module)
     {
@@ -34,11 +34,11 @@ class RepositoryRetriever
 
     /**
      * Get all Repositories from GitHub User
-     * @param $user
+     * @param string $user
      * @param array $params
      * @return RepositoryCollection
      */
-    public function getUserRepositories($user, $params = array())
+    public function getUserRepositories($user, array $params = array())
     {
         return $this->githubClient->api('user')->repos($user, $params);
     }
@@ -63,9 +63,9 @@ class RepositoryRetriever
 
     /**
      * Return File MetaData from User Repository
-     * @param $user
-     * @param $module
-     * @param $filePath
+     * @param string $user
+     * @param string $module
+     * @param string $filePath
      * @return mixed
      */
     public function getRepositoryFileMetadata($user, $module, $filePath)
@@ -78,7 +78,7 @@ class RepositoryRetriever
      * @param array $params
      * @return RepositoryCollection
      */
-    public function getAuthenticatedUserRepositories($params = array())
+    public function getAuthenticatedUserRepositories(array $params = array())
     {
         return $this->githubClient->api('current_user')->repos($params);
     }

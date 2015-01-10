@@ -82,10 +82,10 @@ class IndexController extends AbstractActionController
 
         $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
         $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
-        $license = $license === false ? 'No license file found for this Module' : $license;
+        $license = !$license ? 'No license file found for this Module' : $license;
 
         $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
-        $composerConf = $composerConf === false ? 'No composer.json file found for this Module' : json_decode($composerConf, true);
+        $composerConf = !$composerConf ? 'No composer.json file found for this Module' : json_decode($composerConf, true);
 
         $viewModel = new ViewModel(array(
             'vendor' => $vendor,
@@ -114,7 +114,6 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         );
 
-        /* @var RepositoryCollection $repos */
         $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
@@ -154,11 +153,11 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * @param \Generator $repos
+     * @param RepositoryCollection $repos
      * @param string $cacheKey
      * @return array
      */
-    public function fetchModules($repos, $cacheKey)
+    private function fetchModules(RepositoryCollection $repos, $cacheKey)
     {
         $cacheKey .= '-github';
 
