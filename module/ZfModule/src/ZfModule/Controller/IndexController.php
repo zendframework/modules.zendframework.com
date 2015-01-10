@@ -139,7 +139,6 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         );
 
-        /* @var RepositoryCollection $repos */
         $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
