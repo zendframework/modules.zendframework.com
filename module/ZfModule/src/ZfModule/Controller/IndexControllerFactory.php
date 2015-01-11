@@ -22,26 +22,18 @@ class IndexControllerFactory implements FactoryInterface
         /* @var ControllerManager $controllerManager */
         $serviceManager = $controllerManager->getServiceLocator();
 
-        /* @var Cache\Storage\StorageInterface $moduleCache */
-        $moduleCache = $serviceManager->get('zfmodule_cache');
-
         /* @var Mapper\Module $moduleMapper */
         $moduleMapper = $serviceManager->get('zfmodule_mapper_module');
 
         /* @var Service\Module $moduleService */
         $moduleService = $serviceManager->get('zfmodule_service_module');
 
-        /* @var Client $githubClient */
-        $githubClient = $serviceManager->get(Client::class);
-
         /* @var RepositoryRetriever $repositoryRetriever */
         $repositoryRetriever = $serviceManager->get(RepositoryRetriever::class);
 
         return new IndexController(
-            $moduleCache,
             $moduleMapper,
             $moduleService,
-            $githubClient,
             $repositoryRetriever
         );
     }

@@ -32,12 +32,6 @@ class Module
     {
         return array(
             'factories' => array(
-                'zfmodule_cache' => function ($sm) {
-                    $config = $sm->get('Config');
-                    $storage = StorageFactory::factory($config['zfmodule']['cache']);
-
-                    return $storage;
-                },
                 'zfmodule_mapper_module' => function ($sm) {
                     $mapper = new Mapper\Module();
                     $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
