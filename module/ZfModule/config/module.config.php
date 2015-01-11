@@ -80,23 +80,4 @@ return array(
             'composerView' => 'ZfModule\View\Helper\ComposerView',
         ),
     ),
-    'zfmodule' => array(
-        /**
-         * Cache configuration
-         */
-        'cache' => array(
-            'adapter'   => array(
-                'name' => 'filesystem',
-                'options' => array(
-                    'cache_dir' => realpath('./data/cache'),
-                    'writable' => false,
-                ),
-            ),
-            'plugins' => array(
-                'exception_handler' => array('throw_exceptions' => true),
-                'serializer'
-            )
-        ),
-        'cache_key' => 'zfmodule_app',
-    ),
 );

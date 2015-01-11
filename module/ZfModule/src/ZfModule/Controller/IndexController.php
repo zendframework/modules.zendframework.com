@@ -15,11 +15,6 @@ use ZfModule\Service;
 class IndexController extends AbstractActionController
 {
     /**
-     * @var Cache\Storage\StorageInterface
-     */
-    private $moduleCache;
-
-    /**
      * @var Mapper\Module
      */
     private $moduleMapper;
@@ -30,33 +25,22 @@ class IndexController extends AbstractActionController
     private $moduleService;
 
     /**
-     * @var Client
-     */
-    private $githubClient;
-
-    /**
      * @var RepositoryRetriever
      */
     private $repositoryRetriever;
 
     /**
-     * @param Cache\Storage\StorageInterface $moduleCache
      * @param Mapper\Module $moduleMapper
      * @param Service\Module $moduleService
-     * @param Client $githubClient
      * @param RepositoryRetriever $repositoryRetriever
      */
     public function __construct(
-        Cache\Storage\StorageInterface $moduleCache,
         Mapper\Module $moduleMapper,
         Service\Module $moduleService,
-        Client $githubClient,
         RepositoryRetriever $repositoryRetriever
     ) {
-        $this->moduleCache = $moduleCache;
         $this->moduleMapper = $moduleMapper;
         $this->moduleService = $moduleService;
-        $this->githubClient = $githubClient;
         $this->repositoryRetriever = $repositoryRetriever;
     }
 
@@ -71,14 +55,7 @@ class IndexController extends AbstractActionController
             return;
         }
 
-        $repositoryCacheKey = 'module-view-' . $vendor . '-' . $module;
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
-
-        $httpClient = $this->githubClient->getHttpClient();
-        $response= $httpClient->getResponse();
-        if ($response->getStatusCode() == Http\Response::STATUS_CODE_304 && $this->moduleCache->hasItem($repositoryCacheKey)) {
-            return $this->moduleCache->getItem($repositoryCacheKey);
-        }
 
         $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
         $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
@@ -95,8 +72,6 @@ class IndexController extends AbstractActionController
             'composerConf' => $composerConf,
             'license' => $license,
         ));
-
-        $this->moduleCache->setItem($repositoryCacheKey, $viewModel);
 
         return $viewModel;
     }
@@ -115,11 +90,7 @@ class IndexController extends AbstractActionController
         );
 
         $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
-
-        $identity = $this->zfcUserAuthentication()->getIdentity();
-        $cacheKey = 'modules-user-' . $identity->getId();
-
-        $repositories = $this->fetchModules($repos, $cacheKey);
+        $repositories = $this->fetchModules($repos);
 
         $viewModel = new ViewModel(array('repositories' => $repositories));
         $viewModel->setTerminal(true);
@@ -140,11 +111,8 @@ class IndexController extends AbstractActionController
         );
 
         $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
+        $repositories = $this->fetchModules($repos);
 
-        $identity = $this->zfcUserAuthentication()->getIdentity();
-        $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
-
-        $repositories = $this->fetchModules($repos, $cacheKey);
         $viewModel = new ViewModel(array('repositories' => $repositories));
         $viewModel->setTerminal(true);
         $viewModel->setTemplate('zf-module/index/index.phtml');
@@ -153,37 +121,18 @@ class IndexController extends AbstractActionController
 
     /**
      * @param RepositoryCollection $repos
-     * @param string $cacheKey
      * @return array
      */
-    private function fetchModules(RepositoryCollection $repos, $cacheKey)
+    private function fetchModules(RepositoryCollection $repos)
     {
-        $cacheKey .= '-github';
-
         $repositories = array();
 
         foreach ($repos as $repo) {
             $isModule = $this->moduleService->isModule($repo);
-            //Verify if repos have been modified
-            $httpClient = $this->githubClient->getHttpClient();
-            /* @var $response \Zend\Http\Response */
-            $response = $httpClient->getResponse();
-
-            $hasCache = $this->moduleCache->hasItem($cacheKey);
-
-            if ($response->getStatusCode() == Http\Response::STATUS_CODE_304 && $hasCache) {
-                $repositories = $this->moduleCache->getItem($cacheKey);
-                break;
-            }
-
             if (!$repo->fork && $repo->permissions->push && $isModule && !$this->moduleMapper->findByName($repo->name)) {
                 $repositories[] = $repo;
-                $this->moduleCache->removeItem($cacheKey);
             }
         }
-
-        //save list of modules to cache
-        $this->moduleCache->setItem($cacheKey, $repositories);
 
         return $repositories;
     }
@@ -236,17 +185,7 @@ class IndexController extends AbstractActionController
             );
         }
 
-        $this->clearModuleCache();
-
         return $this->redirect()->toRoute('zfcuser');
-    }
-
-    public function clearModuleCache()
-    {
-        $identity = $this->zfcUserAuthentication()->getIdentity();
-
-        $tags = array($identity->getUsername() . '-' . $identity->getId());
-        $this->moduleCache->clearByTags($tags);
     }
 
     /**
@@ -298,7 +237,6 @@ class IndexController extends AbstractActionController
             );
         }
 
-        $this->clearModuleCache();
         return $this->redirect()->toRoute('zfcuser');
     }
 }
