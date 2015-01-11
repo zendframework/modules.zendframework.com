@@ -2,6 +2,7 @@
 
 namespace ZfModule\Controller;
 
+use Application\Service\RepositoryRetriever;
 use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
 use Zend\Cache;
@@ -34,21 +35,29 @@ class IndexController extends AbstractActionController
     private $githubClient;
 
     /**
+     * @var RepositoryRetriever
+     */
+    private $repositoryRetriever;
+
+    /**
      * @param Cache\Storage\StorageInterface $moduleCache
      * @param Mapper\Module $moduleMapper
      * @param Service\Module $moduleService
      * @param Client $githubClient
+     * @param RepositoryRetriever $repositoryRetriever
      */
     public function __construct(
         Cache\Storage\StorageInterface $moduleCache,
         Mapper\Module $moduleMapper,
         Service\Module $moduleService,
-        Client $githubClient
+        Client $githubClient,
+        RepositoryRetriever $repositoryRetriever
     ) {
         $this->moduleCache = $moduleCache;
         $this->moduleMapper = $moduleMapper;
         $this->moduleService = $moduleService;
         $this->githubClient = $githubClient;
+        $this->repositoryRetriever = $repositoryRetriever;
     }
 
     public function viewAction()
@@ -62,45 +71,32 @@ class IndexController extends AbstractActionController
             return;
         }
 
-        $cacheKey = 'module-view-' . $vendor . '-' . $module;
+        $repositoryCacheKey = 'module-view-' . $vendor . '-' . $module;
+        $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
 
-        $repository = json_decode($this->githubClient->api('repos')->show($vendor, $module));
         $httpClient = $this->githubClient->getHttpClient();
         $response= $httpClient->getResponse();
-        if ($response->getStatusCode() == Http\Response::STATUS_CODE_304 && $this->moduleCache->hasItem($cacheKey)) {
-            return $this->moduleCache->getItem($cacheKey);
+        if ($response->getStatusCode() == Http\Response::STATUS_CODE_304 && $this->moduleCache->hasItem($repositoryCacheKey)) {
+            return $this->moduleCache->getItem($repositoryCacheKey);
         }
 
-        $readme = $this->githubClient->api('repos')->readme($vendor, $module);
-        $readme = json_decode($readme);
+        $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
+        $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
+        $license = !$license ? 'No license file found for this Module' : $license;
 
-        try {
-            $license = $this->githubClient->api('repos')->content($vendor, $module, 'LICENSE');
-            $license = json_decode($license);
-            $license = base64_decode($license->content);
-        } catch (\Exception $e) {
-            $license = 'No license file found for this Module';
-        }
-
-        try {
-            $composerJson = $this->githubClient->api('repos')->content($vendor, $module, 'composer.json');
-            $composerConf = json_decode($composerJson);
-            $composerConf = base64_decode($composerConf->content);
-            $composerConf = json_decode($composerConf, true);
-        } catch (\Exception $e) {
-            $composerConf = 'No composer.json file found for this Module';
-        }
+        $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
+        $composerConf = !$composerConf ? 'No composer.json file found for this Module' : json_decode($composerConf, true);
 
         $viewModel = new ViewModel(array(
             'vendor' => $vendor,
             'module' => $module,
             'repository' => $repository,
-            'readme' => base64_decode($readme->content),
+            'readme' => $readme,
             'composerConf' => $composerConf,
             'license' => $license,
         ));
 
-        $this->moduleCache->setItem($cacheKey, $viewModel);
+        $this->moduleCache->setItem($repositoryCacheKey, $viewModel);
 
         return $viewModel;
     }
@@ -118,8 +114,7 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         );
 
-        /* @var RepositoryCollection $repos */
-        $repos = $this->githubClient->api('current_user')->repos($params);
+        $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-user-' . $identity->getId();
@@ -144,8 +139,7 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         );
 
-        /* @var RepositoryCollection $repos */
-        $repos = $this->githubClient->api('user')->repos($owner, $params);
+        $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
 
         $identity = $this->zfcUserAuthentication()->getIdentity();
         $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
@@ -162,7 +156,7 @@ class IndexController extends AbstractActionController
      * @param string $cacheKey
      * @return array
      */
-    public function fetchModules(RepositoryCollection $repos, $cacheKey)
+    private function fetchModules(RepositoryCollection $repos, $cacheKey)
     {
         $cacheKey .= '-github';
 
@@ -210,8 +204,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $repository = $this->githubClient->api('repos')->show($owner, $repo);
-            $repository = json_decode($repository);
+            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
             if (!($repository instanceof \stdClass)) {
                 throw new Exception\RuntimeException(
@@ -272,8 +265,7 @@ class IndexController extends AbstractActionController
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $repository = $this->githubClient->api('repos')->show($owner, $repo);
-            $repository = json_decode($repository);
+            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
             if (!$repository instanceof \stdClass) {
                 throw new Exception\RuntimeException(

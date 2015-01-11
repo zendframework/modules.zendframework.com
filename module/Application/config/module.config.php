@@ -7,6 +7,8 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+use Application\Service;
+
 return array(
     'router' => array(
         'routes' => array(
@@ -87,6 +89,7 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            Service\RepositoryRetriever::class => Service\RepositoryRetrieverFactory::class,
         ),
     ),
     'translator' => array(
