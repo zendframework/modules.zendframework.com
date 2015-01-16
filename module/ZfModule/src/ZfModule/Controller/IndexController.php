@@ -55,15 +55,9 @@ class IndexController extends AbstractActionController
         }
 
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
-
         $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
-        $readme = !$readme ? 'No README file found for this Module' : $readme;
-
         $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
-        $license = !$license ? 'No license file found for this Module' : $license;
-
         $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
-        $composerConf = !$composerConf ? 'No composer.json file found for this Module' : $composerConf;
 
         $viewModel = new ViewModel(array(
             'vendor' => $vendor,

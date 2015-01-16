@@ -14,17 +14,31 @@
 
         <div class="tab-content">
             <div class="tab-pane active" id="readme">
-                <?php echo $this->markdown($this->readme); ?>
+                <?php if($readme): ?>
+                    <?php echo $this->markdown($this->readme); ?>
+                <?php else: ?>
+                    No README file found for this Module
+                <?php endif; ?>
             </div>
             <!--<div class="tab-pane" id="composer">
-                <?php if (is_array($composerConf)): ?>
-                    <?php echo $this->composerView($this->composerConf); ?>
+                <?php if($this->composerConf): ?>
+                    <?php if (is_array($composerConf)): ?>
+                        <?php echo $this->composerView($this->composerConf); ?>
+                    <?php else: ?>
+                        <?php echo $this->composerConf; ?>
+                    <?php endif; ?>
                 <?php else: ?>
-                    <?php echo $this->composerConf; ?>
+                    No composer.json file found for this Module
                 <?php endif; ?>
             </div>-->
             <div class="tab-pane" id="license">
-                <pre><?php echo $license; ?></pre>
+                <pre>
+                    <?php if($readme): ?>
+                        <?php echo $license; ?>
+                    <?php else: ?>
+                        No license file found for this Module
+                    <?php endif; ?>
+                </pre>
             </div>
         </div>
     </div>
