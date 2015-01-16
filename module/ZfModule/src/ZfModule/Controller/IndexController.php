@@ -3,7 +3,6 @@
 namespace ZfModule\Controller;
 
 use Application\Service\RepositoryRetriever;
-use EdpGithub\Listener\Exception;
 use EdpGithub\Collection\RepositoryCollection;
 use Zend\Cache;
 use Zend\Http;
@@ -57,25 +56,14 @@ class IndexController extends AbstractActionController
 
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
 
-        try {
-            $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
-        } catch (Exception\RuntimeException $e) {
-            $readme = 'No README file found for this Module';
-        }
+        $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
+        $readme = !$readme ? 'No README file found for this Module' : $readme;
 
-        try {
-            $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
-        } catch (Exception\RuntimeException $e) {
-            $license = 'No license file found for this Module';
-        }
+        $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
+        $license = !$license ? 'No license file found for this Module' : $license;
 
-        try {
-            $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
-            $composerConf = json_decode($composerConf, true);
-            $composerConf = !$composerConf ? 'Composer.json invalid format' : $composerConf;
-        } catch (Exception\RuntimeException $e) {
-            $composerConf = 'No composer.json file found for this Module';
-        }
+        $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
+        $composerConf = !$composerConf ? 'No composer.json file found for this Module' : $composerConf;
 
         $viewModel = new ViewModel(array(
             'vendor' => $vendor,
