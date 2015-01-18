@@ -6,7 +6,7 @@ use ApplicationTest\Integration\Util\Bootstrap;
 use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class IndexControllerTest extends AbstractHttpControllerTestCase
+class SearchControllerTest extends AbstractHttpControllerTestCase
 {
     protected function setUp()
     {
@@ -17,19 +17,10 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
     public function testIndexActionCanBeAccessed()
     {
-        $this->dispatch('/');
+        $this->dispatch('/live-search');
 
-        $this->assertControllerName('Application\Controller\Index');
+        $this->assertControllerName('Application\Controller\Search');
         $this->assertActionName('index');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
-    }
-
-    public function testFeedActionCanBeAccessed()
-    {
-        $this->dispatch('/feed');
-
-        $this->assertControllerName('Application\Controller\Index');
-        $this->assertActionName('feed');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 }
