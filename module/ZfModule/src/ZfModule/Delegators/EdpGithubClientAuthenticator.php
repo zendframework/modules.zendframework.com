@@ -19,7 +19,9 @@ class EdpGithubClientAuthenticator implements DelegatorFactoryInterface
         /* @var Client $client */
         $client = $callback();
         $config = $serviceLocator->get('config')['scn-social-auth'];
-        $client->authenticate('UrlClientId', $config['github_client_id'], $config['github_secret']);
+        if (array_key_exists('github_client_id', $config) && array_key_exists('github_secret', $config)) {
+            $client->authenticate('UrlClientId', $config['github_client_id'], $config['github_secret']);
+        }
 
         return $client;
     }
