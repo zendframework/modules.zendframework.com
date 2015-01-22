@@ -5,6 +5,7 @@ namespace ApplicationTest\Service;
 use Application\Service\RepositoryRetriever;
 use EdpGithub\Api;
 use EdpGithub\Collection;
+use EdpGithub\Listener\Exception;
 use PHPUnit_Framework_TestCase;
 
 class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
@@ -86,10 +87,9 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         );
 
         $service = new RepositoryRetriever($client);
-
         $response = $service->getRepositoryFileContent('foo', 'bar', 'baz');
 
-        $this->assertNull($response);
+        $this->assertFalse($response);
     }
 
     public function testCanRetrieveRepositoryFileMetadata()
@@ -140,6 +140,32 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(count($payload), $count);
     }
+
+
+    public function testRepositoryFileContentFails()
+    {
+        $clientMock = $this->getMock('EdpGithub\Client');
+        $clientMock->expects($this->any())
+            ->method('api')
+            ->willThrowException(new Exception\RuntimeException);
+
+        $service = new RepositoryRetriever($clientMock);
+        $response = $service->getRepositoryFileContent('foo', 'bar', 'baz');
+        $this->assertFalse($response);
+    }
+
+    public function testRepositoryDoesNotExists()
+    {
+        $clientMock = $this->getMock('EdpGithub\Client');
+        $clientMock->expects($this->any())
+            ->method('api')
+            ->willThrowException(new Exception\RuntimeException);
+
+        $service = new RepositoryRetriever($clientMock);
+        $response = $service->getUserRepositoryMetadata('foo', 'bar');
+        $this->assertFalse($response);
+    }
+
 
     /**
      * @param Api\AbstractApi $apiInstance

@@ -3,7 +3,6 @@
 namespace ZfModule\Controller;
 
 use Application\Service\RepositoryRetriever;
-use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
 use Zend\Cache;
 use Zend\Http;
@@ -56,13 +55,9 @@ class IndexController extends AbstractActionController
         }
 
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
-
         $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
         $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
-        $license = !$license ? 'No license file found for this Module' : $license;
-
         $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
-        $composerConf = !$composerConf ? 'No composer.json file found for this Module' : json_decode($composerConf, true);
 
         $viewModel = new ViewModel(array(
             'vendor' => $vendor,
