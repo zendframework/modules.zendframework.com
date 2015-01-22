@@ -26,13 +26,13 @@
                         <div class="span6 module-author">
                             <div class="row-fluid">
                                 <div class="span3">
-                                    <img src="<?php echo $module->getPhotoUrl()?>" alt="<?php echo $module->getOwner()?>" class="avatar">
+                                    <img src="<?php echo $module->getPhotoUrl()?>" alt="<?php echo $this->escapeHtml($module->getOwner()); ?>" class="avatar">
                                 </div>
                                 <div class="span9">
-                                    <strong><?php echo $module->getOwner()?></strong>
+                                    <strong><?php echo $this->escapeHtml($module->getOwner()); ?></strong>
                                     <p>
                                         <span class="author-label">Github:</span>
-                                        <a href="<?php echo $module->getUrl()?>"><?php echo $module->getName()?></a>
+                                        <a href="<?php echo $module->getUrl()?>"><?php echo $this->escapeHtml($module->getName()); ?></a>
                                         <!--
                                   <span class="author-label">Blog:</span> <a>placeholder</a><br />
                                   <span class="author-label">Modules:</span> <a>5</a><br /><br />
@@ -48,7 +48,7 @@
                                                     'vendor' => $module->getOwner(),
                                                     'module' =>  $module->getName(),
                                                 )
-                                            );?>"><?php echo $module->getName()?></a></strong>
+                                            );?>"><?php echo $this->escapeHtml($module->getName()); ?></a></strong>
                             <p>
                                 <!--<span class="author-label">Version:</span> 1.2.1<br />-->
                                  <span class="author-label">Created:</span> <?php
@@ -70,7 +70,7 @@
                     <div class="module-description">
                         <div class="span12">
                             <p>
-                                <?php echo $module->getDescription()?>
+                                <?php echo $this->escapeHtml($module->getDescription()); ?>
                             </p>
                         </div>
                         <div style="clear: both;"></div>

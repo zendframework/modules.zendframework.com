@@ -1,14 +1,14 @@
-<?php foreach($results as $module) {?>
+<?php foreach($results as $module): ?>
 <div class="row-fluid">
     <div class="span12">
         <div class="span2">
-            <img src="<?php echo $module->getPhotoUrl()?>" alt="<?php echo $module->getName()?>" class="avatar">
+            <img src="<?php echo $module->getPhotoUrl()?>" alt="<?php echo $this->escapeHtml($module->getName()); ?>" class="avatar">
         </div>
         <div class="span10">
-            <a href="<?php echo $module->getUrl()?>"><?php echo $module->getName()?></a><br>
-            <?php echo $module->getDescription()?>
+            <a href="<?php echo $module->getUrl()?>"><?php echo $this->escapeHtml($module->getName()); ?></a><br>
+            <?php echo $this->escapeHtml($module->getDescription()); ?>
         </div>
     </div>
 </div>
 <hr style="margin:2px;padding:0;"/>
-<?php } ?>
+<?php endforeach; ?>

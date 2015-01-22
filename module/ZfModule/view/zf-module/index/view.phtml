@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="span8">
-        <p class="well"><?php echo $repository->description; ?></p>
+        <p class="well"><?php echo $this->escapeHtml($repository->description); ?></p>
         <ul class="nav nav-tabs">
             <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
             <!--<li><a href="#composer" data-toggle="tab">COMPOSER</a></li>-->
@@ -34,7 +34,7 @@
             <div class="tab-pane" id="license">
                 <pre>
                     <?php if($readme): ?>
-                        <?php echo $license; ?>
+                        <?php echo $this->escapeHtml($license); ?>
                     <?php else: ?>
                         No license file found for this Module
                     <?php endif; ?>

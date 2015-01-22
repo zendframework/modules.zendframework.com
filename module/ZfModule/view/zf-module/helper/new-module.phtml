@@ -7,21 +7,21 @@
             <hr>
         </div>
     </div>
-    <?php foreach($modules as $module) { ?>
+    <?php foreach($modules as $module): ?>
     <div class="row-fluid">
         <div class="span3">
-            <img src="<?php echo $module->getPhotoUrl()?>" alt="<?php echo $module->getName()?>" class="avatar">
+            <img src="<?php echo $module->getPhotoUrl()?>" alt="<?php echo $this->escapeHtml($module->getName()); ?>" class="avatar">
         </div>
         <div class="span9">
             <a href="<?php echo $this->url('view-module', array(
                                                 'vendor' => $module->getOwner(),
                                                 'module' =>  $module->getName(),
                                             )
-                                        );?>"><?php echo $module->getName()?></a><br>
-            <strong>Author:</strong> <?php echo $module->getOwner()?>
+                                        );?>"><?php echo $this->escapeHtml($module->getName()); ?></a><br>
+            <strong>Author:</strong> <?php echo $this->escapeHtml($module->getOwner()); ?>
         </div>
     </div>
     <hr>
-    <?php } ?>
+    <?php endforeach; ?>
 </div>
 

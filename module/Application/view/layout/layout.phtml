@@ -42,11 +42,11 @@
                 ?>" title="My profile">
                 <img src="<?php
                     echo $this->zfcUserIdentity()->getPhotoUrl();
-                ?>" alt="<?php echo $this->zfcUserDisplayName();
+                ?>" alt="<?php echo $this->escapeHtml($this->zfcUserDisplayName());
                 ?>" style="width:23px;height:23px;" />
                 </a></div><a class="login" href="<?php
                     echo $this->url('zfcuser');
-                ?>" title="My profile"> Hello <?php echo ucfirst($userDisplayName);?></a>
+                ?>" title="My profile"> Hello <?php echo $this->escapeHtml(ucfirst($userDisplayName));?></a>
             </li>
             <li class="sep">|</li>
             <li ><a href="<?php echo $this->url('zfcuser/logout'); ?>">Logout</a></li>
