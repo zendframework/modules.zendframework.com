@@ -1,58 +1,61 @@
 <?php
+use EdpGithub\Client;
+use ZfModule\Delegators\EdpGithubClientAuthenticator;
+
 return array(
-    'controllers' => array(
+    'controllers'  => array(
         'factories' => array(
             'ZfModule\Controller\Index' => 'ZfModule\Controller\IndexControllerFactory',
         ),
     ),
-    'router' => array(
+    'router'       => array(
         'routes' => array(
             'view-module' => array(
-                'type' => 'Segment',
+                'type'    => 'Segment',
                 'options' => array(
-                    'route' => '/:vendor/:module',
+                    'route'    => '/:vendor/:module',
                     'defaults' => array(
                         'controller' => 'ZfModule\Controller\Index',
-                        'action' => 'view',
+                        'action'     => 'view',
                     ),
                 ),
             ),
-            'zf-module' => array(
-                'type' => 'Segment',
-                'options' => array (
-                    'route' => '/module',
+            'zf-module'   => array(
+                'type'          => 'Segment',
+                'options'       => array(
+                    'route'    => '/module',
                     'defaults' => array(
                         'controller' => 'ZfModule\Controller\Index',
-                        'action' => 'index',
+                        'action'     => 'index',
                     ),
                 ),
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'list' => array(
-                        'type' => 'Segment',
+                'child_routes'  => array(
+                    'list'   => array(
+                        'type'    => 'Segment',
                         'options' => array(
-                            'route' => '/list[/:owner]',
+                            'route'      => '/list[/:owner]',
                             'constrains' => array(
                                 'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
-                            'defaults' => array(
+                            'defaults'   => array(
                                 'action' => 'organization',
                             ),
                         ),
                     ),
-                    'add' => array(
-                        'type' => 'Literal',
+                    'add'    => array(
+                        'type'    => 'Literal',
                         'options' => array(
-                            'route' => '/add',
+                            'route'    => '/add',
                             'defaults' => array(
                                 'action' => 'add',
                             ),
                         ),
                     ),
                     'remove' => array(
-                        'type' => 'Literal',
+                        'type'    => 'Literal',
                         'options' => array(
-                            'route' => '/remove',
+                            'route'    => '/remove',
                             'defaults' => array(
                                 'action' => 'remove',
                             ),
@@ -69,15 +72,22 @@ return array(
     ),
 
     'view_helpers' => array(
-        'factories' => array(
-            'listModule' => 'ZfModule\View\Helper\ListModuleFactory',
-            'newModule' => 'ZfModule\View\Helper\NewModuleFactory',
+        'factories'  => array(
+            'listModule'   => 'ZfModule\View\Helper\ListModuleFactory',
+            'newModule'    => 'ZfModule\View\Helper\NewModuleFactory',
             'totalModules' => 'ZfModule\View\Helper\TotalModulesFactory',
         ),
         'invokables' => array(
-            'moduleView' => 'ZfModule\View\Helper\ModuleView',
+            'moduleView'        => 'ZfModule\View\Helper\ModuleView',
             'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
-            'composerView' => 'ZfModule\View\Helper\ComposerView',
+            'composerView'      => 'ZfModule\View\Helper\ComposerView',
         ),
     ),
+    'service_manager' => [
+        'delegators' => [
+            Client::class => [
+                EdpGithubClientAuthenticator::class,
+            ],
+        ],
+    ],
 );
