@@ -15,7 +15,7 @@
         <div class="tab-content">
             <div class="tab-pane active" id="readme">
                 <?php if($readme): ?>
-                    <?php echo $this->markdown($this->readme); ?>
+                    <?php echo $this->sanitizeHtml($this->markdown($this->readme)); ?>
                 <?php else: ?>
                     No README file found for this Module
                 <?php endif; ?>
