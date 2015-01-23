@@ -35,9 +35,9 @@ class UserOrganizations extends AbstractHelper
     public function __invoke()
     {
         $orgs = $this->githubClient->api('current_user')->orgs();
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'orgs' => $orgs
-        ));
+        ]);
         $vm->setTemplate('user/helper/user-organizations.phtml');
 
         return $this->getView()->render($vm);

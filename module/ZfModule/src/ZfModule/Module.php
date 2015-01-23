@@ -30,8 +30,8 @@ class Module
 
     public function getServiceConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'zfmodule_mapper_module' => function ($sm) {
                     $mapper = new Mapper\Module();
                     $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
@@ -40,7 +40,7 @@ class Module
                     return $mapper;
                 },
                 'zfmodule_service_module' => 'ZfModule\Service\ModuleFactory',
-            )
-        );
+            ]
+        ];
     }
 }

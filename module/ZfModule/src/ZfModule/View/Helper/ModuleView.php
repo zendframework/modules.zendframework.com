@@ -20,10 +20,10 @@ class ModuleView extends AbstractHelper
      */
     public function __invoke($module, $button = 'submit')
     {
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'module' => $module,
             'button' => $button,
-        ));
+        ]);
         $vm->setTemplate('zf-module/helper/module-view.phtml');
 
 

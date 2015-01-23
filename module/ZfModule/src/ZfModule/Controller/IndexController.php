@@ -59,14 +59,14 @@ class IndexController extends AbstractActionController
         $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
         $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
 
-        $viewModel = new ViewModel(array(
+        $viewModel = new ViewModel([
             'vendor' => $vendor,
             'module' => $module,
             'repository' => $repository,
             'readme' => $readme,
             'composerConf' => $composerConf,
             'license' => $license,
-        ));
+        ]);
 
         return $viewModel;
     }
@@ -77,17 +77,17 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $params = array(
+        $params = [
             'type'      => 'all',
             'per_page'  => 100,
             'sort'      => 'updated',
             'direction' => 'desc',
-        );
+        ];
 
         $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
         $repositories = $this->fetchModules($repos);
 
-        $viewModel = new ViewModel(array('repositories' => $repositories));
+        $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
         return $viewModel;
     }
@@ -99,16 +99,16 @@ class IndexController extends AbstractActionController
         }
 
         $owner = $this->params()->fromRoute('owner', null);
-        $params = array(
+        $params = [
             'per_page'  => 100,
             'sort'      => 'updated',
             'direction' => 'desc',
-        );
+        ];
 
         $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
         $repositories = $this->fetchModules($repos);
 
-        $viewModel = new ViewModel(array('repositories' => $repositories));
+        $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
         $viewModel->setTemplate('zf-module/index/index.phtml');
         return $viewModel;
@@ -120,7 +120,7 @@ class IndexController extends AbstractActionController
      */
     private function fetchModules(RepositoryCollection $repos)
     {
-        $repositories = array();
+        $repositories = [];
 
         foreach ($repos as $repo) {
             $isModule = $this->moduleService->isModule($repo);

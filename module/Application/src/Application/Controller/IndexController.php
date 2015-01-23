@@ -38,10 +38,10 @@ class IndexController extends AbstractActionController
 
         $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
 
-        return array(
+        return [
             'repositories' => $repositories,
             'query' => $query,
-        );
+        ];
     }
 
     /**

@@ -51,7 +51,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
         }
 
         $entity = $this->select($select);
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
         return $entity;
     }
 
@@ -73,7 +73,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
         $select->where($spec);
 
         $entity = $this->select($select);
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
         return $entity;
     }
 
@@ -93,37 +93,37 @@ class Module extends AbstractDbMapper implements ModuleInterface
         }
 
         $entity = $this->select($select);
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
         return $entity;
     }
 
     public function findByName($name)
     {
         $select = $this->getSelect()
-                       ->where(array('name' => $name));
+                       ->where(['name' => $name]);
 
         $entity = $this->select($select)->current();
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
         return $entity;
     }
 
     public function findByUrl($url)
     {
         $select = $this->getSelect()
-                       ->where(array('url' => $url));
+                       ->where(['url' => $url]);
 
         $entity = $this->select($select)->current();
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
         return $entity;
     }
 
     public function findById($id)
     {
         $select = $this->getSelect()
-                       ->where(array('module_id' => $id));
+                       ->where(['module_id' => $id]);
 
         $entity = $this->select($select)->current();
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
         return $entity;
     }
 
@@ -154,7 +154,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
     public function getTotal()
     {
         $select = $this->getSelect();
-        $select->columns(array('num' => new Expression('COUNT(*)')));
+        $select->columns(['num' => new Expression('COUNT(*)')]);
 
         $stmt = $this->getSlaveSql()->prepareStatementForSqlObject($select);
 

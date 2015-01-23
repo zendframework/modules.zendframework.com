@@ -36,10 +36,10 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         $this->controller = $controllerManager->get('Application\Controller\Index');
 
         $this->request = new Http\Request();
-        $this->routeMatch = new RouteMatch(array('controller' => 'index'));
+        $this->routeMatch = new RouteMatch(['controller' => 'index']);
         $this->event = new MvcEvent();
         $config = $serviceManager->get('Config');
-        $routerConfig = isset($config['router']) ? $config['router'] : array();
+        $routerConfig = isset($config['router']) ? $config['router'] : [];
         $router = HttpRouter::factory($routerConfig);
         $this->event->setRouter($router);
         $this->event->setRouteMatch($this->routeMatch);

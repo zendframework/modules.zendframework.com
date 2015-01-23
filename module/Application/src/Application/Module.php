@@ -39,8 +39,8 @@ class Module
 
     public function getServiceConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'ApplicationServiceErrorHandling' => function (ServiceManager $sm) {
                     $logger  = $sm->get('ZendLog');
                     $service = new ErrorHandlingService($logger);
@@ -53,8 +53,8 @@ class Module
                     $log->addWriter($writer);
                     return $log;
                 },
-            ),
-        );
+            ],
+        ];
     }
 
 

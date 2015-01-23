@@ -20,9 +20,9 @@ class ModuleDescription extends AbstractHelper
      */
     public function __invoke($module)
     {
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'module' => $module,
-        ));
+        ]);
         $vm->setTemplate('zf-module/helper/module-description.phtml');
 
 

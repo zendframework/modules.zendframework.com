@@ -47,7 +47,7 @@ class ListModule extends AbstractHelper
                 'per_page' => 100
             ]);
 
-            $modules = array();
+            $modules = [];
             foreach ($repositories as $repository) {
                 if (!$repository->fork && $repository->permissions->push) {
                     $module = $this->moduleMapper->findByName($repository->name);

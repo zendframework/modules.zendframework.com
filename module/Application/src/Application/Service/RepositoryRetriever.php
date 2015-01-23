@@ -47,7 +47,7 @@ class RepositoryRetriever
      *
      * @return RepositoryCollection
      */
-    public function getUserRepositories($user, $params = array())
+    public function getUserRepositories($user, $params = [])
     {
         return $this->githubClient->api('user')->repos($user, $params);
     }
@@ -100,7 +100,7 @@ class RepositoryRetriever
      *
      * @return RepositoryCollection
      */
-    public function getAuthenticatedUserRepositories($params = array())
+    public function getAuthenticatedUserRepositories($params = [])
     {
         return $this->githubClient->api('current_user')->repos($params);
     }

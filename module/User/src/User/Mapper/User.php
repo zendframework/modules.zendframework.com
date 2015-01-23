@@ -21,7 +21,7 @@ class User extends ZfcUserMapper
         }
 
         $entity = $this->select($select);
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
         return $entity;
     }
 }
