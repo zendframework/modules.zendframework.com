@@ -5,7 +5,7 @@
  * If you have a ./config/autoload/ directory set up for your project, you can
  * drop this config file in it and change the values as you wish.
  */
-$settings = array(
+$settings = [
     /**
      * Github Client id
      * 
@@ -24,11 +24,11 @@ $settings = array(
      * https://github.com/settings/applications/new
      */
     'github_secret' =>'',
-);
+];
 
 /**
  * You do not need to edit below this line
  */
-return array(
+return [
     'scn-social-auth' => $settings,
-);
+];

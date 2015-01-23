@@ -29,9 +29,9 @@ class NewModule extends AbstractHelper
         $modules = $this->moduleMapper->findAll(10, 'created_at', 'DESC');
 
         //return $modules;
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'modules' => $modules,
-        ));
+        ]);
         $vm->setTemplate('zf-module/helper/new-module');
 
         return $this->getView()->render($vm);

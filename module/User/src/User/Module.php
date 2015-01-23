@@ -50,8 +50,8 @@ class Module extends AbstractModule
 
     public function getServiceConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'zfcuser_user_mapper' => function ($sm) {
                     $options = $sm->get('zfcuser_module_options');
                     $mapper = new Mapper\User();
@@ -61,13 +61,13 @@ class Module extends AbstractModule
                     $mapper->setHydrator(new Mapper\UserHydrator());
                     return $mapper;
                 },
-            ),
-        );
+            ],
+        ];
     }
 
     public function getAutoloaderConfig()
     {
-        return array();
+        return [];
     }
 
     public function getDir()

@@ -36,9 +36,9 @@ class NewUsers extends AbstractHelper
     {
         $users = $this->userMapper->findAll(16, 'created_at', 'DESC');
 
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'users' => $users,
-        ));
+        ]);
         $vm->setTemplate('user/helper/new-users');
 
         return $this->getView()->render($vm);

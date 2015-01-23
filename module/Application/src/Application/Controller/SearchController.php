@@ -34,9 +34,9 @@ class SearchController extends AbstractActionController
 
         $results = $this->moduleMapper->findByLike($query);
 
-        $viewModel = new ViewModel(array(
+        $viewModel = new ViewModel([
             'results' => $results,
-        ));
+        ]);
         $viewModel->setTerminal(true);
         return $viewModel;
     }

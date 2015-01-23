@@ -1,8 +1,8 @@
 <?php
 ini_set('display_errors', 1);
 
-return array(
-    'modules' => array(
+return [
+    'modules' => [
         'ZF\DevelopmentMode',
         'AssetManager',
         'ZfcBase',
@@ -14,14 +14,14 @@ return array(
         'EdpModuleLayouts',
         'ZfModule',
         'EdpMarkdown',
-    ),
-    'module_listener_options' => array(
-        'config_glob_paths'    => array(
+    ],
+    'module_listener_options' => [
+        'config_glob_paths'    => [
             'config/autoload/{,*.}{global,local}.php',
-        ),
-        'module_paths' => array(
+        ],
+        'module_paths' => [
             './module',
             './vendor',
-        ),
-    ),
-);
+        ],
+    ],
+];

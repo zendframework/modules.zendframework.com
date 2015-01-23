@@ -2,87 +2,87 @@
 use EdpGithub\Client;
 use ZfModule\Delegators\EdpGithubClientAuthenticator;
 
-return array(
-    'controllers'  => array(
-        'factories' => array(
+return [
+    'controllers'  => [
+        'factories' => [
             'ZfModule\Controller\Index' => 'ZfModule\Controller\IndexControllerFactory',
-        ),
-    ),
-    'router'       => array(
-        'routes' => array(
-            'view-module' => array(
+        ],
+    ],
+    'router'       => [
+        'routes' => [
+            'view-module' => [
                 'type'    => 'Segment',
-                'options' => array(
+                'options' => [
                     'route'    => '/:vendor/:module',
-                    'defaults' => array(
+                    'defaults' => [
                         'controller' => 'ZfModule\Controller\Index',
                         'action'     => 'view',
-                    ),
-                ),
-            ),
-            'zf-module'   => array(
+                    ],
+                ],
+            ],
+            'zf-module'   => [
                 'type'          => 'Segment',
-                'options'       => array(
+                'options'       => [
                     'route'    => '/module',
-                    'defaults' => array(
+                    'defaults' => [
                         'controller' => 'ZfModule\Controller\Index',
                         'action'     => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes'  => array(
-                    'list'   => array(
+                'child_routes'  => [
+                    'list'   => [
                         'type'    => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route'      => '/list[/:owner]',
-                            'constrains' => array(
+                            'constrains' => [
                                 'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults'   => array(
+                            ],
+                            'defaults'   => [
                                 'action' => 'organization',
-                            ),
-                        ),
-                    ),
-                    'add'    => array(
+                            ],
+                        ],
+                    ],
+                    'add'    => [
                         'type'    => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route'    => '/add',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'add',
-                            ),
-                        ),
-                    ),
-                    'remove' => array(
+                            ],
+                        ],
+                    ],
+                    'remove' => [
                         'type'    => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route'    => '/remove',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'remove',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'zf-module' => __DIR__ . '/../view',
-        ),
-    ),
+        ],
+    ],
 
-    'view_helpers' => array(
-        'factories'  => array(
+    'view_helpers' => [
+        'factories'  => [
             'listModule'   => 'ZfModule\View\Helper\ListModuleFactory',
             'newModule'    => 'ZfModule\View\Helper\NewModuleFactory',
             'totalModules' => 'ZfModule\View\Helper\TotalModulesFactory',
-        ),
-        'invokables' => array(
+        ],
+        'invokables' => [
             'moduleView'        => 'ZfModule\View\Helper\ModuleView',
             'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
             'composerView'      => 'ZfModule\View\Helper\ComposerView',
-        ),
-    ),
+        ],
+    ],
     'service_manager' => [
         'delegators' => [
             Client::class => [
@@ -90,4 +90,4 @@ return array(
             ],
         ],
     ],
-);
+];

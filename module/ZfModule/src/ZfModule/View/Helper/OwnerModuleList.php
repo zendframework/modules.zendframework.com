@@ -37,9 +37,9 @@ class OwnerModuleList extends AbstractHelper implements ServiceLocatorAwareInter
         $modules = $mapper->findByOwner($options["owner"], 10, 'created_at', 'DESC');
 
         //return $modules;
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'modules' => $modules,
-        ));
+        ]);
         $vm->setTemplate('zf-module/helper/new-module.phtml');
 
         return $this->getView()->render($vm);

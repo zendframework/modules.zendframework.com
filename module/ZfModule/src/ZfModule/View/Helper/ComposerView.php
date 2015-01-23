@@ -20,9 +20,9 @@ class ComposerView extends AbstractHelper
      */
     public function __invoke($composerConf)
     {
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'composerConf' => $composerConf,
-        ));
+        ]);
         $vm->setTemplate('zf-module/helper/composer-view.phtml');
 
 

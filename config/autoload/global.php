@@ -1,31 +1,31 @@
 <?php
-return array(
-    'module_layouts' => array(
+return [
+    'module_layouts' => [
         'ZfcUser' => 'layout/layout-small-header.phtml',
         'ZfModule' => 'layout/layout-small-header.phtml',
-    ),
-    'asset_manager' => array(
-        'caching' => array(
-            'default' => array(
+    ],
+    'asset_manager' => [
+        'caching' => [
+            'default' => [
                 'cache'     => 'FilePath',  // Apc, FilePath, FileSystem etc.
-                'options' => array(
+                'options' => [
                     'dir' => 'public',
-                ),
-            ),
-        ),
-    ),
-    'service_manager' => array(
-        'factories' => array(
+                ],
+            ],
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
             'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
-        ),
-        'invokables' => array(
+        ],
+        'invokables' => [
             'Zend\Session\SessionManager' => 'Zend\Session\SessionManager',
-        ),
-    ),
-    'db' => array(
+        ],
+    ],
+    'db' => [
         'driver'    => 'pdo',
         'dsn'       => 'mysql:dbname=modules;host=localhost',
         'username'  => 'modules',
         'password'  => 'modules',
-    ),
-);
+    ],
+];
