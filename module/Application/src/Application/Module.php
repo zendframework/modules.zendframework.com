@@ -20,13 +20,11 @@ class Module
 {
     public function onBootstrap($e)
     {
-        $e->getApplication()->getServiceManager()->get('translator');
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
         // Attach logger for exceptions
-        $eventManager = $e->getApplication()->getEventManager();
         $eventManager->attach('dispatch.error', function (MvcEvent $event) {
             $exception = $event->getResult()->exception;
             if ($exception) {
