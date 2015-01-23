@@ -10,14 +10,13 @@
     <?php foreach($modules as $module): ?>
     <div class="row-fluid">
         <div class="span3">
-            <img src="<?php echo $module->getPhotoUrl()?>" alt="<?php echo $this->escapeHtml($module->getName()); ?>" class="avatar">
+            <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($module->getName()); ?>" class="avatar">
         </div>
         <div class="span9">
-            <a href="<?php echo $this->url('view-module', array(
-                                                'vendor' => $module->getOwner(),
-                                                'module' =>  $module->getName(),
-                                            )
-                                        );?>"><?php echo $this->escapeHtml($module->getName()); ?></a><br>
+            <a href="<?php echo $this->url('view-module', array('vendor' => $this->escapeUrl($module->getOwner()),'module' => $this->escapeUrl($module->getName()))); ?>">
+                <?php echo $this->escapeHtml($module->getName()); ?>
+            </a>
+            <br>
             <strong>Author:</strong> <?php echo $this->escapeHtml($module->getOwner()); ?>
         </div>
     </div>

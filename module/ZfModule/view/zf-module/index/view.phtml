@@ -1,5 +1,5 @@
-<?php $this->headTitle($module . ' module by ' . $vendor) ?>
-<?php $this->headMeta()->appendName('description', $repository->description); ?>
+<?php $this->headTitle($this->escapeHtmlAttr($module) . ' module by ' . $this->escapeHtmlAttr($vendor)); ?>
+<?php $this->headMeta()->appendName('description', $this->escapeHtmlAttr($repository->description)); ?>
 
 <h3><?php echo $vendor ?> / <?php echo $module ?> </h3>
 
@@ -25,7 +25,7 @@
                     <?php if (is_array($composerConf)): ?>
                         <?php echo $this->composerView($this->composerConf); ?>
                     <?php else: ?>
-                        <?php echo $this->composerConf; ?>
+                        <?php echo $this->escapeHtml($this->composerConf); ?>
                     <?php endif; ?>
                 <?php else: ?>
                     No composer.json file found for this Module

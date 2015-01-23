@@ -37,12 +37,11 @@
             ?>
             <li class="sep">|</li>
             <li class="user-info">
-                <div class="gravatar-container"><a class="login" href="<?php
-                    echo $this->url('zfcuser');
+                <div class="gravatar-container"><a class="login" href="<?php echo $this->url('zfcuser');
                 ?>" title="My profile">
                 <img src="<?php
-                    echo $this->zfcUserIdentity()->getPhotoUrl();
-                ?>" alt="<?php echo $this->escapeHtml($this->zfcUserDisplayName());
+                    echo $this->escapeHtmlAttr($this->zfcUserIdentity()->getPhotoUrl());
+                ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName());
                 ?>" style="width:23px;height:23px;" />
                 </a></div><a class="login" href="<?php
                     echo $this->url('zfcuser');
