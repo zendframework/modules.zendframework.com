@@ -8,11 +8,6 @@ use Zend\View\Model\ViewModel;
 class ComposerView extends AbstractHelper
 {
     /**
-     * $var string template used for view
-     */
-    protected $viewTemplate;
-
-    /**
      * __invoke
      *
      * @access public
@@ -27,15 +22,5 @@ class ComposerView extends AbstractHelper
 
 
         return $this->getView()->render($vm);
-    }
-
-    /**
-     * @param string $viewTemplate
-     * @return ZfcUserLoginWidget
-     */
-    public function setViewTemplate($viewTemplate)
-    {
-        $this->viewTemplate = $viewTemplate;
-        return $this;
     }
 }

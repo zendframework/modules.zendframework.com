@@ -36,14 +36,4 @@ class NewModule extends AbstractHelper
 
         return $this->getView()->render($vm);
     }
-
-    /**
-     * @param string $viewTemplate
-     * @return NewModules
-     */
-    public function setViewTemplate($viewTemplate)
-    {
-        $this->viewTemplate = $viewTemplate;
-        return $this;
-    }
 }
