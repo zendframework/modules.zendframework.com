@@ -10,10 +10,10 @@
                         <div class="span11 module-author">
                             <div class="row-fluid">
                                 <div class="span1">
-                                    <img src="<?php echo $org->avatar_url ?>" alt="<?php echo $this->escapeHtml($org->login); ?>" />
+                                    <img src="<?php echo $this->escapeHtmlAttr($org->avatar_url); ?>" alt="<?php echo $this->escapeHtmlAttr($org->login); ?>" />
                                 </div>
                                 <div class="span10">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#org-accordion" href="#org-<?php echo $this->escapeHtml($org->login); ?>">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#org-accordion" href="#org-<?php echo $this->escapeHtmlAttr($org->login); ?>">
                                       <?php echo $this->escapeHtml($org->login); ?>
                                     </a>
                                 </div>
@@ -22,10 +22,10 @@
                         <div style="clear: both;"></div>
                     </div>
                 </div>
-                <div class="row-fluid accordion-body collapse" id="org-<?php echo $this->escapeHtml($org->login); ?>">
+                <div class="row-fluid accordion-body collapse" id="org-<?php echo $this->escapeHtmlAttr($org->login); ?>">
                     <div class="module-description">
-                        <div class="span12" id="org-content-<?php echo $this->escapeHtml($org->login); ?>">
-                            <div class="well" style="text-align:center">Synchronizing with Github <img src="/img/ajax-loader.gif" alt="loading" /></div>
+                        <div class="span12" id="org-content-<?php echo $this->escapeHtmlAttr($org->login); ?>">
+                            <div class="well" style="text-align:center">Synchronizing with Github <img src="<?php echo $this->basePath('/img/ajax-loader.gif'); ?>" alt="loading" /></div>
                         </div>
                         <div style="clear: both;"></div>
                     </div>

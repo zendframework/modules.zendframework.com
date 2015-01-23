@@ -28,7 +28,7 @@
     <div class="tab">
         <ul class="login">
             <li class="left">&nbsp;</li>
-            <li ><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
+            <li><a href="<?php echo $this->url('home'); ?>"><i class="icon-home icon-white"></i> Home</a></li>
             <?php
                 $userDisplayName = $this->zfcUserDisplayName();
                 if ($userDisplayName):
@@ -64,8 +64,8 @@
     <div class="container">
         <div class="row">
             <div class="span8">
-                <a href="/" style="text-decoration:none">
-                    <img src="/img/zend-logo_small.png" alt="ZF Modules"/>
+                <a href="<?php echo $this->url('home'); ?>" style="text-decoration:none">
+                    <img src="<?php echo $this->basePath('/img/zend-logo_small.png'); ?>" alt="ZF Modules"/>
                     <p class="zf-green">Modules</p>
                 </a>
             </div>
