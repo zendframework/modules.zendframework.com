@@ -13,7 +13,6 @@ return [
         'User',
         'EdpModuleLayouts',
         'ZfModule',
-        'EdpMarkdown',
     ],
     'module_listener_options' => [
         'config_glob_paths'    => [
