@@ -10,7 +10,6 @@
 namespace ZfModule;
 
 use Zend\Mvc\ModuleRouteListener;
-use Zend\Cache\StorageFactory;
 
 class Module
 {

@@ -3,7 +3,6 @@
 namespace ZfModule\Controller;
 
 use Application\Service\RepositoryRetriever;
-use EdpGithub\Client;
 use Zend\Cache;
 use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
