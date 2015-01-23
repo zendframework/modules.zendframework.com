@@ -5,36 +5,22 @@
                 <div class="span5 module-author">
                     <div class="row-fluid">
                         <div class="span2">
-                            <img src="<?php echo $this->escapeHtmlAttr($module['photo_url']); ?>" alt="<?php echo $this->escapeHtmlAttr($module['name']); ?>" />
+                            <img src="<?php echo $this->escapeHtmlAttr($module['photo_url']) ?>" alt="<?php echo $this->escapeHtmlAttr($module['name']) ?>" />
                         </div>
                         <div class="span10">
-                            <strong><?php echo $this->escapeHtml($module['owner']); ?></strong>
+                            <strong><?php echo $this->escapeHtml($module['owner']) ?></strong>
                             <p>
                                 <span class="author-label">Github:</span>
-                                <a href="<?php echo $this->escapeHtmlAttr($module['url']); ?>"><?php echo $this->escapeHtml($module['name']); ?></a><br />
-                                <!--
-                                <span class="author-label">Blog:</span> <a>placeholder</a><br />
-                                <span class="author-label">Modules:</span> <a>5</a><br /><br />
-                                <span class="author-label"><a>More info...</a>-->
+                                <a href="<?php echo $this->escapeHtmlAttr($module['url']) ?>"><?php echo $this->escapeHtml($module['name']) ?></a><br />
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="span5">
-                    <strong><?php echo $this->escapeHtml($module['name']); ?></strong>
+                    <strong><?php echo $this->escapeHtml($module['name']) ?></strong>
                     <p>
-                        <!--<span class="author-label">Version:</span> 1.2.1<br />-->
                         <span class="author-label">Created:</span>
-                        <?php
-                        $date = new DateTime($module['created_at']);
-                        echo $date->format('Y-m-d');
-                        ?><br />
-                        <!--<span class="author-label">Edited:</span> <a>15 days ago</a><br />
-                        <span class="author-label">Tags:</span>
-                        <span class="label">zf2</span>
-                        <span class="label">Assetic</span>
-                        <span class="label">Assets</span>
-                        <span class="label">Sx</span>-->
+                        <?php echo (new DateTime($module['created_at']))->format('Y-m-d') ?><br />
                     </p>
                 </div>
                 <div style="clear: both;"></div>

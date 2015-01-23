@@ -10,21 +10,21 @@
 
     <?php
     $count = 0;
-    foreach($this->users as $user) {
-        if($count%4 == 0){
-    ?>
-    <div class="row-fluid" style="margin-bottom:10px;">
-        <div class="span12">
-        <?php } ?>
-            <div class="span3">
-                <a href="https://github.com/<?php echo $this->escapeHtml($user->getUserName()); ?>" data-delay="0" rel="tooltip" title="<?php echo $this->escapeHtml($user->getUserName()); ?>" class="thumbnail">
-                 <img src="<?php echo $user->getPhotoUrl()?>" alt="<?php echo $this->escapeHtml($user->getUserName()); ?>">
-                </a>
+    foreach ($this->users as $user) {
+        if ($count % 4 == 0) {
+            ?>
+            <div class="row-fluid" style="margin-bottom:10px;">
+                <div class="span12">
+                <?php } ?>
+                <div class="span3">
+                    <a href="https://github.com/<?php echo $this->escapeHtml($user->getUserName()) ?>" data-delay="0" rel="tooltip" title="<?php echo $this->escapeHtml($user->getUserName()) ?>" class="thumbnail">
+                        <img src="<?php echo $user->getPhotoUrl() ?>" alt="<?php echo $this->escapeHtml($user->getUserName()) ?>">
+                    </a>
+                </div>
+                <?php if ($count % 4 == 3) { ?>
+                </div>
             </div>
-    <?php if($count%4 ==3){ ?>
-        </div>
-    </div>
-    <?php
+            <?php
         }
         $count++;
     }

@@ -8,32 +8,20 @@
         <p class="well"><?php echo $this->escapeHtml($repository->description); ?></p>
         <ul class="nav nav-tabs">
             <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
-            <!--<li><a href="#composer" data-toggle="tab">COMPOSER</a></li>-->
             <li ><a href="#license" data-toggle="tab">LICENSE</a></li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane active" id="readme">
-                <?php if($readme): ?>
+                <?php if ($readme): ?>
                     <?php echo $this->sanitizeHtml($this->markdown($this->readme)); ?>
                 <?php else: ?>
                     No README file found for this Module
                 <?php endif; ?>
             </div>
-            <!--<div class="tab-pane" id="composer">
-                <?php if($this->composerConf): ?>
-                    <?php if (is_array($composerConf)): ?>
-                        <?php echo $this->composerView($this->composerConf); ?>
-                    <?php else: ?>
-                        <?php echo $this->escapeHtml($this->composerConf); ?>
-                    <?php endif; ?>
-                <?php else: ?>
-                    No composer.json file found for this Module
-                <?php endif; ?>
-            </div>-->
             <div class="tab-pane" id="license">
                 <pre>
-                    <?php if($this->license): ?>
+                    <?php if ($this->license): ?>
                         <?php echo $this->escapeHtml($this->license); ?>
                     <?php else: ?>
                         No license file found for this Module
@@ -43,16 +31,15 @@
         </div>
     </div>
     <div class="span4">
-        <div class="sidebar"><?php
-            // infos
-            echo $this->moduleDescription(array(
-                'owner'       => $repository->owner->login,
-                'name'        => $repository->name,
-                'created_at'  => $repository->created_at,
-                'url'         => $repository->html_url,
-                'photo_url'   => $repository->owner->avatar_url,
+        <div class="sidebar">
+            <?php echo $this->moduleDescription(array(
+                'owner' => $repository->owner->login,
+                'name' => $repository->name,
+                'created_at' => $repository->created_at,
+                'url' => $repository->html_url,
+                'photo_url' => $repository->owner->avatar_url,
                 'description' => $repository->description
-            ));
-            ?></div>
+            )) ?>
+        </div>
     </div>
 </div>
