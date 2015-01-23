@@ -13,7 +13,8 @@
         "evandotpro/edp-module-layouts": "1.0.*",
         "zf-commons/zfc-user": "1.0.*",
         "zfcampus/zf-development-mode": "~2.0",
-        "socalnick/scn-social-auth": "1.14.1"
+        "socalnick/scn-social-auth": "1.14.1",
+        "ezyang/htmlpurifier": "4.6.*"
     },
     "require-dev": {
         "phpmd/phpmd": "~2.1",

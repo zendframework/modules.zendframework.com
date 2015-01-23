@@ -1,11 +1,11 @@
-<?php $this->headTitle($module . ' module by ' . $vendor) ?>
-<?php $this->headMeta()->appendName('description', $repository->description); ?>
+<?php $this->headTitle($this->escapeHtmlAttr($module) . ' module by ' . $this->escapeHtmlAttr($vendor)); ?>
+<?php $this->headMeta()->appendName('description', $this->escapeHtmlAttr($repository->description)); ?>
 
 <h3><?php echo $vendor ?> / <?php echo $module ?> </h3>
 
 <div class="row">
     <div class="span8">
-        <p class="well"><?php echo $repository->description; ?></p>
+        <p class="well"><?php echo $this->escapeHtml($repository->description); ?></p>
         <ul class="nav nav-tabs">
             <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
             <!--<li><a href="#composer" data-toggle="tab">COMPOSER</a></li>-->
@@ -15,7 +15,7 @@
         <div class="tab-content">
             <div class="tab-pane active" id="readme">
                 <?php if($readme): ?>
-                    <?php echo $this->markdown($this->readme); ?>
+                    <?php echo $this->sanitizeHtml($this->markdown($this->readme)); ?>
                 <?php else: ?>
                     No README file found for this Module
                 <?php endif; ?>
@@ -25,7 +25,7 @@
                     <?php if (is_array($composerConf)): ?>
                         <?php echo $this->composerView($this->composerConf); ?>
                     <?php else: ?>
-                        <?php echo $this->composerConf; ?>
+                        <?php echo $this->escapeHtml($this->composerConf); ?>
                     <?php endif; ?>
                 <?php else: ?>
                     No composer.json file found for this Module
@@ -34,7 +34,7 @@
             <div class="tab-pane" id="license">
                 <pre>
                     <?php if($readme): ?>
-                        <?php echo $license; ?>
+                        <?php echo $this->escapeHtml($license); ?>
                     <?php else: ?>
                         No license file found for this Module
                     <?php endif; ?>
