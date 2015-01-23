@@ -4,58 +4,116 @@ namespace ApplicationTest\Integration\Controller;
 
 use Application\Controller;
 use ApplicationTest\Integration\Util\Bootstrap;
+use User\Mapper\User;
 use Zend\Http;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
-use PHPUnit_Framework_TestCase;
+use Zend\Paginator;
+use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use ZfModule\Mapper\Module;
 
-class IndexControllerTest extends PHPUnit_Framework_TestCase
+class IndexControllerTest extends AbstractHttpControllerTestCase
 {
-    /**
-     * @var Controller\IndexController;
-     */
-    protected $controller;
-    protected $request;
-    protected $response;
-
-    /**
-     * @var RouteMatch
-     */
-    protected $routeMatch;
-
-    protected $event;
-
     protected function setUp()
     {
-        $serviceManager = Bootstrap::getServiceManager();
+        parent::setUp();
 
-        /* @var ControllerManager $controllerManager */
-        $controllerManager = $serviceManager->get('ControllerManager');
-        $this->controller = $controllerManager->get('Application\Controller\Index');
-
-        $this->request = new Http\Request();
-        $this->routeMatch = new RouteMatch(['controller' => 'index']);
-        $this->event = new MvcEvent();
-        $config = $serviceManager->get('Config');
-        $routerConfig = isset($config['router']) ? $config['router'] : [];
-        $router = HttpRouter::factory($routerConfig);
-        $this->event->setRouter($router);
-        $this->event->setRouteMatch($this->routeMatch);
-        $this->controller->setEvent($this->event);
-        $this->controller->setServiceLocator($serviceManager);
+        $this->setApplicationConfig(Bootstrap::getConfig());
     }
 
     public function testIndexActionCanBeAccessed()
     {
-        $this->routeMatch->setParam('action', 'index');
+        $moduleMapper = $this->getMockBuilder(Module::class)->getMock();
 
-        $this->controller->dispatch($this->request);
+        $moduleMapper
+            ->expects($this->once())
+            ->method('pagination')
+            ->with(
+                $this->equalTo(1),
+                $this->equalTo(Controller\IndexController::MODULES_PER_PAGE),
+                $this->equalTo(null),
+                $this->equalTo('created_at'),
+                $this->equalTo('DESC')
+            )
+            ->willReturn(new Paginator\Paginator(new Paginator\Adapter\Null()))
+        ;
 
-        /* @var Response $response */
-        $response = $this->controller->getResponse();
+        $moduleMapper
+            ->expects($this->once())
+            ->method('getTotal')
+            ->willReturn(0)
+        ;
 
-        $this->assertEquals(Http\Response::STATUS_CODE_200, $response->getStatusCode());
+        $moduleMapper
+            ->expects($this->once())
+            ->method('findAll')
+            ->with(
+                $this->equalTo(10),
+                $this->equalTo('created_at'),
+                $this->equalTo('DESC')
+            )
+            ->willReturn([])
+        ;
+
+        $userMapper = $this->getMockBuilder(User::class)->getMock();
+
+        $userMapper
+            ->expects($this->once())
+            ->method('findAll')
+            ->with(
+                $this->equalTo(16),
+                $this->equalTo('created_at'),
+                $this->equalTo('DESC')
+            )
+            ->willReturn([])
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                'zfmodule_mapper_module',
+                $moduleMapper
+            )
+            ->setService(
+                'zfcuser_user_mapper',
+                $userMapper
+            )
+        ;
+
+        $this->dispatch('/');
+
+        $this->assertControllerName('Application\Controller\Index');
+        $this->assertActionName('index');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
+    }
+
+    public function testFeedActionCanBeAccessed()
+    {
+        $moduleMapper = $this->getMockBuilder(Module::class)->getMock();
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('pagination')
+            ->with(
+                $this->equalTo(1),
+                $this->equalTo(Controller\IndexController::MODULES_PER_PAGE),
+                $this->equalTo(null),
+                $this->equalTo('created_at'),
+                $this->equalTo('DESC')
+            )
+            ->willReturn([])
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                'zfmodule_mapper_module',
+                $moduleMapper
+            )
+        ;
+
+        $this->dispatch('/feed');
+
+        $this->assertControllerName('Application\Controller\Index');
+        $this->assertActionName('feed');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 }

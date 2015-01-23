@@ -26,6 +26,14 @@ class Bootstrap
     }
 
     /**
+     * @return mixed
+     */
+    public static function getConfig()
+    {
+        return static::$config;
+    }
+
+    /**
      * @return ServiceManager
      */
     public static function getServiceManager()
