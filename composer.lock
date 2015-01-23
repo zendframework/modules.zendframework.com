@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7d7bf144ee8fb9698aaaae7a7a439aed",
+    "hash": "454db4e043c98eb296d2be7d477e3a50",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
@@ -1060,12 +1060,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c7ad57906d3e0828d72a543d6d959528e850bee0"
+                "reference": "5245d791c3304a356631123fd83d6b5abd16f72c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c7ad57906d3e0828d72a543d6d959528e850bee0",
-                "reference": "c7ad57906d3e0828d72a543d6d959528e850bee0",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/5245d791c3304a356631123fd83d6b5abd16f72c",
+                "reference": "5245d791c3304a356631123fd83d6b5abd16f72c",
                 "shasum": ""
             },
             "require": {
@@ -1114,7 +1114,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-01-22 20:29:00"
+            "time": "2015-01-23 07:28:47"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1532,16 +1532,16 @@
         },
         {
             "name": "sebastian/exporter",
-            "version": "dev-master",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "e0a5fdd64463a0d524305c733e3e4391c76cf739"
+                "reference": "c7d59948d6e82818e1bdff7cadb6c34710eb7dc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/e0a5fdd64463a0d524305c733e3e4391c76cf739",
-                "reference": "e0a5fdd64463a0d524305c733e3e4391c76cf739",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/c7d59948d6e82818e1bdff7cadb6c34710eb7dc0",
+                "reference": "c7d59948d6e82818e1bdff7cadb6c34710eb7dc0",
                 "shasum": ""
             },
             "require": {
@@ -1593,7 +1593,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2015-01-01 09:36:15"
+            "time": "2014-09-10 00:51:36"
         },
         {
             "name": "sebastian/version",
