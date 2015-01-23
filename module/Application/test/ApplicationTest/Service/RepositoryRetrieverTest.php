@@ -3,6 +3,7 @@
 namespace ApplicationTest\Service;
 
 use Application\Service\RepositoryRetriever;
+use EdpGithub;
 use EdpGithub\Api;
 use EdpGithub\Collection;
 use EdpGithub\Listener\Exception;
@@ -75,6 +76,36 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $response = $service->getRepositoryFileContent('foo', 'bar', 'foo.baz');
 
         $this->assertEquals('foo', $response);
+    }
+
+    public function testRepositoryContentCanParsedMarkdown()
+    {
+        $content = 'repository file __FOO__ content';
+        $markdown = function($content) {
+            return str_replace('__FOO__', 'bar', $content);
+        };
+
+        $apiMock = $this->getMock(Api\Markdown::class, ['content','render']);
+        $apiMock
+            ->expects($this->once())
+            ->method('render')
+            ->with($this->equalTo($content))
+            ->willReturn($markdown($content));
+
+        $apiMock
+            ->expects($this->any())
+            ->method('content')
+            ->willReturn(json_encode(['content' => base64_encode($content)]));
+
+        $clientMock = $this->getMock(EdpGithub\Client::class);
+        $clientMock->expects($this->any())
+            ->method('api')
+            ->willReturn($apiMock);
+
+        $service = new RepositoryRetriever($clientMock);
+        $contentMarkdown = $service->getRepositoryFileContent('foo', 'bar', 'foo.md', true);
+
+        $this->assertEquals('repository file bar content', $contentMarkdown);
     }
 
     public function testResponseContentMissingOnGetRepositoryFileContent()
