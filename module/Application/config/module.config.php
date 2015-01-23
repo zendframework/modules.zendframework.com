@@ -8,6 +8,7 @@
  */
 
 use Application\Service;
+use Application\View;
 
 return array(
     'router' => array(
@@ -90,6 +91,7 @@ return array(
         'factories' => array(
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
             Service\RepositoryRetriever::class => Service\RepositoryRetrieverFactory::class,
+            \HTMLPurifier::class => Service\HtmlPurifierFactory::class,
         ),
     ),
     'translator' => array(
@@ -134,11 +136,12 @@ return array(
     ),
     'view_helpers' => array(
         'factories' => array(
+            'sanitizeHtml' => View\Helper\SanitizeHtmlFactory::class,
             'flashMessenger' => function ($sm) {
                 $sm = $sm->getServiceLocator();
                 $plugin = $sm->get('ControllerPluginManager')->get('flashMessenger');
 
-                $helper = new Application\View\Helper\FlashMessenger($plugin);
+                $helper = new View\Helper\FlashMessenger($plugin);
                 return $helper;
             }
         )
