@@ -1,66 +1,62 @@
-
-  <div class="row">
+<div class="row">
     <div class="span8">
-      <div class="row-fluid">
-        <div class="span12">
-          <div class="navbar">
-            <div class="navbar-inner">
-              <h1 class="zf-green">Available Modules</h1>
-              <p>Select which module you want to Submit for Listing</p>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <h1 class="zf-green">Available Modules</h1>
+                        <p>Select which module you want to Submit for Listing</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <?php
-        $flashMessenger = $this->flashMessenger();
-        foreach($flashMessenger->getMessages() as $message) {
-          echo '<h3 class="zf-green">' . $message . '</h3>';
-        }
-      ?>
+        <?php foreach ($this->flashMessenger()->getMessages() as $message): ?>
+            <h3 class="zf-green"><?php echo $message ?></h3>
+        <?php endforeach; ?>
 
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#modules" data-toggle="tab">Registered Modules</a></li>
-      <li><a href="#repositories" data-toggle="tab">My Modules</a></li>
-      <li><a href="#organizations" data-toggle="tab">My Organizations</a></li>
-    </ul>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#modules" data-toggle="tab">Registered Modules</a></li>
+            <li><a href="#repositories" data-toggle="tab">My Modules</a></li>
+            <li><a href="#organizations" data-toggle="tab">My Organizations</a></li>
+        </ul>
 
-    <div class="tab-content">
-      <div class="tab-pane active" id="modules">
-      <?php
-    $modules = $this->listModule(array('user' => true));
-    if (empty($modules)) { ?>
-    <div class="alert alert-block">No modules was submitted yet</div>
-        <?php }
-        foreach($modules as $module) {
-            echo $this->moduleView(array(
-              'owner' => $module->getOwner(),
-              'name' => $module->getName(),
-              'created_at' => $module->getCreatedAt(),
-              'url' => $module->getUrl(),
-              'photo_url' => $module->getPhotoUrl(),
-              'description' => $module->getDescription()
-            ), 'remove');
-        }
-        ?>
-      </div>
-      <div class="tab-pane" id="repositories">
-        <div class="well" style="text-align:center">Synchronizing with Github <img src="/img/ajax-loader.gif" alt="loading" /></div>
-      </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="modules">
+                <?php
+                $modules = $this->listModule(array('user' => true));
+                if (empty($modules)) {
+                    ?>
+                    <div class="alert alert-block">No modules was submitted yet</div>
+                    <?php
+                }
+                foreach ($modules as $module) {
+                    echo $this->moduleView(array(
+                        'owner' => $module->getOwner(),
+                        'name' => $module->getName(),
+                        'created_at' => $module->getCreatedAt(),
+                        'url' => $module->getUrl(),
+                        'photo_url' => $module->getPhotoUrl(),
+                        'description' => $module->getDescription(),
+                    ), 'remove');
+                }
+                ?>
+            </div>
+            <div class="tab-pane" id="repositories">
+                <div class="well" style="text-align:center">Synchronizing with Github <img src="<?php echo $this->basePath('/img/ajax-loader.gif') ?>" alt="loading" /></div>
+            </div>
 
-      <div class="tab-pane" id="organizations">
-        <?php echo $this->userOrganizations();?>
-      </div>
+            <div class="tab-pane" id="organizations">
+                <?php echo $this->userOrganizations() ?>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="span4">
-    <div class="sidebar">
-      <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName(); ?>!</h3>
-      <img class="thumbnail" src="<?php
-          echo $this->zfcUserIdentity()->getPhotoUrl();
-      ?>" alt="<?php echo $this->zfcUserDisplayName(); ?>"/>
-      <br/>
+    <div class="span4">
+        <div class="sidebar">
+            <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
+            <img class="thumbnail" src="<?php echo $this->zfcUserIdentity()->getPhotoUrl() ?>" alt="<?php echo $this->zfcUserDisplayName() ?>"/>
+            <br/>
+        </div>
     </div>
-  </div>
 </div>
 
 <?php

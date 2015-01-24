@@ -2,22 +2,29 @@
 
 namespace User\View\Helper;
 
+use EdpGithub\Client;
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class UserOrganizations extends AbstractHelper implements ServiceLocatorAwareInterface
+class UserOrganizations extends AbstractHelper
 {
+    /**
+     * @var Client
+     */
+    private $githubClient;
+
     /**
      * $var string template used for view
      */
     protected $viewTemplate;
 
     /**
-     * @var ServiceLocator
+     * @param Client $githubClient
      */
-    protected $serviceLocator;
+    public function __construct(Client $githubClient)
+    {
+        $this->githubClient = $githubClient;
+    }
 
     /**
      * __invoke
@@ -27,35 +34,12 @@ class UserOrganizations extends AbstractHelper implements ServiceLocatorAwareInt
      */
     public function __invoke()
     {
-        $sl = $this->getServiceLocator();
-
-        //need to fetch top lvl ServiceLocator
-        $sl = $sl->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
-
-        $orgs = $client->api('current_user')->orgs();
-        $vm = new ViewModel(array(
+        $orgs = $this->githubClient->api('current_user')->orgs();
+        $vm = new ViewModel([
             'orgs' => $orgs
-        ));
+        ]);
         $vm->setTemplate('user/helper/user-organizations.phtml');
 
         return $this->getView()->render($vm);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
     }
 }

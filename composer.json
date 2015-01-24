@@ -1,0 +1,46 @@
+{
+    "name": "zendframework/modules-site",
+    "description": "ZF2 Modules Site",
+    "license": "BSD-3-Clause",
+    "homepage": "https://modules.zendframework.com",
+    "require": {
+        "php": "~5.5",
+        "bshaffer/oauth2-server-php": "dev-develop",
+        "zendframework/zendframework": "~2.3.0",
+        "rwoverdijk/assetmanager": "1.3.*",
+        "evandotpro/edp-github": "dev-master",
+        "evandotpro/edp-markdown": "0.2.*",
+        "evandotpro/edp-module-layouts": "1.0.*",
+        "zf-commons/zfc-user": "1.0.*",
+        "zfcampus/zf-development-mode": "~2.0",
+        "socalnick/scn-social-auth": "1.14.1",
+        "ezyang/htmlpurifier": "4.6.*"
+    },
+    "require-dev": {
+        "phpmd/phpmd": "~2.1",
+        "phpunit/phpunit": "4.0.*",
+        "bjyoungblood/BjyProfiler": "1.1.0",
+        "squizlabs/php_codesniffer": "~2.0.0@RC",
+        "zendframework/zftool": "dev-master",
+        "zendframework/zend-developer-tools": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Application": "module/Application/src/",
+            "User": "module/User/src/",
+            "ZfModule": "module/ZfModule/src/"
+        },
+        "classmap": [
+            "vendor/hybridauth/hybridauth/hybridauth/Hybrid",
+            "vendor/hybridauth/hybridauth/additional-providers/hybridauth-github/Providers"
+        ]
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "ApplicationTest": "module/Application/test/",
+            "UserTest": "module/User/test/",
+            "ZfModuleTest": "module/ZfModule/test/"
+        }
+    }
+}
+

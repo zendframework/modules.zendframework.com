@@ -1,14 +1,14 @@
 <?php
-return array(
-    'service_manager' => array(
-        'factories' => array(
+return [
+    'service_manager' => [
+        'factories' => [
             'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
-        ),
-    ),
-    'db' => array(
+        ],
+    ],
+    'db' => [
         'driver'    => 'pdo',
         'dsn'       => 'mysql:dbname=CHANGEME;host=localhost',
         'username'  => 'CHANGEME',
         'password'  => 'CHANGEME',
-    ),
-);
+    ],
+];

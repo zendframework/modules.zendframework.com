@@ -1,99 +1,102 @@
 <?php
-return array(
-    'controllers' => array(
-        'invokables' => array(
-            'ZfModule\Controller\Index' => 'ZfModule\Controller\IndexController',
-            'ZfModule\Controller\Repo' => 'ZfModule\Controller\RepoController',
-        ),
-    ),
-    'router' => array(
-        'routes' => array(
-            'view-module' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/:vendor/:module',
-                    'defaults' => array(
-                        'controller' => 'ZfModule\Controller\Index',
-                        'action' => 'view',
-                    ),
-                ),
-            ),
-            'zf-module' => array(
-                'type' => 'Segment',
-                'options' => array (
-                    'route' => '/module',
-                    'defaults' => array(
-                        'controller' => 'ZfModule\Controller\Index',
-                        'action' => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'list' => array(
-                        'type' => 'Segment',
-                        'options' => array(
-                            'route' => '/list[/:owner]',
-                            'constrains' => array(
-                                'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                                'action' => 'organization',
-                            ),
-                        ),
-                    ),
-                    'add' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-                    'remove' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/remove',
-                            'defaults' => array(
-                                'action' => 'remove',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
-            'zf-module' => __DIR__ . '/../view',
-        ),
-    ),
 
-    'view_helpers' => array(
-        'invokables' => array(
-            'newModule' => 'ZfModule\View\Helper\NewModule',
-            'listModule' => 'ZfModule\View\Helper\ListModule',
-            'moduleView' => 'ZfModule\View\Helper\ModuleView',
-            'moduleDescription' => 'ZfModule\View\Helper\ModuleDescription',
-        ),
-    ),
-    'zfmodule' => array(
-        /**
-         * Cache configuration
-         */
-        'cache' => array(
-            'adapter'   => array(
-                'name' => 'filesystem',
-                'options' => array(
-                    'cache_dir' => realpath('./data/cache'),
-                    'writable' => false,
-                ),
-            ),
-            'plugins' => array(
-                'exception_handler' => array('throw_exceptions' => true),
-                'serializer'
-            )
-        ),
-        'cache_key' => 'zfmodule_app',
-    ),
-);
+use EdpGithub\Client;
+use ZfModule\Delegators\EdpGithubClientAuthenticator;
+use ZfModule\Mapper\ModuleHydrator;
+use ZfModule\View\Helper;
+
+return [
+    'controllers'  => [
+        'factories' => [
+            'ZfModule\Controller\Index' => 'ZfModule\Controller\IndexControllerFactory',
+        ],
+    ],
+    'router'       => [
+        'routes' => [
+            'view-module' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => '/:vendor/:module',
+                    'defaults' => [
+                        'controller' => 'ZfModule\Controller\Index',
+                        'action'     => 'view',
+                    ],
+                ],
+            ],
+            'zf-module'   => [
+                'type'          => 'Segment',
+                'options'       => [
+                    'route'    => '/module',
+                    'defaults' => [
+                        'controller' => 'ZfModule\Controller\Index',
+                        'action'     => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes'  => [
+                    'list'   => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'      => '/list[/:owner]',
+                            'constrains' => [
+                                'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults'   => [
+                                'action' => 'organization',
+                            ],
+                        ],
+                    ],
+                    'add'    => [
+                        'type'    => 'Literal',
+                        'options' => [
+                            'route'    => '/add',
+                            'defaults' => [
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'remove' => [
+                        'type'    => 'Literal',
+                        'options' => [
+                            'route'    => '/remove',
+                            'defaults' => [
+                                'action' => 'remove',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
+            'zf-module' => __DIR__ . '/../view',
+        ],
+    ],
+    'view_helpers' => [
+        'factories'  => [
+            'listModule'   => Helper\ListModuleFactory::class,
+            'newModule'    => Helper\NewModuleFactory::class,
+            'totalModules' => Helper\TotalModulesFactory::class,
+        ],
+        'invokables' => [
+            'moduleView'        => Helper\ModuleView::class,
+            'moduleDescription' => Helper\ModuleDescription::class,
+            'composerView'      => Helper\ComposerView::class,
+        ],
+    ],
+    'service_manager' => [
+        'invokables' => [
+            ModuleHydrator::class => ModuleHydrator::class,
+        ],
+        'factories' => [
+            'zfmodule_service_module' => ZfModule\Service\ModuleFactory::class,
+            'zfmodule_mapper_module' => ZfModule\Mapper\ModuleFactory::class,
+        ],
+        'delegators' => [
+            Client::class => [
+                EdpGithubClientAuthenticator::class,
+            ],
+        ],
+    ],
+];

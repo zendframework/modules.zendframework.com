@@ -8,11 +8,6 @@ use Zend\View\Model\ViewModel;
 class ModuleView extends AbstractHelper
 {
     /**
-     * $var string template used for view
-     */
-    protected $viewTemplate;
-
-    /**
      * __invoke
      *
      * @access public
@@ -20,23 +15,13 @@ class ModuleView extends AbstractHelper
      */
     public function __invoke($module, $button = 'submit')
     {
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'module' => $module,
             'button' => $button,
-        ));
+        ]);
         $vm->setTemplate('zf-module/helper/module-view.phtml');
 
 
         return $this->getView()->render($vm);
-    }
-
-    /**
-     * @param string $viewTemplate
-     * @return ZfcUserLoginWidget
-     */
-    public function setViewTemplate($viewTemplate)
-    {
-        $this->viewTemplate = $viewTemplate;
-        return $this;
     }
 }

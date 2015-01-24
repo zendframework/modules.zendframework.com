@@ -5,7 +5,7 @@
  * If you have a ./config/autoload/ directory set up for your project, you can
  * drop this config file in it and change the values as you wish.
  */
-$settings = array(
+$settings = [
     /**
      * Zend\Db\Adapter\Adapter DI Alias
      *
@@ -13,6 +13,14 @@ $settings = array(
      * instance that ZfcUser should use.
      */
     //'zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
+
+    /**
+     * Zend\Session\SessionManager DI Alias
+     *
+     * Please specify the DI alias for the configured Zend\Session\SessionManager
+     * instance that ScnSocialAuth should use.
+     */
+    //'zend_session_manager' => 'Zend\Session\SessionManager',
 
     /**
      * User Provider Entity Class
@@ -78,7 +86,7 @@ $settings = array(
      * See he Github docs for a full list of the available permissions:
      * http://developer.github.com/v3/oauth/#scopes
      */
-    //'github_scope' => '',
+    'github_scope' => 'user, public_repo, ',
 
     /**
      * Google Enabled
@@ -120,18 +128,32 @@ $settings = array(
     //'yahoo_enabled' => true,
 
     /**
+     * tumblr Enabled
+     *
+     * Please specify if tumblr is enabled
+     */
+    //'tumblr_enabled' => true,
+
+    /**
+     * Set to true if you want to display only the social login buttons without
+     * the username/password etc. from ZfcUser.
+     */
+    //'social_login_only' => false,
+
+    /**
      * End of ScnSocialAuth configuration
      */
-);
+];
 
 /**
  * You do not need to edit below this line
  */
-return array(
+return [
     'scn-social-auth' => $settings,
-    'service_manager' => array(
-        'aliases' => array(
+    'service_manager' => [
+        'aliases' => [
             'ScnSocialAuth_ZendDbAdapter' => (isset($settings['zend_db_adapter'])) ? $settings['zend_db_adapter']: 'Zend\Db\Adapter\Adapter',
-        ),
-    ),
-);
+            'ScnSocialAuth_ZendSessionManager' => (isset($settings['zend_session_manager'])) ? $settings['zend_session_manager']: 'Zend\Session\SessionManager',
+        ],
+    ],
+];

@@ -1,0 +1,10 @@
+<?php
+
+return [
+    'db' => [
+        'driver'   => 'pdo',
+        'dsn'      => 'mysql:dbname=modules_test;host=localhost',
+        'username' => 'root',
+        'password' => '',
+    ],
+];

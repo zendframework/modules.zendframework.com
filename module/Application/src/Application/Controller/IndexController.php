@@ -10,26 +10,38 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 use Zend\Feed\Writer\Feed;
 use Zend\View\Model\FeedModel;
+use ZfModule\Mapper;
 
 class IndexController extends AbstractActionController
 {
+    const MODULES_PER_PAGE = 15;
+
+    /**
+     * @var Mapper\Module
+     */
+    private $moduleMapper;
+
+    /**
+     * @param Mapper\Module $moduleMapper
+     */
+    public function __construct(Mapper\Module $moduleMapper)
+    {
+        $this->moduleMapper = $moduleMapper;
+    }
+
     public function indexAction()
     {
         $query =  $this->params()->fromQuery('query', null);
-
         $page = (int) $this->params()->fromRoute('page', 1);
-        $sm = $this->getServiceLocator();
-        $mapper = $this->getServiceLocator()->get('zfmodule_mapper_module');
 
-        $repositories = $mapper->pagination($page, 15, $query, 'created_at', 'DESC');
+        $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
 
-        return array(
+        return [
             'repositories' => $repositories,
             'query' => $query,
-        );
+        ];
     }
 
     /**
@@ -47,15 +59,15 @@ class IndexController extends AbstractActionController
 
         // Get the recent modules
         $page = 1;
-        $mapper = $this->getServiceLocator()->get('zfmodule_mapper_module');
-        $repositories = $mapper->pagination($page, 15, null, 'created_at', 'DESC');
+
+        $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC');
 
         // Load them into the feed
         foreach ($repositories as $module) {
             $entry = $feed->createEntry();
             $entry->setTitle($module->getName());
 
-            if($module->getDescription() == '') {
+            if ($module->getDescription() == '') {
                 $moduleDescription = "No Description available";
             } else {
                 $moduleDescription = $module->getDescription();
@@ -74,5 +86,4 @@ class IndexController extends AbstractActionController
 
         return $feedmodel;
     }
-
 }

@@ -4,71 +4,36 @@ namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfModule\Mapper;
 
-class NewModule extends AbstractHelper implements ServiceLocatorAwareInterface
+class NewModule extends AbstractHelper
 {
     /**
-     * $var string template used for view
+     * @var Mapper\Module
      */
-    protected $viewTemplate;
+    private $moduleMapper;
 
     /**
-     * @var ServiceLocator
+     * @param Mapper\Module $moduleMapper
      */
-    protected $serviceLocator;
-
-    /**
-     * __invoke
-     *
-     * @access public
-     * @param array $options array of options
-     * @return array Array of modules
-     */
-    public function __invoke($options = null)
+    public function __construct(Mapper\Module $moduleMapper)
     {
-        $sl = $this->getServiceLocator();
+        $this->moduleMapper = $moduleMapper;
+    }
 
-        //need to fetch top lvl serviceLocator
-        $sl = $sl->getServiceLocator();
-
-        $mapper = $sl->get('zfmodule_mapper_module');
-        $modules = $mapper->findAll(10, 'created_at', 'DESC');
+    /**
+     * @return string
+     */
+    public function __invoke()
+    {
+        $modules = $this->moduleMapper->findAll(10, 'created_at', 'DESC');
 
         //return $modules;
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'modules' => $modules,
-        ));
+        ]);
         $vm->setTemplate('zf-module/helper/new-module');
 
         return $this->getView()->render($vm);
-    }
-
-    /**
-     * @param string $viewTemplate
-     * @return NewModules
-     */
-    public function setViewTemplate($viewTemplate)
-    {
-        $this->viewTemplate = $viewTemplate;
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
     }
 }

@@ -1,30 +1,27 @@
 <?php
 ini_set('display_errors', 1);
-require(__DIR__.'/constants.php');
 
-return array(
-    'modules' => array(
-        'LfjErrorLayout',
+return [
+    'modules' => [
+        'ZF\DevelopmentMode',
+        'AssetManager',
         'ZfcBase',
         'ZfcUser',
         'ScnSocialAuth',
-        'HybridAuth',
         'EdpGithub',
         'Application',
-        'AssetManager',
-        'Assetic',
-		'User',
+        'User',
         'EdpModuleLayouts',
         'ZfModule',
         'EdpMarkdown',
-    ),
-    'module_listener_options' => array(
-        'config_glob_paths'    => array(
+    ],
+    'module_listener_options' => [
+        'config_glob_paths'    => [
             'config/autoload/{,*.}{global,local}.php',
-        ),
-        'module_paths' => array(
+        ],
+        'module_paths' => [
             './module',
             './vendor',
-        ),
-    ),
-);
+        ],
+    ],
+];

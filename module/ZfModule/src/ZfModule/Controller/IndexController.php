@@ -2,64 +2,74 @@
 
 namespace ZfModule\Controller;
 
+use Application\Service\RepositoryRetriever;
+use EdpGithub\Collection\RepositoryCollection;
+use Zend\Cache;
+use Zend\Http;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Zend\View\Model\JsonModel;
+use ZfModule\Mapper;
+use ZfModule\Service;
 
 class IndexController extends AbstractActionController
 {
-    protected $moduleService;
+    /**
+     * @var Mapper\Module
+     */
+    private $moduleMapper;
+
+    /**
+     * @var Service\Module
+     */
+    private $moduleService;
+
+    /**
+     * @var RepositoryRetriever
+     */
+    private $repositoryRetriever;
+
+    /**
+     * @param Mapper\Module $moduleMapper
+     * @param Service\Module $moduleService
+     * @param RepositoryRetriever $repositoryRetriever
+     */
+    public function __construct(
+        Mapper\Module $moduleMapper,
+        Service\Module $moduleService,
+        RepositoryRetriever $repositoryRetriever
+    ) {
+        $this->moduleMapper = $moduleMapper;
+        $this->moduleService = $moduleService;
+        $this->repositoryRetriever = $repositoryRetriever;
+    }
 
     public function viewAction()
     {
         $vendor = $this->params()->fromRoute('vendor', null);
         $module = $this->params()->fromRoute('module', null);
 
-        $sl = $this->getServiceLocator();
-        $mapper = $sl->get('zfmodule_mapper_module');
-
-        //check if module is existing in database otherwise return 404 page
-        $result = $mapper->findByName($module);
-        if(!$result) {
-            $this->getResponse()->setStatusCode(404);
-            return;
+        $result = $this->moduleMapper->findByName($module);
+        if (!$result) {
+            return $this->notFoundAction();
+        }
+        
+        $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
+        if (!$repository) {
+            return $this->notFoundAction();
         }
 
-        $client = $sl->get('EdpGithub\Client');
-        /* @var $cache StorageInterface */
-        $cache = $sl->get('zfmodule_cache');
+        $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
+        $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
+        $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
 
-        $cacheKey = 'module-view-' . $vendor . '-' . $module;
-
-        $repository = json_decode($client->api('repos')->show($vendor, $module));
-        $httpClient = $client->getHttpClient();
-        $response= $httpClient->getResponse();
-        if($response->getStatusCode() == 304 && $cache->hasItem($cacheKey)) {
-            return $cache->getItem($cacheKey);
-        }
-
-        $readme = $client->api('repos')->readme($vendor, $module);
-        $readme = json_decode($readme);
-        $repository = json_decode($client->api('repos')->show($vendor, $module));
-
-        try{
-            $license = $client->api('repos')->content($vendor, $module, 'LICENSE');
-            $license = json_decode($license);
-            $license = base64_decode($license->content);
-        } catch(\Exception $e) {
-            $license = 'No license file found for this Module';
-        }
-
-
-        $viewModel = new ViewModel(array(
+        $viewModel = new ViewModel([
             'vendor' => $vendor,
             'module' => $module,
             'repository' => $repository,
-            'readme' => base64_decode($readme->content),
+            'readme' => $readme,
+            'composerConf' => $composerConf,
             'license' => $license,
-        ));
-
-        $cache->setItem($cacheKey , $viewModel);
+        ]);
 
         return $viewModel;
     }
@@ -70,17 +80,17 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $sl = $this->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
+        $params = [
+            'type'      => 'all',
+            'per_page'  => 100,
+            'sort'      => 'updated',
+            'direction' => 'desc',
+        ];
 
-        $repos = $client->api('current_user')->repos(array('type' =>'all', 'per_page' => 100));
+        $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
+        $repositories = $this->fetchModules($repos);
 
-        $identity = $this->zfcUserAuthentication()->getIdentity();
-        $cacheKey = 'modules-user-' . $identity->getId();
-
-        $repositories = $this->fetchModules($repos, $cacheKey);
-
-        $viewModel = new ViewModel(array('repositories' => $repositories));
+        $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
         return $viewModel;
     }
@@ -91,71 +101,35 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $sl = $this->getServiceLocator();
-        $client = $sl->get('EdpGithub\Client');
-
         $owner = $this->params()->fromRoute('owner', null);
-        $repos = $client->api('user')->repos($owner);
+        $params = [
+            'per_page'  => 100,
+            'sort'      => 'updated',
+            'direction' => 'desc',
+        ];
 
-        $identity = $this->zfcUserAuthentication()->getIdentity();
-        $cacheKey = 'modules-organization-' . $identity->getId() . '-' . $owner;
+        $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
+        $repositories = $this->fetchModules($repos);
 
-        $repositories = $this->fetchModules($repos, $cacheKey);
-        $viewModel = new ViewModel(array('repositories' => $repositories));
+        $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
         $viewModel->setTemplate('zf-module/index/index.phtml');
         return $viewModel;
     }
 
-    public function fetchModules($repos, $cacheKey)
+    /**
+     * @param RepositoryCollection $repos
+     * @return array
+     */
+    private function fetchModules(RepositoryCollection $repos)
     {
-        $sl = $this->getServiceLocator();
-        $mapper = $sl->get('zfmodule_mapper_module');
-        $client = $sl->get('EdpGithub\Client');
-        /* @var $cache StorageInterface */
-        $cache = $sl->get('zfmodule_cache');
+        $repositories = [];
 
-        $repositories = array();
-        //fetch only modules from github
-        foreach($repos as $repo) {
-            //Need to see first if any repository has been updated
-            $httpClient = $client->getHttpClient();
-            $response= $httpClient->getResponse();
-            if($response->getStatusCode() == 304) {
-                if($cache->hasItem($cacheKey . '-github')) {
-                    $repositories =  $cache->getItem($cacheKey . '-github');
-                    break;
-                }
+        foreach ($repos as $repo) {
+            $isModule = $this->moduleService->isModule($repo);
+            if (!$repo->fork && $repo->permissions->push && $isModule && !$this->moduleMapper->findByName($repo->name)) {
+                $repositories[] = $repo;
             }
-            if(!$repo->fork && $repo->permissions->push) {
-                if($this->getModuleService()->isModule($repo)) {
-                   $repositories[] = $repo;
-                }
-            }
-        }
-        //save list of modules to cache
-        if(!$cache->hasItem($cacheKey . '-github')) {
-            $cache->setItem($cacheKey . '-github', $repositories);
-        }
-
-        //check if cache for modules exist
-        if(!$cache->hasItem($cacheKey)) {
-            //check if module is in database
-            foreach($repositories as $key => $repo) {
-                $module = $mapper->findByName($repo->name);
-                if($module) {
-                    unset($repositories[$key]);
-                }
-            }
-            //save database mapped list to cache
-            $cache->setItem($cacheKey , $repositories);
-            // create cache tags
-            $identity = $this->zfcUserAuthentication()->getIdentity();
-
-            $tags = array($identity->getUsername() . '-' . $identity->getId());
-            $cache->setTags($cacheKey, $tags);
-        } else {
-            $repositories = $cache->getItem($cacheKey);
         }
 
         return $repositories;
@@ -173,37 +147,34 @@ class IndexController extends AbstractActionController
         }
 
         $request = $this->getRequest();
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $sm = $this->getServiceLocator();
-            $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
-            $repository = json_decode($repository);
+            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
-            if(!($repository instanceOf \stdClass)) {
+            if (!($repository instanceof \stdClass)) {
                 throw new Exception\RuntimeException(
                     'Not able to fetch the repository from github due to an unknown error.',
-                    500
+                    Http\Response::STATUS_CODE_500
                 );
             }
 
-            $service = $this->getModuleService();
-            if(!$repository->fork && $repository->permissions->push) {
-                if($service->isModule($repository)) {
-                    $module = $service->register($repository);
+            if (!$repository->fork && $repository->permissions->push) {
+                if ($this->moduleService->isModule($repository)) {
+                    $module = $this->moduleService->register($repository);
                     $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
                 } else {
                     throw new Exception\UnexpectedValueException(
                         $repository->name . ' is not a Zend Framework Module',
-                        403
+                        Http\Response::STATUS_CODE_403
                     );
                 }
-            }else {
+            } else {
                 throw new Exception\UnexpectedValueException(
                     'You have no permission to add this module. The reason might be that you are' .
                     'neither the owner nor a collaborator of this repository.',
-                    403
+                    Http\Response::STATUS_CODE_403
                 );
             }
         } else {
@@ -212,19 +183,7 @@ class IndexController extends AbstractActionController
             );
         }
 
-        $this->clearModuleCache();
-
         return $this->redirect()->toRoute('zfcuser');
-    }
-
-    public function clearModuleCache()
-    {
-        $sl = $this->getServiceLocator();
-        $cache = $sl->get('zfmodule_cache');
-        $identity = $this->zfcUserAuthentication()->getIdentity();
-
-        $tags = array($identity->getUsername() . '-' . $identity->getId());
-        $cache->clearByTags($tags);
     }
 
     /**
@@ -239,38 +198,35 @@ class IndexController extends AbstractActionController
         }
 
         $request = $this->getRequest();
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $repo = $request->getPost()->get('repo');
             $owner  = $request->getPost()->get('owner');
 
-            $sm = $this->getServiceLocator();
-            $repository = $sm->get('EdpGithub\Client')->api('repos')->show($owner, $repo);
-            $repository = json_decode($repository);
+            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
-            if(!$repository instanceOf \stdClass) {
+            if (!$repository instanceof \stdClass) {
                 throw new Exception\RuntimeException(
                     'Not able to fetch the repository from github due to an unknown error.',
-                    500
+                    Http\Response::STATUS_CODE_500
                 );
             }
 
-            if(!$repository->fork && $repository->permissions->push) {
-                $mapper = $sm->get('zfmodule_mapper_module');
-                $module = $mapper->findByUrl($repository->html_url);
-                if($module instanceOf \ZfModule\Entity\Module) {
-                    $module = $mapper->delete($module);
+            if (!$repository->fork && $repository->permissions->push) {
+                $module = $this->moduleMapper->findByUrl($repository->html_url);
+                if ($module instanceof \ZfModule\Entity\Module) {
+                    $this->moduleMapper->delete($module);
                     $this->flashMessenger()->addMessage($repository->name .' has been removed from ZF Modules');
                 } else {
                     throw new Exception\UnexpectedValueException(
                         $repository->name . ' was not found',
-                        403
+                        Http\Response::STATUS_CODE_403
                     );
                 }
-            }else {
+            } else {
                 throw new Exception\UnexpectedValueException(
                     'You have no permission to add this module. The reason might be that you are' .
                     'neither the owner nor a collaborator of this repository.',
-                    403
+                    Http\Response::STATUS_CODE_403
                 );
             }
         } else {
@@ -279,23 +235,6 @@ class IndexController extends AbstractActionController
             );
         }
 
-        $this->clearModuleCache();
         return $this->redirect()->toRoute('zfcuser');
-    }
-
-    /**
-     * Getters/setters for DI stuff
-     */
-    public function getModuleService()
-    {
-        if (!$this->moduleService) {
-            $this->moduleService = $this->getServiceLocator()->get('zfmodule_service_module');
-        }
-        return $this->moduleService;
-    }
-
-    public function setModuleService($moduleService)
-    {
-        $this->moduleService = $moduleService;
     }
 }

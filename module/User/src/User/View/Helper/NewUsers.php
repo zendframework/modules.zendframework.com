@@ -4,20 +4,27 @@ namespace User\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use User\Mapper;
 
-class NewUsers extends AbstractHelper implements ServiceLocatorAwareInterface
+class NewUsers extends AbstractHelper
 {
+    /**
+     * @var Mapper\User
+     */
+    private $userMapper;
+
     /**
      * $var string template used for view
      */
     protected $viewTemplate;
 
     /**
-     * @var ServiceLocator
+     * @param Mapper\User $userMapper
      */
-    protected $serviceLocator;
+    public function __construct(Mapper\User $userMapper)
+    {
+        $this->userMapper = $userMapper;
+    }
 
     /**
      * __invoke
@@ -27,16 +34,11 @@ class NewUsers extends AbstractHelper implements ServiceLocatorAwareInterface
      */
     public function __invoke()
     {
-        $sl = $this->getServiceLocator();
+        $users = $this->userMapper->findAll(16, 'created_at', 'DESC');
 
-        //need to fetch top lvl ServiceLocator
-        $sl = $sl->getServiceLocator();
-        $mapper = $sl->get('zfcuser_user_mapper');
-        $users = $mapper->findAll(16, 'created_at', 'DESC');
-
-        $vm = new ViewModel(array(
+        $vm = new ViewModel([
             'users' => $users,
-        ));
+        ]);
         $vm->setTemplate('user/helper/new-users');
 
         return $this->getView()->render($vm);
@@ -51,22 +53,4 @@ class NewUsers extends AbstractHelper implements ServiceLocatorAwareInterface
         $this->viewTemplate = $viewTemplate;
         return $this;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
-    }
-
 }
