@@ -10,7 +10,7 @@ interface ModuleInterface
 
     public function findById($id);
 
-     public function insert($module);
+    public function insert($module);
 
-     public function update($module);
+    public function update($module);
 }

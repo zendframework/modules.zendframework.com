@@ -26,20 +26,4 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
-
-    public function getServiceConfig()
-    {
-        return [
-            'factories' => [
-                'zfmodule_mapper_module' => function ($sm) {
-                    $mapper = new Mapper\Module();
-                    $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
-                    $mapper->setEntityPrototype(new Entity\Module);
-                    $mapper->setHydrator(new Mapper\ModuleHydrator());
-                    return $mapper;
-                },
-                'zfmodule_service_module' => 'ZfModule\Service\ModuleFactory',
-            ]
-        ];
-    }
 }
