@@ -26,7 +26,7 @@ return [
             'home' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route'    => '/[page/:page][?query=:query]',
+                    'route'    => '/[page/:page]',
                     'constraints' => [
                         'page'     => '[0-9]+',
                     ],
