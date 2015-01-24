@@ -24,12 +24,9 @@ return [
                 ],
             ],
             'home' => [
-                'type' => 'Segment',
+                'type' => 'Literal',
                 'options' => [
-                    'route'    => '/[page/:page]',
-                    'constraints' => [
-                        'page'     => '[0-9]+',
-                    ],
+                    'route'    => '/',
                     'defaults' => [
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'index',
