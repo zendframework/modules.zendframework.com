@@ -108,6 +108,31 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('repository file bar content', $contentMarkdown);
     }
 
+    public function testRepositoryContentMarkdownFails()
+    {
+        $content = 'repository file __FOO__ content';
+        $apiMock = $this->getMock(Api\Markdown::class, ['content','render']);
+        $apiMock
+            ->expects($this->once())
+            ->method('render')
+            ->willThrowException(new Exception\RuntimeException);
+
+        $apiMock
+            ->expects($this->any())
+            ->method('content')
+            ->willReturn(json_encode(['content' => base64_encode($content)]));
+
+        $clientMock = $this->getMock(EdpGithub\Client::class);
+        $clientMock->expects($this->any())
+            ->method('api')
+            ->willReturn($apiMock);
+
+        $service = new RepositoryRetriever($clientMock);
+        $contentMarkdown = $service->getRepositoryFileContent('foo', 'bar', 'foo.md', true);
+
+        $this->assertNull($contentMarkdown);
+    }
+
     public function testResponseContentMissingOnGetRepositoryFileContent()
     {
         $payload = [];
