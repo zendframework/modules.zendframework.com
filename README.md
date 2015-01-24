@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/zendframework/modules.zendframework.com.svg?branch=master)](https://travis-ci.org/zendframework/modules.zendframework.com)
-
-# ZF2 Modules Site
+# ZF2 Modules Site [![Build Status](https://travis-ci.org/zendframework/modules.zendframework.com.svg?branch=master)](https://travis-ci.org/zendframework/modules.zendframework.com)
 
 ## Introduction
 
