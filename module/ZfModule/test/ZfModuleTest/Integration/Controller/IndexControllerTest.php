@@ -22,7 +22,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->dispatch('/module');
 
-        $this->assertControllerName('ZfModule\Controller\Index');
+        $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('index');
     }
 
@@ -37,7 +37,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
-        $this->assertControllerName('ZfModule\Controller\Index');
+        $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('organization');
     }
 
@@ -93,7 +93,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
-        $this->assertControllerName('ZfModule\Controller\Index');
+        $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('view');
     }
 }
