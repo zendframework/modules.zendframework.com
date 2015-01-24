@@ -1,4 +1,7 @@
 <?php
+
+use User\GitHub;
+
 return [
     'view_manager' => [
         'template_map' => [
@@ -22,6 +25,11 @@ return [
         'factories' => [
             'newUsers' => 'User\View\Helper\NewUsersFactory',
             'userOrganizations' => 'User\View\Helper\UserOrganizationsFactory',
+        ],
+    ],
+    'service_manager' => [
+        'invokables' => [
+            GitHub\LoginListener::class => GitHub\LoginListener::class,
         ],
     ],
 ];

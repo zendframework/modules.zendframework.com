@@ -2,9 +2,11 @@
 
 namespace User;
 
-use ZfcBase\Module\AbstractModule;
+use User\GitHub;
+use Zend\EventManager\SharedEventManager;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\ApplicationInterface;
+use ZfcBase\Module\AbstractModule;
 
 class Module extends AbstractModule
 {
@@ -16,25 +18,14 @@ class Module extends AbstractModule
      */
     public function bootstrap(ModuleManager $moduleManager, ApplicationInterface $app)
     {
+        /* @var SharedEventManager $em */
         $em = $app->getEventManager()->getSharedManager();
         $sm = $app->getServiceManager();
 
-        $em->attach('ScnSocialAuth\Authentication\Adapter\HybridAuth', 'registerViaProvider', function ($e) {
-            $provider = $e->getParam('provider');
+        /* @var GitHub\LoginListener $loginListener */
+        $loginListener = $sm->get(GitHub\LoginListener::class);
 
-            if ('github' !== $provider) {
-                return;
-            }
-
-            $localUser = $e->getParam('user');
-            $userProfile = $e->getParam('userProfile');
-            $nickname = substr(
-                $userProfile->profileURL,
-                (strrpos($userProfile->profileURL, "/") + 1)
-            );
-            $localUser->setUsername($nickname);
-            $localUser->setPhotoUrl($userProfile->photoURL);
-        });
+        $em->attachAggregate($loginListener);
 
         $em->attach('EdpGithub\Client', 'api', function ($e) use ($sm) {
             $hybridAuth = $sm->get('HybridAuth');
