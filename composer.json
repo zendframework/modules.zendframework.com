@@ -41,7 +41,6 @@
             "UserTest": "module/User/test/",
             "ZfModuleTest": "module/ZfModule/test/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
 
