@@ -3,12 +3,12 @@
 <?php endif; ?>
 
 <?php foreach ($repositories as $module): ?>
-    <?php echo $this->moduleView(array(
+    <?php echo $this->moduleView([
         'owner' => $module->owner->login,
         'name' => $module->name,
         'created_at' => $module->created_at,
         'url' => $module->html_url,
         'photo_url' => $module->owner->avatar_url,
         'description' => $module->description
-    ), 'submit') ?>
+    ], 'submit') ?>
 <?php endforeach; ?>
