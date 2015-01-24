@@ -54,6 +54,7 @@ class Module implements ModuleInterface
         $this->photoUrl = $photoUrl;
         return $this;
     }
+
     public function getOwner()
     {
         return $this->owner;
@@ -64,6 +65,7 @@ class Module implements ModuleInterface
         $this->owner = $owner;
         return $this;
     }
+
     public function getUpdatedAt()
     {
         return $this->updatedAt;
@@ -74,19 +76,27 @@ class Module implements ModuleInterface
         $this->updatedAt = $updatedAt;
         return $this;
     }
+
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreateAtDateTime()
+    {
+        return new \DateTime($this->getCreatedAt());
+    }
 
     public function setCreatedAt($createdAt)
     {
-
         $this->createdAt = $createdAt;
 
         return $this;
     }
+
     /**
      * Get id.
      *

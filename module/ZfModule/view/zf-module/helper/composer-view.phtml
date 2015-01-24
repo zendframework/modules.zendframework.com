@@ -1,19 +1,19 @@
-<div class="well">php composer.phar require "<?php echo $this->escapeHtml($this->composerConf['name']); ?>"</div>
+<div class="well">php composer.phar require "<?php echo $this->escapeHtml($this->composerConf['name']) ?>"</div>
 
 <h3>Require</h3>
 <ul>
-    <?php foreach($this->composerConf['require'] as $requireName => $requireVersion): ?>
+    <?php foreach ($this->composerConf['require'] as $requireName => $requireVersion): ?>
         <li>
-            <?php echo $this->escapeHtml($requireName); ?>: <span class='label label-success'><?php echo $this->escapeHtml($requireVersion); ?></span>
+            <?php echo $this->escapeHtml($requireName) ?>: <span class='label label-success'><?php echo $this->escapeHtml($requireVersion) ?></span>
         </li>
     <?php endforeach; ?>
 </ul>
-<?php if(!empty($this->composerConf['require-dev'])): ?>
+<?php if (!empty($this->composerConf['require-dev'])): ?>
     <h3>Require Dev</h3>
     <ul>
-        <?php foreach($this->composerConf['require-dev'] as $requireName => $requireVersion): ?>
+        <?php foreach ($this->composerConf['require-dev'] as $requireName => $requireVersion): ?>
             <li>
-                <?php echo $this->escapeHtml($requireName); ?>: <span class='label label-important'><?php echo $this->escapeHtml($requireVersion); ?></span>
+                <?php echo $this->escapeHtml($requireName) ?>: <span class='label label-important'><?php echo $this->escapeHtml($requireVersion) ?></span>
             </li>
         <?php endforeach; ?>
     </ul>

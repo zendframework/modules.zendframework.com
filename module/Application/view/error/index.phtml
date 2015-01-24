@@ -2,8 +2,7 @@
 <h2><?php echo $this->message ?></h2>
 
 <?php if (isset($this->display_exceptions) && $this->display_exceptions): ?>
-
-    <?php if(isset($this->exception) && $this->exception instanceof Exception): ?>
+    <?php if (isset($this->exception) && $this->exception instanceof Exception): ?>
         <hr/>
         <h2><?php echo $this->translate('Additional information') ?>:</h2>
         <h3><?php echo get_class($this->exception); ?></h3>
@@ -28,7 +27,7 @@
             <hr/>
             <h2><?php echo $this->translate('Previous exceptions') ?>:</h2>
             <ul class="unstyled">
-                <?php while($e) : ?>
+                <?php while ($e) : ?>
                     <li>
                         <h3><?php echo get_class($e); ?></h3>
                         <dl>
@@ -52,11 +51,7 @@
                 ?>
             </ul>
         <?php endif; ?>
-
     <?php else: ?>
-
         <h3><?php echo $this->translate('No Exception available') ?></h3>
-
-    <?php endif ?>
-
-<?php endif ?>
+    <?php endif; ?>
+<?php endif; ?>
