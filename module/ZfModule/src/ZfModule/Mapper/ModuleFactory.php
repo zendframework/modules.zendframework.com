@@ -22,5 +22,4 @@ class ModuleFactory implements FactoryInterface
 
         return $mapper;
     }
-
 }
