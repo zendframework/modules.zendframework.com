@@ -35,9 +35,9 @@ class Module extends AbstractDbMapper implements ModuleInterface
             };
             $select->where($spec);
         }
-        $adapter = new DbSelect(
-                $select, $this->getSql(), new HydratingResultSet($this->getHydrator(), $this->getEntityPrototype())
-        );
+        $resultSet = new HydratingResultSet($this->getHydrator(), $this->getEntityPrototype());
+
+        $adapter = new DbSelect($select, $this->getSql(), $resultSet);
         $paginator = new Paginator($adapter);
 
         $paginator->setCurrentPageNumber($page);
@@ -168,5 +168,4 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
         return $row['num'];
     }
-
 }
