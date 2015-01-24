@@ -80,22 +80,17 @@ class RepositoryRetriever
     /**
      * Request content as parsed markdown
      *
-     * @param string $content
+     * @param $content
      *
-     * @return string
+     * @return null
      */
     private function requestContentMarkdown($content)
     {
-        if (!$content) {
-            return $content;
-        }
-
         try {
-            $content = $this->githubClient->api('markdown')->render($content);
+            return $this->githubClient->api('markdown')->render($content);
         } catch (RuntimeException $e) {
+            return null;
         }
-
-        return $content;
     }
 
     /**
