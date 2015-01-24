@@ -59,7 +59,7 @@
                 </div>
             </div>
         <?php endforeach; ?>
-        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination', ['query' => $query]) ?>
+        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination', ['query' => $this->query]) ?>
     </div>
     <div class="span4">
         <div class="sidebar">
