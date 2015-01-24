@@ -34,4 +34,4 @@ This site will eventually be a community site for publishing and sharing Zend Fr
 
 ## Deployment
 
-The master branch of this repository is automatically deployed live to [modules.zendframework.com](http://modules.zendframework.com/) every 10 minutes.
+The master branch of this repository is manually deployed live to [modules.zendframework.com](http://modules.zendframework.com/) by [@GeeH](https://github.com/GeeH).
