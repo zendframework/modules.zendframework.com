@@ -58,6 +58,7 @@ class RepositoryRetriever
      * @param string $user
      * @param string $module
      * @param string $filePath
+     * @param bool $parseMarkdown
      *
      * @return bool|string
      */
@@ -80,9 +81,9 @@ class RepositoryRetriever
     /**
      * Request content as parsed markdown
      *
-     * @param $content
+     * @param string $content
      *
-     * @return null
+     * @return string|null
      */
     private function requestContentMarkdown($content)
     {
