@@ -6,23 +6,23 @@
                     <ul>
                         <?php if (isset($this->previous)): ?>
                             <li>
-                                <a href="<?php echo $this->url('home', ['page' => $this->first, 'query' => $query]) ?>">&lt;&lt; First</a>
+                                <a href="<?php echo $this->url('home', [], ['query' => ['query' => $this->query, 'page' => $this->first]]); ?>">&lt;&lt; First</a>
                             </li>
                             <li>
-                                <a href="<?php echo $this->url('home', ['page' => $this->previous, 'query' => $query]) ?>">Previous &gt;</a>
+                                <a href="<?php echo $this->url('home', [], ['query' => ['query' => $this->$query, 'page' => $this->previous]]); ?>">Previous &gt;</a>
                             </li>
                         <?php endif; ?>
                         <?php foreach ($this->pagesInRange as $page): ?>
                             <li<?php echo ($page == $this->current) ? ' class="active"' : '' ?>>
-                                <a href="<?php echo $this->url('home', ['page' => $page, 'query' => $query]) ?>"><?php echo $page; ?></a>
+                                <a href="<?php echo $this->url('home', [], ['query' => ['query' => $this->query, 'page' => $page]]); ?>"><?php echo $page; ?></a>
                             </li>
                         <?php endforeach; ?>
                         <?php if (isset($this->next)): ?>
                             <li>
-                                <a href="<?php echo $this->url('home', ['page' => $this->next, 'query' => $query]) ?>">Next &gt;</a>
+                                <a href="<?php echo $this->url('home', [], ['query' => ['query' => $this->query, 'page' => $this->next]]); ?>">Next &gt;</a>
                             </li>
                             <li>
-                                <a href="<?php echo $this->url('home', ['page' => $this->last, 'query' => $query]) ?>">Last &gt;&gt;</a>
+                                <a href="<?php echo $this->url('home', [], ['query' => ['query' => $this->query, 'page' => $this->last]]); ?>">Last &gt;&gt;</a>
                             </li>
                         <?php endif; ?>
                     </ul>

@@ -34,7 +34,7 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $query =  $this->params()->fromQuery('query', null);
-        $page = (int) $this->params()->fromRoute('page', 1);
+        $page = (int) $this->params()->fromQuery('page', 1);
 
         $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
 
