@@ -184,5 +184,4 @@ class Module implements ModuleInterface
         $this->name = $name;
         return $this;
     }
-
 }
