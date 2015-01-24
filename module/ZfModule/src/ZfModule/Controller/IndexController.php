@@ -50,11 +50,14 @@ class IndexController extends AbstractActionController
 
         $result = $this->moduleMapper->findByName($module);
         if (!$result) {
-            $this->getResponse()->setStatusCode(Http\Response::STATUS_CODE_404);
-            return;
+            return $this->notFoundAction();
+        }
+        
+        $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
+        if (!$repository) {
+            return $this->notFoundAction();
         }
 
-        $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
         $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md');
         $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
         $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
