@@ -32,7 +32,7 @@
             </div>
         </div>
         <?php
-        $url = $this->url('zf-module/list', array('owner' => $org->login));
+        $url = $this->url('zf-module/list', ['owner' => $org->login]);
         $this->inlineScript()->appendScript(<<<EOT
 
     $('#org-$org->login').on("show", function () {

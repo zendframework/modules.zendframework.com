@@ -11,7 +11,7 @@
                 <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getName()) ?>" class="avatar">
             </div>
             <div class="span9">
-                <a href="<?php echo $this->url('view-module', array('vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName()))) ?>">
+                <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
                     <?php echo $this->escapeHtml($module->getName()); ?>
                 </a>
                 <br>

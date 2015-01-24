@@ -11,7 +11,7 @@
         ?>
 
         <?php
-        echo $this->headLink(array('rel' => 'shortcut icon', 'href' => $this->basePath() . '/favicon.ico'))
+        echo $this->headLink(['rel' => 'shortcut icon', 'href' => $this->basePath() . '/favicon.ico'])
                 ->appendStylesheet($this->basePath() . '/css/bootstrap.min.css')
                 ->appendStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
                 ->appendStylesheet($this->basePath() . '/css/style.css')
@@ -47,7 +47,7 @@
                         <li ><a href="<?php echo $this->url('zfcuser/logout'); ?>">Logout</a></li>
                     <?php else: ?>
                         <li id="toggle">
-                            <a class="login" href="<?php echo $this->url('scn-social-auth-user/login/provider', array('provider' => 'github')); ?>">GitHub Login</a>
+                            <a class="login" href="<?php echo $this->url('scn-social-auth-user/login/provider', ['provider' => 'github']); ?>">GitHub Login</a>
                         </li>
                     <?php endif; ?>
                     <li class="right">&nbsp;</li>

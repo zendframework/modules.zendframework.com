@@ -35,7 +35,7 @@
                             </div>
                             <div class="span6">
                                 <strong>
-                                    <a href="<?php echo $this->url('view-module', array('vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName()))) ?>">
+                                    <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
                                         <?php echo $this->escapeHtml($module->getName()) ?>
                                     </a>
                                 </strong>
@@ -59,7 +59,7 @@
                 </div>
             </div>
         <?php endforeach; ?>
-        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination', array('query' => $query)) ?>
+        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination', ['query' => $query]) ?>
     </div>
     <div class="span4">
         <div class="sidebar">
