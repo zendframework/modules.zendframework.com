@@ -9,7 +9,6 @@
         "zendframework/zendframework": "~2.3.0",
         "rwoverdijk/assetmanager": "1.3.*",
         "evandotpro/edp-github": "dev-master",
-        "evandotpro/edp-markdown": "0.2.*",
         "evandotpro/edp-module-layouts": "1.0.*",
         "zf-commons/zfc-user": "1.0.*",
         "zfcampus/zf-development-mode": "~2.0",

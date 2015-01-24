@@ -58,10 +58,11 @@ class RepositoryRetriever
      * @param string $user
      * @param string $module
      * @param string $filePath
+     * @param bool $parseMarkdown
      *
      * @return bool|string
      */
-    public function getRepositoryFileContent($user, $module, $filePath)
+    public function getRepositoryFileContent($user, $module, $filePath, $parseMarkdown = false)
     {
         $contentResponse = $this->getRepositoryFileMetadata($user, $module, $filePath);
 
@@ -69,7 +70,28 @@ class RepositoryRetriever
             return false;
         }
 
-        return base64_decode($contentResponse->content);
+        $content = base64_decode($contentResponse->content);
+        if ($content && $parseMarkdown) {
+            return $this->requestContentMarkdown($content);
+        }
+
+        return $content;
+    }
+
+    /**
+     * Request content as parsed markdown
+     *
+     * @param string $content
+     *
+     * @return string|null
+     */
+    private function requestContentMarkdown($content)
+    {
+        try {
+            return $this->githubClient->api('markdown')->render($content);
+        } catch (RuntimeException $e) {
+            return null;
+        }
     }
 
     /**
