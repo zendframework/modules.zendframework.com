@@ -1,5 +1,5 @@
 <?php $this->headTitle(sprintf('Browse %d modules for Zend Framework 2', $this->totalModules())); ?>
-<?php $this->inlineScript()->appendScript('$(\'#live-search input[name="query"]\').liveSearch({url: "/live-search?query="});'); ?>
+<?php $this->inlineScript()->appendScript('$(\'#live-search input[name="query"]\').liveSearch({url: "' . $this->url('live-search', [], ['query' => ['query' => '']]) . '"});'); ?>
 
 <div class="row">
     <div class="span8">
