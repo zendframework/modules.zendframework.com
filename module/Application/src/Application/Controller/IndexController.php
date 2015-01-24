@@ -16,7 +16,7 @@ use ZfModule\Mapper;
 
 class IndexController extends AbstractActionController
 {
-    const MODULES_PER_PAGE = 1;
+    const MODULES_PER_PAGE = 15;
 
     /**
      * @var Mapper\Module
