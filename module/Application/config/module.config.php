@@ -6,6 +6,7 @@
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
+use Application\Controller;
 use Application\Service;
 use Application\View;
 use Psr\Log;
@@ -18,7 +19,7 @@ return [
                 'options' => [
                     'route'    => '/live-search',
                     'defaults' => [
-                        'controller' => 'Application\Controller\Search',
+                        'controller' => Controller\SearchController::class,
                         'action'     => 'index',
                     ],
                 ],
@@ -28,7 +29,7 @@ return [
                 'options' => [
                     'route'    => '/',
                     'defaults' => [
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => Controller\IndexController::class,
                         'action'     => 'index',
                     ],
                 ],
@@ -40,7 +41,7 @@ return [
                 'options' => [
                     'route' => '/feed',
                     'defaults' => [
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => Controller\IndexController::class,
                         'action' => 'feed',
                     ],
                 ],
@@ -80,8 +81,8 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Application\Controller\Index' => 'Application\Controller\IndexControllerFactory',
-            'Application\Controller\Search' => 'Application\Controller\SearchControllerFactory',
+            Controller\IndexController::class => Controller\IndexControllerFactory::class,
+            Controller\SearchController::class => Controller\SearchControllerFactory::class,
         ],
     ],
     'service_manager' => [

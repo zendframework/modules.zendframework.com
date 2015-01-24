@@ -80,7 +80,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/');
 
-        $this->assertControllerName('Application\Controller\Index');
+        $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
@@ -112,7 +112,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/feed');
 
-        $this->assertControllerName('Application\Controller\Index');
+        $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('feed');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
