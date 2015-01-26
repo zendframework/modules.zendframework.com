@@ -8,7 +8,8 @@ php:
   - hhvm
 
 install:
-  - composer install --prefer-source
+  - composer self-update
+  - composer update --prefer-source
 
 before_script:
   - cp config/autoload/travis.php.local.dist config/autoload/travis.local.php
