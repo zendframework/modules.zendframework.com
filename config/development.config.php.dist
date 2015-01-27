@@ -9,7 +9,6 @@ return [
     'modules' => [
         'ZendDeveloperTools',
         'ZFTool',
-        'AssetManager',
     ],
     // development time configuration globbing
     'module_listener_options' => [
