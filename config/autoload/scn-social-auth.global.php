@@ -7,67 +7,6 @@
  */
 $settings = [
     /**
-     * Zend\Db\Adapter\Adapter DI Alias
-     *
-     * Please specify the DI alias for the configured Zend\Db\Adapter\Adapter
-     * instance that ZfcUser should use.
-     */
-    //'zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
-
-    /**
-     * Zend\Session\SessionManager DI Alias
-     *
-     * Please specify the DI alias for the configured Zend\Session\SessionManager
-     * instance that ScnSocialAuth should use.
-     */
-    //'zend_session_manager' => 'Zend\Session\SessionManager',
-
-    /**
-     * User Provider Entity Class
-     *
-     * Name of Entity class to use. Useful for using your own entity class
-     * instead of the default one provided. Default is ScnSocialAuth\Entity\UserProvider.
-     */
-    //'user_provider_entity_class' => 'ScnSocialAuth\Entity\UserProvider',
-
-    /**
-     * Facebook Enabled
-     *
-     * Please specify if Facebook is enabled
-     */
-    //'facebook_enabled' => true,
-
-    /**
-     * Facebook Scope
-     *
-     * Please specify a Facebook scope
-     *
-     * A comma-separated list of permissions you want to request from the user.
-     * See the Facebook docs for a full list of available permissions:
-     * http://developers.facebook.com/docs/reference/api/permissions.
-     */
-    //'facebook_scope' => '',
-
-    /**
-     * Facebook Display
-     *
-     * Please specify a Facebook display
-     *
-     * The display context to show the authentication page.
-     * Options are: page, popup, iframe, touch and wap.
-     * Read the Facebook docs for more details:
-     * http://developers.facebook.com/docs/reference/dialogs#display. Default: page
-     */
-    //'facebook_display' => '',
-
-    /**
-     * Foursquare Enabled
-     *
-     * Please specify if Foursquare is enabled
-     */
-    //'foursquare_enabled' => true,
-
-    /**
      * Github Enabled
      *
      * Please specify if Github is enabled
@@ -76,73 +15,8 @@ $settings = [
      * https://github.com/settings/applications/new
      */
     'github_enabled' => true,
-
-    /**
-     * Github Scope
-     *
-     * Please specify a Github scope
-     *
-     * A comma-separated list of permissions you want to request from the user.
-     * See he Github docs for a full list of the available permissions:
-     * http://developer.github.com/v3/oauth/#scopes
-     */
     'github_scope' => 'user, public_repo, ',
 
-    /**
-     * Google Enabled
-     *
-     * Please specify if Google is enabled
-     */
-    //'google_enabled' => true,
-
-    /**
-     * Google Scope
-     *
-     * Please specify a Google scope
-     *
-     * A space-separated list of permissions you want to request from the user.
-     * See the Google docs for a full list of available permissions:
-     * https://developers.google.com/accounts/docs/OAuth2Login#scopeparameter.
-     */
-    //'google_scope' => 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-
-    /**
-     * LinkedIn Enabled
-     *
-     * Please specify if LinkedIn is enabled
-     */
-    //'linkedIn_enabled' => true,
-
-    /**
-     * Twitter Enabled
-     *
-     * Please specify if Twitter is enabled
-     */
-    //'twitter_enabled' => true,
-
-    /**
-     * Yahoo! Enabled
-     *
-     * Please specify if Yahoo! is enabled
-     */
-    //'yahoo_enabled' => true,
-
-    /**
-     * tumblr Enabled
-     *
-     * Please specify if tumblr is enabled
-     */
-    //'tumblr_enabled' => true,
-
-    /**
-     * Set to true if you want to display only the social login buttons without
-     * the username/password etc. from ZfcUser.
-     */
-    //'social_login_only' => false,
-
-    /**
-     * End of ScnSocialAuth configuration
-     */
 ];
 
 /**
