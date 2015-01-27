@@ -2,10 +2,10 @@
 
 namespace ZfModule\Mapper;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Stdlib\Hydrator\Reflection;
 use ZfModule\Entity\ModuleInterface as ModuleEntityInterface;
 
-class ModuleHydrator extends ClassMethods
+class ModuleHydrator extends Reflection
 {
     /**
      * Extract values from an object
@@ -19,9 +19,13 @@ class ModuleHydrator extends ClassMethods
         if (!$object instanceof ModuleEntityInterface) {
             throw new Exception\InvalidArgumentException('$object must be an instance of ZfModule\Entity\ModuleEntityInterface');
         }
-        /* @var $object UserInterface*/
+
         $data = parent::extract($object);
         $data = $this->mapField('id', 'module_id', $data);
+        $data = $this->mapField('createdAt', 'created_at', $data);
+        $data = $this->mapField('updatedAt', 'updated_at', $data);
+        $data = $this->mapField('photoUrl', 'photo_url', $data);
+
         return $data;
     }
 
@@ -38,7 +42,12 @@ class ModuleHydrator extends ClassMethods
         if (!$object instanceof ModuleEntityInterface) {
             throw new Exception\InvalidArgumentException('$object must be an instance of ZfModule\Entity\ModuleEntityInterface');
         }
+
         $data = $this->mapField('module_id', 'id', $data);
+        $data = $this->mapField('created_at', 'createdAt', $data);
+        $data = $this->mapField('updated_at', 'updatedAt', $data);
+        $data = $this->mapField('photo_url', 'photoUrl', $data);
+
         return parent::hydrate($data, $object);
     }
 
