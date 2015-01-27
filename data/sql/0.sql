@@ -9,7 +9,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `module` (
-`module_id` int(11) NOT NULL,
+  `module_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `url` varchar(500) NOT NULL,
@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS `module` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   `photo_url` varchar(255) DEFAULT NULL,
-  `owner` varchar(255) NOT NULL
+  `owner` varchar(255) NOT NULL,
+  PRIMARY KEY(`module_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -38,14 +39,15 @@ CREATE TABLE IF NOT EXISTS `module_admin` (
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-`user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `display_name` varchar(50) DEFAULT NULL,
   `password` varchar(128) NOT NULL,
   `photo_url` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `state` int(2) DEFAULT NULL
+  `state` int(2) DEFAULT NULL,
+  PRIMARY KEY(`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -65,12 +67,6 @@ CREATE TABLE IF NOT EXISTS `user_provider` (
 --
 
 --
--- Indexes for table `module`
---
-ALTER TABLE `module`
- ADD PRIMARY KEY (`module_id`);
-
---
 -- Indexes for table `module_admin`
 --
 ALTER TABLE `module_admin`
@@ -80,7 +76,7 @@ ALTER TABLE `module_admin`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
- ADD PRIMARY KEY (`user_id`), ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `email` (`email`);
+ ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `user_provider`
