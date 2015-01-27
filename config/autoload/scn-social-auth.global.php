@@ -15,7 +15,7 @@ $settings = [
      * https://github.com/settings/applications/new
      */
     'github_enabled' => true,
-    'github_scope' => 'user, public_repo, ',
+    'github_scope' => 'user:email,read:org',
 
 ];
 
