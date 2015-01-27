@@ -8,25 +8,31 @@
         <p class="well"><?php echo $this->escapeHtml($repository->description); ?></p>
         <ul class="nav nav-tabs">
             <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
-            <li ><a href="#license" data-toggle="tab">LICENSE</a></li>
+            <li><a href="#license" data-toggle="tab">LICENSE</a></li>
+            <li><a href="#composer" data-toggle="tab">COMPOSER</a></li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane active" id="readme">
-                <?php if($readme): ?>
+                <?php if ($this->readme): ?>
                     <?php echo $this->sanitizeHtml($this->readme); ?>
                 <?php else: ?>
                     No README file found for this Module
                 <?php endif; ?>
             </div>
             <div class="tab-pane" id="license">
-                <pre>
-                    <?php if ($this->license): ?>
-                        <?php echo $this->escapeHtml($this->license); ?>
-                    <?php else: ?>
-                        No license file found for this Module
-                    <?php endif; ?>
-                </pre>
+                <?php if ($this->license): ?>
+                    <pre><?php echo $this->escapeHtml($this->license); ?></pre>
+                <?php else: ?>
+                    <pre>No license file found for this Module</pre>
+                <?php endif; ?>
+            </div>
+            <div class="tab-pane" id="composer">
+                <?php if ($this->composerConf): ?>
+                    <?php echo $this->composerView($this->composerConf); ?>
+                <?php else: ?>
+                    <pre>No Composer file found for this Module</pre>
+                <?php endif; ?>
             </div>
         </div>
     </div>
