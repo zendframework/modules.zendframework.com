@@ -18,9 +18,10 @@
     },
     "require-dev": {
         "bjyoungblood/BjyProfiler": "1.1.0",
+        "fabpot/php-cs-fixer": "~1.4",
         "phpunit/phpunit": "4.0.*",
-        "zendframework/zftool": "dev-master",
-        "zendframework/zend-developer-tools": "dev-master"
+        "zendframework/zend-developer-tools": "dev-master",
+        "zendframework/zftool": "dev-master"
     },
     "autoload": {
         "psr-0": {
