@@ -5,9 +5,6 @@ $config = new Symfony\CS\Config\Config();
 $config->getFinder()
     ->exclude('data')
     ->exclude('puphpet')
-    ->exclude('public/css')
-    ->exclude('public/img')
-    ->exclude('public/js')
     ->in(__DIR__)
 ;
 
