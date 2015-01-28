@@ -32,6 +32,14 @@ This site will eventually be a community site for publishing and sharing Zend Fr
     - `192.168.56.101 modules.zendframework.dev`
  * Browse to http://modules.zendframework.dev/
 
+### Development Mode
+
+To enable development mode:
+
+ * Toggle the development mode flag: `php public/index.php development enable`
+ * Copy `config/autoload/development.local.php.dist` to `config/autoload/development.local.php`
+ * Copy `vendor/zendframework/zend-developer-tools/config/zenddevelopertools.local.php.dist` to `config/autoload/zenddevelopertools.local.php`
+
 ## Deployment
 
 The master branch of this repository is manually deployed live to [modules.zendframework.com](http://modules.zendframework.com/) by [@GeeH](https://github.com/GeeH).
