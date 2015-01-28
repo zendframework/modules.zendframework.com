@@ -62,6 +62,5 @@ return $config
         'unused_use',
         'visibility',
         'whitespacy_lines',
-
     ])
 ;
