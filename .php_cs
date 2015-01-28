@@ -1,6 +1,8 @@
 <?php
 
-$finder = Symfony\CS\Finder\DefaultFinder::create()
+$config = new Symfony\CS\Config\Config();
+
+$config->getFinder()
     ->exclude('data')
     ->exclude('puphpet')
     ->exclude('public/css')
@@ -10,7 +12,7 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->in(__DIR__)
 ;
 
-return Symfony\CS\Config\Config::create()
+return $config
     ->level(Symfony\CS\FixerInterface::NONE_LEVEL)
     ->setUsingCache(true)
     ->fixers([
@@ -63,5 +65,4 @@ return Symfony\CS\Config\Config::create()
         'whitespacy_lines',
 
     ])
-    ->finder($finder)
 ;
