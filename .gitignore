@@ -1,7 +1,6 @@
 .idea/
 .php_cs.cache
 clover.xml
-php-cs-fixer.phar
 index.html
 clover.xml
 .vagrant
