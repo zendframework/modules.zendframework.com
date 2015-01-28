@@ -40,5 +40,13 @@
             "UserTest": "module/User/test/",
             "ZfModuleTest": "module/ZfModule/test/"
         }
+    },
+    "scripts": {
+        "cs": [
+            "php vendor/bin/php-cs-fixer fix --config-file=./.php_cs --dry-run -v"
+        ],
+        "cs-fix": [
+            "php vendor/bin/php-cs-fixer fix --config-file=./.php_cs -v"
+        ]
     }
 }
