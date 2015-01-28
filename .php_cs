@@ -8,7 +8,6 @@ $config->getFinder()
     ->exclude('public/css')
     ->exclude('public/img')
     ->exclude('public/js')
-    ->exclude('vendor')
     ->in(__DIR__)
 ;
 
