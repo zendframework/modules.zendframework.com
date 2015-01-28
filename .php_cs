@@ -12,6 +12,7 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
 
 return Symfony\CS\Config\Config::create()
     ->level(Symfony\CS\FixerInterface::NONE_LEVEL)
+    ->setUsingCache(true)
     ->fixers([
         'braces',
         'concat_with_spaces',
