@@ -16,7 +16,7 @@ class ComposerView extends AbstractHelper
     public function __invoke($composerConf)
     {
         $vm = new ViewModel([
-            'composerConf' => $composerConf,
+            'composerConf' => json_decode($composerConf, true),
         ]);
         $vm->setTemplate('zf-module/helper/composer-view.phtml');
 
