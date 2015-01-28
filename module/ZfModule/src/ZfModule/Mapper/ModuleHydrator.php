@@ -2,10 +2,10 @@
 
 namespace ZfModule\Mapper;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
-use ZfModule\Entity\ModuleInterface as ModuleEntityInterface;
+use Zend\Stdlib\Hydrator\Reflection;
+use ZfModule\Entity;
 
-class ModuleHydrator extends ClassMethods
+class ModuleHydrator extends Reflection
 {
     /**
      * Extract values from an object
@@ -16,36 +16,50 @@ class ModuleHydrator extends ClassMethods
      */
     public function extract($object)
     {
-        if (!$object instanceof ModuleEntityInterface) {
+        if (!$object instanceof Entity\ModuleInterface) {
             throw new Exception\InvalidArgumentException('$object must be an instance of ZfModule\Entity\ModuleEntityInterface');
         }
-        /* @var $object UserInterface*/
+
         $data = parent::extract($object);
-        $data = $this->mapField('id', 'module_id', $data);
+        
+        $this->changeKey('id', 'module_id', $data);
+        $this->changeKey('createdAt', 'created_at', $data);
+        $this->changeKey('updatedAt', 'updated_at', $data);
+        $this->changeKey('photoUrl', 'photo_url', $data);
+
         return $data;
     }
 
     /**
      * Hydrate $object with the provided $data.
      *
-     * @param  array $data
-     * @param  object $object
-     * @return UserInterface
+     * @param array $data
+     * @param Entity\ModuleInterface $object
+     * @return Entity\ModuleInterface
      * @throws Exception\InvalidArgumentException
      */
     public function hydrate(array $data, $object)
     {
-        if (!$object instanceof ModuleEntityInterface) {
+        if (!$object instanceof Entity\ModuleInterface) {
             throw new Exception\InvalidArgumentException('$object must be an instance of ZfModule\Entity\ModuleEntityInterface');
         }
-        $data = $this->mapField('module_id', 'id', $data);
+
+        $this->changeKey('module_id', 'id', $data);
+        $this->changeKey('created_at', 'createdAt', $data);
+        $this->changeKey('updated_at', 'updatedAt', $data);
+        $this->changeKey('photo_url', 'photoUrl', $data);
+
         return parent::hydrate($data, $object);
     }
 
-    protected function mapField($keyFrom, $keyTo, array $array)
+    /**
+     * @param string $source
+     * @param string $target
+     * @param array $data
+     */
+    private function changeKey($source, $target, array &$data)
     {
-        $array[$keyTo] = $array[$keyFrom];
-        unset($array[$keyFrom]);
-        return $array;
+        $data[$target] = $data[$source];
+        unset($data[$source]);
     }
 }
