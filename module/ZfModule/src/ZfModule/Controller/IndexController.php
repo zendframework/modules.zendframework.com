@@ -136,10 +136,6 @@ class IndexController extends AbstractActionController
                 return false;
             }
 
-            if (!$this->moduleService->isModule($repository)) {
-                return false;
-            }
-
             if ($this->moduleMapper->findByName($repository->name)) {
                 return false;
             }

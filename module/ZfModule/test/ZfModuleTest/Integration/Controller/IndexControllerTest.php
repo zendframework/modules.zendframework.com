@@ -179,7 +179,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $viewVariable = $viewModel->getVariable('repositories');
 
         $this->assertInternalType('array', $viewVariable);
-        $this->assertCount(1, $viewVariable);
+        $this->assertCount(2, $viewVariable);
         $this->assertSame($validModule, $viewVariable[0]);
     }
 
@@ -392,7 +392,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $viewVariable = $viewModel->getVariable('repositories');
 
         $this->assertInternalType('array', $viewVariable);
-        $this->assertCount(1, $viewVariable);
+        $this->assertCount(2, $viewVariable);
         $this->assertSame($validModule, $viewVariable[0]);
     }
 
