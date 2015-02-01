@@ -16,17 +16,11 @@ class ErrorHandlingService
         $this->logger = $logger;
     }
 
-    public function logException(\Exception $e)
+    public function logException(\Exception $exception)
     {
-        $trace = $e->getTraceAsString();
-        $i     = 1;
-        do {
-            $messages[] = $i++ . ": " . $e->getMessage();
-        } while ($e = $e->getPrevious());
-
-        $log = "Exception:n" . implode("n", $messages);
-        $log .= "nTrace:n" . $trace;
-
-        $this->logger->error($log);
+        $this->logger->error(
+            $exception->getMessage(),
+            $exception->getTrace()
+        );
     }
 }
