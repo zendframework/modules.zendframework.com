@@ -1,9 +1,4 @@
 <?php
-/**
- * Created by Gary Hockin.
- * Date: 04/12/14
- * @GeeH
- */
 
 namespace Application\Service;
 
@@ -11,11 +6,10 @@ use Zend\Log\Logger;
 
 class ErrorHandlingService
 {
-
     /**
      * @var Logger
      */
-    protected $logger;
+    private $logger;
 
     public function __construct(Logger $logger)
     {
