@@ -9,12 +9,8 @@
 
 namespace Application;
 
-use Psr\Log\LoggerInterface;
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceManager;
 
 class Module
 {
@@ -33,16 +29,6 @@ class Module
                 $service->logException($exception);
             }
         });
-    }
-
-    public function getServiceConfig()
-    {
-        return [
-            'factories' => [
-                Service\ErrorHandlingService::class => Service\ErrorHandlingServiceFactory::class,
-                LoggerInterface::class => Service\LoggerFactory::class,
-            ],
-        ];
     }
 
     public function getConfig()
