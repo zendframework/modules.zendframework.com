@@ -7,6 +7,9 @@ use Exception;
 use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @covers Application\Service\ErrorHandlingService
+ */
 class ErrorHandlingServiceTest extends PHPUnit_Framework_TestCase
 {
     public function testLogExceptionLogsSomething()
@@ -17,7 +20,10 @@ class ErrorHandlingServiceTest extends PHPUnit_Framework_TestCase
         $logger
             ->expects($this->once())
             ->method('error')
-            ->with($this->stringContains($exception->getMessage()))
+            ->with(
+                $this->equalTo($exception->getMessage()),
+                $this->equalTo($exception->getTrace())
+            )
         ;
 
         $service = new Service\ErrorHandlingService($logger);

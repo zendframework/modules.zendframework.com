@@ -6,6 +6,9 @@ use Application\Service;
 use ApplicationTest\Integration\Util\Bootstrap;
 use PHPUnit_Framework_TestCase;
 
+/**
+ * @covers Application\Service\ErrorHandlingService
+ */
 class ErrorHandlingServiceTest extends PHPUnit_Framework_TestCase
 {
     public function testServiceCanBeRetrieved()

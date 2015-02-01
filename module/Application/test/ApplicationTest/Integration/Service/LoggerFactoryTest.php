@@ -9,6 +9,10 @@ use Monolog\Logger;
 use Psr\Log;
 use PHPUnit_Framework_TestCase;
 
+/**
+ * @group Functional
+ * @coversNothing
+ */
 class LoggerFactoryTest extends PHPUnit_Framework_TestCase
 {
     /**
