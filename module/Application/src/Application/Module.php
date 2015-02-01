@@ -41,13 +41,6 @@ class Module
             'factories' => [
                 Service\ErrorHandlingService::class => Service\ErrorHandlingServiceFactory::class,
                 LoggerInterface::class => Service\LoggerFactory::class,
-                'ZendLog'                         => function (ServiceManager $sm) {
-                    $filename = 'log_' . date('F') . '.txt';
-                    $log      = new Logger();
-                    $writer   = new Stream('./data/logs/' . $filename);
-                    $log->addWriter($writer);
-                    return $log;
-                },
             ],
         ];
     }
