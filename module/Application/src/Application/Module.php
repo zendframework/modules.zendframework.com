@@ -39,10 +39,9 @@ class Module
     {
         return [
             'factories' => [
-                Service\ErrorHandlingService::class => function (ServiceManager $sm) {
-                    $logger  = $sm->get('ZendLog');
-                    $service = new ErrorHandlingService($logger);
-                    return $service;
+                Service\ErrorHandlingService::class => function (ServiceManager $serviceManager) {
+                    $logger  = $serviceManager->get('ZendLog');
+                    return new ErrorHandlingService($logger);
                 },
                 'ZendLog'                         => function (ServiceManager $sm) {
                     $filename = 'log_' . date('F') . '.txt';
