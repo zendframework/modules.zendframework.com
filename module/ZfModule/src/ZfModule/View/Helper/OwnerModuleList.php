@@ -2,10 +2,10 @@
 
 namespace ZfModule\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
-use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\View\Helper\AbstractHelper;
+use Zend\View\Model\ViewModel;
 
 class OwnerModuleList extends AbstractHelper implements ServiceLocatorAwareInterface
 {
@@ -54,6 +54,7 @@ class OwnerModuleList extends AbstractHelper implements ServiceLocatorAwareInter
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
+
         return $this;
     }
 }

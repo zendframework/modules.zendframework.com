@@ -21,6 +21,7 @@ class User extends ZfcUser
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
     /**
@@ -40,6 +41,7 @@ class User extends ZfcUser
     public function setPhotoUrl($photoUrl)
     {
         $this->photoUrl = $photoUrl;
+
         return $this;
     }
 }

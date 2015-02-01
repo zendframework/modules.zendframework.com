@@ -42,7 +42,7 @@ class Module extends EventProvider
         $module = $this->moduleMapper->findByUrl($url);
         $update = true;
         if (!$module) {
-            $module  = new \ZfModule\Entity\Module;
+            $module  = new \ZfModule\Entity\Module();
             $update = false;
         }
 

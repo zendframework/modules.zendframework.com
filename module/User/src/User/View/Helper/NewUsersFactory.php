@@ -4,8 +4,8 @@ namespace User\View\Helper;
 
 use User\Mapper;
 use Zend\ServiceManager\FactoryInterface;
-use Zend\View\HelperPluginManager;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\View\HelperPluginManager;
 
 class NewUsersFactory implements FactoryInterface
 {

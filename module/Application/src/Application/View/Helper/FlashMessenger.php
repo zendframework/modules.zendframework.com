@@ -2,8 +2,8 @@
 
 namespace Application\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin as Plugin;
+use Zend\View\Helper\AbstractHelper;
 
 class FlashMessenger extends AbstractHelper
 {

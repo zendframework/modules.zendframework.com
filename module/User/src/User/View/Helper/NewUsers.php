@@ -2,9 +2,9 @@
 
 namespace User\View\Helper;
 
+use User\Mapper;
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Model\ViewModel;
-use User\Mapper;
 
 class NewUsers extends AbstractHelper
 {
@@ -51,6 +51,7 @@ class NewUsers extends AbstractHelper
     public function setViewTemplate($viewTemplate)
     {
         $this->viewTemplate = $viewTemplate;
+
         return $this;
     }
 }
