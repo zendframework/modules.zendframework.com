@@ -15,10 +15,10 @@ class LoggerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $handler = new Handler\RotatingFileHandler('data/logs/log.txt');
+        $handler = new Handler\RotatingFileHandler('data/logs/error.log');
         $handler->setFilenameFormat(
-            '{filename}_{date}',
-            'F'
+            '{filename}-{date}',
+            'Y-m'
         );
 
         $logger = new Logger('error-handling');
