@@ -9,6 +9,7 @@
 
 namespace Application;
 
+use Psr\Log\LoggerInterface;
 use Zend\Log\Logger;
 use Zend\Log\Writer\Stream;
 use Zend\Mvc\ModuleRouteListener;
@@ -39,6 +40,7 @@ class Module
         return [
             'factories' => [
                 Service\ErrorHandlingService::class => Service\ErrorHandlingServiceFactory::class,
+                LoggerInterface::class => Service\LoggerFactory::class,
                 'ZendLog'                         => function (ServiceManager $sm) {
                     $filename = 'log_' . date('F') . '.txt';
                     $log      = new Logger();
