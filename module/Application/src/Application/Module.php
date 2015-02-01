@@ -29,7 +29,7 @@ class Module
             $exception = $event->getResult()->exception;
             if ($exception) {
                 $sm      = $event->getApplication()->getServiceManager();
-                $service = $sm->get('ApplicationServiceErrorHandling');
+                $service = $sm->get(Service\ErrorHandlingService::class);
                 $service->logException($exception);
             }
         });
@@ -39,7 +39,7 @@ class Module
     {
         return [
             'factories' => [
-                'ApplicationServiceErrorHandling' => function (ServiceManager $sm) {
+                Service\ErrorHandlingService::class => function (ServiceManager $sm) {
                     $logger  = $sm->get('ZendLog');
                     $service = new ErrorHandlingService($logger);
                     return $service;
