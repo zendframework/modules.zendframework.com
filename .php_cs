@@ -13,7 +13,6 @@ return $config
     ->setUsingCache(true)
     ->fixers([
         'concat_with_spaces',
-        'controls_spaces',
         // 'double_arrow_multiline_whitespaces',
         'duplicate_semicolon',
         // 'empty_return',
