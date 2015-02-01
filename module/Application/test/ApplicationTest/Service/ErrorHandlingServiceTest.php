@@ -5,7 +5,7 @@ namespace ApplicationTest\Service;
 use Application\Service;
 use Exception;
 use PHPUnit_Framework_TestCase;
-use Zend\Log;
+use Psr\Log\LoggerInterface;
 
 class ErrorHandlingServiceTest extends PHPUnit_Framework_TestCase
 {
@@ -13,10 +13,10 @@ class ErrorHandlingServiceTest extends PHPUnit_Framework_TestCase
     {
         $exception = new Exception('Why, hello!');
 
-        $logger = $this->getMockBuilder(Log\Logger::class)->getMock();
+        $logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $logger
             ->expects($this->once())
-            ->method('err')
+            ->method('error')
             ->with($this->stringContains($exception->getMessage()))
         ;
 

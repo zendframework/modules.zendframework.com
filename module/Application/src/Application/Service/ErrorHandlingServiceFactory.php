@@ -2,7 +2,7 @@
 
 namespace Application\Service;
 
-use Zend\Log;
+use Psr\Log\LoggerInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -14,8 +14,8 @@ class ErrorHandlingServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /** @var Log\Logger $logger */
-        $logger  = $serviceLocator->get('ZendLog');
+        /* @var LoggerInterface $logger */
+        $logger  = $serviceLocator->get(LoggerInterface::class);
 
         return new ErrorHandlingService($logger);
     }

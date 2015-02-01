@@ -2,16 +2,16 @@
 
 namespace Application\Service;
 
-use Zend\Log\Logger;
+use Psr\Log\LoggerInterface;
 
 class ErrorHandlingService
 {
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
     private $logger;
 
-    public function __construct(Logger $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
@@ -27,6 +27,6 @@ class ErrorHandlingService
         $log = "Exception:n" . implode("n", $messages);
         $log .= "nTrace:n" . $trace;
 
-        $this->logger->err($log);
+        $this->logger->error($log);
     }
 }
