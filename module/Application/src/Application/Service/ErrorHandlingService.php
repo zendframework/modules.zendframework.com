@@ -2,6 +2,7 @@
 
 namespace Application\Service;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 
 class ErrorHandlingService
@@ -16,11 +17,29 @@ class ErrorHandlingService
         $this->logger = $logger;
     }
 
-    public function logException(\Exception $exception)
+    public function logException(Exception $exception)
     {
         $this->logger->error(
             $exception->getMessage(),
-            $exception->getTrace()
+            [
+                'previous' => $this->previousExceptionMessages($exception),
+                'trace' => $exception->getTrace(),
+            ]
         );
+    }
+
+    /**
+     * @param Exception $exception
+     * @return array
+     */
+    private function previousExceptionMessages(Exception $exception)
+    {
+        $messages = [];
+
+        while ($exception = $exception->getPrevious()) {
+            $messages[] = $exception->getMessage();
+        }
+
+        return $messages;
     }
 }
