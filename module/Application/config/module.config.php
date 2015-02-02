@@ -136,14 +136,6 @@ return [
     'view_helpers' => [
         'factories' => [
             'sanitizeHtml' => View\Helper\SanitizeHtmlFactory::class,
-            'flashMessenger' => function ($sm) {
-                $sm = $sm->getServiceLocator();
-                $plugin = $sm->get('ControllerPluginManager')->get('flashMessenger');
-
-                $helper = new View\Helper\FlashMessenger($plugin);
-
-                return $helper;
-            },
         ],
     ],
 ];
