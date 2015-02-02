@@ -7,7 +7,8 @@ use ApplicationTest\Integration\Util\Bootstrap;
 use PHPUnit_Framework_TestCase;
 
 /**
- * @covers Application\Service\ErrorHandlingService
+ * @group Functional
+ * @coversNothing
  */
 class ErrorHandlingServiceTest extends PHPUnit_Framework_TestCase
 {
