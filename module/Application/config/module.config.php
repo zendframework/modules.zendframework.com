@@ -9,6 +9,7 @@
 
 use Application\Service;
 use Application\View;
+use Psr\Log;
 
 return [
     'router' => [
@@ -87,8 +88,10 @@ return [
     'service_manager' => [
         'factories' => [
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
-            Service\RepositoryRetriever::class => Service\RepositoryRetrieverFactory::class,
             \HTMLPurifier::class => Service\HtmlPurifierFactory::class,
+            Log\LoggerInterface::class => Service\LoggerFactory::class,
+            Service\ErrorHandlingService::class => Service\ErrorHandlingServiceFactory::class,
+            Service\RepositoryRetriever::class => Service\RepositoryRetrieverFactory::class,
         ],
     ],
     'translator' => [

@@ -1,38 +1,45 @@
 <?php
-/**
- * Created by Gary Hockin.
- * Date: 04/12/14
- * @GeeH
- */
 
 namespace Application\Service;
 
-use Zend\Log\Logger;
+use Exception;
+use Psr\Log\LoggerInterface;
 
 class ErrorHandlingService
 {
-
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
-    protected $logger;
+    private $logger;
 
-    public function __construct(Logger $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
 
-    public function logException(\Exception $e)
+    public function logException(Exception $exception)
     {
-        $trace = $e->getTraceAsString();
-        $i     = 1;
-        do {
-            $messages[] = $i++ . ": " . $e->getMessage();
-        } while ($e = $e->getPrevious());
+        $this->logger->error(
+            $exception->getMessage(),
+            [
+                'previous' => $this->previousExceptionMessages($exception),
+                'trace' => $exception->getTrace(),
+            ]
+        );
+    }
 
-        $log = "Exception:n" . implode("n", $messages);
-        $log .= "nTrace:n" . $trace;
+    /**
+     * @param Exception $exception
+     * @return array
+     */
+    private function previousExceptionMessages(Exception $exception)
+    {
+        $messages = [];
 
-        $this->logger->err($log);
+        while ($exception = $exception->getPrevious()) {
+            $messages[] = $exception->getMessage();
+        }
+
+        return $messages;
     }
 }

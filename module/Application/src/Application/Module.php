@@ -9,12 +9,8 @@
 
 namespace Application;
 
-use Application\Service\ErrorHandlingService;
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceManager;
 
 class Module
 {
@@ -29,30 +25,10 @@ class Module
             $exception = $event->getResult()->exception;
             if ($exception) {
                 $sm      = $event->getApplication()->getServiceManager();
-                $service = $sm->get('ApplicationServiceErrorHandling');
+                $service = $sm->get(Service\ErrorHandlingService::class);
                 $service->logException($exception);
             }
         });
-    }
-
-    public function getServiceConfig()
-    {
-        return [
-            'factories' => [
-                'ApplicationServiceErrorHandling' => function (ServiceManager $sm) {
-                    $logger  = $sm->get('ZendLog');
-                    $service = new ErrorHandlingService($logger);
-                    return $service;
-                },
-                'ZendLog'                         => function (ServiceManager $sm) {
-                    $filename = 'log_' . date('F') . '.txt';
-                    $log      = new Logger();
-                    $writer   = new Stream('./data/logs/' . $filename);
-                    $log->addWriter($writer);
-                    return $log;
-                },
-            ],
-        ];
     }
 
     public function getConfig()
