@@ -43,10 +43,10 @@
     },
     "scripts": {
         "cs": [
-            "php vendor/bin/php-cs-fixer fix --config-file=./.php_cs --dry-run -v"
+            "php vendor/bin/php-cs-fixer fix --config-file=./.php_cs --dry-run --diff -v"
         ],
         "cs-fix": [
-            "php vendor/bin/php-cs-fixer fix --config-file=./.php_cs -v"
+            "php vendor/bin/php-cs-fixer fix --config-file=./.php_cs --diff -v"
         ]
     }
 }
