@@ -2,7 +2,6 @@
 
 namespace User;
 
-use User\GitHub;
 use Zend\EventManager\SharedEventManager;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\ApplicationInterface;
@@ -48,8 +47,9 @@ class Module extends AbstractModule
                     $mapper = new Mapper\User();
                     $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
                     $entityClass = $options->getUserEntityClass();
-                    $mapper->setEntityPrototype(new $entityClass);
+                    $mapper->setEntityPrototype(new $entityClass());
                     $mapper->setHydrator(new Mapper\UserHydrator());
+
                     return $mapper;
                 },
             ],

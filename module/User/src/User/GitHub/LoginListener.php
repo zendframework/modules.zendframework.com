@@ -5,7 +5,6 @@ namespace User\GitHub;
 use Hybrid_User_Profile;
 use User\Entity\User;
 use Zend\EventManager\EventInterface;
-use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\EventManager\SharedListenerAggregateInterface;
 

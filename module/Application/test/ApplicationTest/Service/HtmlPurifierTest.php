@@ -12,8 +12,8 @@ class HtmlPurifierTest extends PHPUnit_Framework_TestCase
     {
         $config = [
             'htmlpurifier' => [
-                'HTML.AllowedElements' => 'foo'
-            ]
+                'HTML.AllowedElements' => 'foo',
+            ],
         ];
 
         $serviceMock = $this->getMock(ServiceManager::class, ['get']);

@@ -4,7 +4,6 @@ namespace ZfModule\Controller;
 
 use Application\Service\RepositoryRetriever;
 use EdpGithub\Collection\RepositoryCollection;
-use Zend\Cache;
 use Zend\Http;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -52,7 +51,7 @@ class IndexController extends AbstractActionController
         if (!$result) {
             return $this->notFoundAction();
         }
-        
+
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($vendor, $module);
         if (!$repository) {
             return $this->notFoundAction();
@@ -94,6 +93,7 @@ class IndexController extends AbstractActionController
 
         $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
+
         return $viewModel;
     }
 
@@ -116,6 +116,7 @@ class IndexController extends AbstractActionController
         $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
         $viewModel->setTemplate('zf-module/index/index.phtml');
+
         return $viewModel;
     }
 
@@ -165,7 +166,7 @@ class IndexController extends AbstractActionController
             if (!$repository->fork && $repository->permissions->push) {
                 if ($this->moduleService->isModule($repository)) {
                     $module = $this->moduleService->register($repository);
-                    $this->flashMessenger()->addMessage($module->getName() .' has been added to ZF Modules');
+                    $this->flashMessenger()->addMessage($module->getName() . ' has been added to ZF Modules');
                 } else {
                     throw new Exception\UnexpectedValueException(
                         $repository->name . ' is not a Zend Framework Module',
@@ -217,7 +218,7 @@ class IndexController extends AbstractActionController
                 $module = $this->moduleMapper->findByUrl($repository->html_url);
                 if ($module instanceof \ZfModule\Entity\Module) {
                     $this->moduleMapper->delete($module);
-                    $this->flashMessenger()->addMessage($repository->name .' has been removed from ZF Modules');
+                    $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
                 } else {
                     throw new Exception\UnexpectedValueException(
                         $repository->name . ' was not found',

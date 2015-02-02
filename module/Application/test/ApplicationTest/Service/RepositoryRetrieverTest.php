@@ -32,7 +32,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
         $count = 0;
         foreach ($repositories as $repository) {
-            $this->assertEquals(current($payload), (array)$repository);
+            $this->assertEquals(current($payload), (array) $repository);
             next($payload);
             ++$count;
         }
@@ -57,7 +57,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $metadata = $service->getUserRepositoryMetadata('foo', 'bar');
 
         $this->assertInstanceOf('stdClass', $metadata);
-        $this->assertEquals($payload, (array)$metadata);
+        $this->assertEquals($payload, (array) $metadata);
     }
 
     public function testCanRetrieveRepositoryFileContent()
@@ -81,11 +81,11 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
     public function testRepositoryContentCanParsedMarkdown()
     {
         $content = 'repository file __FOO__ content';
-        $markdown = function($content) {
+        $markdown = function ($content) {
             return str_replace('__FOO__', 'bar', $content);
         };
 
-        $apiMock = $this->getMock(Api\Markdown::class, ['content','render']);
+        $apiMock = $this->getMock(Api\Markdown::class, ['content', 'render']);
         $apiMock
             ->expects($this->once())
             ->method('render')
@@ -111,11 +111,11 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
     public function testRepositoryContentMarkdownFails()
     {
         $content = 'repository file __FOO__ content';
-        $apiMock = $this->getMock(Api\Markdown::class, ['content','render']);
+        $apiMock = $this->getMock(Api\Markdown::class, ['content', 'render']);
         $apiMock
             ->expects($this->once())
             ->method('render')
-            ->willThrowException(new Exception\RuntimeException);
+            ->willThrowException(new Exception\RuntimeException());
 
         $apiMock
             ->expects($this->any())
@@ -197,13 +197,12 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(count($payload), $count);
     }
 
-
     public function testRepositoryFileContentFails()
     {
         $clientMock = $this->getMock('EdpGithub\Client');
         $clientMock->expects($this->any())
             ->method('api')
-            ->willThrowException(new Exception\RuntimeException);
+            ->willThrowException(new Exception\RuntimeException());
 
         $service = new RepositoryRetriever($clientMock);
         $response = $service->getRepositoryFileContent('foo', 'bar', 'baz');
@@ -215,13 +214,12 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $clientMock = $this->getMock('EdpGithub\Client');
         $clientMock->expects($this->any())
             ->method('api')
-            ->willThrowException(new Exception\RuntimeException);
+            ->willThrowException(new Exception\RuntimeException());
 
         $service = new RepositoryRetriever($clientMock);
         $response = $service->getUserRepositoryMetadata('foo', 'bar');
         $this->assertFalse($response);
     }
-
 
     /**
      * @param Api\AbstractApi $apiInstance

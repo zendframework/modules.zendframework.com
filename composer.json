@@ -18,8 +18,8 @@
     },
     "require-dev": {
         "bjyoungblood/BjyProfiler": "1.1.0",
+        "fabpot/php-cs-fixer": "~1.4",
         "phpunit/phpunit": "4.0.*",
-        "squizlabs/php_codesniffer": "~2.0.0@RC",
         "zendframework/zend-developer-tools": "dev-master",
         "zendframework/zftool": "dev-master"
     },

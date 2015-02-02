@@ -21,7 +21,6 @@ class ModuleView extends AbstractHelper
         ]);
         $vm->setTemplate('zf-module/helper/module-view.phtml');
 
-
         return $this->getView()->render($vm);
     }
 }

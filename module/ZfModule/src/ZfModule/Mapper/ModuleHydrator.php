@@ -21,7 +21,7 @@ class ModuleHydrator extends Reflection
         }
 
         $data = parent::extract($object);
-        
+
         $this->changeKey('id', 'module_id', $data);
         $this->changeKey('createdAt', 'created_at', $data);
         $this->changeKey('updatedAt', 'updated_at', $data);

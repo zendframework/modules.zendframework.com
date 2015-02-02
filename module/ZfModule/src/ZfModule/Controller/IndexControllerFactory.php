@@ -3,7 +3,6 @@
 namespace ZfModule\Controller;
 
 use Application\Service\RepositoryRetriever;
-use Zend\Cache;
 use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

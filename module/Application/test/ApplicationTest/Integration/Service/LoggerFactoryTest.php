@@ -6,8 +6,8 @@ use Application\Service;
 use ApplicationTest\Integration\Util\Bootstrap;
 use Monolog\Handler;
 use Monolog\Logger;
-use Psr\Log;
 use PHPUnit_Framework_TestCase;
+use Psr\Log;
 
 /**
  * @group Functional

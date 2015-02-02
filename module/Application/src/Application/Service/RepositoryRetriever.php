@@ -33,6 +33,7 @@ class RepositoryRetriever
     {
         try {
             $apiResponse = $this->githubClient->api('repos')->show($user, $module);
+
             return json_decode($apiResponse);
         } catch (RuntimeException $e) {
             return false;
@@ -108,8 +109,8 @@ class RepositoryRetriever
         try {
             $apiResponse = $this->githubClient->api('repos')->content($user, $module, $filePath);
             $apiResponse = json_decode($apiResponse);
-            return $apiResponse;
 
+            return $apiResponse;
         } catch (RuntimeException $e) {
             return false;
         }

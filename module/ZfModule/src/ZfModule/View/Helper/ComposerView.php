@@ -20,7 +20,6 @@ class ComposerView extends AbstractHelper
         ]);
         $vm->setTemplate('zf-module/helper/composer-view.phtml');
 
-
         return $this->getView()->render($vm);
     }
 }

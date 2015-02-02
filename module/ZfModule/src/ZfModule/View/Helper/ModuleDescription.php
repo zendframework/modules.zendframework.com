@@ -20,7 +20,6 @@ class ModuleDescription extends AbstractHelper
         ]);
         $vm->setTemplate('zf-module/helper/module-description.phtml');
 
-
         return $this->getView()->render($vm);
     }
 }

@@ -17,7 +17,7 @@ before_script:
   - mysql -uroot modules_test < data/sql/0.sql
 
 script:
-  - vendor/bin/phpcs --standard=phpcs.xml -np --report=summary .
+  - vendor/bin/php-cs-fixer fix --config-file=./.php_cs --dry-run --diff -v
   - vendor/bin/phpunit --configuration phpunit.xml
 
 notifications:

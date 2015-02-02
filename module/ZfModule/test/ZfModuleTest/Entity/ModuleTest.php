@@ -2,8 +2,8 @@
 
 namespace ZfModuleTest\Entity;
 
-use ZfModule\Entity\Module;
 use PHPUnit_Framework_TestCase;
+use ZfModule\Entity\Module;
 
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
@@ -11,7 +11,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->module = new Module;
+        $this->module = new Module();
     }
 
     public function testModuleConstruction()
@@ -67,7 +67,6 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('2013-02-28 13:05:00', $this->module->getUpdatedAt());
     }
-
 
     public function testSetPhotoUrl()
     {

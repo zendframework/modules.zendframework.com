@@ -36,6 +36,7 @@ class TotalModules extends AbstractHelper
         if ($this->total === null) {
             $this->total = $this->moduleMapper->getTotal();
         }
+
         return $this->total;
     }
 }

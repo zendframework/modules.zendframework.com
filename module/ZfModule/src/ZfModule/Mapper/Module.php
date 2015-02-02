@@ -147,6 +147,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
         if (!$where) {
             $where = ['module_id' => $entity->getId()];
         }
+
         return parent::update($entity, $where, $tableName, $hydrator);
     }
 
@@ -155,6 +156,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
         if (!$where) {
             $where = ['module_id' => $entity->getId()];
         }
+
         return parent::delete($where, $tableName);
     }
 

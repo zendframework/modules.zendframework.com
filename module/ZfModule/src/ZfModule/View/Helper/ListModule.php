@@ -38,13 +38,13 @@ class ListModule extends AbstractHelper
     public function __invoke($options = null)
     {
         //need to fetch top lvl ServiceLocator
-        $user = isset($options['user'])? $options['user']:false;
+        $user = isset($options['user']) ? $options['user'] : false;
 
         //limit modules to only user modules
         if ($user) {
             $repositories = $this->githubClient->api('current_user')->repos([
-                'type' =>'all',
-                'per_page' => 100
+                'type' => 'all',
+                'per_page' => 100,
             ]);
 
             $modules = [];
@@ -57,9 +57,10 @@ class ListModule extends AbstractHelper
                 }
             }
         } else {
-            $limit = isset($options['limit'])?$options['limit']:null;
+            $limit = isset($options['limit']) ? $options['limit'] : null;
             $modules = $this->moduleMapper->findAll($limit, 'created_at', 'DESC');
         }
+
         return $modules;
     }
 }
