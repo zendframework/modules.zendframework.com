@@ -19,6 +19,8 @@
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./module/Application/src</directory>
+            <directory suffix=".php">./module/User/src</directory>
+            <directory suffix=".php">./module/ZfModule/src</directory>
         </whitelist>
     </filter>
     <logging>
