@@ -1,4 +1,4 @@
-# ZF2 Modules Site [![Build Status](https://travis-ci.org/zendframework/modules.zendframework.com.svg?branch=master)](https://travis-ci.org/zendframework/modules.zendframework.com)
+# ZF2 Modules Site [![Build Status](https://travis-ci.org/zendframework/modules.zendframework.com.svg?branch=master)](https://travis-ci.org/zendframework/modules.zendframework.com) [![Dependency Status](https://www.versioneye.com/user/projects/54885d5a746eb514b0000279/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54885d5a746eb514b0000279)
 
 ## Introduction
 
