@@ -1,6 +1,7 @@
 <?php
 
 use EdpGithub\Client;
+use ZfModule\Controller;
 use ZfModule\Delegators\EdpGithubClientAuthenticator;
 use ZfModule\Mapper\ModuleHydrator;
 use ZfModule\View\Helper;
@@ -8,7 +9,7 @@ use ZfModule\View\Helper;
 return [
     'controllers'  => [
         'factories' => [
-            'ZfModule\Controller\Index' => 'ZfModule\Controller\IndexControllerFactory',
+            Controller\IndexController::class => Controller\IndexControllerFactory::class,
         ],
     ],
     'router'       => [
@@ -18,7 +19,7 @@ return [
                 'options' => [
                     'route'    => '/:vendor/:module',
                     'defaults' => [
-                        'controller' => 'ZfModule\Controller\Index',
+                        'controller' => Controller\IndexController::class,
                         'action'     => 'view',
                     ],
                 ],
@@ -28,7 +29,7 @@ return [
                 'options'       => [
                     'route'    => '/module',
                     'defaults' => [
-                        'controller' => 'ZfModule\Controller\Index',
+                        'controller' => Controller\IndexController::class,
                         'action'     => 'index',
                     ],
                 ],

@@ -2,6 +2,7 @@
 
 namespace ApplicationTest\Integration\Controller;
 
+use Application\Controller;
 use ApplicationTest\Integration\Util\Bootstrap;
 use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
@@ -37,7 +38,7 @@ class SearchControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/live-search');
 
-        $this->assertControllerName('Application\Controller\Search');
+        $this->assertControllerName(Controller\SearchController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
