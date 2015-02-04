@@ -10,8 +10,6 @@ use ZfcBase\Module\AbstractModule;
 class Module extends AbstractModule
 {
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     *
      * @param ModuleManager $moduleManager
      * @param ApplicationInterface $app
      */
