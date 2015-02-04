@@ -1,8 +1,14 @@
 <?php
 
+use User\Controller;
 use User\GitHub;
 
 return [
+    'controllers' => [
+        'invokables' => [
+            'zfcuser' => Controller\UserController::class,
+        ],
+    ],
     'view_manager' => [
         'template_map' => [
             'helper/module'                 =>  __DIR__ . '/../view/helper/module.phtml',
