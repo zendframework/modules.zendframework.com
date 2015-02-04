@@ -16,11 +16,6 @@ return [
             __DIR__ . '/../view',
         ],
     ],
-    'controllers' => [
-        'invokables' => [
-            'User\Controller\Module' => 'User\Controller\ModuleController',
-        ],
-    ],
     'view_helpers' => [
         'factories' => [
             'newUsers' => 'User\View\Helper\NewUsersFactory',
