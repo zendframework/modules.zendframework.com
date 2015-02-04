@@ -1,12 +1,12 @@
 <?php
 
-namespace ZfModule\View\Helper;
+namespace ZfModule\Mvc\Controller\Plugin;
 
 use EdpGithub\Client;
-use Zend\View\Helper\AbstractHelper;
+use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use ZfModule\Mapper;
 
-class ListModule extends AbstractHelper
+class ListModule extends AbstractPlugin
 {
     /**
      * @var Mapper\Module
