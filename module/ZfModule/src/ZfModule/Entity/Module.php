@@ -5,7 +5,7 @@ namespace ZfModule\Entity;
 class Module implements ModuleInterface
 {
     /**
-     * @var id
+     * @var int
      */
     private $id;
 
@@ -25,12 +25,12 @@ class Module implements ModuleInterface
     private $url;
 
     /**
-     * @var int
+     * @var string
      */
     private $createdAt;
 
     /**
-     * @var int
+     * @var string
      */
     private $updatedAt;
 
