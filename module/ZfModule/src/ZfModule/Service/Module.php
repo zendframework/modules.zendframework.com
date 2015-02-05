@@ -80,4 +80,37 @@ class Module extends EventProvider
 
         return false;
     }
+
+    /**
+     * @param array $options array of options
+     * @return array Array of modules
+     */
+    public function listModule($options = null)
+    {
+        //need to fetch top lvl ServiceLocator
+        $user = isset($options['user']) ? $options['user'] : false;
+
+        //limit modules to only user modules
+        if ($user) {
+            $repositories = $this->githubClient->api('current_user')->repos([
+                'type' => 'all',
+                'per_page' => 100,
+            ]);
+
+            $modules = [];
+            foreach ($repositories as $repository) {
+                if (!$repository->fork && $repository->permissions->push) {
+                    $module = $this->moduleMapper->findByName($repository->name);
+                    if ($module) {
+                        $modules[] = $module;
+                    }
+                }
+            }
+        } else {
+            $limit = isset($options['limit']) ? $options['limit'] : null;
+            $modules = $this->moduleMapper->findAll($limit, 'created_at', 'DESC');
+        }
+
+        return $modules;
+    }
 }

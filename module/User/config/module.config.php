@@ -5,8 +5,11 @@ use User\GitHub;
 
 return [
     'controllers' => [
-        'invokables' => [
+        'aliases' => [
             'zfcuser' => Controller\UserController::class,
+        ],
+        'factories' => [
+            Controller\UserController::class => Controller\UserControllerFactory::class,
         ],
     ],
     'view_manager' => [

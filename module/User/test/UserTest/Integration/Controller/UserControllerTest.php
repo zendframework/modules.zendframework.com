@@ -3,15 +3,13 @@
 namespace UserTest\Integration\Controller;
 
 use ApplicationTest\Integration\Util\Bootstrap;
-use User\Controller;
 use User\Entity\User;
 use User\View\Helper\UserOrganizations;
 use Zend\Authentication\AuthenticationService;
 use Zend\Http;
-use Zend\Mvc;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\View;
-use ZfModule\Mvc\Controller\Plugin\ListModule;
+use ZfModule\Service;
 use ZfModule\View\Helper\TotalModules;
 
 /**
@@ -74,6 +72,20 @@ class UserControllerTest extends AbstractHttpControllerTestCase
             ->willReturn(new User())
         ;
 
+        $moduleService = $this->getMockBuilder(Service\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleService
+            ->expects($this->once())
+            ->method('listModule')
+            ->with($this->equalTo([
+                'user' => true,
+            ]))
+            ->willReturn([])
+        ;
+
         $serviceManager = $this->getApplicationServiceLocator();
 
         $serviceManager
@@ -82,30 +94,9 @@ class UserControllerTest extends AbstractHttpControllerTestCase
                 'zfcuser_auth_service',
                 $authenticationService
             )
-        ;
-
-        $listModule = $this->getMockBuilder(ListModule::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        $listModule
-            ->expects($this->once())
-            ->method('__invoke')
-            ->with($this->equalTo([
-                'user' => true,
-            ]))
-            ->willReturn([])
-        ;
-
-        /* @var Mvc\Controller\PluginManager $controllerPluginManager */
-        $controllerPluginManager = $serviceManager->get('ControllerPluginManager');
-
-        $controllerPluginManager
-            ->setAllowOverride(true)
             ->setService(
-                'listModule',
-                $listModule
+                'zfmodule_service_module',
+                $moduleService
             )
         ;
 
