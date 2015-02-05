@@ -3,15 +3,18 @@
 namespace ZfModuleTest\Entity;
 
 use PHPUnit_Framework_TestCase;
-use ZfModule\Entity\Module;
+use ZfModule\Entity;
 
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Entity\Module
+     */
     private $module;
 
     public function setUp()
     {
-        $this->module = new Module();
+        $this->module = new Entity\Module();
     }
 
     public function testModuleConstruction()
