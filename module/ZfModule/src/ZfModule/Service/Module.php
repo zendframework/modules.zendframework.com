@@ -92,13 +92,30 @@ class Module extends EventProvider
         if (!$user) {
             $limit = isset($options['limit']) ? $options['limit'] : null;
 
-            return $this->moduleMapper->findAll(
-                $limit,
-                'created_at',
-                'DESC'
-            );
+            return $this->listAllModules($limit);
         }
 
+        return $this->listUserModules();
+    }
+
+    /**
+     * @param $limit
+     * @return \Zend\Db\ResultSet\HydratingResultSet
+     */
+    public function listAllModules($limit)
+    {
+        return $this->moduleMapper->findAll(
+            $limit,
+            'created_at',
+            'DESC'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function listUserModules()
+    {
         $repositories = $this->githubClient->api('current_user')->repos([
             'type' => 'all',
             'per_page' => 100,
