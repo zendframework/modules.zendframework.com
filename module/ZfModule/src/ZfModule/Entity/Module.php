@@ -7,42 +7,42 @@ class Module implements ModuleInterface
     /**
      * @var id
      */
-    protected $id = null;
+    private $id = null;
 
     /**
      * @var string
      */
-    protected $name = null;
+    private $name = null;
 
     /**
      * @var string
      */
-    protected $description = null;
+    private $description = null;
 
     /**
      * @var string
      */
-    protected $url = null;
+    private $url = null;
 
     /**
      * @var int
      */
-    protected $createdAt = null;
+    private $createdAt = null;
 
     /**
      * @var int
      */
-    protected $updatedAt = null;
+    private $updatedAt = null;
 
     /**
      * @var string
      */
-    protected $owner = null;
+    private $owner = null;
 
     /**
      * @var string
      */
-    protected $photoUrl = null;
+    private $photoUrl = null;
 
     public function getPhotoUrl()
     {
