@@ -19,57 +19,73 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
     public function testSetOwner()
     {
-        $this->module->setOwner('johndoe');
+        $owner = 'johndoe';
 
-        $this->assertEquals('johndoe', $this->module->getOwner());
+        $this->module->setOwner($owner);
+
+        $this->assertEquals($owner, $this->module->getOwner());
     }
 
     public function testSetId()
     {
-        $this->module->setId(99);
+        $id = 99;
 
-        $this->assertEquals(99, $this->module->getId());
+        $this->module->setId($id);
+
+        $this->assertEquals($id, $this->module->getId());
     }
 
     public function testSetUrl()
     {
-        $this->module->setUrl('http://example.com');
+        $url = 'http://example.com';
 
-        $this->assertEquals('http://example.com', $this->module->getUrl());
+        $this->module->setUrl($url);
+
+        $this->assertEquals($url, $this->module->getUrl());
     }
 
     public function testSetName()
     {
-        $this->module->setName('Super Great Happy Good Time Module');
+        $name = 'Super Great Happy Good Time Module';
 
-        $this->assertEquals('Super Great Happy Good Time Module', $this->module->getName());
+        $this->module->setName($name);
+
+        $this->assertEquals($name, $this->module->getName());
     }
 
     public function testSetDescription()
     {
-        $this->module->setDescription('Lorem ipsum dolor sit amet');
+        $description = 'Lorem ipsum dolor sit amet';
 
-        $this->assertEquals('Lorem ipsum dolor sit amet', $this->module->getDescription());
+        $this->module->setDescription($description);
+
+        $this->assertEquals($description, $this->module->getDescription());
     }
 
     public function testSetCreatedAt()
     {
-        $this->module->setCreatedAt('2013-02-28 13:05:00');
+        $createdAt = '2013-02-28 13:05:00';
 
-        $this->assertEquals('2013-02-28 13:05:00', $this->module->getCreatedAt());
+        $this->module->setCreatedAt($createdAt);
+
+        $this->assertEquals($createdAt, $this->module->getCreatedAt());
     }
 
     public function testSetUpdatedAt()
     {
-        $this->module->setUpdatedAt('2013-02-28 13:05:00');
+        $updatedAt = '2013-02-28 13:05:00';
 
-        $this->assertEquals('2013-02-28 13:05:00', $this->module->getUpdatedAt());
+        $this->module->setUpdatedAt($updatedAt);
+
+        $this->assertEquals($updatedAt, $this->module->getUpdatedAt());
     }
 
     public function testSetPhotoUrl()
     {
-        $this->module->setPhotoUrl('http://www.example.com/photo.jpg');
+        $photoUrl = 'http://www.example.com/photo.jpg';
 
-        $this->assertEquals('http://www.example.com/photo.jpg', $this->module->getPhotoUrl());
+        $this->module->setPhotoUrl($photoUrl);
+
+        $this->assertEquals($photoUrl, $this->module->getPhotoUrl());
     }
 }
