@@ -17,11 +17,6 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->module = new Entity\Module();
     }
 
-    public function testModuleConstruction()
-    {
-        $this->assertInstanceOf('ZfModule\Entity\Module', $this->module);
-    }
-
     public function testSetOwner()
     {
         $this->module->setOwner('johndoe');
