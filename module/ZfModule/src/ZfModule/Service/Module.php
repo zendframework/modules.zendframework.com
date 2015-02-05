@@ -87,10 +87,8 @@ class Module extends EventProvider
      */
     public function listModule($options = null)
     {
-        //need to fetch top lvl ServiceLocator
         $user = isset($options['user']) ? $options['user'] : false;
 
-        //limit modules to only user modules
         if ($user) {
             $repositories = $this->githubClient->api('current_user')->repos([
                 'type' => 'all',
