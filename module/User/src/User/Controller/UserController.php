@@ -33,7 +33,7 @@ class UserController extends ZfcUserController
         }
 
         $viewModel = new ViewModel([
-            'modules' => $this->moduleService->listUserModules(),
+            'modules' => $this->moduleService->currentUserModules(),
         ]);
 
         $viewModel->setTemplate('zfc-user/user/index');

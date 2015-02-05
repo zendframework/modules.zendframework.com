@@ -86,7 +86,7 @@ class Module extends EventProvider
      * @param $limit
      * @return Entity\Module[]
      */
-    public function listAllModules($limit = null)
+    public function allModules($limit = null)
     {
         return $this->moduleMapper->findAll(
             $limit,
@@ -98,7 +98,7 @@ class Module extends EventProvider
     /**
      * @return Entity\Module[]
      */
-    public function listUserModules()
+    public function currentUserModules()
     {
         $repositories = $this->githubClient->api('current_user')->repos([
             'type' => 'all',

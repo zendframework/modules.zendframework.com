@@ -40,7 +40,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $this->assertSame($modules, $service->listAllModules());
+        $this->assertSame($modules, $service->allModules());
     }
 
     public function testListAllModulesWithArgumentListsModulesFromDatabaseLimited()
@@ -73,7 +73,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $this->assertSame($modules, $service->listAllModules($limit));
+        $this->assertSame($modules, $service->allModules($limit));
     }
 
     public function testListUserModuleListsCurrentUsersModulesFromApiFoundInDatabase()
@@ -135,7 +135,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $this->assertSame($modules, $service->listUserModules());
+        $this->assertSame($modules, $service->currentUserModules());
     }
 
     public function testListUserModulesDoesNotLookupModulesFromApiWhereUserHasNoPushPrivilege()
@@ -186,7 +186,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $this->assertSame([], $service->listUserModules());
+        $this->assertSame([], $service->currentUserModules());
     }
 
     public function testListUsersModuleDoesNotLookupModulesFromApiThatAreForks()
@@ -235,7 +235,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $this->assertSame([], $service->listUserModules());
+        $this->assertSame([], $service->currentUserModules());
     }
 
     public function testListUserModulesDoesNotListModulesFromApiNotFoundInDatabase()
@@ -291,6 +291,6 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $this->assertSame([], $service->listUserModules());
+        $this->assertSame([], $service->currentUserModules());
     }
 }
