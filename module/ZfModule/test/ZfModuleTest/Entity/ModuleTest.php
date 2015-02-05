@@ -18,6 +18,19 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->module = new Entity\Module();
     }
 
+    public function testDefaults()
+    {
+        $this->assertNull($this->module->getId());
+        $this->assertNull($this->module->getName());
+        $this->assertNull($this->module->getDescription());
+        $this->assertNull($this->module->getOwner());
+        $this->assertNull($this->module->getPhotoUrl());
+        $this->assertNull($this->module->getUrl());
+        $this->assertEquals(new DateTime(), $this->module->getCreateAtDateTime());
+        $this->assertNull($this->module->getCreatedAt());
+        $this->assertNull($this->module->getUpdatedAt());
+    }
+
     public function testSetOwner()
     {
         $owner = 'johndoe';
