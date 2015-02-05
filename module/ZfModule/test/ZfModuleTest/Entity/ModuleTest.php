@@ -91,12 +91,11 @@ class ModuleTest extends PHPUnit_Framework_TestCase
     public function testSetCreatedAt()
     {
         $createdAt = '2013-02-28 13:05:00';
-        $dateTime = new DateTime($createdAt);
 
         $this->module->setCreatedAt($createdAt);
 
         $this->assertSame($createdAt, $this->module->getCreatedAt());
-        $this->assertEquals($dateTime, $this->module->getCreatedAtDateTime());
+        $this->assertEquals(new DateTime($createdAt), $this->module->getCreatedAtDateTime());
     }
 
     public function testSetUpdatedAt()
