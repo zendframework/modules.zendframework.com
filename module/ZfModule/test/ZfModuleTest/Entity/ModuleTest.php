@@ -26,7 +26,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertNull($this->module->getOwner());
         $this->assertNull($this->module->getPhotoUrl());
         $this->assertNull($this->module->getUrl());
-        $this->assertEquals(new DateTime(), $this->module->getCreateAtDateTime());
+        $this->assertEquals(new DateTime(), $this->module->getCreatedAtDateTime());
         $this->assertNull($this->module->getCreatedAt());
         $this->assertNull($this->module->getUpdatedAt());
     }
@@ -96,7 +96,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->module->setCreatedAt($createdAt);
 
         $this->assertSame($createdAt, $this->module->getCreatedAt());
-        $this->assertEquals($dateTime, $this->module->getCreateAtDateTime());
+        $this->assertEquals($dateTime, $this->module->getCreatedAtDateTime());
     }
 
     public function testSetUpdatedAt()

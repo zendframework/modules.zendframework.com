@@ -2,6 +2,8 @@
 
 namespace ZfModule\Entity;
 
+use DateTime;
+
 class Module implements ModuleInterface
 {
     /**
@@ -86,11 +88,11 @@ class Module implements ModuleInterface
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreateAtDateTime()
+    public function getCreatedAtDateTime()
     {
-        return new \DateTime($this->getCreatedAt());
+        return new DateTime($this->getCreatedAt());
     }
 
     public function setCreatedAt($createdAt)
