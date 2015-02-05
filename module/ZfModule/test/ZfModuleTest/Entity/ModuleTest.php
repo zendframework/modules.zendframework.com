@@ -31,6 +31,18 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertNull($this->module->getUpdatedAt());
     }
 
+    public function testFluentInterface()
+    {
+        $this->assertSame($this->module, $this->module->setId(9000));
+        $this->assertSame($this->module, $this->module->setName('foo'));
+        $this->assertSame($this->module, $this->module->setDescription('bar'));
+        $this->assertSame($this->module, $this->module->setOwner('John Doe'));
+        $this->assertSame($this->module, $this->module->setPhotoUrl('http://www.example.com/photo.jpg'));
+        $this->assertSame($this->module, $this->module->setUrl('http://www.example.com'));
+        $this->assertSame($this->module, $this->module->setCreatedAt('2013-02-28 13:05:00'));
+        $this->assertSame($this->module, $this->module->setUpdatedAt('2013-02-28 13:05:00'));
+    }
+
     public function testSetOwner()
     {
         $owner = 'johndoe';
