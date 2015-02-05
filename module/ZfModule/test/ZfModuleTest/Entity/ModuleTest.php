@@ -7,7 +7,7 @@ use ZfModule\Entity\Module;
 
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
-    protected $module;
+    private $module;
 
     public function setUp()
     {
