@@ -23,7 +23,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->module->setOwner($owner);
 
-        $this->assertEquals($owner, $this->module->getOwner());
+        $this->assertSame($owner, $this->module->getOwner());
     }
 
     public function testSetId()
@@ -32,7 +32,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->module->setId($id);
 
-        $this->assertEquals($id, $this->module->getId());
+        $this->assertSame($id, $this->module->getId());
     }
 
     public function testSetUrl()
@@ -41,7 +41,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->module->setUrl($url);
 
-        $this->assertEquals($url, $this->module->getUrl());
+        $this->assertSame($url, $this->module->getUrl());
     }
 
     public function testSetName()
@@ -50,7 +50,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->module->setName($name);
 
-        $this->assertEquals($name, $this->module->getName());
+        $this->assertSame($name, $this->module->getName());
     }
 
     public function testSetDescription()
@@ -59,7 +59,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->module->setDescription($description);
 
-        $this->assertEquals($description, $this->module->getDescription());
+        $this->assertSame($description, $this->module->getDescription());
     }
 
     public function testSetCreatedAt()
@@ -68,7 +68,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->module->setCreatedAt($createdAt);
 
-        $this->assertEquals($createdAt, $this->module->getCreatedAt());
+        $this->assertSame($createdAt, $this->module->getCreatedAt());
     }
 
     public function testSetUpdatedAt()
@@ -77,7 +77,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->module->setUpdatedAt($updatedAt);
 
-        $this->assertEquals($updatedAt, $this->module->getUpdatedAt());
+        $this->assertSame($updatedAt, $this->module->getUpdatedAt());
     }
 
     public function testSetPhotoUrl()
@@ -86,6 +86,6 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->module->setPhotoUrl($photoUrl);
 
-        $this->assertEquals($photoUrl, $this->module->getPhotoUrl());
+        $this->assertSame($photoUrl, $this->module->getPhotoUrl());
     }
 }
