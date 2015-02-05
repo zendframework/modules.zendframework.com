@@ -12,7 +12,7 @@ use ZfModule\Service;
 
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
-    public function testListModuleWithoutArgumentListsAllModulesFromDatabase()
+    public function testListAllModulesWithoutArgumentListsAllModulesFromDatabase()
     {
         $module = $this->getMockBuilder(Entity\Module::class)->getMock();
 
@@ -40,47 +40,12 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $this->assertSame($modules, $service->listModule());
+        $this->assertSame($modules, $service->listAllModules());
     }
 
-    public function testListModuleWithUserOptionSetToFalseListsAllModulesFromDatabase()
+    public function testListAllModulesWithArgumentListsModulesFromDatabaseLimited()
     {
-        $module = $this->getMockBuilder(Entity\Module::class)->getMock();
-
-        $modules = [
-            $module,
-        ];
-
-        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
-
-        $moduleMapper
-            ->expects($this->once())
-            ->method('findAll')
-            ->with(
-                $this->equalTo(null),
-                $this->equalTo('created_at'),
-                $this->equalTo('DESC')
-            )
-            ->willReturn($modules)
-        ;
-
-        $githubClient = $this->getMockBuilder(Client::class)->getMock();
-
-        $service = new Service\Module(
-            $moduleMapper,
-            $githubClient
-        );
-
-        $options = [
-            'user' => false,
-        ];
-
-        $this->assertSame($modules, $service->listModule($options));
-    }
-
-    public function testListModuleWithUserOptionSetToFalseAndLimitListsCurrentUsersModulesFromDatabaseLimited()
-    {
-        $limit = 10;
+        $limit = 9000;
 
         $module = $this->getMockBuilder(Entity\Module::class)->getMock();
 
@@ -108,15 +73,10 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $options = [
-            'user' => false,
-            'limit' => $limit,
-        ];
-
-        $this->assertSame($modules, $service->listModule($options));
+        $this->assertSame($modules, $service->listAllModules($limit));
     }
 
-    public function testListModuleWithUserOptionSetToTrueListsCurrentUsersModulesFromApiFoundInDatabase()
+    public function testListUserModuleListsCurrentUsersModulesFromApiFoundInDatabase()
     {
         $name = 'foo';
 
@@ -175,14 +135,10 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $options = [
-            'user' => true,
-        ];
-
-        $this->assertSame($modules, $service->listModule($options));
+        $this->assertSame($modules, $service->listUserModules());
     }
 
-    public function testListModuleWithUserOptionSetToTrueDoesNotLookupModulesFromApiWhereUserHasNoPushPrivilege()
+    public function testListUserModulesDoesNotLookupModulesFromApiWhereUserHasNoPushPrivilege()
     {
         $repository = new stdClass();
         $repository->fork = false;
@@ -230,14 +186,10 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $options = [
-            'user' => true,
-        ];
-
-        $this->assertSame([], $service->listModule($options));
+        $this->assertSame([], $service->listUserModules());
     }
 
-    public function testListModuleWithUserOptionSetToTrueDoesNotLookupModulesFromApiThatAreForks()
+    public function testListUsersModuleDoesNotLookupModulesFromApiThatAreForks()
     {
         $repository = new stdClass();
         $repository->fork = true;
@@ -283,14 +235,10 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $options = [
-            'user' => true,
-        ];
-
-        $this->assertSame([], $service->listModule($options));
+        $this->assertSame([], $service->listUserModules());
     }
 
-    public function testListModuleWithUserOptionSetToTrueDoesNotListModulesFromApiNotFoundInDatabase()
+    public function testListUserModulesDoesNotListModulesFromApiNotFoundInDatabase()
     {
         $name = 'foo';
 
@@ -343,10 +291,6 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             $githubClient
         );
 
-        $options = [
-            'user' => true,
-        ];
-
-        $this->assertSame([], $service->listModule($options));
+        $this->assertSame([], $service->listUserModules());
     }
 }

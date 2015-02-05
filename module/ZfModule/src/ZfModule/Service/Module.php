@@ -5,6 +5,7 @@ namespace ZfModule\Service;
 use EdpGithub\Client;
 use stdClass;
 use ZfcBase\EventManager\EventProvider;
+use ZfModule\Entity;
 use ZfModule\Mapper;
 
 class Module extends EventProvider
@@ -82,27 +83,10 @@ class Module extends EventProvider
     }
 
     /**
-     * @param array $options array of options
-     * @return array Array of modules
-     */
-    public function listModule($options = null)
-    {
-        $user = isset($options['user']) ? $options['user'] : false;
-
-        if (!$user) {
-            $limit = isset($options['limit']) ? $options['limit'] : null;
-
-            return $this->listAllModules($limit);
-        }
-
-        return $this->listUserModules();
-    }
-
-    /**
      * @param $limit
-     * @return \Zend\Db\ResultSet\HydratingResultSet
+     * @return Entity\Module[]
      */
-    public function listAllModules($limit)
+    public function listAllModules($limit = null)
     {
         return $this->moduleMapper->findAll(
             $limit,
@@ -112,7 +96,7 @@ class Module extends EventProvider
     }
 
     /**
-     * @return array
+     * @return Entity\Module[]
      */
     public function listUserModules()
     {

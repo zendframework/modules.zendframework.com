@@ -79,10 +79,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
         $moduleService
             ->expects($this->once())
-            ->method('listModule')
-            ->with($this->equalTo([
-                'user' => true,
-            ]))
+            ->method('listUserModules')
             ->willReturn([])
         ;
 
