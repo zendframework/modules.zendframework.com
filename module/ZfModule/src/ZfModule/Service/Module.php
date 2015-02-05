@@ -105,14 +105,23 @@ class Module extends EventProvider
         ]);
 
         $modules = [];
-        foreach ($repositories as $repository) {
-            if (!$repository->fork && $repository->permissions->push) {
-                $module = $this->moduleMapper->findByName($repository->name);
-                if ($module) {
-                    $modules[] = $module;
-                }
+
+        array_walk($repositories, function ($repository) use (&$modules) {
+            if (true === $repository->fork) {
+                return;
             }
-        }
+
+            if (false === $repository->permissions->push) {
+                return;
+            }
+
+            $module = $this->moduleMapper->findByName($repository->name);
+            if (null === $module) {
+                return;
+            }
+
+            array_push($modules, $module);
+        });
 
         return $modules;
     }
