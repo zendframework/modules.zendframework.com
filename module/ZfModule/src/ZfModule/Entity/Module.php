@@ -2,47 +2,49 @@
 
 namespace ZfModule\Entity;
 
+use DateTime;
+
 class Module implements ModuleInterface
 {
     /**
-     * @var id
-     */
-    protected $id = null;
-
-    /**
-     * @var string
-     */
-    protected $name = null;
-
-    /**
-     * @var string
-     */
-    protected $description = null;
-
-    /**
-     * @var string
-     */
-    protected $url = null;
-
-    /**
      * @var int
      */
-    protected $createdAt = null;
-
-    /**
-     * @var int
-     */
-    protected $updatedAt = null;
+    private $id;
 
     /**
      * @var string
      */
-    protected $owner = null;
+    private $name;
 
     /**
      * @var string
      */
-    protected $photoUrl = null;
+    private $description;
+
+    /**
+     * @var string
+     */
+    private $url;
+
+    /**
+     * @var string
+     */
+    private $createdAt;
+
+    /**
+     * @var string
+     */
+    private $updatedAt;
+
+    /**
+     * @var string
+     */
+    private $owner;
+
+    /**
+     * @var string
+     */
+    private $photoUrl;
 
     public function getPhotoUrl()
     {
@@ -86,11 +88,11 @@ class Module implements ModuleInterface
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreateAtDateTime()
+    public function getCreatedAtDateTime()
     {
-        return new \DateTime($this->getCreatedAt());
+        return new DateTime($this->getCreatedAt());
     }
 
     public function setCreatedAt($createdAt)
