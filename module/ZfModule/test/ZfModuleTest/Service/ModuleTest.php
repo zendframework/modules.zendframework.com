@@ -107,20 +107,11 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $currentUserService
             ->expects($this->once())
             ->method('repos')
-            ->with($this->logicalAnd(
-                $this->arrayHasKey('type'),
-                $this->arrayHasKey('per_page')
-            ))
-            ->willReturnCallback(function ($params) use ($repository) {
-
-                $repositories = [];
-
-                if ('all' === $params['type'] && 100 === $params['per_page']) {
-                    array_push($repositories, $repository);
-                }
-
-                return new Mock\Collection\RepositoryCollection($repositories);
-            })
+            ->with($this->equalTo([
+                'type' => 'all',
+                'per_page' => 100,
+            ]))
+            ->willReturn(new Mock\Collection\RepositoryCollection([$repository]))
         ;
 
         $githubClient = $this->getMockBuilder(Client::class)->getMock();
@@ -159,20 +150,11 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $currentUserService
             ->expects($this->once())
             ->method('repos')
-            ->with($this->logicalAnd(
-                $this->arrayHasKey('type'),
-                $this->arrayHasKey('per_page')
-            ))
-            ->willReturnCallback(function ($params) use ($repository) {
-
-                $repositories = [];
-
-                if ('all' === $params['type'] && 100 === $params['per_page']) {
-                    array_push($repositories, $repository);
-                }
-
-                return new Mock\Collection\RepositoryCollection($repositories);
-            })
+            ->with($this->equalTo([
+                'type' => 'all',
+                'per_page' => 100,
+            ]))
+            ->willReturn(new Mock\Collection\RepositoryCollection([$repository]))
         ;
 
         $githubClient = $this->getMockBuilder(Client::class)->getMock();
@@ -209,19 +191,11 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $currentUserService
             ->expects($this->once())
             ->method('repos')
-            ->with($this->logicalAnd(
-                $this->arrayHasKey('type'),
-                $this->arrayHasKey('per_page')
-            ))
-            ->willReturnCallback(function ($params) use ($repository) {
-                $repositories = [];
-
-                if ('all' === $params['type'] && 100 === $params['per_page']) {
-                    array_push($repositories, $repository);
-                }
-
-                return new Mock\Collection\RepositoryCollection($repositories);
-            })
+            ->with($this->equalTo([
+                'type' => 'all',
+                'per_page' => 100,
+            ]))
+            ->willReturn(new Mock\Collection\RepositoryCollection([$repository]))
         ;
 
         $githubClient = $this->getMockBuilder(Client::class)->getMock();
@@ -265,19 +239,11 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $currentUserService
             ->expects($this->once())
             ->method('repos')
-            ->with($this->logicalAnd(
-                $this->arrayHasKey('type'),
-                $this->arrayHasKey('per_page')
-            ))
-            ->willReturnCallback(function ($params) use ($repository) {
-                $repositories = [];
-
-                if ('all' === $params['type'] && 100 === $params['per_page']) {
-                    array_push($repositories, $repository);
-                }
-
-                return new Mock\Collection\RepositoryCollection($repositories);
-            })
+            ->with($this->equalTo([
+                'type' => 'all',
+                'per_page' => 100,
+            ]))
+            ->willReturn(new Mock\Collection\RepositoryCollection([$repository]))
         ;
 
         $githubClient = $this->getMockBuilder(Client::class)->getMock();
