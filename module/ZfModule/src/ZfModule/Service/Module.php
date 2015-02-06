@@ -3,6 +3,7 @@
 namespace ZfModule\Service;
 
 use EdpGithub\Client;
+use EdpGithub\Collection\RepositoryCollection;
 use stdClass;
 use ZfcBase\EventManager\EventProvider;
 use ZfModule\Entity;
@@ -100,12 +101,15 @@ class Module extends EventProvider
      */
     public function currentUserModules()
     {
-        $repositories = $this->githubClient->api('current_user')->repos([
+        /* @var RepositoryCollection $repositoryCollection */
+        $repositoryCollection = $this->githubClient->api('current_user')->repos([
             'type' => 'all',
             'per_page' => 100,
         ]);
 
         $modules = [];
+
+        $repositories = iterator_to_array($repositoryCollection);
 
         array_walk($repositories, function ($repository) use (&$modules) {
             if (true === $repository->fork) {

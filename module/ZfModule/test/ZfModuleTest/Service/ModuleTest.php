@@ -9,6 +9,7 @@ use stdClass;
 use ZfModule\Entity;
 use ZfModule\Mapper;
 use ZfModule\Service;
+use ZfModuleTest\Mock;
 
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
@@ -111,13 +112,14 @@ class ModuleTest extends PHPUnit_Framework_TestCase
                 $this->arrayHasKey('per_page')
             ))
             ->willReturnCallback(function ($params) use ($repository) {
+
+                $repositories = [];
+
                 if ('all' === $params['type'] && 100 === $params['per_page']) {
-                    return [
-                        $repository,
-                    ];
+                    array_push($repositories, $repository);
                 }
 
-                return null;
+                return new Mock\Collection\RepositoryCollection($repositories);
             })
         ;
 
@@ -162,13 +164,14 @@ class ModuleTest extends PHPUnit_Framework_TestCase
                 $this->arrayHasKey('per_page')
             ))
             ->willReturnCallback(function ($params) use ($repository) {
+
+                $repositories = [];
+
                 if ('all' === $params['type'] && 100 === $params['per_page']) {
-                    return [
-                        $repository,
-                    ];
+                    array_push($repositories, $repository);
                 }
 
-                return null;
+                return new Mock\Collection\RepositoryCollection($repositories);
             })
         ;
 
@@ -211,13 +214,13 @@ class ModuleTest extends PHPUnit_Framework_TestCase
                 $this->arrayHasKey('per_page')
             ))
             ->willReturnCallback(function ($params) use ($repository) {
+                $repositories = [];
+
                 if ('all' === $params['type'] && 100 === $params['per_page']) {
-                    return [
-                        $repository,
-                    ];
+                    array_push($repositories, $repository);
                 }
 
-                return null;
+                return new Mock\Collection\RepositoryCollection($repositories);
             })
         ;
 
@@ -267,13 +270,13 @@ class ModuleTest extends PHPUnit_Framework_TestCase
                 $this->arrayHasKey('per_page')
             ))
             ->willReturnCallback(function ($params) use ($repository) {
+                $repositories = [];
+
                 if ('all' === $params['type'] && 100 === $params['per_page']) {
-                    return [
-                        $repository,
-                    ];
+                    array_push($repositories, $repository);
                 }
 
-                return null;
+                return new Mock\Collection\RepositoryCollection($repositories);
             })
         ;
 
