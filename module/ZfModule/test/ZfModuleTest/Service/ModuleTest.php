@@ -254,7 +254,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('findByName')
             ->with($this->equalTo($name))
-            ->willReturn(null)
+            ->willReturn(false)
         ;
 
         $currentUserService = $this->getMockBuilder(Api\CurrentUser::class)->getMock();

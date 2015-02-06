@@ -117,7 +117,7 @@ class Module extends EventProvider
             }
 
             $module = $this->moduleMapper->findByName($repository->name);
-            if (null === $module) {
+            if (!($module instanceof Entity\Module)) {
                 return;
             }
 
