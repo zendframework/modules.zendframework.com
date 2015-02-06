@@ -15,6 +15,7 @@
             </div>
         </div>
         <?php foreach ($this->repositories as $module): ?>
+            <?php /* @var ZfModule\Entity\Module $module */ ?>
             <div class="row-fluid module-row">
                 <div class="span12">
                     <div class="row-fluid">
@@ -40,7 +41,7 @@
                                     </a>
                                 </strong>
                                 <p>
-                                    <span class="author-label">Created:</span> <?php echo $module->getCreateAtDateTime()->format('Y-m-d') ?><br>
+                                    <span class="author-label">Created:</span> <?php echo $module->getCreatedAtDateTime()->format('Y-m-d') ?><br>
                                 </p>
                             </div>
                             <div style="clear: both;"></div>
