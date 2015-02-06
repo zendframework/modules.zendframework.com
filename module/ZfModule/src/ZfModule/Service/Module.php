@@ -109,24 +109,22 @@ class Module extends EventProvider
 
         $modules = [];
 
-        $repositories = iterator_to_array($repositoryCollection);
-
-        array_walk($repositories, function ($repository) use (&$modules) {
+        foreach ($repositoryCollection as $repository) {
             if (true === $repository->fork) {
-                return;
+                continue;
             }
 
             if (false === $repository->permissions->push) {
-                return;
+                continue;
             }
 
             $module = $this->moduleMapper->findByName($repository->name);
             if (!($module instanceof Entity\Module)) {
-                return;
+                continue;
             }
 
             array_push($modules, $module);
-        });
+        }
 
         return $modules;
     }
