@@ -1,6 +1,5 @@
 <?php $this->headTitle(sprintf('Browse %d modules for Zend Framework 2', $this->totalModules())); ?>
 <?php $this->inlineScript()->appendScript('$(\'#live-search input[name="query"]\').liveSearch({url: "' . $this->url('live-search', [], ['query' => ['query' => '']]) . '"});'); ?>
-
 <div class="row">
     <div class="span8">
         <div class="row-fluid">
@@ -14,53 +13,63 @@
                 </div>
             </div>
         </div>
-        <?php foreach ($this->repositories as $module): ?>
-            <?php /* @var ZfModule\Entity\Module $module */ ?>
-            <div class="row-fluid module-row">
-                <div class="span12">
-                    <div class="row-fluid">
-                        <div class="module-info">
-                            <div class="span6 module-author">
-                                <div class="row-fluid">
-                                    <div class="span3">
-                                        <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getOwner()) ?>" class="avatar">
-                                    </div>
-                                    <div class="span9">
-                                        <strong><?php echo $this->escapeHtml($module->getOwner()) ?></strong>
-                                        <p>
-                                            <span class="author-label">Github:</span>
-                                            <a href="<?php echo $this->escapeHtmlAttr($module->getUrl()) ?>"><?php echo $this->escapeHtml($module->getName()) ?></a>
-                                        </p>
+        <?php if (count($this->repositories) >= 1): ?>
+            <?php foreach ($this->repositories as $module): ?>
+                <?php /* @var ZfModule\Entity\Module $module */ ?>
+                <div class="row-fluid module-row">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="module-info">
+                                <div class="span6 module-author">
+                                    <div class="row-fluid">
+                                        <div class="span3">
+                                            <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getOwner()) ?>" class="avatar">
+                                        </div>
+                                        <div class="span9">
+                                            <strong><?php echo $this->escapeHtml($module->getOwner()) ?></strong>
+                                            <p>
+                                                <span class="author-label">Github:</span>
+                                                <a href="<?php echo $this->escapeHtmlAttr($module->getUrl()) ?>"><?php echo $this->escapeHtml($module->getName()) ?></a>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="span6">
+                                    <strong>
+                                        <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
+                                            <?php echo $this->escapeHtml($module->getName()) ?>
+                                        </a>
+                                    </strong>
+                                    <p>
+                                        <span class="author-label">Created:</span> <?php echo $module->getCreatedAtDateTime()->format('Y-m-d') ?><br>
+                                    </p>
+                                </div>
+                                <div style="clear: both;"></div>
                             </div>
-                            <div class="span6">
-                                <strong>
-                                    <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
-                                        <?php echo $this->escapeHtml($module->getName()) ?>
-                                    </a>
-                                </strong>
-                                <p>
-                                    <span class="author-label">Created:</span> <?php echo $module->getCreatedAtDateTime()->format('Y-m-d') ?><br>
-                                </p>
-                            </div>
-                            <div style="clear: both;"></div>
                         </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="module-description">
-                            <div class="span12">
-                                <p>
-                                    <?php echo $this->escapeHtml($module->getDescription()) ?>
-                                </p>
+                        <div class="row-fluid">
+                            <div class="module-description">
+                                <div class="span12">
+                                    <p>
+                                        <?php echo $this->escapeHtml($module->getDescription()) ?>
+                                    </p>
+                                </div>
+                                <div style="clear: both;"></div>
                             </div>
-                            <div style="clear: both;"></div>
                         </div>
                     </div>
                 </div>
+            <?php endforeach; ?>
+            <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination', ['query' => $this->query]) ?>
+        <?php else: ?>
+            <div class="well">
+                <?php if($this->query): ?>
+                    <b>No modules found that match your search criteria "<?php echo $this->escapeHtml($this->query); ?>"</b>
+                <?php else: ?>
+                    <b>No modules found</b>
+                <?php endif; ?>
             </div>
-        <?php endforeach; ?>
-        <?php echo $this->paginationControl($this->repositories, 'Sliding', 'application/index/pagination', ['query' => $this->query]) ?>
+        <?php endif; ?>
     </div>
     <div class="span4">
         <div class="sidebar">

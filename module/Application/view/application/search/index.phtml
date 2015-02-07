@@ -1,14 +1,18 @@
-<?php foreach ($results as $module): ?>
-    <div class="row-fluid">
-        <div class="span12">
-            <div class="span2">
-                <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getName()) ?>" class="avatar">
-            </div>
-            <div class="span10">
-                <a href="<?php echo $this->escapeHtmlAttr($module->getUrl()) ?>"><?php echo $this->escapeHtml($module->getName()) ?></a><br>
-                <?php echo $this->escapeHtml($module->getDescription()) ?>
+<?php if (count($results) >= 1): ?>
+    <?php foreach ($results as $module): ?>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="span2">
+                    <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getName()) ?>" class="avatar">
+                </div>
+                <div class="span10">
+                    <a href="<?php echo $this->escapeHtmlAttr($module->getUrl()) ?>"><?php echo $this->escapeHtml($module->getName()) ?></a><br>
+                    <?php echo $this->escapeHtml($module->getDescription()) ?>
+                </div>
             </div>
         </div>
-    </div>
-    <hr style="margin:2px;padding:0;"/>
-<?php endforeach; ?>
+        <hr style="margin:2px;padding:0;"/>
+    <?php endforeach; ?>
+<?php else: ?>
+    <b>No modules found that match your search criteria</b>
+<?php endif; ?>
