@@ -13,11 +13,6 @@ class NewUsers extends AbstractHelper
     private $userMapper;
 
     /**
-     * $var string template used for view
-     */
-    protected $viewTemplate;
-
-    /**
      * @param Mapper\User $userMapper
      */
     public function __construct(Mapper\User $userMapper)
@@ -38,16 +33,5 @@ class NewUsers extends AbstractHelper
         return $this->getView()->render('user/helper/new-users', [
             'users' => $users,
         ]);
-    }
-
-    /**
-     * @param string $viewTemplate
-     * @return NewUsers
-     */
-    public function setViewTemplate($viewTemplate)
-    {
-        $this->viewTemplate = $viewTemplate;
-
-        return $this;
     }
 }
