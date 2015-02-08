@@ -5,6 +5,7 @@ namespace User\Controller;
 use Zend\View\Model\ViewModel;
 use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 use ZfcUser\Controller\UserController as ZfcUserController;
+use ZfModule\Service;
 
 /**
  * @method array listModule(array $options)
@@ -12,6 +13,19 @@ use ZfcUser\Controller\UserController as ZfcUserController;
  */
 class UserController extends ZfcUserController
 {
+    /**
+     * @var Service\Module
+     */
+    private $moduleService;
+
+    /**
+     * @param Service\Module $moduleService
+     */
+    public function __construct(Service\Module $moduleService)
+    {
+        $this->moduleService = $moduleService;
+    }
+
     public function indexAction()
     {
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
@@ -19,9 +33,7 @@ class UserController extends ZfcUserController
         }
 
         $viewModel = new ViewModel([
-            'modules' => $this->listModule([
-                'user' => true,
-            ]),
+            'modules' => $this->moduleService->currentUserModules(),
         ]);
 
         $viewModel->setTemplate('zfc-user/user/index');

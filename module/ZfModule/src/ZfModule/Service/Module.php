@@ -3,8 +3,10 @@
 namespace ZfModule\Service;
 
 use EdpGithub\Client;
+use EdpGithub\Collection\RepositoryCollection;
 use stdClass;
 use ZfcBase\EventManager\EventProvider;
+use ZfModule\Entity;
 use ZfModule\Mapper;
 
 class Module extends EventProvider
@@ -79,5 +81,51 @@ class Module extends EventProvider
         }
 
         return false;
+    }
+
+    /**
+     * @param $limit
+     * @return Entity\Module[]
+     */
+    public function allModules($limit = null)
+    {
+        return $this->moduleMapper->findAll(
+            $limit,
+            'created_at',
+            'DESC'
+        );
+    }
+
+    /**
+     * @return Entity\Module[]
+     */
+    public function currentUserModules()
+    {
+        /* @var RepositoryCollection $repositoryCollection */
+        $repositoryCollection = $this->githubClient->api('current_user')->repos([
+            'type' => 'all',
+            'per_page' => 100,
+        ]);
+
+        $modules = [];
+
+        foreach ($repositoryCollection as $repository) {
+            if (true === $repository->fork) {
+                continue;
+            }
+
+            if (false === $repository->permissions->push) {
+                continue;
+            }
+
+            $module = $this->moduleMapper->findByName($repository->name);
+            if (!($module instanceof Entity\Module)) {
+                continue;
+            }
+
+            array_push($modules, $module);
+        }
+
+        return $modules;
     }
 }
