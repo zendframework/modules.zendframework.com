@@ -3,7 +3,6 @@
 namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Model\ViewModel;
 use ZfModule\Mapper;
 
 class NewModule extends AbstractHelper
@@ -28,12 +27,8 @@ class NewModule extends AbstractHelper
     {
         $modules = $this->moduleMapper->findAll(10, 'created_at', 'DESC');
 
-        //return $modules;
-        $vm = new ViewModel([
+        return $this->getView()->render('zf-module/helper/new-module', [
             'modules' => $modules,
         ]);
-        $vm->setTemplate('zf-module/helper/new-module');
-
-        return $this->getView()->render($vm);
     }
 }

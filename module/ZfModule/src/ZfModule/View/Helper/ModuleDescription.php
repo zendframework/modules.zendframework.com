@@ -3,7 +3,6 @@
 namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Model\ViewModel;
 
 class ModuleDescription extends AbstractHelper
 {
@@ -15,11 +14,8 @@ class ModuleDescription extends AbstractHelper
      */
     public function __invoke($module)
     {
-        $vm = new ViewModel([
+        return $this->getView()->render('zf-module/helper/module-description.phtml', [
             'module' => $module,
         ]);
-        $vm->setTemplate('zf-module/helper/module-description.phtml');
-
-        return $this->getView()->render($vm);
     }
 }

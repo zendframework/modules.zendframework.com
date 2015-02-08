@@ -4,7 +4,6 @@ namespace User\View\Helper;
 
 use User\Mapper;
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Model\ViewModel;
 
 class NewUsers extends AbstractHelper
 {
@@ -36,12 +35,9 @@ class NewUsers extends AbstractHelper
     {
         $users = $this->userMapper->findAll(16, 'created_at', 'DESC');
 
-        $vm = new ViewModel([
+        return $this->getView()->render('user/helper/new-users', [
             'users' => $users,
         ]);
-        $vm->setTemplate('user/helper/new-users');
-
-        return $this->getView()->render($vm);
     }
 
     /**

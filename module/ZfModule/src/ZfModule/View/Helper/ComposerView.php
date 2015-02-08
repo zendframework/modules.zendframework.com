@@ -3,7 +3,6 @@
 namespace ZfModule\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Model\ViewModel;
 
 class ComposerView extends AbstractHelper
 {
@@ -15,11 +14,8 @@ class ComposerView extends AbstractHelper
      */
     public function __invoke($composerConf)
     {
-        $vm = new ViewModel([
+        return $this->getView()->render('zf-module/helper/composer-view.phtml', [
             'composerConf' => json_decode($composerConf, true),
         ]);
-        $vm->setTemplate('zf-module/helper/composer-view.phtml');
-
-        return $this->getView()->render($vm);
     }
 }
