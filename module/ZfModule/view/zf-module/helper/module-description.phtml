@@ -1,13 +1,13 @@
 <div class="row">
     <div class="hidden-xs col-sm-2">
-        <img src="<?php echo $this->escapeHtmlAttr($module['photo_url']) ?>" alt="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" class="thumbnail img-responsive">
+        <img src="<?php echo $this->escapeHtmlAttr($this->photoUrl); ?>" alt="<?php echo $this->escapeHtmlAttr($this->owner); ?>" class="thumbnail img-responsive">
     </div>
     <div class="col-xs-7 col-sm-6">
-        <p><strong><?php echo $this->escapeHtml($module['name']) ?></strong></p>
-        <p><span class="zf-green">Submitter:</span> <?php echo $this->escapeHtml($module['owner']) ?></p>
-        <p><span class="zf-green">Created:</span> <?php echo $this->dateFormat(new DateTime($module['created_at']), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT); ?></p>
+        <p><strong><?php echo $this->escapeHtml($this->name); ?></strong></p>
+        <p><span class="zf-green">Submitter:</span> <?php echo $this->escapeHtml($this->owner); ?></p>
+        <p><span class="zf-green">Created:</span> <?php echo $this->dateFormat(new DateTime($this->createdAt), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT); ?></p>
     </div>
     <div class="col-xs-4">
-        <a href="<?php echo $this->escapeHtmlAttr($module['url']) ?>">Show module on GitHub</a>
+        <a href="<?php echo $this->escapeHtmlAttr($this->url); ?>">Show module on GitHub</a>
     </div>
 </div>
