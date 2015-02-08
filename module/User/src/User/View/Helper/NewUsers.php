@@ -27,9 +27,6 @@ class NewUsers extends AbstractHelper
     }
 
     /**
-     * __invoke
-     *
-     * @access public
      * @return string
      */
     public function __invoke()

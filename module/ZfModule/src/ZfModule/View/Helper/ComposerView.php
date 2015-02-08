@@ -8,9 +8,7 @@ use Zend\View\Model\ViewModel;
 class ComposerView extends AbstractHelper
 {
     /**
-     * __invoke
-     *
-     * @access public
+     * @param string $composerConf
      * @return string
      */
     public function __invoke($composerConf)

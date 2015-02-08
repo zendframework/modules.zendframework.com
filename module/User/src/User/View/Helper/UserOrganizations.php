@@ -27,9 +27,6 @@ class UserOrganizations extends AbstractHelper
     }
 
     /**
-     * __invoke
-     *
-     * @access public
      * @return string
      */
     public function __invoke()

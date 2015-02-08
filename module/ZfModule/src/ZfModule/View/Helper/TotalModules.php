@@ -26,10 +26,7 @@ class TotalModules extends AbstractHelper
     }
 
     /**
-     * __invoke
-     *
-     * @access public
-     * @return string
+     * @return int
      */
     public function __invoke()
     {

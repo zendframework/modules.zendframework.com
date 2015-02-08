@@ -8,9 +8,8 @@ use Zend\View\Model\ViewModel;
 class ModuleView extends AbstractHelper
 {
     /**
-     * __invoke
-     *
-     * @access public
+     * @param array $module
+     * @param string $button
      * @return string
      */
     public function __invoke($module, $button = 'submit')
