@@ -13,7 +13,6 @@
         <?php
         echo $this->headLink(['rel' => 'shortcut icon', 'href' => $this->basePath() . '/favicon.ico'])
                 ->appendStylesheet($this->basePath() . '/css/bootstrap.min.css')
-                ->appendStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
                 ->appendStylesheet($this->basePath() . '/css/style.css')
                 ->appendStylesheet($this->basePath() . '/css/slide.css')
                 ->appendStylesheet($this->basePath() . '/css/jquery.livesearch.css')
@@ -28,7 +27,7 @@
             <div class="tab">
                 <ul class="login">
                     <li class="left">&nbsp;</li>
-                    <li><a href="<?php echo $this->url('home') ?>"><i class="icon-home icon-white"></i> Home</a></li>
+                    <li><a href="<?php echo $this->url('home') ?>">Home</a></li>
                     <?php
                     $userDisplayName = $this->zfcUserDisplayName();
                     if ($userDisplayName):
@@ -57,14 +56,11 @@
         <div class="container-fluid landing-intro">
             <div class="container">
                 <div class="row">
-                    <div class="span8">
+                    <div class="col-md-8 col-sm-12">
                         <h1 class="zf-green">
-                            Welcome to the ZF2 Modules Site
-                            <br />
-                            <small>
-                                Find one of <strong><?php echo $this->totalModules() ?></strong> modules that fits your needs.
-                            </small>
+                            <strong>Welcome to the ZF2 Modules Site</strong>
                         </h1>
+                        <h3 class="text-muted">Find one of <strong><?php echo $this->totalModules() ?></strong> modules that fits your needs.</h3>
                         <div>
                             <p>
                                 This website is a work-in-progress. In the future you will be able to use this website to   browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.
@@ -76,7 +72,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="span4">
+                    <div class="col-md-4 hidden-xs hidden-sm">
                         <img class="attentionimage pull-right" src="<?php echo $this->basePath('/img/rsz_logo.png') ?>" alt="ZF Modules"/>
                     </div>
                 </div>
@@ -85,7 +81,9 @@
 
 
         <div class="container main-content">
-            <?php echo $this->content; ?>
+            <div class="container-fluid">
+                <?php echo $this->content; ?>
+            </div>
         </div>
         <hr style="clear:both" />
 
@@ -95,7 +93,7 @@
         echo $this->inlineScript()
                 ->prependFile($this->basePath() . '/js/jquery.livesearch.js')
                 ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                ->prependFile($this->basePath() . '/js/jquery.min.js')
+                ->prependFile($this->basePath() . '/js/jquery-1.11.2.min.js')
         ?>
     </body>
 </html>

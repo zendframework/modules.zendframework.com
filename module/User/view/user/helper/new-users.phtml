@@ -1,24 +1,22 @@
 <div class="block">
-    <div class="row">
-        <div class="span4">
-            <h4>New Developers</h4>
-            <hr>
-        </div>
-    </div>
+    <h4><strong>New Developers</strong></h4>
+    <hr>
     <?php $count = 0; ?>
     <?php foreach ($this->users as $user): ?>
-        <?php if ($count % 4 == 0): ?>
-            <div class="row-fluid" style="margin-bottom:10px;">
-                <div class="span12">
-        <?php endif; ?>
-                    <div class="span3">
-                        <a href="https://github.com/<?php echo $this->escapeHtmlAttr($user->getUserName()); ?>" data-delay="0" rel="tooltip" title="<?php echo $this->escapeHtmlAttr($user->getUserName()); ?>" class="thumbnail">
-                            <img src="<?php echo $this->escapeHtmlAttr($user->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($user->getUserName()); ?>">
-                        </a>
+        <?php if($user->getPhotoUrl()): ?>
+            <?php if ($count % 4 == 0): ?>
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-md-12">
+            <?php endif; ?>
+                        <div class="col-md-3">
+                            <a href="https://github.com/<?php echo $this->escapeHtmlAttr($user->getUserName()); ?>" data-delay="0" rel="tooltip" title="<?php echo $this->escapeHtmlAttr($user->getUserName()); ?>" class="thumbnail">
+                                <img src="<?php echo $this->escapeHtmlAttr($user->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($user->getUsername()) ?>" class="img-responsive">
+                            </a>
+                        </div>
+            <?php if ($count++ % 4 == 3): ?>
                     </div>
-        <?php if ($count++ % 4 == 3): ?>
                 </div>
-            </div>
+            <?php endif; ?>
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
