@@ -51,4 +51,32 @@ class NewUsersTest extends PHPUnit_Framework_TestCase
 
         $helper();
     }
+
+    public function testCanSetViewTemplate()
+    {
+        $viewTemplate = 'foo';
+
+        $userMapper = $this->getMockBuilder(Mapper\User::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $view = $this->getMockBuilder(View\Renderer\RendererInterface::class)->getMock();
+
+        $view
+            ->expects($this->once())
+            ->method('render')
+            ->with(
+                $this->equalTo($viewTemplate),
+                $this->equalTo([
+                    'users' => null,
+                ])
+            )
+        ;
+
+        $helper = new Helper\NewUsers($userMapper);
+        $helper->setView($view);
+
+        $helper();
+    }
 }
