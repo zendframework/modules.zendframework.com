@@ -15,7 +15,7 @@ class TotalModules extends AbstractHelper
     /**
      * @var int
      */
-    protected $total;
+    private $total;
 
     /**
      * @param Mapper\Module $moduleMapper
