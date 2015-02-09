@@ -15,8 +15,10 @@ use Zend\EventManager\SharedEventManager;
  */
 class LoginListenerTest extends PHPUnit_Framework_TestCase
 {
-    /** @var LoginListener */
-    protected $listener;
+    /**
+     * @var LoginListener
+     */
+    private $listener;
 
     protected function setUp()
     {
