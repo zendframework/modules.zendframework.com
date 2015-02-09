@@ -36,24 +36,6 @@ class Module extends AbstractModule
         });
     }
 
-    public function getServiceConfig()
-    {
-        return [
-            'factories' => [
-                'zfcuser_user_mapper' => function ($sm) {
-                    $options = $sm->get('zfcuser_module_options');
-                    $mapper = new Mapper\User();
-                    $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
-                    $entityClass = $options->getUserEntityClass();
-                    $mapper->setEntityPrototype(new $entityClass());
-                    $mapper->setHydrator(new Mapper\UserHydrator());
-
-                    return $mapper;
-                },
-            ],
-        ];
-    }
-
     public function getAutoloaderConfig()
     {
         return [];

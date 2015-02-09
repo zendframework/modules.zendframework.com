@@ -2,6 +2,7 @@
 
 use User\Controller;
 use User\GitHub;
+use User\Mapper;
 
 return [
     'controllers' => [
@@ -32,6 +33,9 @@ return [
         ],
     ],
     'service_manager' => [
+        'factories' => [
+            'zfcuser_user_mapper' => Mapper\UserFactory::class,
+        ],
         'invokables' => [
             GitHub\LoginListener::class => GitHub\LoginListener::class,
         ],
