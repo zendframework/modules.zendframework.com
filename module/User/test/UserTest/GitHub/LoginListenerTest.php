@@ -25,6 +25,11 @@ class LoginListenerTest extends PHPUnit_Framework_TestCase
         $this->listener = new LoginListener();
     }
 
+    protected function tearDown()
+    {
+        unset($this->listener);
+    }
+
     /**
      * @covers \User\GitHub\LoginListener::attachShared
      */
