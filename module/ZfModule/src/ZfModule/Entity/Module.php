@@ -103,8 +103,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Get id.
-     *
      * @return int
      */
     public function getId()
@@ -113,8 +111,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Set id.
-     *
      * @param int $id
      * @return ModuleInterface
      */
@@ -126,8 +122,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Get Url
-     *
      * @return string
      */
     public function getUrl()
@@ -136,8 +130,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Set Url
-     *
      * @param string $url
      * @return ModuleInterface
      */
@@ -149,8 +141,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Get Description
-     *
      * @return string
      */
     public function getDescription()
@@ -159,8 +149,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Set Description
-     *
      * @param string $description
      * @return ModuleInterface
      */
@@ -172,8 +160,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Get Name
-     *
      * @return string
      */
     public function getName()
@@ -182,8 +168,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Set Name
-     *
      * @param string $name
      * @return ModuleInterface
      */
