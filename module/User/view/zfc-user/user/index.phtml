@@ -57,12 +57,4 @@
         </div>
     </div>
 </div>
-
-<?php
-$url = $this->url('zf-module');
-$this->inlineScript()->appendScript(<<<EOT
-
-$("#repositories").load("$url");
-
-EOT
-);
+<?php $this->inlineScript()->appendScript('$("#repositories").load("' . $this->url('zf-module') . '");'); ?>
