@@ -11,7 +11,7 @@
             </div>
         </div>
         <?php foreach ($this->flashMessenger()->getMessages() as $message): ?>
-            <h3 class="zf-green"><?php echo $message ?></h3>
+            <h3 class="zf-green"><?php echo $message; ?></h3>
         <?php endforeach; ?>
 
         <ul class="nav nav-tabs">
@@ -42,17 +42,17 @@
                 ?>
             </div>
             <div class="tab-pane" id="repositories">
-                <div class="well" style="text-align:center">Synchronizing with GitHub <img src="<?php echo $this->basePath('/img/ajax-loader.gif') ?>" alt="loading" /></div>
+                <div class="well" style="text-align:center">Synchronizing with GitHub <img src="<?php echo $this->basePath('/img/ajax-loader.gif'); ?>" alt="loading" /></div>
             </div>
 
             <div class="tab-pane" id="organizations">
-                <?php echo $this->userOrganizations() ?>
+                <?php echo $this->userOrganizations(); ?>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="sidebar" style="text-align: center">
-            <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
+            <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName(); ?>!</h3>
             <?php /* @var User\Entity\User $identity */ ?>
             <?php $identity = $this->zfcUserIdentity(); ?>
             <img class="thumbnail" src="<?php echo $identity->getPhotoUrl(); ?>" alt="<?php echo $this->zfcUserDisplayName() ?>"/>
