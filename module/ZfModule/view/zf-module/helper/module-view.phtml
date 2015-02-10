@@ -1,56 +1,38 @@
-<div class="row-fluid module-row">
-    <div class="span12">
-        <div class="row-fluid">
-            <div class="module-info">
-                <div class="span5 module-author">
-                    <div class="row-fluid">
-                        <div class="span2">
-                            <img src="<?php echo $this->escapeHtmlAttr($module['photo_url']) ?>" alt="<?php echo $this->escapeHtmlAttr($module['name']) ?>" />
-                        </div>
-                        <div class="span10">
-                            <strong><?php echo $this->escapeHtml($module['owner']) ?></strong>
-                            <p>
-                                <span class="author-label">Github:</span>
-                                <a href="<?php echo $this->escapeHtmlAttr($module['url']) ?>"><?php echo $this->escapeHtml($module['name']) ?></a><br />
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="span5">
-                    <strong><?php echo $this->escapeHtml($module['name']) ?></strong>
-                    <p>
-                        <span class="author-label">Created:</span>
-                        <?php echo (new DateTime($module['created_at']))->format('Y-m-d') ?><br />
-                    </p>
-                </div>
-                <div class="span1">
-                    <br />
-                    <?php if ($button == 'submit'): ?>
-                        <form action="<?php echo $this->url('zf-module/add') ?>" method="post">
-                            <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" />
-                            <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($module['name']) ?>" />
-                            <input type="submit" class="btn btn-success"/>
-                        </form>
-                    <?php else: ?>
-                        <form action="<?php echo $this->url('zf-module/remove') ?>" method="post">
-                            <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" />
-                            <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($module['name']) ?>" />
-                            <input type="submit" value="Remove" class="btn btn-danger"/>
-                        </form>
-                    <?php endif; ?>
-                </div>
-                <div style="clear: both;"></div>
+<div class="module-row">
+    <div class="module-info">
+        <div class="row">
+            <div class="hidden-xs col-sm-2">
+                <img src="<?php echo $this->escapeHtmlAttr($module['photo_url']) ?>" alt="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" class="thumbnail img-responsive">
+            </div>
+            <div class="col-xs-7 col-sm-6">
+                <p>
+                    <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module['owner']), 'module' => $this->escapeUrl($module['name'])]) ?>">
+                        <strong><?php echo $this->escapeHtml($module['name']) ?></strong>
+                    </a>
+                </p>
+                <p><span class="zf-green">Submitter:</span> <?php echo $this->escapeHtml($module['owner']) ?></p>
+                <p><span class="zf-green">Created:</span> <?php echo $this->dateFormat(new DateTime($module['created_at']), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT); ?></p>
+            </div>
+            <div class="col-xs-4">
+                <a href="<?php echo $this->escapeHtmlAttr($module['url']) ?>">Show module on GitHub</a>
+                <hr>
+                <?php if ($button == 'submit'): ?>
+                    <form action="<?php echo $this->url('zf-module/add') ?>" method="post">
+                        <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" />
+                        <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($module['name']) ?>" />
+                        <input type="submit" class="btn btn-success"/>
+                    </form>
+                <?php else: ?>
+                    <form action="<?php echo $this->url('zf-module/remove') ?>" method="post">
+                        <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" />
+                        <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($module['name']) ?>" />
+                        <input type="submit" value="Remove" class="btn btn-danger"/>
+                    </form>
+                <?php endif; ?>
             </div>
         </div>
-        <div class="row-fluid">
-            <div class="module-description">
-                <div class="span12">
-                    <p>
-                        <?php echo $this->escapeHtml($module['description']) ?>
-                    </p>
-                </div>
-                <div style="clear: both;"></div>
-            </div>
-        </div>
+    </div>
+    <div class="module-description">
+        <p><?php echo $this->escapeHtml($module['description']) ?></p>
     </div>
 </div>

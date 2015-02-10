@@ -1,7 +1,7 @@
 <div class="row">
-    <div class="span8">
-        <div class="row-fluid">
-            <div class="span12">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="navbar">
                     <div class="navbar-inner">
                         <h1 class="zf-green">Available Modules</h1>
@@ -19,7 +19,7 @@
             <li><a href="#repositories" data-toggle="tab">My Modules</a></li>
             <li><a href="#organizations" data-toggle="tab">My Organizations</a></li>
         </ul>
-
+        <br />
         <div class="tab-content">
             <div class="tab-pane active" id="modules">
                 <?php
@@ -49,8 +49,8 @@
             </div>
         </div>
     </div>
-    <div class="span4">
-        <div class="sidebar">
+    <div class="col-md-4">
+        <div class="sidebar" style="text-align: center">
             <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
             <img class="thumbnail" src="<?php echo $this->zfcUserIdentity()->getPhotoUrl() ?>" alt="<?php echo $this->zfcUserDisplayName() ?>"/>
             <br/>

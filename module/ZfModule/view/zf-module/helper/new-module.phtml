@@ -1,16 +1,12 @@
 <div class="block">
-    <div class="row">
-        <div class="span4">
-            <h4>New Modules</h4>
-            <hr>
-        </div>
-    </div>
+    <h4><strong>New Modules</strong></h4>
+    <hr>
     <?php foreach ($modules as $module): ?>
-        <div class="row-fluid">
-            <div class="span3">
-                <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getName()) ?>" class="avatar">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getName()) ?>" class="thumbnail img-responsive">
             </div>
-            <div class="span9">
+            <div class="col-md-9">
                 <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
                     <?php echo $this->escapeHtml($module->getName()); ?>
                 </a>
