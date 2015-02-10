@@ -3,11 +3,7 @@
     <p>
         There is no sign-up form anymore! Just log in with your GitHub account. All your information will be provided by GitHub.
     </p>
-    <?php $socialSignIn = true; ?>
     <?php foreach ($this->options->getEnabledProviders() as $provider): ?>
-        <?php if ($socialSignIn): ?>
-            <?php $socialSignIn = false; ?>
-        <?php endif; ?>
         <p><?php echo $this->socialSignInButton($provider); ?></p>
     <?php endforeach; ?>
 </div>
