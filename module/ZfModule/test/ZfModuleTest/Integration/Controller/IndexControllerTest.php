@@ -5,6 +5,8 @@ namespace ZfModuleTest\Integration\Controller;
 use Application\Service;
 use ApplicationTest\Integration\Util\Bootstrap;
 use stdClass;
+use Zend\Authentication\AuthenticationService;
+use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use ZfModule\Controller;
 use ZfModule\Mapper;
@@ -18,16 +20,55 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->setApplicationConfig(Bootstrap::getConfig());
     }
 
-    public function testIndexActionCanBeAccessed()
+    public function testIndexActionRedirectsIfNotAuthenticated()
     {
+        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
+
+        $authenticationService
+            ->expects($this->once())
+            ->method('hasIdentity')
+            ->willReturn(false)
+        ;
+
+        $serviceManager = $this->getApplicationServiceLocator();
+
+        $serviceManager
+            ->setAllowOverride(true)
+            ->setService(
+                'zfcuser_auth_service',
+                $authenticationService
+            )
+        ;
+
         $this->dispatch('/module');
 
         $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('index');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+
+        $this->assertRedirectTo('/user/login');
     }
 
-    public function testOrganizationActionCanBeAccessed()
+    public function testOrganizationActionRedirectsIfNotAuthenticated()
     {
+        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
+
+        $authenticationService
+            ->expects($this->once())
+            ->method('hasIdentity')
+            ->willReturn(false)
+        ;
+
+        $serviceManager = $this->getApplicationServiceLocator();
+
+        $serviceManager
+            ->setAllowOverride(true)
+            ->setService(
+                'zfcuser_auth_service',
+                $authenticationService
+            )
+        ;
+
         $owner = 'foo';
 
         $url = sprintf(
@@ -39,6 +80,9 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('organization');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+
+        $this->assertRedirectTo('/user/login');
     }
 
     public function testViewActionCanBeAccessed()
