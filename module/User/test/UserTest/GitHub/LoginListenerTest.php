@@ -8,19 +8,26 @@ use ReflectionClass;
 use User\Entity\User;
 use User\GitHub\LoginListener;
 use Zend\EventManager\Event;
-use Zend\EventManager\EventManager;
+use Zend\EventManager\SharedEventManager;
 
 /**
  * Test case for {@see \User\GitHub\LoginListener}
  */
 class LoginListenerTest extends PHPUnit_Framework_TestCase
 {
-    /** @var LoginListener */
-    protected $listener;
+    /**
+     * @var LoginListener
+     */
+    private $listener;
 
     protected function setUp()
     {
         $this->listener = new LoginListener();
+    }
+
+    protected function tearDown()
+    {
+        unset($this->listener);
     }
 
     /**
@@ -28,11 +35,14 @@ class LoginListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testAttach()
     {
-        $eventManager = new EventManager();
-        $this->listener->attachShared($eventManager->getSharedManager());
+        $sharedEventManager = new SharedEventManager();
 
-        $listeners = $eventManager->getSharedManager()
-            ->getListeners('ScnSocialAuth\Authentication\Adapter\HybridAuth', 'registerViaProvider');
+        $this->listener->attachShared($sharedEventManager);
+
+        $listeners = $sharedEventManager->getListeners(
+            'ScnSocialAuth\Authentication\Adapter\HybridAuth',
+            'registerViaProvider'
+        );
 
         $this->assertFalse($listeners->isEmpty());
     }
