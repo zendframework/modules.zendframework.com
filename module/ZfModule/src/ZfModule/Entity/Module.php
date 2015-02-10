@@ -112,7 +112,7 @@ class Module implements ModuleInterface
 
     /**
      * @param int $id
-     * @return ModuleInterface
+     * @return self
      */
     public function setId($id)
     {
@@ -131,7 +131,7 @@ class Module implements ModuleInterface
 
     /**
      * @param string $url
-     * @return ModuleInterface
+     * @return self
      */
     public function setUrl($url)
     {
@@ -150,7 +150,7 @@ class Module implements ModuleInterface
 
     /**
      * @param string $description
-     * @return ModuleInterface
+     * @return self
      */
     public function setDescription($description)
     {
@@ -169,7 +169,7 @@ class Module implements ModuleInterface
 
     /**
      * @param string $name
-     * @return ModuleInterface
+     * @return self
      */
     public function setName($name)
     {
