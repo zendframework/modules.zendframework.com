@@ -119,6 +119,63 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_404);
     }
 
+    public function testViewActionSetsHttp404ResponseCodeIfRepositoryMetaDataNotFound()
+    {
+        $vendor = 'foo';
+        $module = 'bar';
+
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('findByName')
+            ->with($this->equalTo($module))
+            ->willReturn(new stdClass())
+        ;
+
+        $repositoryRetriever = $this->getMockBuilder(Service\RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositoryMetadata')
+            ->with(
+                $this->equalTo($vendor),
+                $this->equalTo($module)
+            )
+            ->willReturn(null)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                'zfmodule_mapper_module',
+                $moduleMapper
+            )
+            ->setService(
+                Service\RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+        ;
+
+        $url = sprintf(
+            '/%s/%s',
+            $vendor,
+            $module
+        );
+
+        $this->dispatch($url);
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('not-found');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_404);
+    }
+
     public function testViewActionCanBeAccessed()
     {
         $vendor = 'foo';
