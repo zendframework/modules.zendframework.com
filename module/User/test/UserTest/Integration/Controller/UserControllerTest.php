@@ -6,7 +6,6 @@ use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
 use User\Entity\User;
 use User\View\Helper\UserOrganizations;
-use Zend\Authentication\AuthenticationService;
 use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\View;
@@ -42,23 +41,6 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function testIndexActionSetsModulesIfAuthenticated()
     {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        $authenticationService
-            ->expects($this->any())
-            ->method('hasIdentity')
-            ->willReturn(true)
-        ;
-
-        $authenticationService
-            ->expects($this->any())
-            ->method('getIdentity')
-            ->willReturn(new User())
-        ;
-
         $moduleService = $this->getMockBuilder(Service\Module::class)
             ->disableOriginalConstructor()
             ->getMock()
@@ -74,10 +56,6 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
         $serviceManager
             ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
             ->setService(
                 'zfmodule_service_module',
                 $moduleService
@@ -120,6 +98,8 @@ class UserControllerTest extends AbstractHttpControllerTestCase
                 $totalModules
             )
         ;
+
+        $this->authenticatedAs(new User());
 
         $this->dispatch('/user');
 
