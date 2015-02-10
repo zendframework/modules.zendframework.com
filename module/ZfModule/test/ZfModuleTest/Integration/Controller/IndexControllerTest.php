@@ -85,6 +85,35 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertRedirectTo('/user/login');
     }
 
+    public function testAddActionRedirectsIfNotAuthenticated()
+    {
+        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
+
+        $authenticationService
+            ->expects($this->once())
+            ->method('hasIdentity')
+            ->willReturn(false)
+        ;
+
+        $serviceManager = $this->getApplicationServiceLocator();
+
+        $serviceManager
+            ->setAllowOverride(true)
+            ->setService(
+                'zfcuser_auth_service',
+                $authenticationService
+            )
+        ;
+
+        $this->dispatch('/module/add');
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('add');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+
+        $this->assertRedirectTo('/user/login');
+    }
+
     public function testViewActionCanBeAccessed()
     {
         $vendor = 'foo';
