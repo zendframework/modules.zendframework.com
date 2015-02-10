@@ -22,15 +22,11 @@
         <br />
         <div class="tab-content">
             <div class="tab-pane active" id="modules">
-                <?php
-                if (empty($modules)) {
-                    ?>
-                    <div class="alert alert-block">No modules have been submitted yet</div>
-                    <?php
-                }
-                /* @var ZfModule\Entity\Module[] $modules */
-                foreach ($modules as $module) {
-                    echo $this->moduleView([
+                <?php if (empty($modules)): ?>
+                <div class="alert alert-block">No modules have been submitted yet</div>
+                <?php endif; ?>
+                <?php foreach ($modules as $module): ?>
+                <?php echo $this->moduleView([
                         'owner' => $module->getOwner(),
                         'name' => $module->getName(),
                         'created_at' => $module->getCreatedAt(),
@@ -38,8 +34,8 @@
                         'photo_url' => $module->getPhotoUrl(),
                         'description' => $module->getDescription(),
                     ], 'remove');
-                }
                 ?>
+                <?php endforeach; ?>
             </div>
             <div class="tab-pane" id="repositories">
                 <div class="well" style="text-align:center">Synchronizing with GitHub <img src="<?php echo $this->basePath('/img/ajax-loader.gif'); ?>" alt="loading" /></div>
