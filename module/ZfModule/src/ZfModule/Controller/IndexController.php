@@ -68,7 +68,7 @@ class IndexController extends AbstractActionController
         /* HOTFIX for https://github.com/EvanDotPro/EdpGithub/issues/23 - markdown needs to be the last request */
         $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md', true);
 
-        $viewModel = new ViewModel([
+        return new ViewModel([
             'vendor' => $vendor,
             'module' => $module,
             'repository' => $repository,
@@ -76,8 +76,6 @@ class IndexController extends AbstractActionController
             'composerConf' => $composerConf,
             'license' => $license,
         ]);
-
-        return $viewModel;
     }
 
     public function indexAction()
