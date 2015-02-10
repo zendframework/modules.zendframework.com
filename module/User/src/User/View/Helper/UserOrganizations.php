@@ -4,7 +4,6 @@ namespace User\View\Helper;
 
 use EdpGithub\Client;
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Model\ViewModel;
 
 class UserOrganizations extends AbstractHelper
 {
@@ -32,11 +31,9 @@ class UserOrganizations extends AbstractHelper
     public function __invoke()
     {
         $orgs = $this->githubClient->api('current_user')->orgs();
-        $vm = new ViewModel([
+
+        return $this->getView()->render('user/helper/user-organizations.phtml', [
             'orgs' => $orgs,
         ]);
-        $vm->setTemplate('user/helper/user-organizations.phtml');
-
-        return $this->getView()->render($vm);
     }
 }
