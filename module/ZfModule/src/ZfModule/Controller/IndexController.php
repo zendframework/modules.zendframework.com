@@ -7,9 +7,14 @@ use EdpGithub\Collection\RepositoryCollection;
 use Zend\Http;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use ZfcUser\Controller\Plugin;
 use ZfModule\Mapper;
 use ZfModule\Service;
 
+/**
+ * @method Http\Request getRequest()
+ * @method Plugin\ZfcUserAuthentication zfcUserAuthentication()
+ */
 class IndexController extends AbstractActionController
 {
     /**
