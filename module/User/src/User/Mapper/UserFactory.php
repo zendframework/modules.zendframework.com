@@ -5,6 +5,7 @@ namespace User\Mapper;
 use Zend\Db;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfcUser\Mapper;
 use ZfcUser\Options;
 
 class UserFactory implements FactoryInterface
@@ -27,7 +28,7 @@ class UserFactory implements FactoryInterface
 
         $mapper->setDbAdapter($dbAdapter);
         $mapper->setEntityPrototype(new $entityClass());
-        $mapper->setHydrator(new UserHydrator());
+        $mapper->setHydrator(new Mapper\UserHydrator());
 
         return $mapper;
     }
