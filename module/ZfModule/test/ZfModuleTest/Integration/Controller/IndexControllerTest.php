@@ -81,6 +81,44 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertRedirectTo('/user/login');
     }
 
+    public function testViewActionSetsHttp404ResponseCodeIfModuleNotFound()
+    {
+        $vendor = 'foo';
+        $module = 'bar';
+
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('findByName')
+            ->with($this->equalTo($module))
+            ->willReturn(null)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                'zfmodule_mapper_module',
+                $moduleMapper
+            )
+        ;
+
+        $url = sprintf(
+            '/%s/%s',
+            $vendor,
+            $module
+        );
+
+        $this->dispatch($url);
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('not-found');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_404);
+    }
+
     public function testViewActionCanBeAccessed()
     {
         $vendor = 'foo';
