@@ -46,11 +46,18 @@ class Module implements ModuleInterface
      */
     private $photoUrl;
 
+    /**
+     * @return string
+     */
     public function getPhotoUrl()
     {
         return $this->photoUrl;
     }
 
+    /**
+     * @param string $photoUrl
+     * @return self
+     */
     public function setPhotoUrl($photoUrl)
     {
         $this->photoUrl = $photoUrl;
@@ -58,11 +65,18 @@ class Module implements ModuleInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getOwner()
     {
         return $this->owner;
     }
 
+    /**
+     * @param string $owner
+     * @return self
+     */
     public function setOwner($owner)
     {
         $this->owner = $owner;
@@ -70,11 +84,18 @@ class Module implements ModuleInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @param string $updatedAt
+     * @return self
+     */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
@@ -82,6 +103,9 @@ class Module implements ModuleInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -95,6 +119,10 @@ class Module implements ModuleInterface
         return new DateTime($this->getCreatedAt());
     }
 
+    /**
+     * @param string $createdAt
+     * @return self
+     */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
