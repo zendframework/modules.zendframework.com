@@ -8,12 +8,10 @@ use Zend\View\Model\ViewModel;
 class ModuleDescription extends AbstractHelper
 {
     /**
-     * __invoke
-     *
-     * @access public
+     * @param array $module
      * @return string
      */
-    public function __invoke($module)
+    public function __invoke(array $module)
     {
         $vm = new ViewModel([
             'module' => $module,
