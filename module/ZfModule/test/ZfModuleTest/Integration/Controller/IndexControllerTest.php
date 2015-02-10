@@ -22,23 +22,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
     public function testIndexActionRedirectsIfNotAuthenticated()
     {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
-
-        $authenticationService
-            ->expects($this->once())
-            ->method('hasIdentity')
-            ->willReturn(false)
-        ;
-
-        $serviceManager = $this->getApplicationServiceLocator();
-
-        $serviceManager
-            ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
-        ;
+        $this->notAuthenticated();
 
         $this->dispatch('/module');
 
@@ -51,23 +35,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
     public function testOrganizationActionRedirectsIfNotAuthenticated()
     {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
-
-        $authenticationService
-            ->expects($this->once())
-            ->method('hasIdentity')
-            ->willReturn(false)
-        ;
-
-        $serviceManager = $this->getApplicationServiceLocator();
-
-        $serviceManager
-            ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
-        ;
+        $this->notAuthenticated();
 
         $owner = 'foo';
 
@@ -87,23 +55,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
     public function testAddActionRedirectsIfNotAuthenticated()
     {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
-
-        $authenticationService
-            ->expects($this->once())
-            ->method('hasIdentity')
-            ->willReturn(false)
-        ;
-
-        $serviceManager = $this->getApplicationServiceLocator();
-
-        $serviceManager
-            ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
-        ;
+        $this->notAuthenticated();
 
         $this->dispatch('/module/add');
 
@@ -116,23 +68,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
     public function testRemoveActionRedirectsIfNotAuthenticated()
     {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
-
-        $authenticationService
-            ->expects($this->once())
-            ->method('hasIdentity')
-            ->willReturn(false)
-        ;
-
-        $serviceManager = $this->getApplicationServiceLocator();
-
-        $serviceManager
-            ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
-        ;
+        $this->notAuthenticated();
 
         $this->dispatch('/module/remove');
 
@@ -197,5 +133,26 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('view');
+    }
+
+    private function notAuthenticated()
+    {
+        $authenticationService = $this->getMockBuilder(AuthenticationService::class)
+            ->getMock();
+
+        $authenticationService
+            ->expects($this->once())
+            ->method('hasIdentity')
+            ->willReturn(false);
+
+        $serviceManager = $this->getApplicationServiceLocator();
+
+        $serviceManager
+            ->setAllowOverride(true)
+            ->setService(
+                'zfcuser_auth_service',
+                $authenticationService
+            )
+        ;
     }
 }
