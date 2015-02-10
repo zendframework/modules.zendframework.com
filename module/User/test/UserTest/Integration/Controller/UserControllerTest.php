@@ -2,6 +2,7 @@
 
 namespace UserTest\Integration\Controller;
 
+use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
 use User\Entity\User;
 use User\View\Helper\UserOrganizations;
@@ -17,6 +18,8 @@ use ZfModule\View\Helper\TotalModules;
  */
 class UserControllerTest extends AbstractHttpControllerTestCase
 {
+    use AuthenticationTrait;
+
     protected function setUp()
     {
         parent::setUp();
@@ -26,23 +29,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function testIndexActionRedirectsIfNotAuthenticated()
     {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
-
-        $authenticationService
-            ->expects($this->once())
-            ->method('hasIdentity')
-            ->willReturn(false)
-        ;
-
-        $serviceManager = $this->getApplicationServiceLocator();
-
-        $serviceManager
-            ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
-        ;
+        $this->notAuthenticated();
 
         $this->dispatch('/user');
 

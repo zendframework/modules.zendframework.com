@@ -3,9 +3,9 @@
 namespace ZfModuleTest\Integration\Controller;
 
 use Application\Service;
+use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
 use stdClass;
-use Zend\Authentication\AuthenticationService;
 use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use ZfModule\Controller;
@@ -13,6 +13,8 @@ use ZfModule\Mapper;
 
 class IndexControllerTest extends AbstractHttpControllerTestCase
 {
+    use AuthenticationTrait;
+
     protected function setUp()
     {
         parent::setUp();
@@ -133,26 +135,5 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('view');
-    }
-
-    private function notAuthenticated()
-    {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)
-            ->getMock();
-
-        $authenticationService
-            ->expects($this->once())
-            ->method('hasIdentity')
-            ->willReturn(false);
-
-        $serviceManager = $this->getApplicationServiceLocator();
-
-        $serviceManager
-            ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
-        ;
     }
 }
