@@ -11,13 +11,23 @@ class User extends ZfcUser
      */
     private $photoUrl;
 
+    /**
+     * @var string
+     */
     private $createdAt;
 
+    /**
+     * @return string
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param string $createdAt
+     * @return self
+     */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
@@ -25,7 +35,6 @@ class User extends ZfcUser
         return $this;
     }
     /**
-     * get Photo Url
      * @return string
      */
     public function getPhotoUrl()
@@ -34,9 +43,8 @@ class User extends ZfcUser
     }
 
     /**
-     * set Photo Url
-     * @param string $photo
-     * @return UserInterface
+     * @param string $photoUrl
+     * @return self
      */
     public function setPhotoUrl($photoUrl)
     {
