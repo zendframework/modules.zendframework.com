@@ -9,9 +9,9 @@ class User extends ZfcUser
     /**
      * @var string
      */
-    protected $photoUrl;
+    private $photoUrl;
 
-    protected $createdAt;
+    private $createdAt;
 
     public function getCreatedAt()
     {
