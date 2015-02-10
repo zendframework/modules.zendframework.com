@@ -38,14 +38,7 @@
     </div>
     <div class="col-md-4">
         <div class="sidebar">
-            <?php echo $this->moduleDescription([
-                'owner' => $repository->owner->login,
-                'name' => $repository->name,
-                'created_at' => $repository->created_at,
-                'url' => $repository->html_url,
-                'photo_url' => $repository->owner->avatar_url,
-                'description' => $repository->description
-            ]) ?>
+            <?php echo $this->moduleDescription($repository); ?>
         </div>
     </div>
 </div>
