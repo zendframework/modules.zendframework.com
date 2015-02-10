@@ -22,20 +22,21 @@
         <br />
         <div class="tab-content">
             <div class="tab-pane active" id="modules">
-                <?php if (empty($modules)): ?>
+            <?php if (0 === count($modules)): ?>
                 <div class="alert alert-block">No modules have been submitted yet</div>
-                <?php endif; ?>
+            <?php else: ?>
                 <?php foreach ($modules as $module): ?>
-                <?php echo $this->moduleView([
-                        'owner' => $module->getOwner(),
-                        'name' => $module->getName(),
-                        'created_at' => $module->getCreatedAt(),
-                        'url' => $module->getUrl(),
-                        'photo_url' => $module->getPhotoUrl(),
-                        'description' => $module->getDescription(),
-                    ], 'remove');
-                ?>
+                    <?php echo $this->moduleView([
+                            'owner' => $module->getOwner(),
+                            'name' => $module->getName(),
+                            'created_at' => $module->getCreatedAt(),
+                            'url' => $module->getUrl(),
+                            'photo_url' => $module->getPhotoUrl(),
+                            'description' => $module->getDescription(),
+                        ], 'remove');
+                    ?>
                 <?php endforeach; ?>
+            <?php endif; ?>
             </div>
             <div class="tab-pane" id="repositories">
                 <div class="well" style="text-align:center">Synchronizing with GitHub <img src="<?php echo $this->basePath('/img/ajax-loader.gif'); ?>" alt="loading" /></div>
