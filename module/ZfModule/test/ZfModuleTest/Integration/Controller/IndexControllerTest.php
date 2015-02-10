@@ -5,9 +5,11 @@ namespace ZfModuleTest\Integration\Controller;
 use Application\Service;
 use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
+use EdpGithub\Collection;
 use stdClass;
 use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use ZfcUser\Entity\User;
 use ZfModule\Controller;
 use ZfModule\Mapper;
 
@@ -33,6 +35,47 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
         $this->assertRedirectTo('/user/login');
+    }
+
+    public function testIndexActionFetches100MostRecentlyUpdatedUserRepositories()
+    {
+        $this->authenticatedAs(new User());
+
+        $repositoryCollection = $this->getMockBuilder(Collection\RepositoryCollection::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever = $this->getMockBuilder(Service\RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getAuthenticatedUserRepositories')
+            ->with($this->equalTo([
+                'type' => 'all',
+                'per_page' => 100,
+                'sort' => 'updated',
+                'direction' => 'desc',
+            ]))
+            ->willReturn($repositoryCollection)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                Service\RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+        ;
+
+        $this->dispatch('/module');
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('index');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
     public function testOrganizationActionRedirectsIfNotAuthenticated()
