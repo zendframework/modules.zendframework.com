@@ -52,7 +52,9 @@
     <div class="col-md-4">
         <div class="sidebar" style="text-align: center">
             <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
-            <img class="thumbnail" src="<?php echo $this->zfcUserIdentity()->getPhotoUrl() ?>" alt="<?php echo $this->zfcUserDisplayName() ?>"/>
+            <?php /* @var User\Entity\User $identity */ ?>
+            <?php $identity = $this->zfcUserIdentity(); ?>
+            <img class="thumbnail" src="<?php echo $identity->getPhotoUrl(); ?>" alt="<?php echo $this->zfcUserDisplayName() ?>"/>
             <br/>
         </div>
     </div>
