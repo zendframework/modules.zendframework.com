@@ -1077,6 +1077,83 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         );
     }
 
+    public function testRemoveActionDeletesModuleIfPermissionsAreSufficientAndItHasBeenRegistered()
+    {
+        $this->authenticatedAs(new User());
+
+        $repository = 'foo';
+        $owner = 'johndoe';
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $module = new stdClass();
+        $module->name = 'foo';
+        $module->html_url = 'http://example.org';
+        $module->fork = false;
+        $module->permissions = new stdClass();
+        $module->permissions->push = true;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositoryMetadata')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($repository)
+            )
+            ->willReturn($module)
+        ;
+
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $entity = new Entity\Module();
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('findByUrl')
+            ->with($this->equalTo($module->html_url))
+            ->willReturn($entity)
+        ;
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('delete')
+            ->with($this->equalTo($entity))
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+            ->setService(
+                Mapper\Module::class,
+                $moduleMapper
+            )
+        ;
+
+        $this->dispatch(
+            '/module/remove',
+            Http\Request::METHOD_POST,
+            [
+                'repo' => $repository,
+                'owner' => $owner,
+            ]
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('remove');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+
+        $this->assertRedirectTo('/user');
+    }
+
     public function testViewActionSetsHttp404ResponseCodeIfModuleNotFound()
     {
         $vendor = 'foo';
