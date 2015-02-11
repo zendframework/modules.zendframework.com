@@ -155,6 +155,7 @@ class IndexController extends AbstractActionController
 
     /**
      * @throws Exception\UnexpectedValueException
+     * @throws Exception\RuntimeException
      * @return Http\Response
      */
     public function addAction()
@@ -204,10 +205,9 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * This function is used to remove a module from the site
      * @throws Exception\UnexpectedValueException
-     * @return
-     **/
+     * @return Http\Response
+     */
     public function removeAction()
     {
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
