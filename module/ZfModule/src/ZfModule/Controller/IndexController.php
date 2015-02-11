@@ -84,14 +84,12 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $params = [
-            'type'      => 'all',
-            'per_page'  => 100,
-            'sort'      => 'updated',
+        $repositories = $this->repositoryRetriever->getAuthenticatedUserRepositories([
+            'type' => 'all',
+            'per_page' => 100,
+            'sort' => 'updated',
             'direction' => 'desc',
-        ];
-
-        $repositories = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
+        ]);
 
         $modules = $this->filterModules($repositories);
 
