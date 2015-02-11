@@ -190,15 +190,15 @@ class IndexController extends AbstractActionController
             );
         }
 
-        if ($this->moduleService->isModule($repository)) {
-            $module = $this->moduleService->register($repository);
-            $this->flashMessenger()->addMessage($module->getName() . ' has been added to ZF Modules');
-        } else {
+        if (!$this->moduleService->isModule($repository)) {
             throw new Exception\UnexpectedValueException(
                 $repository->name . ' is not a Zend Framework Module',
                 Http\Response::STATUS_CODE_403
             );
         }
+
+        $module = $this->moduleService->register($repository);
+        $this->flashMessenger()->addMessage($module->getName() . ' has been added to ZF Modules');
 
         return $this->redirect()->toRoute('zfcuser');
     }
