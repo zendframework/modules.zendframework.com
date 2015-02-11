@@ -238,6 +238,46 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertRedirectTo('/user/login');
     }
 
+    public function testOrganizationActionFetches100MostRecentlyUpdatedRepositoriesWhenNoOwnerIsSpecified()
+    {
+        $this->authenticatedAs(new User());
+
+        $repositoryCollection = $this->repositoryCollectionMock();
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositories')
+            ->with(
+                $this->equalTo(null),
+                $this->equalTo([
+                    'per_page' => 100,
+                    'sort' => 'updated',
+                    'direction' => 'desc',
+                ]
+            ))
+            ->willReturn($repositoryCollection)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+        ;
+
+        $this->dispatch('/module/list');
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('organization');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
+    }
+
     public function testAddActionRedirectsIfNotAuthenticated()
     {
         $this->notAuthenticated();
