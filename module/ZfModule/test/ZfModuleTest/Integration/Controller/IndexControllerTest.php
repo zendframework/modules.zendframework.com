@@ -995,6 +995,88 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         );
     }
 
+    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryNotPreviouslyRegistered()
+    {
+        $this->authenticatedAs(new User());
+
+        $repository = 'foo';
+        $owner = 'johndoe';
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $module = new stdClass();
+        $module->name = 'foo';
+        $module->html_url = 'http://example.org';
+        $module->fork = false;
+        $module->permissions = new stdClass();
+        $module->permissions->push = true;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositoryMetadata')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($repository)
+            )
+            ->willReturn($module)
+        ;
+
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('findByUrl')
+            ->with($this->equalTo($module->html_url))
+            ->willReturn(false)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+            ->setService(
+                Mapper\Module::class,
+                $moduleMapper
+            )
+        ;
+
+        $this->dispatch(
+            '/module/remove',
+            Http\Request::METHOD_POST,
+            [
+                'repo' => $repository,
+                'owner' => $owner,
+            ]
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('remove');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+
+        /* @var View\Model\ViewModel  $result */
+        $result = $this->getApplication()->getMvcEvent()->getResult();
+
+        /* @var Exception $exception */
+        $exception = $result->getVariable('exception');
+
+        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertSame(
+            sprintf(
+                '%s was not found',
+                $module->name
+            ),
+            $exception->getMessage()
+        );
+    }
+
     public function testViewActionSetsHttp404ResponseCodeIfModuleNotFound()
     {
         $vendor = 'foo';
