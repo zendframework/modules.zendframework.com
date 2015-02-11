@@ -163,12 +163,12 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService
             ->expects($this->any())
             ->method('isModule')
-            ->willReturnCallback(function ($module) use ($nonModule) {
-                if ($module === $nonModule) {
-                    return false;
+            ->willReturnCallback(function ($repository) use ($nonModule) {
+                if ($repository !== $nonModule) {
+                    return true;
                 }
 
-                return true;
+                return false;
             })
         ;
 
@@ -228,11 +228,11 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->notAuthenticated();
 
-        $owner = 'foo';
+        $vendor = 'foo';
 
         $url = sprintf(
             '/module/list/%s',
-            $owner
+            $vendor
         );
 
         $this->dispatch($url);
@@ -295,13 +295,13 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
 
         $repositoryRetriever
             ->expects($this->once())
             ->method('getUserRepositories')
             ->with(
-                $this->equalTo($owner),
+                $this->equalTo($vendor),
                 $this->equalTo([
                     'per_page' => 100,
                     'sort' => 'updated',
@@ -321,7 +321,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $url = sprintf(
             '/module/list/%s',
-            $owner
+            $vendor
         );
 
         $this->dispatch($url);
@@ -390,13 +390,13 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
 
         $repositoryRetriever
             ->expects($this->once())
             ->method('getUserRepositories')
             ->with(
-                $this->equalTo($owner),
+                $this->equalTo($vendor),
                 $this->equalTo([
                     'per_page' => 100,
                     'sort' => 'updated',
@@ -414,12 +414,12 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService
             ->expects($this->any())
             ->method('isModule')
-            ->willReturnCallback(function ($module) use ($nonModule) {
-                if ($module === $nonModule) {
-                    return false;
+            ->willReturnCallback(function ($repository) use ($nonModule) {
+                if ($repository !== $nonModule) {
+                    return true;
                 }
 
-                return true;
+                return false;
             })
         ;
 
@@ -458,7 +458,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $url = sprintf(
             '/module/list/%s',
-            $owner
+            $vendor
         );
 
         $this->dispatch($url);
@@ -543,8 +543,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repository = 'foo';
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
+        $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
@@ -555,8 +555,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->expects($this->once())
             ->method('getUserRepositoryMetadata')
             ->with(
-                $this->equalTo($owner),
-                $this->equalTo($repository)
+                $this->equalTo($vendor),
+                $this->equalTo($name)
             )
             ->willReturn(null)
         ;
@@ -573,8 +573,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             '/module/add',
             Http\Request::METHOD_POST,
             [
-                'repo' => $repository,
-                'owner' => $owner,
+                'repo' => $name,
+                'owner' => $vendor,
             ]
         );
 
@@ -596,16 +596,16 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     }
 
     /**
-     * @dataProvider providerModuleWithInsufficientPrivileges
+     * @dataProvider providerRepositoryWithInsufficientPrivileges
      *
-     * @param stdClass $module
+     * @param stdClass $repository
      */
-    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions($module)
+    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions($repository)
     {
         $this->authenticatedAs(new User());
 
-        $repository = 'foo';
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
+        $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
@@ -616,10 +616,10 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->expects($this->once())
             ->method('getUserRepositoryMetadata')
             ->with(
-                $this->equalTo($owner),
-                $this->equalTo($repository)
+                $this->equalTo($vendor),
+                $this->equalTo($name)
             )
-            ->willReturn($module)
+            ->willReturn($repository)
         ;
 
         $this->getApplicationServiceLocator()
@@ -634,8 +634,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             '/module/add',
             Http\Request::METHOD_POST,
             [
-                'repo' => $repository,
-                'owner' => $owner,
+                'repo' => $name,
+                'owner' => $vendor,
             ]
         );
 
@@ -660,23 +660,23 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     /**
      * @return \Generator
      */
-    public function providerModuleWithInsufficientPrivileges()
+    public function providerRepositoryWithInsufficientPrivileges()
     {
-        $module = new stdClass();
-        $module->permissions = new stdClass();
+        $repository = new stdClass();
+        $repository->permissions = new stdClass();
 
-        $module->fork = true;
-        $module->permissions->push = true;
+        $repository->fork = true;
+        $repository->permissions->push = true;
 
         yield [
-            $module,
+            $repository,
         ];
 
-        $module->fork = false;
-        $module->permissions->push = false;
+        $repository->fork = false;
+        $repository->permissions->push = false;
 
         yield [
-            $module,
+            $repository,
         ];
     }
 
@@ -684,28 +684,28 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repository = 'foo';
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
+        $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        $module = new stdClass();
-        $module->name = 'foo';
-        $module->fork = false;
-        $module->permissions = new stdClass();
-        $module->permissions->push = true;
+        $repository = new stdClass();
+        $repository->name = 'foo';
+        $repository->fork = false;
+        $repository->permissions = new stdClass();
+        $repository->permissions->push = true;
 
         $repositoryRetriever
             ->expects($this->once())
             ->method('getUserRepositoryMetadata')
             ->with(
-                $this->equalTo($owner),
-                $this->equalTo($repository)
+                $this->equalTo($vendor),
+                $this->equalTo($name)
             )
-            ->willReturn($module)
+            ->willReturn($repository)
         ;
 
         $moduleService = $this->getMockBuilder(Service\Module::class)
@@ -716,7 +716,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService
             ->expects($this->once())
             ->method('isModule')
-            ->with($this->equalTo($module))
+            ->with($this->equalTo($repository))
             ->willReturn(false)
         ;
 
@@ -736,8 +736,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             '/module/add',
             Http\Request::METHOD_POST,
             [
-                'repo' => $repository,
-                'owner' => $owner,
+                'repo' => $name,
+                'owner' => $vendor,
             ]
         );
 
@@ -755,7 +755,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertSame(
             sprintf(
                 '%s is not a Zend Framework Module',
-                $module->name
+                $repository->name
             ),
             $exception->getMessage()
         );
@@ -765,28 +765,28 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repository = 'foo';
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
+        $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        $module = new stdClass();
-        $module->name = 'foo';
-        $module->fork = false;
-        $module->permissions = new stdClass();
-        $module->permissions->push = true;
+        $repository = new stdClass();
+        $repository->name = 'foo';
+        $repository->fork = false;
+        $repository->permissions = new stdClass();
+        $repository->permissions->push = true;
 
         $repositoryRetriever
             ->expects($this->once())
             ->method('getUserRepositoryMetadata')
             ->with(
-                $this->equalTo($owner),
-                $this->equalTo($repository)
+                $this->equalTo($vendor),
+                $this->equalTo($name)
             )
-            ->willReturn($module)
+            ->willReturn($repository)
         ;
 
         $moduleService = $this->getMockBuilder(Service\Module::class)
@@ -797,14 +797,14 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService
             ->expects($this->once())
             ->method('isModule')
-            ->with($this->equalTo($module))
+            ->with($this->equalTo($repository))
             ->willReturn(true)
         ;
 
         $moduleService
             ->expects($this->once())
             ->method('register')
-            ->with($this->equalTo($module))
+            ->with($this->equalTo($repository))
             ->willReturn(new Entity\Module())
         ;
 
@@ -824,8 +824,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             '/module/add',
             Http\Request::METHOD_POST,
             [
-                'repo' => $repository,
-                'owner' => $owner,
+                'repo' => $name,
+                'owner' => $vendor,
             ]
         );
 
@@ -881,8 +881,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repository = 'foo';
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
+        $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
@@ -893,8 +893,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->expects($this->once())
             ->method('getUserRepositoryMetadata')
             ->with(
-                $this->equalTo($owner),
-                $this->equalTo($repository)
+                $this->equalTo($vendor),
+                $this->equalTo($name)
             )
             ->willReturn(null)
         ;
@@ -911,8 +911,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             '/module/remove',
             Http\Request::METHOD_POST,
             [
-                'repo' => $repository,
-                'owner' => $owner,
+                'repo' => $name,
+                'owner' => $vendor,
             ]
         );
 
@@ -934,16 +934,16 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     }
 
     /**
-     * @dataProvider providerModuleWithInsufficientPrivileges
+     * @dataProvider providerRepositoryWithInsufficientPrivileges
      *
-     * @param stdClass $module
+     * @param stdClass $repository
      */
-    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions($module)
+    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions($repository)
     {
         $this->authenticatedAs(new User());
 
-        $repository = 'foo';
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
+        $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
@@ -954,10 +954,10 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->expects($this->once())
             ->method('getUserRepositoryMetadata')
             ->with(
-                $this->equalTo($owner),
-                $this->equalTo($repository)
+                $this->equalTo($vendor),
+                $this->equalTo($name)
             )
-            ->willReturn($module)
+            ->willReturn($repository)
         ;
 
         $this->getApplicationServiceLocator()
@@ -972,8 +972,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             '/module/remove',
             Http\Request::METHOD_POST,
             [
-                'repo' => $repository,
-                'owner' => $owner,
+                'repo' => $name,
+                'owner' => $vendor,
             ]
         );
 
@@ -999,29 +999,29 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repository = 'foo';
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
+        $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        $module = new stdClass();
-        $module->name = 'foo';
-        $module->html_url = 'http://example.org';
-        $module->fork = false;
-        $module->permissions = new stdClass();
-        $module->permissions->push = true;
+        $repository = new stdClass();
+        $repository->name = 'foo';
+        $repository->html_url = 'http://example.org';
+        $repository->fork = false;
+        $repository->permissions = new stdClass();
+        $repository->permissions->push = true;
 
         $repositoryRetriever
             ->expects($this->once())
             ->method('getUserRepositoryMetadata')
             ->with(
-                $this->equalTo($owner),
-                $this->equalTo($repository)
+                $this->equalTo($vendor),
+                $this->equalTo($name)
             )
-            ->willReturn($module)
+            ->willReturn($repository)
         ;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
@@ -1032,7 +1032,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleMapper
             ->expects($this->once())
             ->method('findByUrl')
-            ->with($this->equalTo($module->html_url))
+            ->with($this->equalTo($repository->html_url))
             ->willReturn(false)
         ;
 
@@ -1052,8 +1052,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             '/module/remove',
             Http\Request::METHOD_POST,
             [
-                'repo' => $repository,
-                'owner' => $owner,
+                'repo' => $name,
+                'owner' => $vendor,
             ]
         );
 
@@ -1071,7 +1071,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertSame(
             sprintf(
                 '%s was not found',
-                $module->name
+                $repository->name
             ),
             $exception->getMessage()
         );
@@ -1081,29 +1081,29 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repository = 'foo';
-        $owner = 'johndoe';
+        $vendor = 'johndoe';
+        $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        $module = new stdClass();
-        $module->name = 'foo';
-        $module->html_url = 'http://example.org';
-        $module->fork = false;
-        $module->permissions = new stdClass();
-        $module->permissions->push = true;
+        $repository = new stdClass();
+        $repository->name = 'foo';
+        $repository->html_url = 'http://example.org';
+        $repository->fork = false;
+        $repository->permissions = new stdClass();
+        $repository->permissions->push = true;
 
         $repositoryRetriever
             ->expects($this->once())
             ->method('getUserRepositoryMetadata')
             ->with(
-                $this->equalTo($owner),
-                $this->equalTo($repository)
+                $this->equalTo($vendor),
+                $this->equalTo($name)
             )
-            ->willReturn($module)
+            ->willReturn($repository)
         ;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
@@ -1111,19 +1111,19 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $entity = new Entity\Module();
+        $module = new Entity\Module();
 
         $moduleMapper
             ->expects($this->once())
             ->method('findByUrl')
-            ->with($this->equalTo($module->html_url))
-            ->willReturn($entity)
+            ->with($this->equalTo($repository->html_url))
+            ->willReturn($module)
         ;
 
         $moduleMapper
             ->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo($entity))
+            ->with($this->equalTo($module))
         ;
 
         $this->getApplicationServiceLocator()
@@ -1142,8 +1142,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             '/module/remove',
             Http\Request::METHOD_POST,
             [
-                'repo' => $repository,
-                'owner' => $owner,
+                'repo' => $name,
+                'owner' => $vendor,
             ]
         );
 
@@ -1157,7 +1157,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     public function testViewActionSetsHttp404ResponseCodeIfModuleNotFound()
     {
         $vendor = 'foo';
-        $module = 'bar';
+        $name = 'bar';
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
             ->disableOriginalConstructor()
@@ -1167,7 +1167,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleMapper
             ->expects($this->once())
             ->method('findByName')
-            ->with($this->equalTo($module))
+            ->with($this->equalTo($name))
             ->willReturn(null)
         ;
 
@@ -1182,7 +1182,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $url = sprintf(
             '/%s/%s',
             $vendor,
-            $module
+            $name
         );
 
         $this->dispatch($url);
@@ -1195,7 +1195,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     public function testViewActionSetsHttp404ResponseCodeIfRepositoryMetaDataNotFound()
     {
         $vendor = 'foo';
-        $module = 'bar';
+        $name = 'bar';
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
             ->disableOriginalConstructor()
@@ -1205,8 +1205,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleMapper
             ->expects($this->once())
             ->method('findByName')
-            ->with($this->equalTo($module))
-            ->willReturn(new stdClass())
+            ->with($this->equalTo($name))
+            ->willReturn(new Entity\Module())
         ;
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -1219,7 +1219,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->method('getUserRepositoryMetadata')
             ->with(
                 $this->equalTo($vendor),
-                $this->equalTo($module)
+                $this->equalTo($name)
             )
             ->willReturn(null)
         ;
@@ -1239,7 +1239,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $url = sprintf(
             '/%s/%s',
             $vendor,
-            $module
+            $name
         );
 
         $this->dispatch($url);
@@ -1252,7 +1252,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     public function testViewActionCanBeAccessed()
     {
         $vendor = 'foo';
-        $module = 'bar';
+        $name = 'bar';
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
             ->disableOriginalConstructor()
@@ -1262,8 +1262,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleMapper
             ->expects($this->once())
             ->method('findByName')
-            ->with($this->equalTo($module))
-            ->willReturn(new stdClass())
+            ->with($this->equalTo($name))
+            ->willReturn(new Entity\Module())
         ;
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -1276,7 +1276,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->method('getUserRepositoryMetadata')
             ->with(
                 $this->equalTo($vendor),
-                $this->equalTo($module)
+                $this->equalTo($name)
             )
             ->willReturn(new stdClass())
         ;
@@ -1296,7 +1296,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $url = sprintf(
             '/%s/%s',
             $vendor,
-            $module
+            $name
         );
 
         $this->dispatch($url);
