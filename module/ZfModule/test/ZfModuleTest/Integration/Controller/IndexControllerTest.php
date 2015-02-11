@@ -15,6 +15,7 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\View;
 use ZfcUser\Entity\User;
 use ZfModule\Controller;
+use ZfModule\Entity;
 use ZfModule\Mapper;
 use ZfModule\Service;
 
@@ -758,6 +759,81 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ),
             $exception->getMessage()
         );
+    }
+
+    public function testAddActionRegistersRepositoryIfPermissionsAreSufficientAndItIsAModule()
+    {
+        $this->authenticatedAs(new User());
+
+        $repository = 'foo';
+        $owner = 'johndoe';
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $module = new stdClass();
+        $module->name = 'foo';
+        $module->fork = false;
+        $module->permissions = new stdClass();
+        $module->permissions->push = true;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositoryMetadata')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($repository)
+            )
+            ->willReturn($module)
+        ;
+
+        $moduleService = $this->getMockBuilder(Service\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleService
+            ->expects($this->once())
+            ->method('isModule')
+            ->with($this->equalTo($module))
+            ->willReturn(true)
+        ;
+
+        $moduleService
+            ->expects($this->once())
+            ->method('register')
+            ->with($this->equalTo($module))
+            ->willReturn(new Entity\Module())
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+            ->setService(
+                Service\Module::class,
+                $moduleService
+            )
+        ;
+
+        $this->dispatch(
+            '/module/add',
+            Http\Request::METHOD_POST,
+            [
+                'repo' => $repository,
+                'owner' => $owner,
+            ]
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('add');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+
+        $this->assertRedirectTo('/user');
     }
 
     public function testRemoveActionRedirectsIfNotAuthenticated()
