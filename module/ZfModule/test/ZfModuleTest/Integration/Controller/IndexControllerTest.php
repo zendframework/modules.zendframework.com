@@ -849,6 +849,34 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertRedirectTo('/user/login');
     }
 
+    /**
+     * @dataProvider providerNotPost
+     *
+     * @param string $method
+     */
+    public function testRemoveActionThrowsUnexpectedValueExceptionIfNotPostedTo($method)
+    {
+        $this->authenticatedAs(new User());
+
+        $this->dispatch(
+            '/module/remove',
+            $method
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('remove');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+
+        /* @var View\Model\ViewModel  $result */
+        $result = $this->getApplication()->getMvcEvent()->getResult();
+
+        /* @var Exception $exception */
+        $exception = $result->getVariable('exception');
+
+        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertSame('Something went wrong with the post values of the request...', $exception->getMessage());
+    }
+
     public function testViewActionSetsHttp404ResponseCodeIfModuleNotFound()
     {
         $vendor = 'foo';
