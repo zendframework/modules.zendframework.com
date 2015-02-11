@@ -215,40 +215,40 @@ class IndexController extends AbstractActionController
         }
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            $repo = $request->getPost()->get('repo');
-            $owner  = $request->getPost()->get('owner');
+        if (!$request->isPost()) {
+            throw new Exception\UnexpectedValueException(
+                'Something went wrong with the post values of the request...'
+            );
+        }
 
-            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
+        $repo = $request->getPost()->get('repo');
+        $owner  = $request->getPost()->get('owner');
 
-            if (!$repository instanceof \stdClass) {
-                throw new Exception\RuntimeException(
-                    'Not able to fetch the repository from github due to an unknown error.',
-                    Http\Response::STATUS_CODE_500
-                );
-            }
+        $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
-            if (!$repository->fork && $repository->permissions->push) {
-                $module = $this->moduleMapper->findByUrl($repository->html_url);
-                if ($module instanceof \ZfModule\Entity\Module) {
-                    $this->moduleMapper->delete($module);
-                    $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
-                } else {
-                    throw new Exception\UnexpectedValueException(
-                        $repository->name . ' was not found',
-                        Http\Response::STATUS_CODE_403
-                    );
-                }
+        if (!$repository instanceof \stdClass) {
+            throw new Exception\RuntimeException(
+                'Not able to fetch the repository from github due to an unknown error.',
+                Http\Response::STATUS_CODE_500
+            );
+        }
+
+        if (!$repository->fork && $repository->permissions->push) {
+            $module = $this->moduleMapper->findByUrl($repository->html_url);
+            if ($module instanceof \ZfModule\Entity\Module) {
+                $this->moduleMapper->delete($module);
+                $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
             } else {
                 throw new Exception\UnexpectedValueException(
-                    'You have no permission to add this module. The reason might be that you are' .
-                    'neither the owner nor a collaborator of this repository.',
+                    $repository->name . ' was not found',
                     Http\Response::STATUS_CODE_403
                 );
             }
         } else {
             throw new Exception\UnexpectedValueException(
-                'Something went wrong with the post values of the request...'
+                'You have no permission to add this module. The reason might be that you are' .
+                'neither the owner nor a collaborator of this repository.',
+                Http\Response::STATUS_CODE_403
             );
         }
 
