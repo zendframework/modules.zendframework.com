@@ -233,21 +233,21 @@ class IndexController extends AbstractActionController
             );
         }
 
-        if (!$repository->fork && $repository->permissions->push) {
-            $module = $this->moduleMapper->findByUrl($repository->html_url);
-            if ($module instanceof \ZfModule\Entity\Module) {
-                $this->moduleMapper->delete($module);
-                $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
-            } else {
-                throw new Exception\UnexpectedValueException(
-                    $repository->name . ' was not found',
-                    Http\Response::STATUS_CODE_403
-                );
-            }
-        } else {
+        if ($repository->fork || !$repository->permissions->push) {
             throw new Exception\UnexpectedValueException(
                 'You have no permission to remove this module. The reason might be that you are ' .
                 'neither the owner nor a collaborator of this repository.',
+                Http\Response::STATUS_CODE_403
+            );
+        }
+
+        $module = $this->moduleMapper->findByUrl($repository->html_url);
+        if ($module instanceof \ZfModule\Entity\Module) {
+            $this->moduleMapper->delete($module);
+            $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
+        } else {
+            throw new Exception\UnexpectedValueException(
+                $repository->name . ' was not found',
                 Http\Response::STATUS_CODE_403
             );
         }
