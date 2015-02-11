@@ -596,7 +596,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     }
 
     /**
-     * @dataProvider providerAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions
+     * @dataProvider providerModuleWithInsufficientPrivileges
      *
      * @param stdClass $module
      */
@@ -660,7 +660,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     /**
      * @return \Generator
      */
-    public function providerAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions()
+    public function providerModuleWithInsufficientPrivileges()
     {
         $module = new stdClass();
         $module->permissions = new stdClass();
@@ -929,6 +929,68 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
         $this->assertSame(
             'Not able to fetch the repository from github due to an unknown error.',
+            $exception->getMessage()
+        );
+    }
+
+    /**
+     * @dataProvider providerModuleWithInsufficientPrivileges
+     *
+     * @param stdClass $module
+     */
+    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions($module)
+    {
+        $this->authenticatedAs(new User());
+
+        $repository = 'foo';
+        $owner = 'johndoe';
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositoryMetadata')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($repository)
+            )
+            ->willReturn($module)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+        ;
+
+        $this->dispatch(
+            '/module/remove',
+            Http\Request::METHOD_POST,
+            [
+                'repo' => $repository,
+                'owner' => $owner,
+            ]
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('remove');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+
+        /* @var View\Model\ViewModel  $result */
+        $result = $this->getApplication()->getMvcEvent()->getResult();
+
+        /* @var Exception $exception */
+        $exception = $result->getVariable('exception');
+
+        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertSame(
+            'You have no permission to add this module. The reason might be that you are' .
+            'neither the owner nor a collaborator of this repository.',
             $exception->getMessage()
         );
     }
