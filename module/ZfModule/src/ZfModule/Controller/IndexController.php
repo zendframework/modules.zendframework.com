@@ -91,10 +91,11 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         ];
 
-        $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
-        $repositories = $this->filterModules($repos);
+        $repositories = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
 
-        $viewModel = new ViewModel(['repositories' => $repositories]);
+        $modules = $this->filterModules($repositories);
+
+        $viewModel = new ViewModel(['repositories' => $modules]);
         $viewModel->setTerminal(true);
 
         return $viewModel;
@@ -113,10 +114,11 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         ];
 
-        $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
-        $repositories = $this->filterModules($repos);
+        $repositories = $this->repositoryRetriever->getUserRepositories($owner, $params);
 
-        $viewModel = new ViewModel(['repositories' => $repositories]);
+        $modules = $this->filterModules($repositories);
+
+        $viewModel = new ViewModel(['repositories' => $modules]);
         $viewModel->setTerminal(true);
         $viewModel->setTemplate('zf-module/index/index.phtml');
 
