@@ -2,18 +2,23 @@
 
 namespace ZfModuleTest\Integration\Controller;
 
-use Application\Service;
+use Application\Service\RepositoryRetriever;
 use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
 use EdpGithub\Collection;
 use PHPUnit_Framework_MockObject_MockObject;
 use stdClass;
 use Zend\Http;
+use Zend\Mvc;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use ZfcUser\Entity\User;
 use ZfModule\Controller;
 use ZfModule\Mapper;
+use ZfModule\Service;
 
+/**
+ * @method Mvc\Application getApplication()
+ */
 class IndexControllerTest extends AbstractHttpControllerTestCase
 {
     use AuthenticationTrait;
@@ -44,7 +49,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $repositoryCollection = $this->repositoryCollectionMock();
 
-        $repositoryRetriever = $this->getMockBuilder(Service\RepositoryRetriever::class)
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -64,7 +69,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                Service\RepositoryRetriever::class,
+                RepositoryRetriever::class,
                 $repositoryRetriever
             )
         ;
@@ -74,6 +79,143 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
+    }
+
+    public function testIndexActionFiltersOutUserRepositoriesWhichAreNeitherModulesNorAddedNorEligibleOtherwise()
+    {
+        $this->authenticatedAs(new User());
+
+        $repositories = [];
+
+        $module = new stdClass();
+        $module->name = 'foo';
+        $module->description = 'blah blah';
+        $module->fork = false;
+        $module->created_at = '1970-01-01 00:00:00';
+        $module->html_url = 'http://www.example.org';
+        $module->owner = new stdClass();
+        $module->owner->login = 'johndoe';
+        $module->owner->avatar_url = 'johndoe';
+        $module->permissions = new stdClass();
+        $module->permissions->push = true;
+
+        array_push($repositories, $module);
+
+        $nonModule = new stdClass();
+        $nonModule->name = 'bar';
+        $nonModule->fork = false;
+        $nonModule->permissions = new stdClass();
+        $nonModule->permissions->push = true;
+
+        array_push($repositories, $nonModule);
+
+        $forkedModule = new stdClass();
+        $forkedModule->name = 'baz';
+        $forkedModule->fork = true;
+        $forkedModule->permissions = new stdClass();
+        $forkedModule->permissions->push = true;
+
+        array_push($repositories, $forkedModule);
+
+        $moduleWithoutPushPermissions = new stdClass();
+        $moduleWithoutPushPermissions->name = 'qux';
+        $moduleWithoutPushPermissions->fork = false;
+        $moduleWithoutPushPermissions->permissions = new stdClass();
+        $moduleWithoutPushPermissions->permissions->push = false;
+
+        array_push($repositories, $moduleWithoutPushPermissions);
+
+        $registeredModule = new stdClass();
+        $registeredModule->name = 'vqz';
+        $registeredModule->fork = false;
+        $registeredModule->permissions = new stdClass();
+        $registeredModule->permissions->push = true;
+
+        array_push($repositories, $registeredModule);
+
+        $repositoryCollection = $this->repositoryCollectionMock($repositories);
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getAuthenticatedUserRepositories')
+            ->with($this->equalTo([
+                'type' => 'all',
+                'per_page' => 100,
+                'sort' => 'updated',
+                'direction' => 'desc',
+            ]))
+            ->willReturn($repositoryCollection)
+        ;
+
+        $moduleService = $this->getMockBuilder(Service\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleService
+            ->expects($this->any())
+            ->method('isModule')
+            ->willReturnCallback(function ($module) use ($nonModule) {
+                if ($module === $nonModule) {
+                    return false;
+                }
+
+                return true;
+            })
+        ;
+
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleMapper
+            ->expects($this->any())
+            ->method('findByName')
+            ->willReturnCallback(function ($name) use ($registeredModule) {
+                if ($name === $registeredModule->name) {
+                    return true;
+                }
+
+                return null;
+            })
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+            ->setService(
+                'zfmodule_service_module',
+                $moduleService
+            )
+            ->setService(
+                'zfmodule_mapper_module',
+                $moduleMapper
+            )
+        ;
+
+        $this->dispatch('/module');
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('index');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
+
+        /* @var Mvc\Application $application */
+        $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
+
+        $viewVariable = $viewModel->getVariable('repositories');
+
+        $this->assertInternalType('array', $viewVariable);
+        $this->assertCount(1, $viewVariable);
+        $this->assertSame($module, $viewVariable[0]);
     }
 
     public function testOrganizationActionRedirectsIfNotAuthenticated()
@@ -177,7 +319,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->willReturn(new stdClass())
         ;
 
-        $repositoryRetriever = $this->getMockBuilder(Service\RepositoryRetriever::class)
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -199,7 +341,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $moduleMapper
             )
             ->setService(
-                Service\RepositoryRetriever::class,
+                RepositoryRetriever::class,
                 $repositoryRetriever
             )
         ;
@@ -234,7 +376,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->willReturn(new stdClass())
         ;
 
-        $repositoryRetriever = $this->getMockBuilder(Service\RepositoryRetriever::class)
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -256,7 +398,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $moduleMapper
             )
             ->setService(
-                Service\RepositoryRetriever::class,
+                RepositoryRetriever::class,
                 $repositoryRetriever
             )
         ;
