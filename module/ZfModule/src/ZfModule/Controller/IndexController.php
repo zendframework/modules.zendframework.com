@@ -182,20 +182,20 @@ class IndexController extends AbstractActionController
             );
         }
 
-        if (!$repository->fork && $repository->permissions->push) {
-            if ($this->moduleService->isModule($repository)) {
-                $module = $this->moduleService->register($repository);
-                $this->flashMessenger()->addMessage($module->getName() . ' has been added to ZF Modules');
-            } else {
-                throw new Exception\UnexpectedValueException(
-                    $repository->name . ' is not a Zend Framework Module',
-                    Http\Response::STATUS_CODE_403
-                );
-            }
-        } else {
+        if ($repository->fork || !$repository->permissions->push) {
             throw new Exception\UnexpectedValueException(
                 'You have no permission to add this module. The reason might be that you are ' .
                 'neither the owner nor a collaborator of this repository.',
+                Http\Response::STATUS_CODE_403
+            );
+        }
+
+        if ($this->moduleService->isModule($repository)) {
+            $module = $this->moduleService->register($repository);
+            $this->flashMessenger()->addMessage($module->getName() . ' has been added to ZF Modules');
+        } else {
+            throw new Exception\UnexpectedValueException(
+                $repository->name . ' is not a Zend Framework Module',
                 Http\Response::STATUS_CODE_403
             );
         }
