@@ -246,7 +246,7 @@ class IndexController extends AbstractActionController
             }
         } else {
             throw new Exception\UnexpectedValueException(
-                'You have no permission to add this module. The reason might be that you are' .
+                'You have no permission to remove this module. The reason might be that you are ' .
                 'neither the owner nor a collaborator of this repository.',
                 Http\Response::STATUS_CODE_403
             );

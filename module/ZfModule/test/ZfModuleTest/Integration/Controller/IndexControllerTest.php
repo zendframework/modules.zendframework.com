@@ -989,7 +989,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
         $this->assertSame(
-            'You have no permission to add this module. The reason might be that you are' .
+            'You have no permission to remove this module. The reason might be that you are ' .
             'neither the owner nor a collaborator of this repository.',
             $exception->getMessage()
         );
