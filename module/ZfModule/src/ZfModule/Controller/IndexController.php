@@ -106,13 +106,12 @@ class IndexController extends AbstractActionController
         }
 
         $owner = $this->params()->fromRoute('owner', null);
-        $params = [
-            'per_page'  => 100,
-            'sort'      => 'updated',
-            'direction' => 'desc',
-        ];
 
-        $repositories = $this->repositoryRetriever->getUserRepositories($owner, $params);
+        $repositories = $this->repositoryRetriever->getUserRepositories($owner, [
+            'per_page' => 100,
+            'sort' => 'updated',
+            'direction' => 'desc',
+        ]);
 
         $modules = $this->filterModules($repositories);
 
