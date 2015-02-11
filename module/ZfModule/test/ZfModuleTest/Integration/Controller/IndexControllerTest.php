@@ -325,6 +325,152 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
+    public function testOrganizationActionFiltersOutUserRepositoriesWhichAreNeitherModulesNorAddedNorEligibleOtherwise()
+    {
+        $this->authenticatedAs(new User());
+
+        $repositories = [];
+
+        $module = new stdClass();
+        $module->name = 'foo';
+        $module->description = 'blah blah';
+        $module->fork = false;
+        $module->created_at = '1970-01-01 00:00:00';
+        $module->html_url = 'http://www.example.org';
+        $module->owner = new stdClass();
+        $module->owner->login = 'johndoe';
+        $module->owner->avatar_url = 'johndoe';
+        $module->permissions = new stdClass();
+        $module->permissions->push = true;
+
+        array_push($repositories, $module);
+
+        $nonModule = new stdClass();
+        $nonModule->name = 'bar';
+        $nonModule->fork = false;
+        $nonModule->permissions = new stdClass();
+        $nonModule->permissions->push = true;
+
+        array_push($repositories, $nonModule);
+
+        $forkedModule = new stdClass();
+        $forkedModule->name = 'baz';
+        $forkedModule->fork = true;
+        $forkedModule->permissions = new stdClass();
+        $forkedModule->permissions->push = true;
+
+        array_push($repositories, $forkedModule);
+
+        $moduleWithoutPushPermissions = new stdClass();
+        $moduleWithoutPushPermissions->name = 'qux';
+        $moduleWithoutPushPermissions->fork = false;
+        $moduleWithoutPushPermissions->permissions = new stdClass();
+        $moduleWithoutPushPermissions->permissions->push = false;
+
+        array_push($repositories, $moduleWithoutPushPermissions);
+
+        $registeredModule = new stdClass();
+        $registeredModule->name = 'vqz';
+        $registeredModule->fork = false;
+        $registeredModule->permissions = new stdClass();
+        $registeredModule->permissions->push = true;
+
+        array_push($repositories, $registeredModule);
+
+        $repositoryCollection = $this->repositoryCollectionMock($repositories);
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $owner = 'johndoe';
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositories')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo([
+                    'per_page' => 100,
+                    'sort' => 'updated',
+                    'direction' => 'desc',
+                ])
+            )
+            ->willReturn($repositoryCollection)
+        ;
+
+        $moduleService = $this->getMockBuilder(Service\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleService
+            ->expects($this->any())
+            ->method('isModule')
+            ->willReturnCallback(function ($module) use ($nonModule) {
+                if ($module === $nonModule) {
+                    return false;
+                }
+
+                return true;
+            })
+        ;
+
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleMapper
+            ->expects($this->any())
+            ->method('findByName')
+            ->willReturnCallback(function ($name) use ($registeredModule) {
+                if ($name === $registeredModule->name) {
+                    return true;
+                }
+
+                return null;
+            })
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+            ->setService(
+                'zfmodule_service_module',
+                $moduleService
+            )
+            ->setService(
+                'zfmodule_mapper_module',
+                $moduleMapper
+            )
+        ;
+
+        $url = sprintf(
+            '/module/list/%s',
+            $owner
+        );
+
+        $this->dispatch($url);
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('organization');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
+
+        /* @var Mvc\Application $application */
+        $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
+
+        $viewVariable = $viewModel->getVariable('repositories');
+
+        $this->assertInternalType('array', $viewVariable);
+        $this->assertCount(1, $viewVariable);
+        $this->assertSame($module, $viewVariable[0]);
+    }
+
     public function testAddActionRedirectsIfNotAuthenticated()
     {
         $this->notAuthenticated();
