@@ -32,7 +32,7 @@ class Module extends EventProvider
     }
 
     /**
-     * @param array $data
+     * @param stdClass $data
      * @return object|Entity\Module
      */
     public function register($data)
