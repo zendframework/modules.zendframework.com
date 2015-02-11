@@ -124,21 +124,34 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * @param RepositoryCollection $repos
+     * @param RepositoryCollection $repositories
      * @return array
      */
-    private function fetchModules(RepositoryCollection $repos)
+    private function fetchModules(RepositoryCollection $repositories)
     {
-        $repositories = [];
+        $modules = [];
 
-        foreach ($repos as $repo) {
-            $isModule = $this->moduleService->isModule($repo);
-            if (!$repo->fork && $repo->permissions->push && $isModule && !$this->moduleMapper->findByName($repo->name)) {
-                $repositories[] = $repo;
+        foreach ($repositories as $repository) {
+            if ($repository->fork) {
+                continue;
             }
+
+            if (!$repository->permissions->push) {
+                continue;
+            }
+
+            if (!$this->moduleService->isModule($repository)) {
+                continue;
+            }
+
+            if ($this->moduleMapper->findByName($repository->name)) {
+                continue;
+            }
+
+            $modules[] = $repository;
         }
 
-        return $repositories;
+        return $modules;
     }
 
     /**
