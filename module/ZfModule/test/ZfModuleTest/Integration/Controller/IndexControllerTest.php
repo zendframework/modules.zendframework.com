@@ -6,11 +6,13 @@ use Application\Service\RepositoryRetriever;
 use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
 use EdpGithub\Collection;
+use Exception;
 use PHPUnit_Framework_MockObject_MockObject;
 use stdClass;
 use Zend\Http;
 use Zend\Mvc;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Zend\View;
 use ZfcUser\Entity\User;
 use ZfModule\Controller;
 use ZfModule\Mapper;
@@ -488,6 +490,52 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
         $this->assertRedirectTo('/user/login');
+    }
+
+    /**
+     * @dataProvider providerNotPost
+     *
+     * @param string $method
+     */
+    public function testAddActionThrowsUnexpectedValueExceptionIfNotPostedTo($method)
+    {
+        $this->authenticatedAs(new User());
+
+        $this->dispatch(
+            '/module/add',
+            $method
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('add');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+
+        /* @var View\Model\ViewModel  $result */
+        $result = $this->getApplication()->getMvcEvent()->getResult();
+
+        /* @var Exception $exception */
+        $exception = $result->getVariable('exception');
+
+        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertSame('Something went wrong with the post values of the request...', $exception->getMessage());
+    }
+
+    /**
+     * @return array
+     */
+    public function providerNotPost()
+    {
+        return [
+            [
+                Http\Request::METHOD_GET,
+            ],
+            [
+                Http\Request::METHOD_PUT,
+            ],
+            [
+                Http\Request::METHOD_DELETE,
+            ],
+        ];
     }
 
     public function testRemoveActionRedirectsIfNotAuthenticated()
