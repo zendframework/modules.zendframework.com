@@ -588,7 +588,95 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $exception = $result->getVariable('exception');
 
         $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
-        $this->assertSame('Not able to fetch the repository from github due to an unknown error.', $exception->getMessage());
+        $this->assertSame(
+            'Not able to fetch the repository from github due to an unknown error.',
+            $exception->getMessage()
+        );
+    }
+
+    /**
+     * @dataProvider providerAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions
+     *
+     * @param stdClass $module
+     */
+    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions($module)
+    {
+        $this->authenticatedAs(new User());
+
+        $repository = 'foo';
+        $owner = 'johndoe';
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositoryMetadata')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($repository)
+            )
+            ->willReturn($module)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+        ;
+
+        $this->dispatch(
+            '/module/add',
+            Http\Request::METHOD_POST,
+            [
+                'repo' => $repository,
+                'owner' => $owner,
+            ]
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('add');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+
+        /* @var View\Model\ViewModel  $result */
+        $result = $this->getApplication()->getMvcEvent()->getResult();
+
+        /* @var Exception $exception */
+        $exception = $result->getVariable('exception');
+
+        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertSame(
+            'You have no permission to add this module. The reason might be that you are' .
+            'neither the owner nor a collaborator of this repository.',
+            $exception->getMessage()
+        );
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function providerAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions()
+    {
+        $module = new stdClass();
+        $module->permissions = new stdClass();
+
+        $module->fork = true;
+        $module->permissions->push = true;
+
+        yield [
+            $module,
+        ];
+
+        $module->fork = false;
+        $module->permissions->push = false;
+
+        yield [
+            $module,
+        ];
     }
 
     public function testRemoveActionRedirectsIfNotAuthenticated()
