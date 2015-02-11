@@ -538,6 +538,59 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         ];
     }
 
+    public function testAddActionThrowsRuntimeExceptionIfUnableToFetchRepositoryMetaData()
+    {
+        $this->authenticatedAs(new User());
+
+        $repository = 'foo';
+        $owner = 'johndoe';
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositoryMetadata')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($repository)
+            )
+            ->willReturn(null)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+        ;
+
+        $this->dispatch(
+            '/module/add',
+            Http\Request::METHOD_POST,
+            [
+                'repo' => $repository,
+                'owner' => $owner,
+            ]
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('add');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+
+        /* @var View\Model\ViewModel  $result */
+        $result = $this->getApplication()->getMvcEvent()->getResult();
+
+        /* @var Exception $exception */
+        $exception = $result->getVariable('exception');
+
+        $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
+        $this->assertSame('Not able to fetch the repository from github due to an unknown error.', $exception->getMessage());
+    }
+
     public function testRemoveActionRedirectsIfNotAuthenticated()
     {
         $this->notAuthenticated();
