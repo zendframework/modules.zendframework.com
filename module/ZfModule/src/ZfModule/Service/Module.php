@@ -32,11 +32,8 @@ class Module extends EventProvider
     }
 
     /**
-     * createFromForm
-     *
      * @param array $data
-     * @return \ZfcUser\Entity\UserInterface
-     * @throws Exception\InvalidArgumentException
+     * @return object|Entity\Module
      */
     public function register($data)
     {
