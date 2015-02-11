@@ -6,6 +6,7 @@ use Application\Service;
 use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
 use EdpGithub\Collection;
+use PHPUnit_Framework_MockObject_MockObject;
 use stdClass;
 use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
@@ -41,10 +42,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repositoryCollection = $this->getMockBuilder(Collection\RepositoryCollection::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        $repositoryCollection = $this->repositoryCollectionMock();
 
         $repositoryRetriever = $this->getMockBuilder(Service\RepositoryRetriever::class)
             ->disableOriginalConstructor()
@@ -273,5 +271,73 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('view');
+    }
+
+    /**
+     * @link http://stackoverflow.com/a/15907250
+     *
+     * @param array $repositories
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    private function repositoryCollectionMock(array $repositories = [])
+    {
+        $data = new stdClass();
+        $data->array = $repositories;
+        $data->position = 0;
+
+        $repositoryCollection = $this->getMockBuilder(Collection\RepositoryCollection::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryCollection
+            ->expects($this->any())
+            ->method('rewind')
+            ->willReturnCallback(function () use ($data) {
+                $data->position = 0;
+            })
+        ;
+
+        $repositoryCollection
+            ->expects($this->any())
+            ->method('current')
+            ->willReturnCallback(function () use ($data) {
+                return $data->array[$data->position];
+            })
+        ;
+
+        $repositoryCollection
+            ->expects($this->any())
+            ->method('key')
+            ->willReturnCallback(function () use ($data) {
+                return $data->position;
+            })
+        ;
+
+        $repositoryCollection
+            ->expects($this->any())
+            ->method('next')
+            ->willReturnCallback(function () use ($data) {
+                $data->position++;
+            })
+        ;
+
+        $repositoryCollection
+            ->expects($this->any())
+            ->method('valid')
+            ->willReturnCallback(function () use ($data) {
+                return isset($data->array[$data->position]);
+            })
+        ;
+
+        $repositoryCollection
+            ->expects($this->any())
+            ->method('count')
+            ->willReturnCallback(function () use ($data) {
+                return count($data->array);
+            })
+        ;
+
+        return $repositoryCollection;
     }
 }
