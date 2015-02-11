@@ -154,10 +154,9 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * This function is used to submit a module from the site
      * @throws Exception\UnexpectedValueException
-     * @return
-     **/
+     * @return Http\Response
+     */
     public function addAction()
     {
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
