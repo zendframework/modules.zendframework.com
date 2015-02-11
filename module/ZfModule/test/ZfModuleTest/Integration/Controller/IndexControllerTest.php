@@ -211,6 +211,9 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         /* @var Mvc\Application $application */
         $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
 
+        $this->assertTrue($viewModel->terminate());
+        $this->assertSame('zf-module/index/index', $viewModel->getTemplate());
+
         $viewVariable = $viewModel->getVariable('repositories');
 
         $this->assertInternalType('array', $viewVariable);
@@ -463,6 +466,9 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         /* @var Mvc\Application $application */
         $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
+
+        $this->assertTrue($viewModel->terminate());
+        $this->assertSame('zf-module/index/index.phtml', $viewModel->getTemplate());
 
         $viewVariable = $viewModel->getVariable('repositories');
 
