@@ -679,6 +679,87 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         ];
     }
 
+    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsNotAModule()
+    {
+        $this->authenticatedAs(new User());
+
+        $repository = 'foo';
+        $owner = 'johndoe';
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $module = new stdClass();
+        $module->name = 'foo';
+        $module->fork = false;
+        $module->permissions = new stdClass();
+        $module->permissions->push = true;
+
+        $repositoryRetriever
+            ->expects($this->once())
+            ->method('getUserRepositoryMetadata')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($repository)
+            )
+            ->willReturn($module)
+        ;
+
+        $moduleService = $this->getMockBuilder(Service\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleService
+            ->expects($this->once())
+            ->method('isModule')
+            ->with($this->equalTo($module))
+            ->willReturn(false)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+            ->setService(
+                Service\Module::class,
+                $moduleService
+            )
+        ;
+
+        $this->dispatch(
+            '/module/add',
+            Http\Request::METHOD_POST,
+            [
+                'repo' => $repository,
+                'owner' => $owner,
+            ]
+        );
+
+        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertActionName('add');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+
+        /* @var View\Model\ViewModel  $result */
+        $result = $this->getApplication()->getMvcEvent()->getResult();
+
+        /* @var Exception $exception */
+        $exception = $result->getVariable('exception');
+
+        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertSame(
+            sprintf(
+                '%s is not a Zend Framework Module',
+                $module->name
+            ),
+            $exception->getMessage()
+        );
+    }
+
     public function testRemoveActionRedirectsIfNotAuthenticated()
     {
         $this->notAuthenticated();
