@@ -92,7 +92,7 @@ class IndexController extends AbstractActionController
         ];
 
         $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
-        $repositories = $this->fetchModules($repos);
+        $repositories = $this->filterModules($repos);
 
         $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
@@ -114,7 +114,7 @@ class IndexController extends AbstractActionController
         ];
 
         $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
-        $repositories = $this->fetchModules($repos);
+        $repositories = $this->filterModules($repos);
 
         $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
@@ -127,7 +127,7 @@ class IndexController extends AbstractActionController
      * @param RepositoryCollection $repositories
      * @return array
      */
-    private function fetchModules(RepositoryCollection $repositories)
+    private function filterModules(RepositoryCollection $repositories)
     {
         $modules = [];
 
