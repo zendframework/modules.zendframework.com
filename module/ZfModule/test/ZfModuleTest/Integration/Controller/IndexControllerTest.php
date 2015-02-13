@@ -590,7 +590,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
         $this->assertSame(
-            'Not able to fetch the repository from github due to an unknown error.',
+            'Not able to fetch the repository from GitHub due to an unknown error.',
             $exception->getMessage()
         );
     }
@@ -928,7 +928,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
         $this->assertSame(
-            'Not able to fetch the repository from github due to an unknown error.',
+            'Not able to fetch the repository from GitHub due to an unknown error.',
             $exception->getMessage()
         );
     }

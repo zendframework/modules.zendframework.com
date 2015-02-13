@@ -176,7 +176,7 @@ class IndexController extends AbstractActionController
 
         if (!($repository instanceof \stdClass)) {
             throw new Exception\RuntimeException(
-                'Not able to fetch the repository from github due to an unknown error.',
+                'Not able to fetch the repository from GitHub due to an unknown error.',
                 Http\Response::STATUS_CODE_500
             );
         }
@@ -224,7 +224,7 @@ class IndexController extends AbstractActionController
 
         if (!$repository instanceof \stdClass) {
             throw new Exception\RuntimeException(
-                'Not able to fetch the repository from github due to an unknown error.',
+                'Not able to fetch the repository from GitHub due to an unknown error.',
                 Http\Response::STATUS_CODE_500
             );
         }
