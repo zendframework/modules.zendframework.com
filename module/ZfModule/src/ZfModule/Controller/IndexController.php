@@ -166,9 +166,7 @@ class IndexController extends AbstractActionController
 
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            throw new Exception\UnexpectedValueException(
-                'Something went wrong with the post values of the request...'
-            );
+            throw new Exception\UnexpectedValueException('Something went wrong with the post values of the request...');
         }
 
         $repo = $request->getPost()->get('repo');
@@ -216,9 +214,7 @@ class IndexController extends AbstractActionController
 
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            throw new Exception\UnexpectedValueException(
-                'Something went wrong with the post values of the request...'
-            );
+            throw new Exception\UnexpectedValueException('Something went wrong with the post values of the request...');
         }
 
         $repo = $request->getPost()->get('repo');
