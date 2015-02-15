@@ -39,8 +39,8 @@ class Module extends EventProvider
      */
     public function register($data)
     {
-        $url = $data->html_url;
-        $module = $this->moduleMapper->findByUrl($url);
+        $module = $this->moduleMapper->findByUrl($data->html_url);
+
         $update = true;
         if (!$module) {
             $module  = new Entity\Module();
@@ -50,9 +50,8 @@ class Module extends EventProvider
         $module->setName($data->name);
         $module->setDescription($data->description);
         $module->setUrl($data->html_url);
-        $owner = $data->owner;
-        $module->setOwner($owner->login);
-        $module->setPhotoUrl($owner->avatar_url);
+        $module->setOwner($data->owner->login);
+        $module->setPhotoUrl($data->owner->avatar_url);
 
         if ($update) {
             $this->moduleMapper->update($module);
