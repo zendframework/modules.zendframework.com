@@ -383,6 +383,69 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testRegisterUpdatesExistingModule()
+    {
+        $repository = $this->repository();
+
+        $module = $this->getMockBuilder(Entity\Module::class)->getMock();
+
+        $module
+            ->expects($this->once())
+            ->method('setName')
+            ->with($this->equalTo($repository->name))
+        ;
+
+        $module
+            ->expects($this->once())
+            ->method('setDescription')
+            ->with($this->equalTo($repository->description))
+        ;
+
+        $module
+            ->expects($this->once())
+            ->method('setUrl')
+            ->with($this->equalTo($repository->html_url))
+        ;
+
+        $module
+            ->expects($this->once())
+            ->method('setOwner')
+            ->with($this->equalTo($repository->owner->login))
+        ;
+        $module
+            ->expects($this->once())
+            ->method('setPhotoUrl')
+            ->with($this->equalTo($repository->owner->avatar_url))
+        ;
+
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('findByUrl')
+            ->with($this->equalTo($repository->html_url))
+            ->willReturn($module)
+        ;
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('update')
+            ->with($this->equalTo($module))
+        ;
+
+        $githubClient = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $service = new Service\Module(
+            $moduleMapper,
+            $githubClient
+        );
+
+        $this->assertSame($module, $service->register($repository));
+    }
+
     /**
      * @return stdClass
      */
@@ -391,9 +454,17 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $repository = new stdClass();
 
         $repository->name = 'foo';
+        $repository->description = 'blah blah';
+        $repository->fork = false;
+        $repository->created_at = '1970-01-01 00:00:00';
+        $repository->html_url = 'http://www.example.org';
 
         $repository->owner = new stdClass();
         $repository->owner->login = 'suzie';
+        $repository->owner->avatar_url = 'http://www.example.org/img/suzie.gif';
+
+        $repository->permissions = new stdClass();
+        $repository->permissions->push = true;
 
         return $repository;
     }
