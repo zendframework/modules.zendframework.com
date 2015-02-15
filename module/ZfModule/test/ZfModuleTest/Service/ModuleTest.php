@@ -77,7 +77,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertSame($modules, $service->allModules($limit));
     }
 
-    public function testListUserModuleListsCurrentUsersModulesFromApiFoundInDatabase()
+    public function testListUserModulesListsCurrentUsersModulesFromApiFoundInDatabase()
     {
         $name = 'foo';
 
@@ -174,7 +174,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertSame([], $service->currentUserModules());
     }
 
-    public function testListUsersModuleDoesNotLookupModulesFromApiThatAreForks()
+    public function testListUserModulesDoesNotLookupModulesFromApiThatAreForks()
     {
         $repository = new stdClass();
         $repository->fork = true;
