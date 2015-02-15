@@ -39,12 +39,14 @@ class Module extends EventProvider
      */
     public function register($repository)
     {
+        $isUpdate = false;
+
         $module = $this->moduleMapper->findByUrl($repository->html_url);
 
-        $update = true;
-        if (!$module) {
+        if ($module) {
+            $isUpdate = true;
+        } else {
             $module  = new Entity\Module();
-            $update = false;
         }
 
         $module->setName($repository->name);
@@ -53,7 +55,7 @@ class Module extends EventProvider
         $module->setOwner($repository->owner->login);
         $module->setPhotoUrl($repository->owner->avatar_url);
 
-        if ($update) {
+        if ($isUpdate) {
             $this->moduleMapper->update($module);
         } else {
             $this->moduleMapper->insert($module);
