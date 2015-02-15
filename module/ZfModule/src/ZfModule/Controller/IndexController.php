@@ -165,8 +165,10 @@ class IndexController extends AbstractActionController
             throw new Exception\UnexpectedValueException('Something went wrong with the post values of the request...');
         }
 
-        $repo = $request->getPost()->get('repo');
-        $owner  = $request->getPost()->get('owner');
+        $postParams = $request->getPost();
+
+        $repo = $postParams->get('repo');
+        $owner  = $postParams->get('owner');
 
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
@@ -213,8 +215,10 @@ class IndexController extends AbstractActionController
             throw new Exception\UnexpectedValueException('Something went wrong with the post values of the request...');
         }
 
-        $repo = $request->getPost()->get('repo');
-        $owner  = $request->getPost()->get('owner');
+        $postParams = $request->getPost();
+
+        $repo = $postParams->get('repo');
+        $owner  = $postParams->get('owner');
 
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
