@@ -84,18 +84,19 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
-    public function testIndexActionFiltersOutUserRepositoriesWhichAreNeitherModulesNorAddedNorEligibleOtherwise()
+    public function testIndexActionRendersValidModulesOnly()
     {
         $this->authenticatedAs(new User());
 
-        $module = $this->validModule();
+        $validModule = $this->validModule();
+
         $forkedModule = $this->forkedModule();
         $nonModule = $this->nonModule();
         $registeredModule = $this->registeredModule();
         $moduleWithoutPushPermissions = $this->moduleWithoutPushPermissions();
 
         $repositories = [
-            $module,
+            $validModule,
             $nonModule,
             $forkedModule,
             $moduleWithoutPushPermissions,
@@ -187,7 +188,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertInternalType('array', $viewVariable);
         $this->assertCount(1, $viewVariable);
-        $this->assertSame($module, $viewVariable[0]);
+        $this->assertSame($validModule, $viewVariable[0]);
     }
 
     public function testOrganizationActionRedirectsIfNotAuthenticated()
@@ -297,18 +298,19 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
-    public function testOrganizationActionFiltersOutUserRepositoriesWhichAreNeitherModulesNorAddedNorEligibleOtherwise()
+    public function testOrganizationActionRendersValidModulesOnly()
     {
         $this->authenticatedAs(new User());
 
-        $module = $this->validModule();
+        $validModule = $this->validModule();
+
         $forkedModule = $this->forkedModule();
         $nonModule = $this->nonModule();
         $registeredModule = $this->registeredModule();
         $moduleWithoutPushPermissions = $this->moduleWithoutPushPermissions();
 
         $repositories = [
-            $module,
+            $validModule,
             $nonModule,
             $forkedModule,
             $moduleWithoutPushPermissions,
@@ -409,7 +411,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertInternalType('array', $viewVariable);
         $this->assertCount(1, $viewVariable);
-        $this->assertSame($module, $viewVariable[0]);
+        $this->assertSame($validModule, $viewVariable[0]);
     }
 
     public function testAddActionRedirectsIfNotAuthenticated()
