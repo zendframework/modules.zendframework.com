@@ -4,6 +4,7 @@ namespace ZfModule\Service;
 
 use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
+use EdpGithub\Http\Client as HttpClient;
 use stdClass;
 use ZfcBase\EventManager\EventProvider;
 use ZfModule\Entity;
@@ -75,7 +76,16 @@ class Module extends EventProvider
             $repository->name
         );
 
-        $response = $this->githubClient->getHttpClient()->request('search/code?q=' . $query);
+        $path = sprintf(
+            'search/code?q=%s',
+            $query
+        );
+
+        /* @var HttpClient $httpClient */
+        $httpClient = $this->githubClient->getHttpClient();
+
+        $response = $httpClient->request($path);
+
         $result = json_decode($response->getbody(), true);
 
         if (isset($result['total_count']) && $result['total_count'] > 0) {
