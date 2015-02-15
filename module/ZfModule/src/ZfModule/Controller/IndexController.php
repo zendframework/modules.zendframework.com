@@ -4,6 +4,7 @@ namespace ZfModule\Controller;
 
 use Application\Service\RepositoryRetriever;
 use EdpGithub\Collection\RepositoryCollection;
+use stdClass;
 use Zend\Http;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -124,7 +125,7 @@ class IndexController extends AbstractActionController
 
     /**
      * @param RepositoryCollection $repositories
-     * @return array
+     * @return stdClass[]
      */
     private function filterModules(RepositoryCollection $repositories)
     {
