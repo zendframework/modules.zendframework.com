@@ -272,12 +272,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
-        $repository = new stdClass();
-
-        $repository->name = 'foo';
-
-        $repository->owner = new stdClass();
-        $repository->owner->login = 'suzie';
+        $repository = $this->repository();
 
         $path = sprintf(
             'search/code?q=repo:%s/%s filename:Module.php "class Module"',
@@ -312,5 +307,94 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         );
 
         $service->isModule($repository);
+    }
+
+    /**
+     * @dataProvider providerIsModuleReturnsTrueIfResultCountIsGreaterThanZero
+     *
+     * @param bool $isModule
+     * @param array $data
+     */
+    public function testIsModuleReturnValueDependsOnTotalCountInResponseBody($isModule, $data)
+    {
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repository = $this->repository();
+
+        $response = $this->getMockBuilder(Http\Response::class)->getMock();
+
+        $response
+            ->expects($this->once())
+            ->method('getBody')
+            ->willReturn(json_encode($data))
+        ;
+
+        $httpClient = $this->getMockBuilder(HttpClient::class)->getMock();
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->willReturn($response);
+
+        $githubClient = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $githubClient
+            ->expects($this->once())
+            ->method('getHttpClient')
+            ->willReturn($httpClient)
+        ;
+
+        $service = new Service\Module(
+            $moduleMapper,
+            $githubClient
+        );
+
+        $this->assertSame($isModule, $service->isModule($repository));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerIsModuleReturnsTrueIfResultCountIsGreaterThanZero()
+    {
+        return [
+            [
+                false,
+                [],
+            ],
+            [
+                false,
+                [
+                    'total_count' => 0,
+                ],
+            ],
+            [
+                true,
+                [
+                    'total_count' => 1,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return stdClass
+     */
+    private function repository()
+    {
+        $repository = new stdClass();
+
+        $repository->name = 'foo';
+
+        $repository->owner = new stdClass();
+        $repository->owner->login = 'suzie';
+
+        return $repository;
     }
 }
