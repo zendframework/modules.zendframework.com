@@ -34,12 +34,12 @@ class Module extends EventProvider
     }
 
     /**
-     * @param stdClass $data
-     * @return object|Entity\Module
+     * @param stdClass $repository
+     * @return Entity\Module
      */
-    public function register($data)
+    public function register($repository)
     {
-        $module = $this->moduleMapper->findByUrl($data->html_url);
+        $module = $this->moduleMapper->findByUrl($repository->html_url);
 
         $update = true;
         if (!$module) {
@@ -47,11 +47,11 @@ class Module extends EventProvider
             $update = false;
         }
 
-        $module->setName($data->name);
-        $module->setDescription($data->description);
-        $module->setUrl($data->html_url);
-        $module->setOwner($data->owner->login);
-        $module->setPhotoUrl($data->owner->avatar_url);
+        $module->setName($repository->name);
+        $module->setDescription($repository->description);
+        $module->setUrl($repository->html_url);
+        $module->setOwner($repository->owner->login);
+        $module->setPhotoUrl($repository->owner->avatar_url);
 
         if ($update) {
             $this->moduleMapper->update($module);
