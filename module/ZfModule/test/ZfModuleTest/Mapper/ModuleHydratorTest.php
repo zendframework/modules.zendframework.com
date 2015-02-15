@@ -3,6 +3,7 @@
 namespace ZfModuleTest\Mapper;
 
 use PHPUnit_Framework_TestCase;
+use stdClass;
 use ZfModule\Entity\Module;
 use ZfModule\Mapper\ModuleHydrator;
 
@@ -36,6 +37,16 @@ class ModuleHydratorTest extends PHPUnit_Framework_TestCase
         $this->assertSame($data, $hydrator->extract($module));
     }
 
+    /**
+     * @expectedException \ZfModule\Mapper\Exception\InvalidArgumentException
+     * @expectedExceptionMessage $object must be an instance of ZfModule\Entity\ModuleEntityInterface
+     */
+    public function testEntityHydratorRefusesToExtractInvalidObject()
+    {
+        $hydrator = new ModuleHydrator();
+        $hydrator->extract(new stdClass());
+    }
+
     public function testEntityHydratorCanHydrate()
     {
         $data = [
@@ -62,5 +73,15 @@ class ModuleHydratorTest extends PHPUnit_Framework_TestCase
         $hydrator = new ModuleHydrator();
 
         $this->assertEquals($module, $hydrator->hydrate($data, new Module()));
+    }
+
+    /**
+     * @expectedException \ZfModule\Mapper\Exception\InvalidArgumentException
+     * @expectedExceptionMessage $object must be an instance of ZfModule\Entity\ModuleEntityInterface
+     */
+    public function testEntityHydratorRefusesToHydrateInvalidObject()
+    {
+        $hydrator = new ModuleHydrator();
+        $hydrator->hydrate([], new stdClass());
     }
 }
