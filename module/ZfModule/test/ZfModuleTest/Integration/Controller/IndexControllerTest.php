@@ -88,53 +88,19 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repositories = [];
+        $module = $this->validModule();
+        $forkedModule = $this->forkedModule();
+        $nonModule = $this->nonModule();
+        $registeredModule = $this->registeredModule();
+        $moduleWithoutPushPermissions = $this->moduleWithoutPushPermissions();
 
-        $module = new stdClass();
-        $module->name = 'foo';
-        $module->description = 'blah blah';
-        $module->fork = false;
-        $module->created_at = '1970-01-01 00:00:00';
-        $module->html_url = 'http://www.example.org';
-        $module->owner = new stdClass();
-        $module->owner->login = 'johndoe';
-        $module->owner->avatar_url = 'johndoe';
-        $module->permissions = new stdClass();
-        $module->permissions->push = true;
-
-        array_push($repositories, $module);
-
-        $nonModule = new stdClass();
-        $nonModule->name = 'bar';
-        $nonModule->fork = false;
-        $nonModule->permissions = new stdClass();
-        $nonModule->permissions->push = true;
-
-        array_push($repositories, $nonModule);
-
-        $forkedModule = new stdClass();
-        $forkedModule->name = 'baz';
-        $forkedModule->fork = true;
-        $forkedModule->permissions = new stdClass();
-        $forkedModule->permissions->push = true;
-
-        array_push($repositories, $forkedModule);
-
-        $moduleWithoutPushPermissions = new stdClass();
-        $moduleWithoutPushPermissions->name = 'qux';
-        $moduleWithoutPushPermissions->fork = false;
-        $moduleWithoutPushPermissions->permissions = new stdClass();
-        $moduleWithoutPushPermissions->permissions->push = false;
-
-        array_push($repositories, $moduleWithoutPushPermissions);
-
-        $registeredModule = new stdClass();
-        $registeredModule->name = 'vqz';
-        $registeredModule->fork = false;
-        $registeredModule->permissions = new stdClass();
-        $registeredModule->permissions->push = true;
-
-        array_push($repositories, $registeredModule);
+        $repositories = [
+            $module,
+            $nonModule,
+            $forkedModule,
+            $moduleWithoutPushPermissions,
+            $registeredModule,
+        ];
 
         $repositoryCollection = $this->repositoryCollectionMock($repositories);
 
@@ -335,53 +301,19 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $repositories = [];
+        $module = $this->validModule();
+        $forkedModule = $this->forkedModule();
+        $nonModule = $this->nonModule();
+        $registeredModule = $this->registeredModule();
+        $moduleWithoutPushPermissions = $this->moduleWithoutPushPermissions();
 
-        $module = new stdClass();
-        $module->name = 'foo';
-        $module->description = 'blah blah';
-        $module->fork = false;
-        $module->created_at = '1970-01-01 00:00:00';
-        $module->html_url = 'http://www.example.org';
-        $module->owner = new stdClass();
-        $module->owner->login = 'johndoe';
-        $module->owner->avatar_url = 'johndoe';
-        $module->permissions = new stdClass();
-        $module->permissions->push = true;
-
-        array_push($repositories, $module);
-
-        $nonModule = new stdClass();
-        $nonModule->name = 'bar';
-        $nonModule->fork = false;
-        $nonModule->permissions = new stdClass();
-        $nonModule->permissions->push = true;
-
-        array_push($repositories, $nonModule);
-
-        $forkedModule = new stdClass();
-        $forkedModule->name = 'baz';
-        $forkedModule->fork = true;
-        $forkedModule->permissions = new stdClass();
-        $forkedModule->permissions->push = true;
-
-        array_push($repositories, $forkedModule);
-
-        $moduleWithoutPushPermissions = new stdClass();
-        $moduleWithoutPushPermissions->name = 'qux';
-        $moduleWithoutPushPermissions->fork = false;
-        $moduleWithoutPushPermissions->permissions = new stdClass();
-        $moduleWithoutPushPermissions->permissions->push = false;
-
-        array_push($repositories, $moduleWithoutPushPermissions);
-
-        $registeredModule = new stdClass();
-        $registeredModule->name = 'vqz';
-        $registeredModule->fork = false;
-        $registeredModule->permissions = new stdClass();
-        $registeredModule->permissions->push = true;
-
-        array_push($repositories, $registeredModule);
+        $repositories = [
+            $module,
+            $nonModule,
+            $forkedModule,
+            $moduleWithoutPushPermissions,
+            $registeredModule,
+        ];
 
         $repositoryCollection = $this->repositoryCollectionMock($repositories);
 
@@ -662,21 +594,12 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
      */
     public function providerRepositoryWithInsufficientPrivileges()
     {
-        $repository = new stdClass();
-        $repository->permissions = new stdClass();
-
-        $repository->fork = true;
-        $repository->permissions->push = true;
-
         yield [
-            $repository,
+            $this->forkedModule(),
         ];
 
-        $repository->fork = false;
-        $repository->permissions->push = false;
-
         yield [
-            $repository,
+            $this->moduleWithoutPushPermissions(),
         ];
     }
 
@@ -692,11 +615,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $repository = new stdClass();
-        $repository->name = 'foo';
-        $repository->fork = false;
-        $repository->permissions = new stdClass();
-        $repository->permissions->push = true;
+        $nonModule = $this->nonModule();
 
         $repositoryRetriever
             ->expects($this->once())
@@ -705,7 +624,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $this->equalTo($vendor),
                 $this->equalTo($name)
             )
-            ->willReturn($repository)
+            ->willReturn($nonModule)
         ;
 
         $moduleService = $this->getMockBuilder(Service\Module::class)
@@ -716,7 +635,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService
             ->expects($this->once())
             ->method('isModule')
-            ->with($this->equalTo($repository))
+            ->with($this->equalTo($nonModule))
             ->willReturn(false)
         ;
 
@@ -755,7 +674,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertSame(
             sprintf(
                 '%s is not a Zend Framework Module',
-                $repository->name
+                $nonModule->name
             ),
             $exception->getMessage()
         );
@@ -773,11 +692,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $repository = new stdClass();
-        $repository->name = 'foo';
-        $repository->fork = false;
-        $repository->permissions = new stdClass();
-        $repository->permissions->push = true;
+        $validModule = $this->validModule();
 
         $repositoryRetriever
             ->expects($this->once())
@@ -786,7 +701,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $this->equalTo($vendor),
                 $this->equalTo($name)
             )
-            ->willReturn($repository)
+            ->willReturn($validModule)
         ;
 
         $moduleService = $this->getMockBuilder(Service\Module::class)
@@ -797,14 +712,14 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService
             ->expects($this->once())
             ->method('isModule')
-            ->with($this->equalTo($repository))
+            ->with($this->equalTo($validModule))
             ->willReturn(true)
         ;
 
         $moduleService
             ->expects($this->once())
             ->method('register')
-            ->with($this->equalTo($repository))
+            ->with($this->equalTo($validModule))
             ->willReturn(new Entity\Module())
         ;
 
@@ -1007,12 +922,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $repository = new stdClass();
-        $repository->name = 'foo';
-        $repository->html_url = 'http://example.org';
-        $repository->fork = false;
-        $repository->permissions = new stdClass();
-        $repository->permissions->push = true;
+        $unregisteredModule = $this->unregisteredModule();
 
         $repositoryRetriever
             ->expects($this->once())
@@ -1021,7 +931,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $this->equalTo($vendor),
                 $this->equalTo($name)
             )
-            ->willReturn($repository)
+            ->willReturn($unregisteredModule)
         ;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
@@ -1032,7 +942,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleMapper
             ->expects($this->once())
             ->method('findByUrl')
-            ->with($this->equalTo($repository->html_url))
+            ->with($this->equalTo($unregisteredModule->html_url))
             ->willReturn(false)
         ;
 
@@ -1071,7 +981,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertSame(
             sprintf(
                 '%s was not found',
-                $repository->name
+                $unregisteredModule->name
             ),
             $exception->getMessage()
         );
@@ -1089,12 +999,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $repository = new stdClass();
-        $repository->name = 'foo';
-        $repository->html_url = 'http://example.org';
-        $repository->fork = false;
-        $repository->permissions = new stdClass();
-        $repository->permissions->push = true;
+        $registeredModule = $this->registeredModule();
 
         $repositoryRetriever
             ->expects($this->once())
@@ -1103,7 +1008,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $this->equalTo($vendor),
                 $this->equalTo($name)
             )
-            ->willReturn($repository)
+            ->willReturn($registeredModule)
         ;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
@@ -1116,7 +1021,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleMapper
             ->expects($this->once())
             ->method('findByUrl')
-            ->with($this->equalTo($repository->html_url))
+            ->with($this->equalTo($registeredModule->html_url))
             ->willReturn($module)
         ;
 
@@ -1371,5 +1276,90 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         ;
 
         return $repositoryCollection;
+    }
+
+    /**
+     * @return stdClass
+     */
+    private function validModule()
+    {
+        $repository = new stdClass();
+
+        $repository->name = 'foo';
+        $repository->description = 'blah blah';
+        $repository->fork = false;
+        $repository->created_at = '1970-01-01 00:00:00';
+        $repository->html_url = 'http://www.example.org';
+
+        $repository->owner = new stdClass();
+        $repository->owner->login = 'johndoe';
+        $repository->owner->avatar_url = 'johndoe';
+
+        $repository->permissions = new stdClass();
+        $repository->permissions->push = true;
+
+        return $repository;
+    }
+
+    /**
+     * @return stdClass
+     */
+    private function nonModule()
+    {
+        $repository = $this->validModule();
+
+        $repository->name = 'non-module';
+
+        return $repository;
+    }
+
+    /**
+     * @return stdClass
+     */
+    private function forkedModule()
+    {
+        $repository = $this->validModule();
+
+        $repository->name = 'forked-module';
+        $repository->fork = true;
+
+        return $repository;
+    }
+
+    /**
+     * @return stdClass
+     */
+    private function moduleWithoutPushPermissions()
+    {
+        $repository = $this->validModule();
+
+        $repository->name = 'module-without-push-permissions';
+        $repository->permissions->push = false;
+
+        return $repository;
+    }
+
+    /**
+     * @return stdClass
+     */
+    private function registeredModule()
+    {
+        $repository = $this->validModule();
+
+        $repository->name = 'registered-module';
+
+        return $repository;
+    }
+
+    /**
+     * @return stdClass
+     */
+    private function unregisteredModule()
+    {
+        $repository = $this->validModule();
+
+        $repository->name = 'unregistered-module';
+
+        return $repository;
     }
 }
