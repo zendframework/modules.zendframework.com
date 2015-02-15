@@ -383,6 +383,44 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testRegisterInsertsModule()
+    {
+        $repository = $this->repository();
+
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('findByUrl')
+            ->with($this->equalTo($repository->html_url))
+            ->willReturn(null)
+        ;
+
+        $moduleMapper
+            ->expects($this->once())
+            ->method('insert')
+            ->with($this->isInstanceOf(Entity\Module::class))
+        ;
+
+        $githubClient = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $service = new Service\Module(
+            $moduleMapper,
+            $githubClient
+        );
+
+        $module = $service->register($repository);
+
+        $this->assertSame($repository->name, $module->getName());
+        $this->assertSame($repository->description, $module->getDescription());
+        $this->assertSame($repository->html_url, $module->getUrl());
+        $this->assertSame($repository->owner->login, $module->getOwner());
+        $this->assertSame($repository->owner->avatar_url, $module->getPhotoUrl());
+    }
+
     public function testRegisterUpdatesExistingModule()
     {
         $repository = $this->repository();
