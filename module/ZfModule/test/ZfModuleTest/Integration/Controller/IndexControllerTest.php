@@ -516,7 +516,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
      *
      * @param stdClass $repository
      */
-    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions($repository)
+    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryHasInsufficientPrivileges($repository)
     {
         $this->authenticatedAs(new User());
 
@@ -837,7 +837,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
      *
      * @param stdClass $repository
      */
-    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryIsForkOrUserHasNoPushPermissions($repository)
+    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryHasInsufficientPrivileges($repository)
     {
         $this->authenticatedAs(new User());
 
