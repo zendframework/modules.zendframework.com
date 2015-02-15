@@ -254,7 +254,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
 
         $repositoryRetriever
             ->expects($this->once())
@@ -314,7 +314,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
 
         $repositoryRetriever
             ->expects($this->once())
@@ -459,7 +459,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
         $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -520,7 +520,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
         $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -591,7 +591,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
         $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -668,7 +668,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
         $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -780,7 +780,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
         $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -841,7 +841,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
         $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -898,7 +898,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
         $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -975,7 +975,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authenticatedAs(new User());
 
-        $vendor = 'johndoe';
+        $vendor = 'suzie';
         $name = 'foo';
 
         $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
@@ -1276,8 +1276,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $repository->html_url = 'http://www.example.org';
 
         $repository->owner = new stdClass();
-        $repository->owner->login = 'johndoe';
-        $repository->owner->avatar_url = 'johndoe';
+        $repository->owner->login = 'suzie';
+        $repository->owner->avatar_url = 'http://www.example.org/img/suzie.gif';
 
         $repository->permissions = new stdClass();
         $repository->permissions->push = true;
