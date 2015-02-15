@@ -32,11 +32,8 @@ class Module extends EventProvider
     }
 
     /**
-     * createFromForm
-     *
-     * @param array $data
-     * @return \ZfcUser\Entity\UserInterface
-     * @throws Exception\InvalidArgumentException
+     * @param stdClass $data
+     * @return object|Entity\Module
      */
     public function register($data)
     {
@@ -44,7 +41,7 @@ class Module extends EventProvider
         $module = $this->moduleMapper->findByUrl($url);
         $update = true;
         if (!$module) {
-            $module  = new \ZfModule\Entity\Module();
+            $module  = new Entity\Module();
             $update = false;
         }
 

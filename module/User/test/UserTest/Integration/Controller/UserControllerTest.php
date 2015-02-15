@@ -2,10 +2,10 @@
 
 namespace UserTest\Integration\Controller;
 
+use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
 use User\Entity\User;
 use User\View\Helper\UserOrganizations;
-use Zend\Authentication\AuthenticationService;
 use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\View;
@@ -17,6 +17,8 @@ use ZfModule\View\Helper\TotalModules;
  */
 class UserControllerTest extends AbstractHttpControllerTestCase
 {
+    use AuthenticationTrait;
+
     protected function setUp()
     {
         parent::setUp();
@@ -26,23 +28,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function testIndexActionRedirectsIfNotAuthenticated()
     {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)->getMock();
-
-        $authenticationService
-            ->expects($this->once())
-            ->method('hasIdentity')
-            ->willReturn(false)
-        ;
-
-        $serviceManager = $this->getApplicationServiceLocator();
-
-        $serviceManager
-            ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
-        ;
+        $this->notAuthenticated();
 
         $this->dispatch('/user');
 
@@ -55,23 +41,6 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function testIndexActionSetsModulesIfAuthenticated()
     {
-        $authenticationService = $this->getMockBuilder(AuthenticationService::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        $authenticationService
-            ->expects($this->any())
-            ->method('hasIdentity')
-            ->willReturn(true)
-        ;
-
-        $authenticationService
-            ->expects($this->any())
-            ->method('getIdentity')
-            ->willReturn(new User())
-        ;
-
         $moduleService = $this->getMockBuilder(Service\Module::class)
             ->disableOriginalConstructor()
             ->getMock()
@@ -87,10 +56,6 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
         $serviceManager
             ->setAllowOverride(true)
-            ->setService(
-                'zfcuser_auth_service',
-                $authenticationService
-            )
             ->setService(
                 'zfmodule_service_module',
                 $moduleService
@@ -133,6 +98,8 @@ class UserControllerTest extends AbstractHttpControllerTestCase
                 $totalModules
             )
         ;
+
+        $this->authenticatedAs(new User());
 
         $this->dispatch('/user');
 

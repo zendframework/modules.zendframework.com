@@ -7,9 +7,14 @@ use EdpGithub\Collection\RepositoryCollection;
 use Zend\Http;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use ZfcUser\Controller\Plugin;
 use ZfModule\Mapper;
 use ZfModule\Service;
 
+/**
+ * @method Http\Request getRequest()
+ * @method Plugin\ZfcUserAuthentication zfcUserAuthentication()
+ */
 class IndexController extends AbstractActionController
 {
     /**
@@ -63,7 +68,7 @@ class IndexController extends AbstractActionController
         /* HOTFIX for https://github.com/EvanDotPro/EdpGithub/issues/23 - markdown needs to be the last request */
         $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md', true);
 
-        $viewModel = new ViewModel([
+        return new ViewModel([
             'vendor' => $vendor,
             'module' => $module,
             'repository' => $repository,
@@ -71,8 +76,6 @@ class IndexController extends AbstractActionController
             'composerConf' => $composerConf,
             'license' => $license,
         ]);
-
-        return $viewModel;
     }
 
     public function indexAction()
@@ -81,17 +84,16 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $params = [
-            'type'      => 'all',
-            'per_page'  => 100,
-            'sort'      => 'updated',
+        $repositories = $this->repositoryRetriever->getAuthenticatedUserRepositories([
+            'type' => 'all',
+            'per_page' => 100,
+            'sort' => 'updated',
             'direction' => 'desc',
-        ];
+        ]);
 
-        $repos = $this->repositoryRetriever->getAuthenticatedUserRepositories($params);
-        $repositories = $this->fetchModules($repos);
+        $modules = $this->filterModules($repositories);
 
-        $viewModel = new ViewModel(['repositories' => $repositories]);
+        $viewModel = new ViewModel(['repositories' => $modules]);
         $viewModel->setTerminal(true);
 
         return $viewModel;
@@ -104,16 +106,16 @@ class IndexController extends AbstractActionController
         }
 
         $owner = $this->params()->fromRoute('owner', null);
-        $params = [
-            'per_page'  => 100,
-            'sort'      => 'updated',
+
+        $repositories = $this->repositoryRetriever->getUserRepositories($owner, [
+            'per_page' => 100,
+            'sort' => 'updated',
             'direction' => 'desc',
-        ];
+        ]);
 
-        $repos = $this->repositoryRetriever->getUserRepositories($owner, $params);
-        $repositories = $this->fetchModules($repos);
+        $modules = $this->filterModules($repositories);
 
-        $viewModel = new ViewModel(['repositories' => $repositories]);
+        $viewModel = new ViewModel(['repositories' => $modules]);
         $viewModel->setTerminal(true);
         $viewModel->setTemplate('zf-module/index/index.phtml');
 
@@ -121,28 +123,37 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * @param RepositoryCollection $repos
+     * @param RepositoryCollection $repositories
      * @return array
      */
-    private function fetchModules(RepositoryCollection $repos)
+    private function filterModules(RepositoryCollection $repositories)
     {
-        $repositories = [];
-
-        foreach ($repos as $repo) {
-            $isModule = $this->moduleService->isModule($repo);
-            if (!$repo->fork && $repo->permissions->push && $isModule && !$this->moduleMapper->findByName($repo->name)) {
-                $repositories[] = $repo;
+        return array_filter(iterator_to_array($repositories), function ($repository) {
+            if ($repository->fork) {
+                return false;
             }
-        }
 
-        return $repositories;
+            if (!$repository->permissions->push) {
+                return false;
+            }
+
+            if (!$this->moduleService->isModule($repository)) {
+                return false;
+            }
+
+            if ($this->moduleMapper->findByName($repository->name)) {
+                return false;
+            }
+
+            return true;
+        });
     }
 
     /**
-     * This function is used to submit a module from the site
      * @throws Exception\UnexpectedValueException
-     * @return
-     **/
+     * @throws Exception\RuntimeException
+     * @return Http\Response
+     */
     public function addAction()
     {
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
@@ -150,50 +161,49 @@ class IndexController extends AbstractActionController
         }
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            $repo = $request->getPost()->get('repo');
-            $owner  = $request->getPost()->get('owner');
+        if (!$request->isPost()) {
+            throw new Exception\UnexpectedValueException('Something went wrong with the post values of the request...');
+        }
 
-            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
+        $postParams = $request->getPost();
 
-            if (!($repository instanceof \stdClass)) {
-                throw new Exception\RuntimeException(
-                    'Not able to fetch the repository from github due to an unknown error.',
-                    Http\Response::STATUS_CODE_500
-                );
-            }
+        $repo = $postParams->get('repo');
+        $owner  = $postParams->get('owner');
 
-            if (!$repository->fork && $repository->permissions->push) {
-                if ($this->moduleService->isModule($repository)) {
-                    $module = $this->moduleService->register($repository);
-                    $this->flashMessenger()->addMessage($module->getName() . ' has been added to ZF Modules');
-                } else {
-                    throw new Exception\UnexpectedValueException(
-                        $repository->name . ' is not a Zend Framework Module',
-                        Http\Response::STATUS_CODE_403
-                    );
-                }
-            } else {
-                throw new Exception\UnexpectedValueException(
-                    'You have no permission to add this module. The reason might be that you are' .
-                    'neither the owner nor a collaborator of this repository.',
-                    Http\Response::STATUS_CODE_403
-                );
-            }
-        } else {
-            throw new Exception\UnexpectedValueException(
-                'Something went wrong with the post values of the request...'
+        $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
+
+        if (!($repository instanceof \stdClass)) {
+            throw new Exception\RuntimeException(
+                'Not able to fetch the repository from GitHub due to an unknown error.',
+                Http\Response::STATUS_CODE_500
             );
         }
+
+        if ($repository->fork || !$repository->permissions->push) {
+            throw new Exception\UnexpectedValueException(
+                'You have no permission to add this module. The reason might be that you are ' .
+                'neither the owner nor a collaborator of this repository.',
+                Http\Response::STATUS_CODE_403
+            );
+        }
+
+        if (!$this->moduleService->isModule($repository)) {
+            throw new Exception\UnexpectedValueException(
+                $repository->name . ' is not a Zend Framework Module',
+                Http\Response::STATUS_CODE_403
+            );
+        }
+
+        $module = $this->moduleService->register($repository);
+        $this->flashMessenger()->addMessage($module->getName() . ' has been added to ZF Modules');
 
         return $this->redirect()->toRoute('zfcuser');
     }
 
     /**
-     * This function is used to remove a module from the site
      * @throws Exception\UnexpectedValueException
-     * @return
-     **/
+     * @return Http\Response
+     */
     public function removeAction()
     {
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
@@ -201,42 +211,43 @@ class IndexController extends AbstractActionController
         }
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            $repo = $request->getPost()->get('repo');
-            $owner  = $request->getPost()->get('owner');
+        if (!$request->isPost()) {
+            throw new Exception\UnexpectedValueException('Something went wrong with the post values of the request...');
+        }
 
-            $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
+        $postParams = $request->getPost();
 
-            if (!$repository instanceof \stdClass) {
-                throw new Exception\RuntimeException(
-                    'Not able to fetch the repository from github due to an unknown error.',
-                    Http\Response::STATUS_CODE_500
-                );
-            }
+        $repo = $postParams->get('repo');
+        $owner  = $postParams->get('owner');
 
-            if (!$repository->fork && $repository->permissions->push) {
-                $module = $this->moduleMapper->findByUrl($repository->html_url);
-                if ($module instanceof \ZfModule\Entity\Module) {
-                    $this->moduleMapper->delete($module);
-                    $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
-                } else {
-                    throw new Exception\UnexpectedValueException(
-                        $repository->name . ' was not found',
-                        Http\Response::STATUS_CODE_403
-                    );
-                }
-            } else {
-                throw new Exception\UnexpectedValueException(
-                    'You have no permission to add this module. The reason might be that you are' .
-                    'neither the owner nor a collaborator of this repository.',
-                    Http\Response::STATUS_CODE_403
-                );
-            }
-        } else {
-            throw new Exception\UnexpectedValueException(
-                'Something went wrong with the post values of the request...'
+        $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
+
+        if (!$repository instanceof \stdClass) {
+            throw new Exception\RuntimeException(
+                'Not able to fetch the repository from GitHub due to an unknown error.',
+                Http\Response::STATUS_CODE_500
             );
         }
+
+        if ($repository->fork || !$repository->permissions->push) {
+            throw new Exception\UnexpectedValueException(
+                'You have no permission to remove this module. The reason might be that you are ' .
+                'neither the owner nor a collaborator of this repository.',
+                Http\Response::STATUS_CODE_403
+            );
+        }
+
+        $module = $this->moduleMapper->findByUrl($repository->html_url);
+
+        if (!$module) {
+            throw new Exception\UnexpectedValueException(
+                $repository->name . ' was not found',
+                Http\Response::STATUS_CODE_403
+            );
+        }
+
+        $this->moduleMapper->delete($module);
+        $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
 
         return $this->redirect()->toRoute('zfcuser');
     }

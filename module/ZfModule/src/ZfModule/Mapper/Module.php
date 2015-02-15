@@ -8,6 +8,7 @@ use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use ZfcBase\Mapper\AbstractDbMapper;
+use ZfModule\Entity;
 
 class Module extends AbstractDbMapper implements ModuleInterface
 {
@@ -110,6 +111,10 @@ class Module extends AbstractDbMapper implements ModuleInterface
         return $this->findBy('name', $name);
     }
 
+    /**
+     * @param string $url
+     * @return Entity\Module
+     */
     public function findByUrl($url)
     {
         return $this->findBy('url', $url);
