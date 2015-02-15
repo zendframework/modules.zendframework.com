@@ -4,8 +4,10 @@ namespace ZfModuleTest\Service;
 
 use EdpGithub\Api;
 use EdpGithub\Client;
+use EdpGithub\Http\Client as HttpClient;
 use PHPUnit_Framework_TestCase;
 use stdClass;
+use Zend\Http;
 use ZfModule\Entity;
 use ZfModule\Mapper;
 use ZfModule\Service;
@@ -261,5 +263,54 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertSame([], $service->currentUserModules());
+    }
+
+    public function testIsModuleQueriesGitHubApi()
+    {
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repository = new stdClass();
+
+        $repository->name = 'foo';
+
+        $repository->owner = new stdClass();
+        $repository->owner->login = 'suzie';
+
+        $path = sprintf(
+            'search/code?q=repo:%s/%s filename:Module.php "class Module"',
+            $repository->owner->login,
+            $repository->name
+        );
+
+        $response = $this->getMockBuilder(Http\Response::class)->getMock();
+
+        $httpClient = $this->getMockBuilder(HttpClient::class)->getMock();
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with($this->equalTo($path))
+            ->willReturn($response);
+
+        $githubClient = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $githubClient
+            ->expects($this->once())
+            ->method('getHttpClient')
+            ->willReturn($httpClient)
+        ;
+
+        $service = new Service\Module(
+            $moduleMapper,
+            $githubClient
+        );
+
+        $service->isModule($repository);
     }
 }
