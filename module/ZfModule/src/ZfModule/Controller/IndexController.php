@@ -128,29 +128,25 @@ class IndexController extends AbstractActionController
      */
     private function filterModules(RepositoryCollection $repositories)
     {
-        $modules = [];
-
-        foreach ($repositories as $repository) {
+        return array_filter(iterator_to_array($repositories), function ($repository) {
             if ($repository->fork) {
-                continue;
+                return false;
             }
 
             if (!$repository->permissions->push) {
-                continue;
+                return false;
             }
 
             if (!$this->moduleService->isModule($repository)) {
-                continue;
+                return false;
             }
 
             if ($this->moduleMapper->findByName($repository->name)) {
-                continue;
+                return false;
             }
 
-            $modules[] = $repository;
-        }
-
-        return $modules;
+            return true;
+        });
     }
 
     /**
