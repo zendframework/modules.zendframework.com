@@ -113,12 +113,6 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $repositoryRetriever
             ->expects($this->once())
             ->method('getAuthenticatedUserRepositories')
-            ->with($this->equalTo([
-                'type' => 'all',
-                'per_page' => 100,
-                'sort' => 'updated',
-                'direction' => 'desc',
-            ]))
             ->willReturn($repositoryCollection)
         ;
 
@@ -329,14 +323,6 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $repositoryRetriever
             ->expects($this->once())
             ->method('getUserRepositories')
-            ->with(
-                $this->equalTo($vendor),
-                $this->equalTo([
-                    'per_page' => 100,
-                    'sort' => 'updated',
-                    'direction' => 'desc',
-                ])
-            )
             ->willReturn($repositoryCollection)
         ;
 
