@@ -6,6 +6,7 @@ use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
 use EdpGithub\Http\Client as HttpClient;
 use stdClass;
+use Zend\Http;
 use ZfcBase\EventManager\EventProvider;
 use ZfModule\Entity;
 use ZfModule\Mapper;
@@ -84,9 +85,10 @@ class Module extends EventProvider
         /* @var HttpClient $httpClient */
         $httpClient = $this->githubClient->getHttpClient();
 
+        /* @var Http\Response $response */
         $response = $httpClient->request($path);
 
-        $result = json_decode($response->getbody(), true);
+        $result = json_decode($response->getBody(), true);
 
         if (isset($result['total_count']) && $result['total_count'] > 0) {
             return true;
