@@ -2,16 +2,14 @@
 
 namespace ApplicationTest\Integration\Util;
 
-use PHPUnit_Framework_MockObject_Matcher_InvokedCount;
-use PHPUnit_Framework_MockObject_MockBuilder;
 use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager;
 
 /**
  * @method ServiceManager\ServiceManager getApplicationServiceLocator()
- * @method PHPUnit_Framework_MockObject_MockBuilder getMockBuilder()
- * @method PHPUnit_Framework_MockObject_Matcher_InvokedCount once()
- * @method PHPUnit_Framework_MockObject_Matcher_InvokedCount any()
+ * @method \PHPUnit_Framework_MockObject_MockBuilder getMockBuilder()
+ * @method \PHPUnit_Framework_MockObject_Matcher_InvokedCount once()
+ * @method \PHPUnit_Framework_MockObject_Matcher_InvokedCount any()
  */
 trait AuthenticationTrait
 {
