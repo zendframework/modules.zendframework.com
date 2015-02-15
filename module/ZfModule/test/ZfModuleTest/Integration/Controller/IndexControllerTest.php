@@ -90,17 +90,15 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $validModule = $this->validModule();
 
-        $forkedModule = $this->forkedModule();
         $nonModule = $this->nonModule();
         $registeredModule = $this->registeredModule();
-        $moduleWithoutPushPermissions = $this->moduleWithoutPushPermissions();
 
         $repositories = [
             $validModule,
             $nonModule,
-            $forkedModule,
-            $moduleWithoutPushPermissions,
             $registeredModule,
+            $this->forkedModule(),
+            $this->moduleWithoutPushPermissions(),
         ];
 
         $repositoryCollection = $this->repositoryCollectionMock($repositories);
@@ -298,17 +296,15 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $validModule = $this->validModule();
 
-        $forkedModule = $this->forkedModule();
         $nonModule = $this->nonModule();
         $registeredModule = $this->registeredModule();
-        $moduleWithoutPushPermissions = $this->moduleWithoutPushPermissions();
 
         $repositories = [
             $validModule,
             $nonModule,
-            $forkedModule,
-            $moduleWithoutPushPermissions,
             $registeredModule,
+            $this->forkedModule(),
+            $this->moduleWithoutPushPermissions(),
         ];
 
         $repositoryCollection = $this->repositoryCollectionMock($repositories);
