@@ -69,7 +69,12 @@ class Module extends EventProvider
      */
     public function isModule(stdClass $repository)
     {
-        $query = 'repo:' . $repository->owner->login . '/' . $repository->name . ' filename:Module.php "class Module"';
+        $query = sprintf(
+            'repo:%s/%s filename:Module.php "class Module"',
+            $repository->owner->login,
+            $repository->name
+        );
+
         $response = $this->githubClient->getHttpClient()->request('search/code?q=' . $query);
         $result = json_decode($response->getbody(), true);
 
