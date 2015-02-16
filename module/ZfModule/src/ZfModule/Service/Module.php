@@ -4,7 +4,9 @@ namespace ZfModule\Service;
 
 use EdpGithub\Client;
 use EdpGithub\Collection\RepositoryCollection;
+use EdpGithub\Http\Client as HttpClient;
 use stdClass;
+use Zend\Http;
 use ZfcBase\EventManager\EventProvider;
 use ZfModule\Entity;
 use ZfModule\Mapper;
@@ -32,27 +34,28 @@ class Module extends EventProvider
     }
 
     /**
-     * @param stdClass $data
-     * @return object|Entity\Module
+     * @param stdClass $repository
+     * @return Entity\Module
      */
-    public function register($data)
+    public function register($repository)
     {
-        $url = $data->html_url;
-        $module = $this->moduleMapper->findByUrl($url);
-        $update = true;
-        if (!$module) {
+        $isUpdate = false;
+
+        $module = $this->moduleMapper->findByUrl($repository->html_url);
+
+        if ($module) {
+            $isUpdate = true;
+        } else {
             $module  = new Entity\Module();
-            $update = false;
         }
 
-        $module->setName($data->name);
-        $module->setDescription($data->description);
-        $module->setUrl($data->html_url);
-        $owner = $data->owner;
-        $module->setOwner($owner->login);
-        $module->setPhotoUrl($owner->avatar_url);
+        $module->setName($repository->name);
+        $module->setDescription($repository->description);
+        $module->setUrl($repository->html_url);
+        $module->setOwner($repository->owner->login);
+        $module->setPhotoUrl($repository->owner->avatar_url);
 
-        if ($update) {
+        if ($isUpdate) {
             $this->moduleMapper->update($module);
         } else {
             $this->moduleMapper->insert($module);
@@ -69,9 +72,24 @@ class Module extends EventProvider
      */
     public function isModule(stdClass $repository)
     {
-        $query = 'repo:' . $repository->owner->login . '/' . $repository->name . ' filename:Module.php "class Module"';
-        $response = $this->githubClient->getHttpClient()->request('search/code?q=' . $query);
-        $result = json_decode($response->getbody(), true);
+        $query = sprintf(
+            'repo:%s/%s filename:Module.php "class Module"',
+            $repository->owner->login,
+            $repository->name
+        );
+
+        $path = sprintf(
+            'search/code?q=%s',
+            $query
+        );
+
+        /* @var HttpClient $httpClient */
+        $httpClient = $this->githubClient->getHttpClient();
+
+        /* @var Http\Response $response */
+        $response = $httpClient->request($path);
+
+        $result = json_decode($response->getBody(), true);
 
         if (isset($result['total_count']) && $result['total_count'] > 0) {
             return true;
