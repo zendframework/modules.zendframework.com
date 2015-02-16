@@ -34,9 +34,11 @@
                         ?>
                         <li class="sep">|</li>
                         <li class="user-info">
+                            <?php /* @var User\Entity\User $identity */ ?>
+                            <?php $identity = $this->zfcUserIdentity(); ?>
                             <div class="gravatar-container"><a class="login" href="<?php echo $this->url('zfcuser') ?>" title="My profile">
                                     <img src="<?php
-                                    echo $this->escapeHtmlAttr($this->zfcUserIdentity()->getPhotoUrl());
+                                    echo $this->escapeHtmlAttr($identity->getPhotoUrl());
                                     ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName());
                                     ?>" style="width:23px;height:23px;" />
                                 </a></div><a class="login" href="<?php echo $this->url('zfcuser') ?>" title="My profile"> Hello <?php echo $this->escapeHtml(ucfirst($userDisplayName)) ?></a>

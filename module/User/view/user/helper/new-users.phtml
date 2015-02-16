@@ -3,6 +3,7 @@
     <hr>
     <?php $count = 0; ?>
     <?php foreach ($this->users as $user): ?>
+        <?php /* @var User\Entity\User $user */ ?>
         <?php if($user->getPhotoUrl()): ?>
             <?php if ($count % 4 == 0): ?>
                 <div class="row" style="margin-bottom:10px;">
