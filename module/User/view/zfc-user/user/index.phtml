@@ -28,6 +28,7 @@
                     <div class="alert alert-block">No modules have been submitted yet</div>
                     <?php
                 }
+                /* @var ZfModule\Entity\Module[] $modules */
                 foreach ($modules as $module) {
                     echo $this->moduleView([
                         'owner' => $module->getOwner(),

@@ -46,11 +46,18 @@ class Module implements ModuleInterface
      */
     private $photoUrl;
 
+    /**
+     * @return string
+     */
     public function getPhotoUrl()
     {
         return $this->photoUrl;
     }
 
+    /**
+     * @param string $photoUrl
+     * @return self
+     */
     public function setPhotoUrl($photoUrl)
     {
         $this->photoUrl = $photoUrl;
@@ -58,11 +65,18 @@ class Module implements ModuleInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getOwner()
     {
         return $this->owner;
     }
 
+    /**
+     * @param string $owner
+     * @return self
+     */
     public function setOwner($owner)
     {
         $this->owner = $owner;
@@ -70,11 +84,18 @@ class Module implements ModuleInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @param string $updatedAt
+     * @return self
+     */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
@@ -82,6 +103,9 @@ class Module implements ModuleInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -95,6 +119,10 @@ class Module implements ModuleInterface
         return new DateTime($this->getCreatedAt());
     }
 
+    /**
+     * @param string $createdAt
+     * @return self
+     */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
@@ -103,8 +131,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Get id.
-     *
      * @return int
      */
     public function getId()
@@ -113,10 +139,8 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Set id.
-     *
      * @param int $id
-     * @return ModuleInterface
+     * @return self
      */
     public function setId($id)
     {
@@ -126,8 +150,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Get Url
-     *
      * @return string
      */
     public function getUrl()
@@ -136,10 +158,8 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Set Url
-     *
      * @param string $url
-     * @return ModuleInterface
+     * @return self
      */
     public function setUrl($url)
     {
@@ -149,8 +169,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Get Description
-     *
      * @return string
      */
     public function getDescription()
@@ -159,10 +177,8 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Set Description
-     *
      * @param string $description
-     * @return ModuleInterface
+     * @return self
      */
     public function setDescription($description)
     {
@@ -172,8 +188,6 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Get Name
-     *
      * @return string
      */
     public function getName()
@@ -182,10 +196,8 @@ class Module implements ModuleInterface
     }
 
     /**
-     * Set Name
-     *
      * @param string $name
-     * @return ModuleInterface
+     * @return self
      */
     public function setName($name)
     {
