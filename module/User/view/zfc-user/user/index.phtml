@@ -57,4 +57,4 @@
         </div>
     </div>
 </div>
-<?php $this->inlineScript()->appendScript('$("#repositories").load("' . $this->url('zf-module') . '");'); ?>
+<?php $this->inlineScript()->appendScript('$("#repositories").load("' . $this->escapeJs($this->url('zf-module')) . '");'); ?>
