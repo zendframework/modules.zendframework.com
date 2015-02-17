@@ -133,7 +133,7 @@ class Module extends EventProvider
                 continue;
             }
 
-            $module = $this->moduleMapper->findByName($repository->name);
+            $module = $this->moduleMapper->findByUrl($repository->html_url);
             if (!($module instanceof Entity\Module)) {
                 continue;
             }
