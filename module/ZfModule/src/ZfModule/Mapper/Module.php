@@ -120,11 +120,6 @@ class Module extends AbstractDbMapper implements ModuleInterface
         return $this->findBy('url', $url);
     }
 
-    public function findById($id)
-    {
-        return $this->findBy('module_id', $id);
-    }
-
     public function findBy($key, $value)
     {
         $select = $this->getSelect();

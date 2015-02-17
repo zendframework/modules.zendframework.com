@@ -8,8 +8,6 @@ interface ModuleInterface
 
     public function findByUrl($url);
 
-    public function findById($id);
-
     public function insert($module);
 
     public function update($module);
