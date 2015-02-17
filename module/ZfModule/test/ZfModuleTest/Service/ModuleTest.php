@@ -81,13 +81,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
     public function testListUserModulesListsCurrentUsersModulesFromApiFoundInDatabase()
     {
-        $name = 'foo';
-
-        $repository = new stdClass();
-        $repository->fork = false;
-        $repository->permissions = new stdClass();
-        $repository->permissions->push = true;
-        $repository->name = $name;
+        $repository = $this->repository();
 
         $module = $this->getMockBuilder(Entity\Module::class)->getMock();
 
@@ -100,7 +94,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $moduleMapper
             ->expects($this->once())
             ->method('findByName')
-            ->with($this->equalTo($name))
+            ->with($this->equalTo($repository->name))
             ->willReturn($module)
         ;
 
@@ -135,9 +129,8 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
     public function testListUserModulesDoesNotLookupModulesFromApiWhereUserHasNoPushPrivilege()
     {
-        $repository = new stdClass();
-        $repository->fork = false;
-        $repository->permissions = new stdClass();
+        $repository = $this->repository();
+
         $repository->permissions->push = false;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
@@ -178,7 +171,8 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
     public function testListUserModulesDoesNotLookupModulesFromApiThatAreForks()
     {
-        $repository = new stdClass();
+        $repository = $this->repository();
+
         $repository->fork = true;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
@@ -219,20 +213,14 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
     public function testListUserModulesDoesNotListModulesFromApiNotFoundInDatabase()
     {
-        $name = 'foo';
-
-        $repository = new stdClass();
-        $repository->fork = false;
-        $repository->permissions = new stdClass();
-        $repository->permissions->push = true;
-        $repository->name = $name;
+        $repository = $this->repository();
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
 
         $moduleMapper
             ->expects($this->once())
             ->method('findByName')
-            ->with($this->equalTo($name))
+            ->with($this->equalTo($repository->name))
             ->willReturn(false)
         ;
 
