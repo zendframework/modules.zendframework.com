@@ -112,7 +112,7 @@ class Module extends EventProvider
     }
 
     /**
-     * @return Entity\Module[]
+     * @return stdClass[]
      */
     public function currentUserModules()
     {
@@ -122,25 +122,20 @@ class Module extends EventProvider
             'per_page' => 100,
         ]);
 
-        $modules = [];
-
-        foreach ($repositoryCollection as $repository) {
+        return array_filter(iterator_to_array($repositoryCollection), function ($repository) {
             if (true === $repository->fork) {
-                continue;
+                return false;
             }
 
             if (false === $repository->permissions->push) {
-                continue;
+                return false;
             }
 
-            $module = $this->moduleMapper->findByUrl($repository->html_url);
-            if (!($module instanceof Entity\Module)) {
-                continue;
+            if (null === $this->moduleMapper->findByUrl($repository->html_url)) {
+                return false;
             }
 
-            array_push($modules, $module);
-        }
-
-        return $modules;
+            return true;
+        });
     }
 }
