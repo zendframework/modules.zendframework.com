@@ -22,7 +22,7 @@
                         <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($name); ?>" />
                         <input type="submit" class="btn btn-success"/>
                     </form>
-                <?php else: ?>
+                <?php elseif ($button == ZfModule\View\Helper\ModuleView::BUTTON_REMOVE): ?>
                     <form action="<?php echo $this->url('zf-module/remove') ?>" method="post">
                         <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($owner); ?>" />
                         <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($name); ?>" />
