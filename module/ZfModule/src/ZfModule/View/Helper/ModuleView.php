@@ -9,6 +9,9 @@ use ZfModule\Entity;
 
 class ModuleView extends AbstractHelper
 {
+    const BUTTON_SUBMIT = 'submit';
+    const BUTTON_REMOVE = 'remove';
+
     /**
      * @param Entity\Module|stdClass $module
      * @param string $button

@@ -27,7 +27,7 @@
                 <div class="alert alert-block">No modules have been submitted yet</div>
             <?php else: ?>
                 <?php foreach ($modules as $module): ?>
-                    <?php echo $this->moduleView($module, 'remove'); ?>
+                    <?php echo $this->moduleView($module, ZfModule\View\Helper\ModuleView::BUTTON_REMOVE); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
             </div>
