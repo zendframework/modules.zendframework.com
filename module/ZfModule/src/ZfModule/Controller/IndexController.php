@@ -85,16 +85,16 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser/login');
         }
 
-        $repositories = $this->repositoryRetriever->getAuthenticatedUserRepositories([
+        $currentUserRepositories = $this->repositoryRetriever->getAuthenticatedUserRepositories([
             'type' => 'all',
             'per_page' => 100,
             'sort' => 'updated',
             'direction' => 'desc',
         ]);
 
-        $modules = $this->filterModules($repositories);
+        $repositories = $this->registeredRepositories($currentUserRepositories);
 
-        $viewModel = new ViewModel(['repositories' => $modules]);
+        $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
 
         return $viewModel;
@@ -108,15 +108,15 @@ class IndexController extends AbstractActionController
 
         $owner = $this->params()->fromRoute('owner', null);
 
-        $repositories = $this->repositoryRetriever->getUserRepositories($owner, [
+        $userRepositories = $this->repositoryRetriever->getUserRepositories($owner, [
             'per_page' => 100,
             'sort' => 'updated',
             'direction' => 'desc',
         ]);
 
-        $modules = $this->filterModules($repositories);
+        $repositories = $this->registeredRepositories($userRepositories);
 
-        $viewModel = new ViewModel(['repositories' => $modules]);
+        $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
         $viewModel->setTemplate('zf-module/index/index.phtml');
 
@@ -127,7 +127,7 @@ class IndexController extends AbstractActionController
      * @param RepositoryCollection $repositories
      * @return stdClass[]
      */
-    private function filterModules(RepositoryCollection $repositories)
+    private function registeredRepositories(RepositoryCollection $repositories)
     {
         return array_filter(iterator_to_array($repositories), function ($repository) {
             if ($repository->fork) {
