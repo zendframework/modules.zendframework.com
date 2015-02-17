@@ -4,15 +4,9 @@ use EdpGithub\Client;
 use ZfModule\Controller;
 use ZfModule\Delegators\EdpGithubClientAuthenticator;
 use ZfModule\Mapper\ModuleHydrator;
-use ZfModule\Mvc;
 use ZfModule\View\Helper;
 
 return [
-    'controller_plugins' => [
-        'factories' => [
-            'listModule' => Mvc\Controller\Plugin\ListModuleFactory::class,
-        ],
-    ],
     'controllers'  => [
         'factories' => [
             Controller\IndexController::class => Controller\IndexControllerFactory::class,
