@@ -93,8 +93,8 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $moduleMapper
             ->expects($this->once())
-            ->method('findByName')
-            ->with($this->equalTo($repository->name))
+            ->method('findByUrl')
+            ->with($this->equalTo($repository->html_url))
             ->willReturn($module)
         ;
 
@@ -137,7 +137,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $moduleMapper
             ->expects($this->never())
-            ->method('findByName')
+            ->method('findByUrl')
         ;
 
         $currentUserService = $this->getMockBuilder(Api\CurrentUser::class)->getMock();
@@ -179,7 +179,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $moduleMapper
             ->expects($this->never())
-            ->method('findByName')
+            ->method('findByUrl')
         ;
 
         $currentUserService = $this->getMockBuilder(Api\CurrentUser::class)->getMock();
@@ -219,8 +219,8 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $moduleMapper
             ->expects($this->once())
-            ->method('findByName')
-            ->with($this->equalTo($repository->name))
+            ->method('findByUrl')
+            ->with($this->equalTo($repository->html_url))
             ->willReturn(false)
         ;
 
