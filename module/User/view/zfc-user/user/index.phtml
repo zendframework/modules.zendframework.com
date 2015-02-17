@@ -23,7 +23,7 @@
         <div class="tab-content">
             <div class="tab-pane active" id="modules">
             <?php /* @var ZfModule\Entity\Module[] $modules */ ?>
-            <?php if (0 === count($modules)): ?>
+            <?php if (!count($modules)): ?>
                 <div class="alert alert-block">No modules have been submitted yet</div>
             <?php else: ?>
                 <?php foreach ($modules as $module): ?>
