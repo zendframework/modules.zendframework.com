@@ -22,12 +22,12 @@
         <br />
         <div class="tab-content">
             <div class="tab-pane active" id="modules">
-            <?php /* @var stdClass[] $modules */ ?>
-            <?php if (!count($modules)): ?>
+            <?php /* @var stdClass[] $repositories */ ?>
+            <?php if (!count($repositories)): ?>
                 <div class="alert alert-block">No modules have been submitted yet</div>
             <?php else: ?>
-                <?php foreach ($modules as $module): ?>
-                    <?php echo $this->repository($module, ZfModule\View\Helper\Repository::BUTTON_REMOVE); ?>
+                <?php foreach ($repositories as $repository): ?>
+                    <?php echo $this->repository($repository, ZfModule\View\Helper\Repository::BUTTON_REMOVE); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
             </div>
