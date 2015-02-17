@@ -16,13 +16,13 @@
             <div class="col-xs-4">
                 <a href="<?php echo $this->escapeHtmlAttr($url); ?>">Show module on GitHub</a>
                 <hr>
-                <?php if ($button == ZfModule\View\Helper\ModuleView::BUTTON_SUBMIT): ?>
+                <?php if (ZfModule\View\Helper\ModuleView::BUTTON_SUBMIT === $button): ?>
                     <form action="<?php echo $this->url('zf-module/add') ?>" method="post">
                         <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($owner); ?>" />
                         <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($name); ?>" />
                         <input type="submit" class="btn btn-success"/>
                     </form>
-                <?php elseif ($button == ZfModule\View\Helper\ModuleView::BUTTON_REMOVE): ?>
+                <?php elseif (ZfModule\View\Helper\ModuleView::BUTTON_REMOVE === $button): ?>
                     <form action="<?php echo $this->url('zf-module/remove') ?>" method="post">
                         <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($owner); ?>" />
                         <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($name); ?>" />
