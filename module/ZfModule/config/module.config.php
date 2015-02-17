@@ -80,7 +80,7 @@ return [
             'totalModules' => Helper\TotalModulesFactory::class,
         ],
         'invokables' => [
-            'moduleView'        => Helper\ModuleView::class,
+            'repository'        => Helper\Repository::class,
             'moduleDescription' => Helper\ModuleDescription::class,
             'composerView'      => Helper\ComposerView::class,
         ],

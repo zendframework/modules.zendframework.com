@@ -3,6 +3,6 @@
     <div class="alert alert-block">No modules found</div>
 <?php else: ?>
     <?php foreach ($repositories as $repository): ?>
-        <?php echo $this->moduleView($repository, ZfModule\View\Helper\ModuleView::BUTTON_SUBMIT); ?>
+        <?php echo $this->repository($repository, ZfModule\View\Helper\Repository::BUTTON_SUBMIT); ?>
     <?php endforeach; ?>
 <?php endif; ?>

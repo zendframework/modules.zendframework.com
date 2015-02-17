@@ -7,7 +7,7 @@ use stdClass;
 use Zend\View;
 use ZfModule\View\Helper;
 
-class ModuleViewTest extends PHPUnit_Framework_TestCase
+class RepositoryTest extends PHPUnit_Framework_TestCase
 {
     public function testInvokeHandlesRepository()
     {
@@ -19,7 +19,7 @@ class ModuleViewTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('render')
             ->with(
-                $this->equalTo('zf-module/helper/module-view.phtml'),
+                $this->equalTo('zf-module/helper/repository.phtml'),
                 $this->equalTo([
                     'owner' => $repository->owner->login,
                     'name' => $repository->name,
@@ -32,7 +32,7 @@ class ModuleViewTest extends PHPUnit_Framework_TestCase
             )
         ;
 
-        $helper = new Helper\ModuleView();
+        $helper = new Helper\Repository();
         $helper->setView($view);
 
         $helper($repository);
@@ -49,7 +49,7 @@ class ModuleViewTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('render')
             ->with(
-                $this->equalTo('zf-module/helper/module-view.phtml'),
+                $this->equalTo('zf-module/helper/repository.phtml'),
                 $this->logicalAnd(
                     $this->arrayHasKey('button'),
                     $this->callback(function ($values) use ($button) {
@@ -59,7 +59,7 @@ class ModuleViewTest extends PHPUnit_Framework_TestCase
             )
         ;
 
-        $helper = new Helper\ModuleView();
+        $helper = new Helper\Repository();
         $helper->setView($view);
 
         $helper($repository, $button);

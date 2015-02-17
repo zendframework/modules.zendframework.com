@@ -5,7 +5,7 @@ namespace ZfModule\View\Helper;
 use stdClass;
 use Zend\View\Helper\AbstractHelper;
 
-class ModuleView extends AbstractHelper
+class Repository extends AbstractHelper
 {
     const BUTTON_SUBMIT = 'submit';
     const BUTTON_REMOVE = 'remove';
@@ -17,7 +17,7 @@ class ModuleView extends AbstractHelper
      */
     public function __invoke($module, $button = 'submit')
     {
-        return $this->getView()->render('zf-module/helper/module-view.phtml', [
+        return $this->getView()->render('zf-module/helper/repository.phtml', [
             'owner' => $module->owner->login,
             'name' => $module->name,
             'createdAt' => $module->created_at,
