@@ -2,30 +2,30 @@
     <div class="module-info">
         <div class="row">
             <div class="hidden-xs col-sm-2">
-                <img src="<?php echo $this->escapeHtmlAttr($module['photo_url']) ?>" alt="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" class="thumbnail img-responsive">
+                <img src="<?php echo $this->escapeHtmlAttr($photoUrl); ?>" alt="<?php echo $this->escapeHtmlAttr($owner); ?>" class="thumbnail img-responsive">
             </div>
             <div class="col-xs-7 col-sm-6">
                 <p>
-                    <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module['owner']), 'module' => $this->escapeUrl($module['name'])]) ?>">
-                        <strong><?php echo $this->escapeHtml($module['name']) ?></strong>
+                    <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($owner), 'module' => $this->escapeUrl($name)]); ?>">
+                        <strong><?php echo $this->escapeHtml($name); ?></strong>
                     </a>
                 </p>
-                <p><span class="zf-green">Submitter:</span> <?php echo $this->escapeHtml($module['owner']) ?></p>
-                <p><span class="zf-green">Created:</span> <?php echo $this->dateFormat(new DateTime($module['created_at']), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT); ?></p>
+                <p><span class="zf-green">Submitter:</span> <?php echo $this->escapeHtml($owner); ?></p>
+                <p><span class="zf-green">Created:</span> <?php echo $this->dateFormat(new DateTime($createdAt), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT); ?></p>
             </div>
             <div class="col-xs-4">
-                <a href="<?php echo $this->escapeHtmlAttr($module['url']) ?>">Show module on GitHub</a>
+                <a href="<?php echo $this->escapeHtmlAttr($url); ?>">Show module on GitHub</a>
                 <hr>
                 <?php if ($button == 'submit'): ?>
                     <form action="<?php echo $this->url('zf-module/add') ?>" method="post">
-                        <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" />
-                        <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($module['name']) ?>" />
+                        <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($owner); ?>" />
+                        <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($name); ?>" />
                         <input type="submit" class="btn btn-success"/>
                     </form>
                 <?php else: ?>
                     <form action="<?php echo $this->url('zf-module/remove') ?>" method="post">
-                        <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($module['owner']) ?>" />
-                        <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($module['name']) ?>" />
+                        <input type="hidden" name="owner" value="<?php echo $this->escapeHtmlAttr($owner); ?>" />
+                        <input type="hidden" name="repo" value="<?php echo $this->escapeHtmlAttr($name); ?>" />
                         <input type="submit" value="Remove" class="btn btn-danger"/>
                     </form>
                 <?php endif; ?>
@@ -33,6 +33,6 @@
         </div>
     </div>
     <div class="module-description">
-        <p><?php echo $this->escapeHtml($module['description']) ?></p>
+        <p><?php echo $this->escapeHtml($description); ?></p>
     </div>
 </div>

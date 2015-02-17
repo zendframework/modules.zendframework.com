@@ -3,13 +3,6 @@
     <div class="alert alert-block">No modules found</div>
 <?php else: ?>
     <?php foreach ($repositories as $repository): ?>
-        <?php echo $this->moduleView([
-            'owner' => $repository->owner->login,
-            'name' => $repository->name,
-            'created_at' => $repository->created_at,
-            'url' => $repository->html_url,
-            'photo_url' => $repository->owner->avatar_url,
-            'description' => $repository->description
-        ], 'submit') ?>
+        <?php echo $this->moduleView($repository, 'submit'); ?>
     <?php endforeach; ?>
 <?php endif; ?>

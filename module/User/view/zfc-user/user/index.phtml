@@ -27,15 +27,7 @@
                 <div class="alert alert-block">No modules have been submitted yet</div>
             <?php else: ?>
                 <?php foreach ($modules as $module): ?>
-                    <?php echo $this->moduleView([
-                            'owner' => $module->getOwner(),
-                            'name' => $module->getName(),
-                            'created_at' => $module->getCreatedAt(),
-                            'url' => $module->getUrl(),
-                            'photo_url' => $module->getPhotoUrl(),
-                            'description' => $module->getDescription(),
-                        ], 'remove');
-                    ?>
+                    <?php echo $this->moduleView($module, 'remove'); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
             </div>
