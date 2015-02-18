@@ -31,11 +31,10 @@ class Module extends AbstractDbMapper implements ModuleInterface
         }
 
         if (null !== $query) {
-            $spec = function ($where) use ($query) {
+            $select->where(function ($where) use ($query) {
                 /* @var Sql\Where $where */
                 $where->like('name', '%' . $query . '%')->or->like('description', '%' . $query . '%');
-            };
-            $select->where($spec);
+            });
         }
         $resultSet = new HydratingResultSet($this->getHydrator(), $this->getEntityPrototype());
 
@@ -78,11 +77,10 @@ class Module extends AbstractDbMapper implements ModuleInterface
             $select->limit($limit);
         }
 
-        $spec = function ($where) use ($query) {
+        $select->where(function ($where) use ($query) {
             /* @var Sql\Where $where */
             $where->like('name', '%' . $query . '%')->or->like('description', '%' . $query . '%');
-        };
-        $select->where($spec);
+        });
 
         $entity = $this->select($select);
         $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
