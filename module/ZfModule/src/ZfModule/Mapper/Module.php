@@ -32,8 +32,10 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
         if (null !== $query) {
             $select->where(function ($where) use ($query) {
+                $like = '%' . $query . '%';
+
                 /* @var Sql\Where $where */
-                $where->like('name', '%' . $query . '%')->or->like('description', '%' . $query . '%');
+                $where->like('name', $like)->or->like('description', $like);
             });
         }
         $resultSet = new HydratingResultSet($this->getHydrator(), $this->getEntityPrototype());
@@ -78,8 +80,10 @@ class Module extends AbstractDbMapper implements ModuleInterface
         }
 
         $select->where(function ($where) use ($query) {
+            $like = '%' . $query . '%';
+
             /* @var Sql\Where $where */
-            $where->like('name', '%' . $query . '%')->or->like('description', '%' . $query . '%');
+            $where->like('name', $like)->or->like('description', $like);
         });
 
         $entity = $this->select($select);
