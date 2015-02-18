@@ -85,6 +85,12 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     private function whereLike(Sql\Select $select, $query)
     {
+        $query = preg_replace('/\s+/', ' ', $query);
+
+        if (!trim($query)) {
+            return;
+        }
+
         $words = explode(' ', $query);
 
         $select->where(function ($where) use ($words) {
