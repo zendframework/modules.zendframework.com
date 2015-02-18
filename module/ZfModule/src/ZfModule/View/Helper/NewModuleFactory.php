@@ -20,7 +20,7 @@ class NewModuleFactory implements FactoryInterface
         $serviceManager = $helperPluginManager->getServiceLocator();
 
         /* @var Mapper\Module $moduleMapper */
-        $moduleMapper = $serviceManager->get('zfmodule_mapper_module');
+        $moduleMapper = $serviceManager->get(Mapper\Module::class);
 
         return new NewModule($moduleMapper);
     }

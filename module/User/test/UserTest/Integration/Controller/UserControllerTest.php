@@ -57,7 +57,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $serviceManager
             ->setAllowOverride(true)
             ->setService(
-                'zfmodule_service_module',
+                Service\Module::class,
                 $moduleService
             )
         ;

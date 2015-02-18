@@ -155,11 +155,11 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $repositoryRetriever
             )
             ->setService(
-                'zfmodule_service_module',
+                Service\Module::class,
                 $moduleService
             )
             ->setService(
-                'zfmodule_mapper_module',
+                Mapper\Module::class,
                 $moduleMapper
             )
         ;
@@ -363,11 +363,11 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $repositoryRetriever
             )
             ->setService(
-                'zfmodule_service_module',
+                Service\Module::class,
                 $moduleService
             )
             ->setService(
-                'zfmodule_mapper_module',
+                Mapper\Module::class,
                 $moduleMapper
             )
         ;
@@ -1063,7 +1063,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                'zfmodule_mapper_module',
+                Mapper\Module::class,
                 $moduleMapper
             )
         ;
@@ -1116,7 +1116,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                'zfmodule_mapper_module',
+                Mapper\Module::class,
                 $moduleMapper
             )
             ->setService(
@@ -1173,7 +1173,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                'zfmodule_mapper_module',
+                Mapper\Module::class,
                 $moduleMapper
             )
             ->setService(

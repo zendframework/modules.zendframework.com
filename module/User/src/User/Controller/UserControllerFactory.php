@@ -19,7 +19,7 @@ class UserControllerFactory implements FactoryInterface
         $serviceManager = $controllerManager->getServiceLocator();
 
         /* @var Service\Module $moduleService */
-        $moduleService = $serviceManager->get('zfmodule_service_module');
+        $moduleService = $serviceManager->get(Service\Module::class);
 
         return new UserController($moduleService);
     }

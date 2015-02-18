@@ -8,7 +8,7 @@ use User\Mapper\User;
 use Zend\Http;
 use Zend\Paginator;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-use ZfModule\Mapper\Module;
+use ZfModule\Mapper;
 
 class IndexControllerTest extends AbstractHttpControllerTestCase
 {
@@ -21,7 +21,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
     public function testIndexActionCanBeAccessed()
     {
-        $moduleMapper = $this->getMockBuilder(Module::class)->getMock();
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
 
         $moduleMapper
             ->expects($this->once())
@@ -69,7 +69,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                'zfmodule_mapper_module',
+                Mapper\Module::class,
                 $moduleMapper
             )
             ->setService(
@@ -87,7 +87,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
     public function testFeedActionCanBeAccessed()
     {
-        $moduleMapper = $this->getMockBuilder(Module::class)->getMock();
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
 
         $moduleMapper
             ->expects($this->once())
@@ -105,7 +105,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                'zfmodule_mapper_module',
+                Mapper\Module::class,
                 $moduleMapper
             )
         ;
