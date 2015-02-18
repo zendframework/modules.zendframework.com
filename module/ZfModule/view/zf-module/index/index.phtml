@@ -1,14 +1,8 @@
-<?php if (empty($this->repositories)): ?>
+<?php /* @var stdClass[] $repositories */ ?>
+<?php if (!count($repositories)): ?>
     <div class="alert alert-block">No modules found</div>
+<?php else: ?>
+    <?php foreach ($repositories as $repository): ?>
+        <?php echo $this->repository($repository, ZfModule\View\Helper\Repository::BUTTON_SUBMIT); ?>
+    <?php endforeach; ?>
 <?php endif; ?>
-
-<?php foreach ($repositories as $module): ?>
-    <?php echo $this->moduleView([
-        'owner' => $module->owner->login,
-        'name' => $module->name,
-        'created_at' => $module->created_at,
-        'url' => $module->html_url,
-        'photo_url' => $module->owner->avatar_url,
-        'description' => $module->description
-    ], 'submit') ?>
-<?php endforeach; ?>
