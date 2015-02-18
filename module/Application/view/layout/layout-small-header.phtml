@@ -17,35 +17,38 @@
         <?php echo $this->headLink(); ?>
     </head>
     <body>
-        <a href="https://github.com/zendframework/modules.zendframework.com"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/zendframework/modules.zendframework.com">
+            <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub">
+        </a>
         <div id="toppanel">
             <div class="tab">
                 <ul class="login">
                     <li class="left">&nbsp;</li>
-                    <li><a href="<?php echo $this->url('home'); ?>">Home</a></li>
-                    <?php $userDisplayName = $this->zfcUserDisplayName(); ?>
-                    <?php if ($userDisplayName): ?>
-                        <li class="sep">|</li>
-                        <li class="user-info">
-                            <?php /* @var User\Entity\User $identity */ ?>
-                            <?php $identity = $this->zfcUserIdentity(); ?>
-                            <div class="gravatar-container"><a class="login" href="<?php
-                                echo $this->url('zfcuser');
-                                ?>" title="My profile">
-                                    <img src="<?php
-                                    echo $this->escapeHtmlAttr($identity->getPhotoUrl());
-                                    ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName());
-                                    ?>" style="width:23px;height:23px;" />
-                                </a></div><a class="login" href="<?php echo $this->url('zfcuser') ?>" title="My profile"> Hello <?php echo $this->escapeHtml(ucfirst($userDisplayName)); ?></a>
-                        </li>
-                        <li class="sep">|</li>
-                        <li ><a href="<?php echo $this->url('zfcuser/logout'); ?>">Logout</a></li>
-                    <?php else: ?>
-                        <li id="toggle">
-                            <a class="login" href="<?php echo $this->url('scn-social-auth-user/login/provider', ['provider' => 'github']); ?>">GitHub Login</a>
-                        </li>
-                    <?php endif; ?>
+                    <li>
+                        <a href="<?php echo $this->url('home'); ?>">Home</a>
+                    </li>
+                <?php $userDisplayName = $this->zfcUserDisplayName(); ?>
+                <?php if ($userDisplayName): ?>
+                    <li class="sep">|</li>
+                    <li class="user-info">
+                        <?php /* @var User\Entity\User $identity */ ?>
+                        <?php $identity = $this->zfcUserIdentity(); ?>
+                        <div class="gravatar-container">
+                            <a class="login" href="<?php echo $this->url('zfcuser'); ?>" title="My profile">
+                                <img src="<?php echo $this->escapeHtmlAttr($identity->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName()); ?>" style="width:23px;height:23px;" />
+                            </a>
+                        </div>
+                        <a class="login" href="<?php echo $this->url('zfcuser'); ?>" title="My profile"> Hello <?php echo $this->escapeHtml(ucfirst($userDisplayName)); ?></a>
+                    </li>
+                    <li class="sep">|</li>
+                    <li>
+                        <a href="<?php echo $this->url('zfcuser/logout'); ?>">Logout</a>
+                    </li>
+                <?php else: ?>
+                    <li id="toggle">
+                        <a class="login" href="<?php echo $this->url('scn-social-auth-user/login/provider', ['provider' => 'github']); ?>">GitHub Login</a>
+                    </li>
+                <?php endif; ?>
                     <li class="right">&nbsp;</li>
                 </ul>
             </div>
@@ -57,22 +60,22 @@
                     <div class="col-md-8">
                         <a href="<?php echo $this->url('home'); ?>" style="text-decoration:none">
                             <img src="<?php echo $this->basePath('/img/zend-logo_small.png'); ?>" alt="ZF Modules"/>
-                            <p class="zf-green">Modules</p>
+                            <p class="zf-green">
+                                Modules
+                            </p>
                         </a>
                     </div>
-                    <div class="col-md-4">
-
-                    </div>
+                    <div class="col-md-4"></div>
                 </div>
             </div>
         </div>
 
-
         <div class="container main-content">
             <div class="container-fluid">
                 <?php echo $this->content; ?>
-            </div
+            </div>
         </div>
+
         <hr style="clear:both" />
 
         <?php echo $this->partial('layout/footer'); ?>
