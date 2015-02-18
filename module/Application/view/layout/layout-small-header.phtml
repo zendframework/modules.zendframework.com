@@ -24,9 +24,8 @@
                 <ul class="login">
                     <li class="left">&nbsp;</li>
                     <li><a href="<?php echo $this->url('home'); ?>">Home</a></li>
-                    <?php
-                    $userDisplayName = $this->zfcUserDisplayName();
-                    if ($userDisplayName): ?>
+                    <?php $userDisplayName = $this->zfcUserDisplayName(); ?>
+                    <?php if ($userDisplayName): ?>
                         <li class="sep">|</li>
                         <li class="user-info">
                             <?php /* @var User\Entity\User $identity */ ?>
