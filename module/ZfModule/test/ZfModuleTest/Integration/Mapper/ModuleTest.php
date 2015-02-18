@@ -64,7 +64,10 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $paginator = $this->mapper->pagination(1, 100, $query);
 
-        $this->assertSame(1, $paginator->getTotalItemCount());
+        /* @var Db\ResultSet\HydratingResultSet $resultSet */
+        $resultSet = $paginator->getCurrentItems();
+
+        $this->assertCount(1, $resultSet);
     }
 
     /**
@@ -85,9 +88,10 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->mapper->insert($module);
 
-        $results = $this->mapper->findByLike($query);
+        /* @var Db\ResultSet\HydratingResultSet $resultSet */
+        $resultSet = $this->mapper->findByLike($query);
 
-        $this->assertCount(1, $results);
+        $this->assertCount(1, $resultSet);
     }
 
     /**
