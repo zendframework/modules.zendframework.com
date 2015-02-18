@@ -31,13 +31,9 @@ class Module extends AbstractDbMapper implements ModuleInterface
         }
 
         if (null !== $query) {
-            $select->where(function ($where) use ($query) {
-                $like = '%' . $query . '%';
-
-                /* @var Sql\Where $where */
-                $where->like('name', $like)->or->like('description', $like);
-            });
+            $this->whereLike($select, $query);
         }
+
         $resultSet = new HydratingResultSet($this->getHydrator(), $this->getEntityPrototype());
 
         $adapter = new DbSelect($select, $this->getSql(), $resultSet);
@@ -79,17 +75,22 @@ class Module extends AbstractDbMapper implements ModuleInterface
             $select->limit($limit);
         }
 
+        $this->whereLike($select, $query);
+
+        $entity = $this->select($select);
+        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
+
+        return $entity;
+    }
+
+    private function whereLike(Sql\Select $select, $query)
+    {
         $select->where(function ($where) use ($query) {
             $like = '%' . $query . '%';
 
             /* @var Sql\Where $where */
             $where->like('name', $like)->or->like('description', $like);
         });
-
-        $entity = $this->select($select);
-        $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
-
-        return $entity;
     }
 
     public function findByOwner($owner, $limit = null, $orderBy = null, $sort = 'ASC')
