@@ -112,6 +112,67 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testPaginationMatchesEntitiesWhereAllWordsExist()
+    {
+        $value = 'foo bar baz qux';
+        $query = 'foo baz';
+
+        $module = $this->module();
+        $module->setDescription($value);
+        $this->mapper->insert($module);
+
+        $moduleFoo = $this->module();
+        $moduleFoo->setDescription('foo');
+        $this->mapper->insert($moduleFoo);
+
+        $moduleBaz = $this->module();
+        $moduleBaz->setDescription('baz');
+        $this->mapper->insert($moduleBaz);
+
+        $paginator = $this->mapper->pagination(1, 100, $query);
+
+        /* @var Db\ResultSet\HydratingResultSet $resultSet */
+        $resultSet = $paginator->getCurrentItems();
+
+        $this->assertCount(1, $resultSet);
+
+        /* @var Entity\Module $result */
+        $result = $resultSet->current();
+
+        $this->assertInstanceOf(Entity\Module::class, $result);
+        $this->assertSame($result->getDescription(), $module->getDescription());
+    }
+
+    public function testFindByLikeMatchesEntitiesWhereAllWordsExist()
+    {
+        $value = 'foo bar baz qux';
+        $query = 'foo baz';
+
+        $module = $this->module();
+        $module->setDescription($value);
+        $this->mapper->insert($module);
+
+        $moduleFoo = $this->module();
+        $moduleFoo->setDescription('foo');
+        $this->mapper->insert($moduleFoo);
+
+        $moduleBaz = $this->module();
+        $moduleBaz->setDescription('baz');
+        $this->mapper->insert($moduleBaz);
+
+        /* @var Db\ResultSet\HydratingResultSet $resultSet */
+        $resultSet = $this->mapper->findByLike($query);
+
+        $this->assertCount(1, $resultSet);
+
+        /* @var Entity\Module $result */
+        $result = $resultSet->current();
+
+        $this->assertInstanceOf(Entity\Module::class, $result);
+
+        $this->assertSame($result->getDescription(), $module->getDescription());
+    }
+
     /**
      * @return Entity\Module
      */

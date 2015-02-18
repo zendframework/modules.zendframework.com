@@ -85,11 +85,21 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
     private function whereLike(Sql\Select $select, $query)
     {
-        $select->where(function ($where) use ($query) {
-            $like = '%' . $query . '%';
+        $words = explode(' ', $query);
 
-            /* @var Sql\Where $where */
-            $where->like('name', $like)->or->like('description', $like)->or->like('owner', $like);
+        $select->where(function ($where) use ($words) {
+
+            foreach ($words as $word) {
+                $like = '%' . $word . '%';
+
+                /* @var Sql\Where $where */
+                $where
+                    ->nest()
+                    ->like('name', $like)->or
+                    ->like('description', $like)->or
+                    ->like('owner', $like)
+                    ->unnest();
+            }
         });
     }
 
