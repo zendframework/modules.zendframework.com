@@ -3,7 +3,7 @@
 namespace ZfModule\Mapper;
 
 use Zend\Db\ResultSet\HydratingResultSet;
-use Zend\Db\Sql\Expression;
+use Zend\Db\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
@@ -32,6 +32,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
 
         if (null !== $query) {
             $spec = function ($where) use ($query) {
+                /* @var Sql\Where $where */
                 $where->like('name', '%' . $query . '%')->or->like('description', '%' . $query . '%');
             };
             $select->where($spec);
@@ -78,6 +79,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
         }
 
         $spec = function ($where) use ($query) {
+            /* @var Sql\Where $where */
             $where->like('name', '%' . $query . '%')->or->like('description', '%' . $query . '%');
         };
         $select->where($spec);
@@ -160,7 +162,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
     public function getTotal()
     {
         $select = $this->getSelect();
-        $select->columns(['num' => new Expression('COUNT(*)')]);
+        $select->columns(['num' => new Sql\Expression('COUNT(*)')]);
 
         $stmt = $this->getSlaveSql()->prepareStatementForSqlObject($select);
         $row = $stmt->execute()->current();
