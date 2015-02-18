@@ -1,16 +1,16 @@
+<?php /* @var ZfModule\Entity\Module[] $results */ ?>
 <?php if (count($results) >= 1): ?>
-    <?php /* @var ZfModule\Entity\Module[] $results*/ ?>
     <?php foreach ($results as $module): ?>
         <div class="media">
             <div class="media-left">
-                <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
-                    <img width="50" src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getName()) ?>" class="media-object">
+                <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]); ?>">
+                    <img width="50" src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($module->getName()); ?>" class="media-object">
                 </a>
             </div>
             <div class="media-body">
                 <h4 class="media-heading">
-                    <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
-                        <?php echo $this->escapeHtml($module->getName()) ?>
+                    <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]); ?>">
+                        <?php echo $this->escapeHtml($module->getOwner()); ?>/<?php echo $this->escapeHtml($module->getName()); ?>
                     </a>
                 </h4>
                 <?php echo $this->escapeHtml($module->getDescription()) ?>
