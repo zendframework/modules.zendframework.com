@@ -89,7 +89,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
             $like = '%' . $query . '%';
 
             /* @var Sql\Where $where */
-            $where->like('name', $like)->or->like('description', $like);
+            $where->like('name', $like)->or->like('description', $like)->or->like('owner', $like);
         });
     }
 
