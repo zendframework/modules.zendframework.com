@@ -36,7 +36,7 @@
                         <?php $identity = $this->zfcUserIdentity(); ?>
                         <div class="gravatar-container">
                             <a class="login" href="<?php echo $this->url('zfcuser'); ?>" title="My profile">
-                                <img src="<?php echo $this->escapeHtmlAttr($identity->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName()); ?>" style="width:23px;height:23px;" />
+                                <img src="<?php echo $this->escapeHtmlAttr($identity->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName()); ?>" style="width:23px;height:23px;">
                             </a>
                         </div>
                         <a class="login" href="<?php echo $this->url('zfcuser'); ?>" title="My profile"> Hello <?php echo $this->escapeHtml(ucfirst($userDisplayName)); ?></a>
@@ -67,7 +67,7 @@
                             <p>
                                 This website is a work-in-progress. In the future you will be able to use this website to   browse, search, rate, and comment on all of the great modules the Zend Framework community has to offer.
                             </p>
-                            <hr />
+                            <hr>
                             <p>
                                 If you are interested in helping with this project, simply fork the code on <a class="zf-green" href="https://github.com/zendframework/modules.zendframework.com">GITHUB</a> and get started!
                                 Additionally, join us in #zftalk.modules on Freenode and ask how you can help! Grab latest modules using <a class="zf-green" href="<?php echo $this->url('feed') ?>">RSS Feed</a>.
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 hidden-xs hidden-sm">
-                        <img class="attentionimage pull-right" src="<?php echo $this->basePath('/img/rsz_logo.png'); ?>" alt="ZF Modules"/>
+                        <img class="attentionimage pull-right" src="<?php echo $this->basePath('/img/rsz_logo.png'); ?>" alt="ZF Modules">
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
             </div>
         </div>
 
-        <hr style="clear:both" />
+        <hr style="clear:both">
 
         <?php echo $this->partial('layout/footer'); ?>
 

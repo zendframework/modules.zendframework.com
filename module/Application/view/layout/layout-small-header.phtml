@@ -35,7 +35,7 @@
                         <?php $identity = $this->zfcUserIdentity(); ?>
                         <div class="gravatar-container">
                             <a class="login" href="<?php echo $this->url('zfcuser'); ?>" title="My profile">
-                                <img src="<?php echo $this->escapeHtmlAttr($identity->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName()); ?>" style="width:23px;height:23px;" />
+                                <img src="<?php echo $this->escapeHtmlAttr($identity->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName()); ?>" style="width:23px;height:23px;">
                             </a>
                         </div>
                         <a class="login" href="<?php echo $this->url('zfcuser'); ?>" title="My profile"> Hello <?php echo $this->escapeHtml(ucfirst($userDisplayName)); ?></a>
@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <a href="<?php echo $this->url('home'); ?>" style="text-decoration:none">
-                            <img src="<?php echo $this->basePath('/img/zend-logo_small.png'); ?>" alt="ZF Modules"/>
+                            <img src="<?php echo $this->basePath('/img/zend-logo_small.png'); ?>" alt="ZF Modules">
                             <p class="zf-green">
                                 Modules
                             </p>
@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <hr style="clear:both" />
+        <hr style="clear:both">
 
         <?php echo $this->partial('layout/footer'); ?>
 
