@@ -68,6 +68,29 @@ class ModuleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider providerProperties
+     *
+     * @param $property
+     */
+    public function testFindByLikeFindsInProperty($property)
+    {
+        $value = 'foo bar baz';
+        $query = 'bar';
+
+        $module = $this->module();
+
+        $setter = 'set' . ucfirst($property);
+
+        $module->{$setter}($value);
+
+        $this->mapper->insert($module);
+
+        $results = $this->mapper->findByLike($query);
+
+        $this->assertCount(1, $results);
+    }
+
+    /**
      * @return array
      */
     public function providerProperties()
