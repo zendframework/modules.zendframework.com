@@ -17,7 +17,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             Mapper\Module::class,
-            $serviceManager->get('zfmodule_mapper_module')
+            $serviceManager->get(Mapper\Module::class)
         );
     }
 }

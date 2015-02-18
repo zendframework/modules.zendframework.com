@@ -3,7 +3,8 @@
 use EdpGithub\Client;
 use ZfModule\Controller;
 use ZfModule\Delegators\EdpGithubClientAuthenticator;
-use ZfModule\Mapper\ModuleHydrator;
+use ZfModule\Mapper;
+use ZfModule\Service;
 use ZfModule\View\Helper;
 
 return [
@@ -87,11 +88,11 @@ return [
     ],
     'service_manager' => [
         'invokables' => [
-            ModuleHydrator::class => ModuleHydrator::class,
+            Mapper\ModuleHydrator::class => Mapper\ModuleHydrator::class,
         ],
         'factories' => [
-            'zfmodule_service_module' => ZfModule\Service\ModuleFactory::class,
-            'zfmodule_mapper_module' => ZfModule\Mapper\ModuleFactory::class,
+            Mapper\Module::class => Mapper\ModuleFactory::class,
+            Service\Module::class => Service\ModuleFactory::class,
         ],
         'delegators' => [
             Client::class => [

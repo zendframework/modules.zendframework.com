@@ -17,7 +17,7 @@ class ModuleFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         /* @var Mapper\Module $moduleMapper */
-        $moduleMapper = $serviceLocator->get('zfmodule_mapper_module');
+        $moduleMapper = $serviceLocator->get(Mapper\Module::class);
 
         /* @var Client $githubClient */
         $githubClient = $serviceLocator->get('EdpGithub\Client');

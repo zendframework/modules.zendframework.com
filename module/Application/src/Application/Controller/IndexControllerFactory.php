@@ -26,7 +26,7 @@ class IndexControllerFactory implements FactoryInterface
         $serviceManager = $controllerManager->getServiceLocator();
 
         /* @var Mapper\Module $moduleMapper */
-        $moduleMapper = $serviceManager->get('zfmodule_mapper_module');
+        $moduleMapper = $serviceManager->get(Mapper\Module::class);
 
         return new IndexController($moduleMapper);
     }

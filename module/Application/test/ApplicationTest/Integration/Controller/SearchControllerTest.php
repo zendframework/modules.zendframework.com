@@ -31,7 +31,7 @@ class SearchControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                'zfmodule_mapper_module',
+                Mapper\Module::class,
                 $moduleMapper
             )
         ;

@@ -21,10 +21,10 @@ class IndexControllerFactory implements FactoryInterface
         $serviceManager = $controllerManager->getServiceLocator();
 
         /* @var Mapper\Module $moduleMapper */
-        $moduleMapper = $serviceManager->get('zfmodule_mapper_module');
+        $moduleMapper = $serviceManager->get(Mapper\Module::class);
 
         /* @var Service\Module $moduleService */
-        $moduleService = $serviceManager->get('zfmodule_service_module');
+        $moduleService = $serviceManager->get(Service\Module::class);
 
         /* @var RepositoryRetriever $repositoryRetriever */
         $repositoryRetriever = $serviceManager->get(RepositoryRetriever::class);
