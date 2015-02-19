@@ -13,7 +13,6 @@
         <?php $this->headLink()->appendStylesheet($this->basePath('css/bootstrap.min.css')); ?>
         <?php $this->headLink()->appendStylesheet($this->basePath('css/style.css')); ?>
         <?php $this->headLink()->appendStylesheet($this->basePath('css/slide.css')); ?>
-        <?php $this->headLink()->appendStylesheet($this->basePath('css/jquery.livesearch.css')); ?>
         <?php $this->headLink()->appendAlternate($this->url('feed'), 'application/rss+xml', 'RSS Feed for ZF2 Modules'); ?>
         <?php echo $this->headLink(); ?>
     </head>
@@ -94,7 +93,6 @@
 
         <?php echo $this->partial('layout/footer'); ?>
 
-        <?php $this->inlineScript()->prependFile($this->basePath('js/jquery.livesearch.js')); ?>
         <?php $this->inlineScript()->prependFile($this->basePath('js/bootstrap.min.js')); ?>
         <?php $this->inlineScript()->prependFile($this->basePath('js/jquery-1.11.2.min.js')); ?>
         <?php echo $this->inlineScript(); ?>
