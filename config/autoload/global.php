@@ -1,10 +1,5 @@
 <?php
 return [
-    'module_layouts' => [
-        'User' => 'layout/layout-small-header.phtml',
-        'ZfcUser' => 'layout/layout-small-header.phtml',
-        'ZfModule' => 'layout/layout-small-header.phtml',
-    ],
     'asset_manager' => [
         'caching' => [
             'default' => [

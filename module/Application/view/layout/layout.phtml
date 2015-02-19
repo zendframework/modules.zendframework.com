@@ -54,6 +54,7 @@
             </div>
         </div>
 
+    <?php if (true === $this->withLargeHeader): ?>
         <div class="container-fluid landing-intro">
             <div class="container">
                 <div class="row">
@@ -82,6 +83,22 @@
                 </div>
             </div>
         </div>
+    <?php else: ?>
+        <div class="container-fluid landing-intro small-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <a href="<?php echo $this->url('home'); ?>" style="text-decoration:none">
+                            <img src="<?php echo $this->basePath('img/zend-logo_small.png'); ?>" alt="ZF Modules">
+                            <p class="zf-green">
+                                Modules
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 
         <div class="container main-content">
             <div class="container-fluid">

@@ -121,7 +121,7 @@ return [
             'application/index/index'           => __DIR__ . '/../view/application/index/index.phtml',
             'application/index/pagination'      => __DIR__ . '/../view/application/index/pagination.phtml',
             'application/search/index'          => __DIR__ . '/../view/application/search/index.phtml',
-            'layout/error'                      => __DIR__ . '/../view/layout/layout-small-header.phtml',
+            'layout/error'                      => __DIR__ . '/../view/layout/layout.phtml',
             'layout/layout'                     => __DIR__ . '/../view/layout/layout.phtml',
             'error/404'                         => __DIR__ . '/../view/error/404.phtml',
             'error/index'                       => __DIR__ . '/../view/error/index.phtml',
