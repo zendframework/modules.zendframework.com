@@ -9,11 +9,11 @@
         <?php $this->headMeta()->setCharset('UTF-8'); ?>
         <?php echo $this->headMeta(); ?>
 
-        <?php $this->headLink(['rel' => 'shortcut icon', 'href' => $this->basePath() . '/favicon.ico']); ?>
-        <?php $this->headLink()->appendStylesheet($this->basePath() . '/css/bootstrap.min.css'); ?>
-        <?php $this->headLink()->appendStylesheet($this->basePath() . '/css/style.css'); ?>
-        <?php $this->headLink()->appendStylesheet($this->basePath() . '/css/slide.css'); ?>
-        <?php $this->headLink()->appendStylesheet($this->basePath() . '/css/jquery.livesearch.css'); ?>
+        <?php $this->headLink(['rel' => 'shortcut icon', 'href' => $this->basePath('favicon.ico')]); ?>
+        <?php $this->headLink()->appendStylesheet($this->basePath('css/bootstrap.min.css')); ?>
+        <?php $this->headLink()->appendStylesheet($this->basePath('css/style.css')); ?>
+        <?php $this->headLink()->appendStylesheet($this->basePath('css/slide.css')); ?>
+        <?php $this->headLink()->appendStylesheet($this->basePath('css/jquery.livesearch.css')); ?>
         <?php $this->headLink()->appendAlternate($this->url('feed'), 'application/rss+xml', 'RSS Feed for ZF2 Modules'); ?>
         <?php echo $this->headLink(); ?>
     </head>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 hidden-xs hidden-sm">
-                        <img class="attentionimage pull-right" src="<?php echo $this->basePath('/img/rsz_logo.png'); ?>" alt="ZF Modules">
+                        <img class="attentionimage pull-right" src="<?php echo $this->basePath('img/rsz_logo.png'); ?>" alt="ZF Modules">
                     </div>
                 </div>
             </div>
@@ -94,9 +94,9 @@
 
         <?php echo $this->partial('layout/footer'); ?>
 
-        <?php $this->inlineScript()->prependFile($this->basePath() . '/js/jquery.livesearch.js'); ?>
-        <?php $this->inlineScript()->prependFile($this->basePath() . '/js/bootstrap.min.js'); ?>
-        <?php $this->inlineScript()->prependFile($this->basePath() . '/js/jquery-1.11.2.min.js'); ?>
+        <?php $this->inlineScript()->prependFile($this->basePath('js/jquery.livesearch.js')); ?>
+        <?php $this->inlineScript()->prependFile($this->basePath('js/bootstrap.min.js')); ?>
+        <?php $this->inlineScript()->prependFile($this->basePath('js/jquery-1.11.2.min.js')); ?>
         <?php echo $this->inlineScript(); ?>
     </body>
 </html>
