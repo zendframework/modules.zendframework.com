@@ -8,7 +8,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class EdpGithubClientAuthenticator implements DelegatorFactoryInterface
 {
-
     /**
      * {@inheritDoc}
      *

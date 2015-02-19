@@ -11,9 +11,11 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-install:
+before_install:
   - composer self-update
-  - composer update --prefer-source
+
+install:
+  - composer install
 
 before_script:
   - cp config/autoload/travis.php.local.dist config/autoload/travis.local.php
