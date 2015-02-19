@@ -11,7 +11,6 @@ return [
         'EdpGithub',
         'Application',
         'User',
-        'EdpModuleLayouts',
         'ZfModule',
     ],
     'module_listener_options' => [

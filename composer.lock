@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9ceb580d51cdf3144a63df23d59a9188",
+    "hash": "eda6da72d0c093464156822f172fb3eb",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
@@ -114,44 +114,6 @@
                 "zf2"
             ],
             "time": "2015-01-27 14:52:28"
-        },
-        {
-            "name": "evandotpro/edp-module-layouts",
-            "version": "v1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EvanDotPro/EdpModuleLayouts.git",
-                "reference": "984658a4aa3d70d2830b598f0fd44fb0ad56e981"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EvanDotPro/EdpModuleLayouts/zipball/984658a4aa3d70d2830b598f0fd44fb0ad56e981",
-                "reference": "984658a4aa3d70d2830b598f0fd44fb0ad56e981",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "./Module.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Evan Coury",
-                    "email": "me@evancoury.com",
-                    "homepage": "http://blog.evan.pro/"
-                }
-            ],
-            "description": "EdpModuleLayouts is very simple ZF2 module for making module-specific layouts insanely easy.",
-            "homepage": "https://github.com/EvanDotPro/EdpModuleLayouts",
-            "keywords": [
-                "zf2"
-            ],
-            "time": "2012-09-14 01:32:51"
         },
         {
             "name": "ezyang/htmlpurifier",
