@@ -9,10 +9,8 @@
             </div>
             <div class="col-md-9">
                 <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
-                    <?php echo $this->escapeHtml($module->getName()); ?>
+                    <?php echo $this->escapeHtml($module->getOwner()); ?>/<?php echo $this->escapeHtml($module->getName()); ?>
                 </a>
-                <br>
-                <strong>Author:</strong> <?php echo $this->escapeHtml($module->getOwner()) ?>
             </div>
         </div>
         <hr>

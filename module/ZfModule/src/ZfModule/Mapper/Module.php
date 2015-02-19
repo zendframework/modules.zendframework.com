@@ -3,7 +3,7 @@
 namespace ZfModule\Mapper;
 
 use Zend\Db\ResultSet\HydratingResultSet;
-use Zend\Db\Sql\Expression;
+use Zend\Db\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
@@ -31,11 +31,9 @@ class Module extends AbstractDbMapper implements ModuleInterface
         }
 
         if (null !== $query) {
-            $spec = function ($where) use ($query) {
-                $where->like('name', '%' . $query . '%')->or->like('description', '%' . $query . '%');
-            };
-            $select->where($spec);
+            $this->whereLike($select, $query);
         }
+
         $resultSet = new HydratingResultSet($this->getHydrator(), $this->getEntityPrototype());
 
         $adapter = new DbSelect($select, $this->getSql(), $resultSet);
@@ -77,15 +75,38 @@ class Module extends AbstractDbMapper implements ModuleInterface
             $select->limit($limit);
         }
 
-        $spec = function ($where) use ($query) {
-            $where->like('name', '%' . $query . '%')->or->like('description', '%' . $query . '%');
-        };
-        $select->where($spec);
+        $this->whereLike($select, $query);
 
         $entity = $this->select($select);
         $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
 
         return $entity;
+    }
+
+    private function whereLike(Sql\Select $select, $query)
+    {
+        $query = preg_replace('/\s+/', ' ', $query);
+
+        if (!trim($query)) {
+            return;
+        }
+
+        $words = explode(' ', $query);
+
+        $select->where(function ($where) use ($words) {
+
+            foreach ($words as $word) {
+                $like = '%' . $word . '%';
+
+                /* @var Sql\Where $where */
+                $where
+                    ->nest()
+                    ->like('name', $like)->or
+                    ->like('description', $like)->or
+                    ->like('owner', $like)
+                    ->unnest();
+            }
+        });
     }
 
     public function findByOwner($owner, $limit = null, $orderBy = null, $sort = 'ASC')
@@ -160,7 +181,7 @@ class Module extends AbstractDbMapper implements ModuleInterface
     public function getTotal()
     {
         $select = $this->getSelect();
-        $select->columns(['num' => new Expression('COUNT(*)')]);
+        $select->columns(['num' => new Sql\Expression('COUNT(*)')]);
 
         $stmt = $this->getSlaveSql()->prepareStatementForSqlObject($select);
         $row = $stmt->execute()->current();
