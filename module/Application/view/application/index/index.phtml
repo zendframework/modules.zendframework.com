@@ -1,6 +1,6 @@
 <?php $this->headTitle(sprintf('Browse %d modules for Zend Framework 2', $this->totalModules())); ?>
 <?php $this->headLink()->appendStylesheet($this->basePath('css/jquery.livesearch.css')); ?>
-<?php $this->inlineScript()->prependFile($this->basePath('js/jquery.livesearch.js')); ?>
+<?php $this->inlineScript()->appendFile($this->basePath('js/jquery.livesearch.js')); ?>
 <?php $this->inlineScript()->appendScript('$(\'#live-search input[name="query"]\').liveSearch({url: "' . $this->url('live-search', [], ['query' => ['query' => '']]) . '"});'); ?>
 
 <div class="col-xs-12 col-md-8">
