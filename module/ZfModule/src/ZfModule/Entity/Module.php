@@ -56,7 +56,6 @@ class Module implements ModuleInterface
 
     /**
      * @param string $photoUrl
-     * @return self
      */
     public function setPhotoUrl($photoUrl)
     {
@@ -73,7 +72,6 @@ class Module implements ModuleInterface
 
     /**
      * @param string $owner
-     * @return self
      */
     public function setOwner($owner)
     {
@@ -90,7 +88,6 @@ class Module implements ModuleInterface
 
     /**
      * @param string $updatedAt
-     * @return self
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -115,7 +112,6 @@ class Module implements ModuleInterface
 
     /**
      * @param string $createdAt
-     * @return self
      */
     public function setCreatedAt($createdAt)
     {
@@ -132,7 +128,6 @@ class Module implements ModuleInterface
 
     /**
      * @param int $id
-     * @return self
      */
     public function setId($id)
     {
@@ -149,7 +144,6 @@ class Module implements ModuleInterface
 
     /**
      * @param string $url
-     * @return self
      */
     public function setUrl($url)
     {
@@ -166,7 +160,6 @@ class Module implements ModuleInterface
 
     /**
      * @param string $description
-     * @return self
      */
     public function setDescription($description)
     {
@@ -183,7 +176,6 @@ class Module implements ModuleInterface
 
     /**
      * @param string $name
-     * @return self
      */
     public function setName($name)
     {
