@@ -3,6 +3,8 @@
 <?php $this->inlineScript()->appendFile($this->basePath('js/jquery.livesearch.js')); ?>
 <?php $this->inlineScript()->appendScript('$(\'#live-search input[name="query"]\').liveSearch({url: "' . $this->url('live-search', [], ['query' => ['query' => '']]) . '"});'); ?>
 
+<?php $this->layout()->withLargeHeader = true; ?>
+
 <div class="col-xs-12 col-md-8">
     <div class="well well-sm">
         <form id="live-search">
