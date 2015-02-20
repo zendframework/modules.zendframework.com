@@ -108,7 +108,13 @@
 
         <hr style="clear:both">
 
-        <?php echo $this->partial('layout/footer'); ?>
+        <footer class="footer">
+            <div class="container">
+                <p>
+                    &copy; 2005 - <?php echo date('Y'); ?> by Zend Technologies Ltd. All rights reserved.
+                </p>
+            </div>
+        </footer>
 
         <?php $this->inlineScript()->prependFile($this->basePath('js/bootstrap.min.js')); ?>
         <?php $this->inlineScript()->prependFile($this->basePath('js/jquery-1.11.2.min.js')); ?>
