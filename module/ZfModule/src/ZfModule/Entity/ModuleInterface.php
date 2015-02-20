@@ -15,7 +15,6 @@ interface ModuleInterface
      * Set Owner
      *
      * @param string
-     * @return string
      */
     public function setOwner($owner);
 
@@ -30,7 +29,6 @@ interface ModuleInterface
      * Set Photo URL
      *
      * @param string
-     * @return string
      */
     public function setPhotoUrl($photoUrl);
 
@@ -73,7 +71,6 @@ interface ModuleInterface
      * Set id.
      *
      * @param int $id
-     * @return ModuleInterface
      */
     public function setId($id);
 
@@ -88,7 +85,6 @@ interface ModuleInterface
      * Set Url
      *
      * @param string $url
-     * @return ModuleInterface
      */
     public function setUrl($url);
 
@@ -103,7 +99,6 @@ interface ModuleInterface
      * Set Description
      *
      * @param string $description
-     * @return ModuleInterface
      */
     public function setDescription($description);
 
@@ -118,7 +113,6 @@ interface ModuleInterface
      * Set Name
      *
      * @param string $name
-     * @return ModuleInterface
      */
     public function setName($name);
 }
