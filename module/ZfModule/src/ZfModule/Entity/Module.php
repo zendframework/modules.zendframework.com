@@ -61,8 +61,6 @@ class Module implements ModuleInterface
     public function setPhotoUrl($photoUrl)
     {
         $this->photoUrl = $photoUrl;
-
-        return $this;
     }
 
     /**
@@ -80,8 +78,6 @@ class Module implements ModuleInterface
     public function setOwner($owner)
     {
         $this->owner = $owner;
-
-        return $this;
     }
 
     /**
@@ -99,8 +95,6 @@ class Module implements ModuleInterface
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     /**
@@ -126,8 +120,6 @@ class Module implements ModuleInterface
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     /**
@@ -145,8 +137,6 @@ class Module implements ModuleInterface
     public function setId($id)
     {
         $this->id = (int) $id;
-
-        return $this;
     }
 
     /**
@@ -164,8 +154,6 @@ class Module implements ModuleInterface
     public function setUrl($url)
     {
         $this->url = $url;
-
-        return $this;
     }
 
     /**
@@ -183,8 +171,6 @@ class Module implements ModuleInterface
     public function setDescription($description)
     {
         $this->description = $description;
-
-        return $this;
     }
 
     /**
@@ -202,7 +188,5 @@ class Module implements ModuleInterface
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
     }
 }
