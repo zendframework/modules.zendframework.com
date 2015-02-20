@@ -181,3 +181,14 @@ div.container a.brand {
 
     background: url(../img/speech-bubble-arrow.png) no-repeat;
 }
+
+/* Revisited Styles */
+
+.fork-me-ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    width: 149px;
+    height: 149px;
+}
