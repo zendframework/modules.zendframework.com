@@ -6,12 +6,16 @@ interface ModuleInterface
 {
     /**
      * Get Owner
+     *
      * @return string
      */
     public function getOwner();
 
     /**
      * Set Owner
+     *
+     * @param string
+     * @return string
      */
     public function setOwner($owner);
 
@@ -21,8 +25,12 @@ interface ModuleInterface
      * @return string
      */
     public function getPhotoUrl();
+
     /**
      * Set Photo URL
+     *
+     * @param string
+     * @return string
      */
     public function setPhotoUrl($photoUrl);
 
@@ -35,6 +43,7 @@ interface ModuleInterface
 
     /**
      * Set Updated at
+     *
      * @param int $updatedAt
      */
     public function setUpdatedAt($updatedAt);
