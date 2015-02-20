@@ -174,24 +174,16 @@ class ModuleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Id shouldn't need to be set, but currently missing auto_increment
-     * @link https://github.com/zendframework/modules.zendframework.com/pull/340
-     *
      * @return Entity\Module
      */
     private function module()
     {
-        static $id = 1;
-
         $module = new Entity\Module();
 
-        $module->setId($id);
         $module->setName('');
         $module->setOwner('');
         $module->setDescription('');
         $module->setUrl('');
-
-        $id++;
 
         return $module;
     }
