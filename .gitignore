@@ -1,7 +1,6 @@
 .idea/
 .php_cs.cache
 clover.xml
-index.html
 clover.xml
 .vagrant
 vendor
