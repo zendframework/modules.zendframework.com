@@ -65,8 +65,6 @@ class IndexController extends AbstractActionController
 
         $license = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'LICENSE');
         $composerConf = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'composer.json');
-
-        /* HOTFIX for https://github.com/EvanDotPro/EdpGithub/issues/23 - markdown needs to be the last request */
         $readme = $this->repositoryRetriever->getRepositoryFileContent($vendor, $module, 'README.md', true);
 
         return new ViewModel([
