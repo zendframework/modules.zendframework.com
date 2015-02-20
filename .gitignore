@@ -1,12 +1,9 @@
 .idea/
 .php_cs.cache
 clover.xml
-index.html
-clover.xml
 .vagrant
 vendor
 config/development.config.php
-.vagrant
 puphpet/files/dot/ssh
 !puphpet/files/dot/ssh/insecure_private_key
 data/logs/*
