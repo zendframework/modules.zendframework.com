@@ -186,7 +186,7 @@ div.container a.brand {
 
 .fork-me-ribbon a {
     position: absolute;
-    top: 0;
+    top: 7px;
     right: 0;
     border: 0;
     width: 149px;
