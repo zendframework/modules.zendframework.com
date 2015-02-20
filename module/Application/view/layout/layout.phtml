@@ -11,15 +11,15 @@
 
         <?php $this->headLink(['rel' => 'shortcut icon', 'href' => $this->basePath('favicon.ico')]); ?>
         <?php $this->headLink()->appendStylesheet($this->basePath('css/bootstrap.min.css')); ?>
-        <?php $this->headLink()->appendStylesheet($this->basePath('css/style.css')); ?>
+        <?php $this->headLink()->appendStylesheet($this->basePath('css/style.css?201502201415')); ?>
         <?php $this->headLink()->appendStylesheet($this->basePath('css/slide.css')); ?>
         <?php $this->headLink()->appendAlternate($this->url('feed'), 'application/rss+xml', 'RSS Feed for ZF2 Modules'); ?>
         <?php echo $this->headLink(); ?>
     </head>
     <body>
-        <a href="https://github.com/zendframework/modules.zendframework.com" target="_blank">
-            <img style="position: absolute; top: 0; right: 0; border: 0; width: 149px; height: 149px;" src="<?php echo $this->basePath('img/aral/github-ribbons/right-green@2x.png'); ?>" alt="Fork me on GitHub">
-        </a>
+        <aside class="fork-me-ribbon">
+            <a href="https://github.com/zendframework/modules.zendframework.com" target="_blank">Fork me on GitHub</a>
+        </aside>
         <div id="toppanel">
             <div class="tab">
                 <ul class="login">
