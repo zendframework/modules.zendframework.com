@@ -184,11 +184,16 @@ div.container a.brand {
 
 /* Revisited Styles */
 
-.fork-me-ribbon {
+.fork-me-ribbon a {
     position: absolute;
     top: 0;
     right: 0;
     border: 0;
     width: 149px;
     height: 149px;
+    background-image: url(../img/aral/github-ribbons/right-green@2x.png);
+    background-size: 149px 149px;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
