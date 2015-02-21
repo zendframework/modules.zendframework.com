@@ -56,13 +56,10 @@ class Module implements ModuleInterface
 
     /**
      * @param string $photoUrl
-     * @return self
      */
     public function setPhotoUrl($photoUrl)
     {
         $this->photoUrl = $photoUrl;
-
-        return $this;
     }
 
     /**
@@ -75,13 +72,10 @@ class Module implements ModuleInterface
 
     /**
      * @param string $owner
-     * @return self
      */
     public function setOwner($owner)
     {
         $this->owner = $owner;
-
-        return $this;
     }
 
     /**
@@ -94,13 +88,10 @@ class Module implements ModuleInterface
 
     /**
      * @param string $updatedAt
-     * @return self
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     /**
@@ -121,13 +112,10 @@ class Module implements ModuleInterface
 
     /**
      * @param string $createdAt
-     * @return self
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     /**
@@ -140,13 +128,10 @@ class Module implements ModuleInterface
 
     /**
      * @param int $id
-     * @return self
      */
     public function setId($id)
     {
         $this->id = (int) $id;
-
-        return $this;
     }
 
     /**
@@ -159,13 +144,10 @@ class Module implements ModuleInterface
 
     /**
      * @param string $url
-     * @return self
      */
     public function setUrl($url)
     {
         $this->url = $url;
-
-        return $this;
     }
 
     /**
@@ -178,13 +160,10 @@ class Module implements ModuleInterface
 
     /**
      * @param string $description
-     * @return self
      */
     public function setDescription($description)
     {
         $this->description = $description;
-
-        return $this;
     }
 
     /**
@@ -197,12 +176,9 @@ class Module implements ModuleInterface
 
     /**
      * @param string $name
-     * @return self
      */
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
     }
 }
