@@ -11,6 +11,7 @@ namespace Application\Controller;
 use Zend\Feed\Writer\Feed;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\FeedModel;
+use Zend\View\Model\ViewModel;
 use ZfModule\Mapper;
 
 class IndexController extends AbstractActionController
@@ -30,17 +31,20 @@ class IndexController extends AbstractActionController
         $this->moduleMapper = $moduleMapper;
     }
 
+    /**
+     * @return ViewModel
+     */
     public function indexAction()
     {
         $query =  $this->params()->fromQuery('query', null);
         $page = (int) $this->params()->fromQuery('page', 1);
 
-        $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
+        $repositories = $this->getModules($page, $query);
 
-        return [
+        return new ViewModel([
             'repositories' => $repositories,
             'query' => $query,
-        ];
+        ]);
     }
 
     /**
@@ -52,37 +56,31 @@ class IndexController extends AbstractActionController
         // Prepare the feed
         $feed = new Feed();
         $feed->setTitle('ZF2 Modules');
-        $feed->setDescription('Recently added modules.');
+        $feed->setDescription('Recently added ZF2 modules');
         $feed->setFeedLink('http://modules.zendframework.com/feed', 'atom');
         $feed->setLink('http://modules.zendframework.com');
 
         // Get the recent modules
-        $page = 1;
-
-        $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC');
+        $modules = $this->getModules();
 
         // Load them into the feed
-        foreach ($repositories as $module) {
-            $entry = $feed->createEntry();
-            $entry->setTitle($module->getName());
-
-            if ($module->getDescription() == '') {
-                $moduleDescription = "No Description available";
-            } else {
-                $moduleDescription = $module->getDescription();
-            }
-
-            $entry->setDescription($moduleDescription);
-            $entry->setLink($module->getUrl());
-            $entry->setDateCreated(strtotime($module->getCreatedAt()));
-
-            $feed->addEntry($entry);
-        }
+        $mapper = new Mapper\ModuleToFeed($feed);
+        $mapper->addModules($modules);
 
         // Render the feed
         $feedmodel = new FeedModel();
         $feedmodel->setFeed($feed);
 
         return $feedmodel;
+    }
+
+    /**
+     * @param int $page
+     * @param string $query
+     * @return \Zend\Paginator\Paginator
+     */
+    protected function getModules($page = 1, $query = null)
+    {
+        return $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
     }
 }
