@@ -9,7 +9,7 @@
 namespace ZfModule\Mapper;
 
 use Zend\Feed\Writer\Feed;
-use ZfModule\Entity\Module;
+use ZfModule\Entity\Module as ModuleEntity;
 
 /**
  * ModuleToFeed
@@ -42,10 +42,10 @@ class ModuleToFeed
     }
 
     /**
-     * @param Module $module
+     * @param ModuleEntity $module
      * @return \Zend\Feed\Writer\Entry
      */
-    public function addModule(Module $module)
+    public function addModule(ModuleEntity $module)
     {
         $entry = $this->feed->createEntry();
         $entry->setTitle($module->getName());
