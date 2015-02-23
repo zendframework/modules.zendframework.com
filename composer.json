@@ -6,6 +6,7 @@
     "require": {
         "bshaffer/oauth2-server-php": "dev-develop",
         "evandotpro/edp-github": "dev-master",
+        "ext-intl": "*",
         "ezyang/htmlpurifier": "4.6.*",
         "monolog/monolog": "~1.12",
         "php": "~5.5",
