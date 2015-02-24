@@ -8,6 +8,6 @@
         <p><span class="zf-green">Created:</span> <?php echo $this->dateFormat(new DateTime($this->createdAt), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT); ?></p>
     </div>
     <div class="col-xs-4">
-        <a href="<?php echo $this->escapeHtmlAttr($this->url); ?>">Show module on GitHub</a>
+        <a target="_blank" href="<?php echo $this->escapeHtmlAttr($this->url); ?>">Show module on GitHub</a>
     </div>
 </div>
