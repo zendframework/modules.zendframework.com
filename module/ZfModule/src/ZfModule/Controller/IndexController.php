@@ -90,7 +90,7 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         ]);
 
-        $repositories = $this->registeredRepositories($currentUserRepositories);
+        $repositories = $this->unregisteredRepositories($currentUserRepositories);
 
         $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
@@ -112,7 +112,7 @@ class IndexController extends AbstractActionController
             'direction' => 'desc',
         ]);
 
-        $repositories = $this->registeredRepositories($userRepositories);
+        $repositories = $this->unregisteredRepositories($userRepositories);
 
         $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
@@ -125,7 +125,7 @@ class IndexController extends AbstractActionController
      * @param RepositoryCollection $repositories
      * @return stdClass[]
      */
-    private function registeredRepositories(RepositoryCollection $repositories)
+    private function unregisteredRepositories(RepositoryCollection $repositories)
     {
         return array_filter(iterator_to_array($repositories), function ($repository) {
             if ($repository->fork) {
