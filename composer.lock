@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "3cc6c4ae66ede348143680e43ef3429c",
+    "hash": "dc890408fac3f9e893694ac96c19d159",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
