@@ -84,21 +84,18 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
-    public function testIndexActionRendersValidModulesOnly()
+    public function testIndexActionRendersUnregisteredModulesOnly()
     {
         $this->authenticatedAs(new User());
 
-        $validModule = $this->validModule();
-
-        $nonModule = $this->nonModule();
+        $unregisteredModule = $this->validModule();
         $registeredModule = $this->registeredModule();
 
         $repositories = [
-            $validModule,
-            $nonModule,
+            $unregisteredModule,
             $registeredModule,
-            $this->forkedModule(),
             $this->moduleWithoutPushPermissions(),
+            $this->forkedModule(),
         ];
 
         $repositoryCollection = $this->repositoryCollectionMock($repositories);
@@ -172,8 +169,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $viewVariable = $viewModel->getVariable('repositories');
 
         $this->assertInternalType('array', $viewVariable);
-        $this->assertCount(2, $viewVariable);
-        $this->assertSame($validModule, $viewVariable[0]);
+        $this->assertCount(1, $viewVariable);
+        $this->assertSame($unregisteredModule, $viewVariable[0]);
     }
 
     public function testOrganizationActionRedirectsIfNotAuthenticated()
