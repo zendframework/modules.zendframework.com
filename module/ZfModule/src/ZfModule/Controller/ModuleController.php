@@ -157,7 +157,8 @@ class ModuleController extends AbstractActionController
 
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            throw new Exception\UnexpectedValueException('Something went wrong with the post values of the request...');
+            $this->flashMessenger()->addErrorMessage('Something went wrong with the post values of the request...');
+            return $this->redirect()->toRoute('zfcuser');
         }
 
         $postParams = $request->getPost();
@@ -168,29 +169,25 @@ class ModuleController extends AbstractActionController
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
         if (!($repository instanceof \stdClass)) {
-            throw new Exception\RuntimeException(
-                'Not able to fetch the repository from GitHub due to an unknown error.',
-                Http\Response::STATUS_CODE_500
-            );
+            $this->flashMessenger()->addErrorMessage('Not able to fetch the repository from GitHub due to an unknown error.');
+            return $this->redirect()->toRoute('zfcuser');
         }
 
         if ($repository->fork || !$repository->permissions->push) {
-            throw new Exception\UnexpectedValueException(
+            $this->flashMessenger()->addErrorMessage(
                 'You have no permission to add this module. The reason might be that you are ' .
-                'neither the owner nor a collaborator of this repository.',
-                Http\Response::STATUS_CODE_403
+                'neither the owner nor a collaborator of this repository.'
             );
+            return $this->redirect()->toRoute('zfcuser');
         }
 
         if (!$this->moduleService->isModule($repository)) {
-            throw new Exception\UnexpectedValueException(
-                $repository->name . ' is not a Zend Framework Module',
-                Http\Response::STATUS_CODE_403
-            );
+            $this->flashMessenger()->addErrorMessage($repository->name . ' is not a Zend Framework Module');
+            return $this->redirect()->toRoute('zfcuser');
         }
 
         $module = $this->moduleService->register($repository);
-        $this->flashMessenger()->addMessage($module->getName() . ' has been added to ZF Modules');
+        $this->flashMessenger()->addSuccessMessage($module->getName() . ' has been added to ZF Modules');
 
         return $this->redirect()->toRoute('zfcuser');
     }
@@ -207,7 +204,8 @@ class ModuleController extends AbstractActionController
 
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            throw new Exception\UnexpectedValueException('Something went wrong with the post values of the request...');
+            $this->flashMessenger()->addErrorMessage('Something went wrong with the post values of the request...');
+            return $this->redirect()->toRoute('zfcuser');
         }
 
         $postParams = $request->getPost();
@@ -218,31 +216,27 @@ class ModuleController extends AbstractActionController
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
         if (!$repository instanceof \stdClass) {
-            throw new Exception\RuntimeException(
-                'Not able to fetch the repository from GitHub due to an unknown error.',
-                Http\Response::STATUS_CODE_500
-            );
+            $this->flashMessenger()->addErrorMessage('Not able to fetch the repository from GitHub due to an unknown error.');
+            return $this->redirect()->toRoute('zfcuser');
         }
 
         if ($repository->fork || !$repository->permissions->push) {
-            throw new Exception\UnexpectedValueException(
+            $this->flashMessenger()->addErrorMessage(
                 'You have no permission to remove this module. The reason might be that you are ' .
-                'neither the owner nor a collaborator of this repository.',
-                Http\Response::STATUS_CODE_403
+                'neither the owner nor a collaborator of this repository.'
             );
+            return $this->redirect()->toRoute('zfcuser');
         }
 
         $module = $this->moduleMapper->findByUrl($repository->html_url);
 
         if (!$module) {
-            throw new Exception\UnexpectedValueException(
-                $repository->name . ' was not found',
-                Http\Response::STATUS_CODE_403
-            );
+            $this->flashMessenger()->addErrorMessage($repository->name . ' was not found');
+            return $this->redirect()->toRoute('zfcuser');
         }
 
         $this->moduleMapper->delete($module);
-        $this->flashMessenger()->addMessage($repository->name . ' has been removed from ZF Modules');
+        $this->flashMessenger()->addSuccessMessage($repository->name . ' has been removed from ZF Modules');
 
         return $this->redirect()->toRoute('zfcuser');
     }
