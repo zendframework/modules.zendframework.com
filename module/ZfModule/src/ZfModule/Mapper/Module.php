@@ -146,7 +146,8 @@ class Module extends AbstractDbMapper implements ModuleInterface
         $select = $this->getSelect();
         $select->where([$key => $value]);
 
-        $entity = $this->select($select)->current();
+        $entity = $this->select($select)->current() ?: null;
+
         $this->getEventManager()->trigger('find', $this, ['entity' => $entity]);
 
         return $entity;
