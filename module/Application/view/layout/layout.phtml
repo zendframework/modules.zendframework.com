@@ -11,7 +11,7 @@
 
         <?php $this->headLink(['rel' => 'shortcut icon', 'href' => $this->basePath('favicon.ico')]); ?>
         <?php $this->headLink()->appendStylesheet($this->basePath('css/bootstrap.min.css')); ?>
-        <?php $this->headLink()->appendStylesheet($this->basePath('css/style.css?201502201415')); ?>
+        <?php $this->headLink()->appendStylesheet($this->basePath('css/style.css?201502241620')); ?>
         <?php $this->headLink()->appendStylesheet($this->basePath('css/slide.css')); ?>
         <?php $this->headLink()->appendAlternate($this->url('feed'), 'application/rss+xml', 'RSS Feed for ZF2 Modules'); ?>
         <?php echo $this->headLink(); ?>
@@ -20,39 +20,56 @@
         <aside class="fork-me-ribbon">
             <a href="https://github.com/zendframework/modules.zendframework.com" target="_blank">Fork me on GitHub</a>
         </aside>
-        <div id="toppanel">
-            <div class="tab">
-                <ul class="login">
-                    <li class="left">&nbsp;</li>
-                    <li>
-                        <a href="<?php echo $this->url('home'); ?>">Home</a>
-                    </li>
-                <?php $userDisplayName = $this->zfcUserDisplayName(); ?>
-                <?php if ($userDisplayName): ?>
-                    <li class="sep">|</li>
-                    <li class="user-info">
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<?php echo $this->url('home'); ?>">
+                        ZF Modules
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="<?php echo $this->url('home'); ?>" title="Home">Home</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                    <?php $userDisplayName = $this->zfcUserDisplayName(); ?>
+                    <?php if ($userDisplayName): ?>
                         <?php /* @var User\Entity\User $identity */ ?>
                         <?php $identity = $this->zfcUserIdentity(); ?>
-                        <div class="gravatar-container">
-                            <a class="login" href="<?php echo $this->url('zfcuser'); ?>" title="My profile">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 <img src="<?php echo $this->escapeHtmlAttr($identity->getPhotoUrl()); ?>" alt="<?php echo $this->escapeHtmlAttr($this->zfcUserDisplayName()); ?>" style="width:23px;height:23px;">
+                                <span class="caret"></span>
                             </a>
-                        </div>
-                        <a class="login" href="<?php echo $this->url('zfcuser'); ?>" title="My profile"> Hello <?php echo $this->escapeHtml(ucfirst($userDisplayName)); ?></a>
-                    </li>
-                    <li class="sep">|</li>
-                    <li>
-                        <a href="<?php echo $this->url('zfcuser/logout'); ?>">Logout</a>
-                    </li>
-                <?php else: ?>
-                    <li id="toggle">
-                        <a class="login" href="<?php echo $this->url('scn-social-auth-user/login/provider', ['provider' => 'github']); ?>">GitHub Login</a>
-                    </li>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="<?php echo $this->url('zfcuser'); ?>" title="My profile">My Profile</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="<?php echo $this->url('zfcuser/logout'); ?>" title="Logout">Sign out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php else: ?>
+                        <li>
+                            <a href="<?php echo $this->url('scn-social-auth-user/login/provider', ['provider' => 'github']); ?>">Sign in with GitHub</a>
+                        </li>
+                    </ul>
                 <?php endif; ?>
-                    <li class="right">&nbsp;</li>
-                </ul>
+                </div>
             </div>
-        </div>
+        </nav>
 
     <?php if (true === $this->withLargeHeader): ?>
         <div class="container-fluid landing-intro">

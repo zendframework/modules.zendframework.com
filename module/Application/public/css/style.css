@@ -1,5 +1,5 @@
 body {
-    padding-top: 0;
+    padding-top: 70px;
     padding-bottom: 40px;
     background: url('../img/light_wool.png') repeat;
 }
@@ -186,7 +186,7 @@ div.container a.brand {
 
 .fork-me-ribbon a {
     position: absolute;
-    top: 7px;
+    top: 50px;
     right: 0;
     border: 0;
     width: 149px;
