@@ -381,7 +381,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('findByUrl')
             ->with($this->equalTo($repository->html_url))
-            ->willReturn(null)
+            ->willReturn(false)
         ;
 
         $moduleMapper
