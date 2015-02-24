@@ -445,7 +445,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
      *
      * @param string $method
      */
-    public function testAddActionThrowsUnexpectedValueExceptionIfNotPostedTo($method)
+    public function testAddActionRedirectToUserPageAndErrorMessageIfNotPostedTo($method)
     {
         $this->authenticatedAs(new User());
 
@@ -456,16 +456,18 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+        $this->assertRedirect('/user');
 
-        /* @var View\Model\ViewModel  $result */
-        $result = $this->getApplication()->getMvcEvent()->getResult();
+        $serviceManager = Bootstrap::getServiceManager();
 
-        /* @var Exception $exception */
-        $exception = $result->getVariable('exception');
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
-        $this->assertSame('Something went wrong with the post values of the request...', $exception->getMessage());
+        $this->assertContains(
+            'Something went wrong with the post values of the request...',
+            $flashMessengerViewHelper->getCurrentErrorMessages()
+        );
     }
 
     /**
@@ -486,7 +488,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         ];
     }
 
-    public function testAddActionThrowsRuntimeExceptionIfUnableToFetchRepositoryMetaData()
+    public function testAddActionRedirectAndErrorMessageIsSetIfUnableToFetchRepositoryMetaData()
     {
         $this->authenticatedAs(new User());
 
@@ -527,18 +529,17 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+        $this->assertRedirect('/user');
 
-        /* @var View\Model\ViewModel  $result */
-        $result = $this->getApplication()->getMvcEvent()->getResult();
+        $serviceManager = Bootstrap::getServiceManager();
 
-        /* @var Exception $exception */
-        $exception = $result->getVariable('exception');
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
-        $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
-        $this->assertSame(
+        $this->assertContains(
             'Not able to fetch the repository from GitHub due to an unknown error.',
-            $exception->getMessage()
+            $flashMessengerViewHelper->getCurrentErrorMessages()
         );
     }
 
@@ -547,7 +548,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
      *
      * @param stdClass $repository
      */
-    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryHasInsufficientPrivileges($repository)
+    public function testAddActionRedirectAndErrorMessageIsSetWhenRepositoryHasInsufficientPrivileges($repository)
     {
         $this->authenticatedAs(new User());
 
@@ -588,19 +589,18 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+        $this->assertRedirect('/user');
 
-        /* @var View\Model\ViewModel  $result */
-        $result = $this->getApplication()->getMvcEvent()->getResult();
+        $serviceManager = Bootstrap::getServiceManager();
 
-        /* @var Exception $exception */
-        $exception = $result->getVariable('exception');
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
-        $this->assertSame(
+        $this->assertContains(
             'You have no permission to add this module. The reason might be that you are ' .
             'neither the owner nor a collaborator of this repository.',
-            $exception->getMessage()
+            $flashMessengerViewHelper->getCurrentErrorMessages()
         );
     }
 
@@ -618,7 +618,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         ];
     }
 
-    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsNotAModule()
+    public function testAddActionRedirectAndErrorMessageIsSetWhenRepositoryIsNotAModule()
     {
         $this->authenticatedAs(new User());
 
@@ -677,21 +677,20 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+        $this->assertRedirect('/user');
 
-        /* @var View\Model\ViewModel  $result */
-        $result = $this->getApplication()->getMvcEvent()->getResult();
+        $serviceManager = Bootstrap::getServiceManager();
 
-        /* @var Exception $exception */
-        $exception = $result->getVariable('exception');
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
-        $this->assertSame(
+        $this->assertContains(
             sprintf(
                 '%s is not a Zend Framework Module',
                 $nonModule->name
             ),
-            $exception->getMessage()
+            $flashMessengerViewHelper->getCurrentErrorMessages()
         );
     }
 
@@ -784,7 +783,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
      *
      * @param string $method
      */
-    public function testRemoveActionThrowsUnexpectedValueExceptionIfNotPostedTo($method)
+    public function testRemoveActionRedirectAndErrorMessageIsSetIfNotPostedTo($method)
     {
         $this->authenticatedAs(new User());
 
@@ -795,19 +794,21 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+        $this->assertRedirect('/user');
 
-        /* @var View\Model\ViewModel  $result */
-        $result = $this->getApplication()->getMvcEvent()->getResult();
+        $serviceManager = Bootstrap::getServiceManager();
 
-        /* @var Exception $exception */
-        $exception = $result->getVariable('exception');
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
-        $this->assertSame('Something went wrong with the post values of the request...', $exception->getMessage());
+        $this->assertContains(
+            'Something went wrong with the post values of the request...',
+            $flashMessengerViewHelper->getCurrentErrorMessages()
+        );
     }
 
-    public function testRemoveActionThrowsRuntimeExceptionIfUnableToFetchRepositoryMetaData()
+    public function testRemoveActionRedirectAndErrorMessageIsSetIfUnableToFetchRepositoryMetaData()
     {
         $this->authenticatedAs(new User());
 
@@ -848,18 +849,17 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+        $this->assertRedirect('/user');
 
-        /* @var View\Model\ViewModel  $result */
-        $result = $this->getApplication()->getMvcEvent()->getResult();
+        $serviceManager = Bootstrap::getServiceManager();
 
-        /* @var Exception $exception */
-        $exception = $result->getVariable('exception');
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
-        $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
-        $this->assertSame(
+        $this->assertContains(
             'Not able to fetch the repository from GitHub due to an unknown error.',
-            $exception->getMessage()
+            $flashMessengerViewHelper->getCurrentErrorMessages()
         );
     }
 
@@ -868,7 +868,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
      *
      * @param stdClass $repository
      */
-    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryHasInsufficientPrivileges($repository)
+    public function testRemoveActionRedirectAndErrorMessageIsSetWhenRepositoryHasInsufficientPrivileges($repository)
     {
         $this->authenticatedAs(new User());
 
@@ -909,23 +909,22 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+        $this->assertRedirect('/user');
 
-        /* @var View\Model\ViewModel  $result */
-        $result = $this->getApplication()->getMvcEvent()->getResult();
+        $serviceManager = Bootstrap::getServiceManager();
 
-        /* @var Exception $exception */
-        $exception = $result->getVariable('exception');
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
-        $this->assertSame(
+        $this->assertContains(
             'You have no permission to remove this module. The reason might be that you are ' .
             'neither the owner nor a collaborator of this repository.',
-            $exception->getMessage()
+            $flashMessengerViewHelper->getCurrentErrorMessages()
         );
     }
 
-    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryNotPreviouslyRegistered()
+    public function testRemoveActionRedirectAndErrorMessageIsSetWhenRepositoryNotPreviouslyRegistered()
     {
         $this->authenticatedAs(new User());
 
@@ -984,21 +983,20 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
-        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
+        $this->assertRedirect('/user');
 
-        /* @var View\Model\ViewModel  $result */
-        $result = $this->getApplication()->getMvcEvent()->getResult();
+        $serviceManager = Bootstrap::getServiceManager();
 
-        /* @var Exception $exception */
-        $exception = $result->getVariable('exception');
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
-        $this->assertSame(
+        $this->assertContains(
             sprintf(
                 '%s was not found',
                 $unregisteredModule->name
             ),
-            $exception->getMessage()
+            $flashMessengerViewHelper->getCurrentErrorMessages()
         );
     }
 
