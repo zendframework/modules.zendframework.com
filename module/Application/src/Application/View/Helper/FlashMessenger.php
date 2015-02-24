@@ -48,11 +48,9 @@ class FlashMessenger extends ZendFlashMessenger
 
         $messageOutput = '';
 
-        foreach ($this->classMessages as $currentNamespace => $css) {
-            $namespaceOptions = $this->classOptions[$currentNamespace];
-
-            $this->classMessages[$currentNamespace] = $namespaceOptions['class'];
-            $openingString = sprintf('<div%%s><span class="sr-only">%s</span>', $namespaceOptions['name']);
+        foreach ($this->classOptions as $currentNamespace => $options) {
+            $this->classMessages[$currentNamespace] = $options['class'];
+            $openingString = sprintf('<div%%s><span class="sr-only">%s</span>', $options['name']);
 
             $this->setMessageOpenFormat($openingString);
             $this->setMessageSeparatorString(sprintf('</div>%s', $openingString));
