@@ -927,7 +927,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->expects($this->once())
             ->method('findByUrl')
             ->with($this->equalTo($unregisteredModule->html_url))
-            ->willReturn(false)
+            ->willReturn(null)
         ;
 
         $this->getApplicationServiceLocator()
