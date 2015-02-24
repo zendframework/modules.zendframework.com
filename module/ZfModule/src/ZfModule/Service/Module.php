@@ -131,7 +131,7 @@ class Module extends EventProvider
                 return false;
             }
 
-            if (null === $this->moduleMapper->findByUrl($repository->html_url)) {
+            if (false === $this->moduleMapper->findByUrl($repository->html_url)) {
                 return false;
             }
 
