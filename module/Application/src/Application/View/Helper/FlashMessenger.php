@@ -41,9 +41,9 @@ class FlashMessenger extends ZendFlashMessenger
             ],
         ];
 
-        // if custom namespace handle as info message
+        // if custom namespace handle as default message
         if (!isset($this->classOptions[$namespace])) {
-            $this->classOptions[$namespace] = $this->classOptions[PluginFlashMessenger::NAMESPACE_INFO];
+            $this->classOptions[$namespace] = $this->classOptions[PluginFlashMessenger::NAMESPACE_DEFAULT];
         }
 
         $messageOutput = '';
