@@ -20,23 +20,23 @@ class FlashMessenger extends ZendFlashMessenger
     {
         $this->classOptions = [
             PluginFlashMessenger::NAMESPACE_INFO => [
-                'name' => $this->getTranslator()->translate('Information'),
+                'name' => 'Information',
                 'class' => 'alert alert-info',
             ],
             PluginFlashMessenger::NAMESPACE_ERROR => [
-                'name' => $this->getTranslator()->translate('Error'),
+                'name' => 'Error',
                 'class' => 'alert alert-danger',
             ],
             PluginFlashMessenger::NAMESPACE_SUCCESS => [
-                'name' => $this->getTranslator()->translate('Success'),
+                'name' => 'Success',
                 'class' => 'alert alert-success',
             ],
             PluginFlashMessenger::NAMESPACE_DEFAULT => [
-                'name' => $this->getTranslator()->translate('Message'),
+                'name' => 'Message',
                 'class' => 'alert alert-info',
             ],
             PluginFlashMessenger::NAMESPACE_WARNING => [
-                'name' => $this->getTranslator()->translate('Warning'),
+                'name' => 'Warning',
                 'class' => 'alert alert-warning',
             ],
         ];
@@ -47,10 +47,11 @@ class FlashMessenger extends ZendFlashMessenger
         }
 
         $messageOutput = '';
+        $translator = $this->getTranslator();
 
         foreach ($this->classOptions as $currentNamespace => $options) {
             $this->classMessages[$currentNamespace] = $options['class'];
-            $openingString = sprintf('<div%%s><span class="sr-only">%s</span>', $options['name']);
+            $openingString = sprintf('<div%%s><span class="sr-only">%s</span>', $translator->translate($options['name']));
 
             $this->setMessageOpenFormat($openingString);
             $this->setMessageSeparatorString(sprintf('</div>%s', $openingString));
