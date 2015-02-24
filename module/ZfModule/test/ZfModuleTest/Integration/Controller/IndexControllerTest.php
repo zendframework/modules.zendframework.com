@@ -120,15 +120,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         ;
 
         $moduleService
-            ->expects($this->any())
+            ->expects($this->never())
             ->method('isModule')
-            ->willReturnCallback(function ($repository) use ($nonModule) {
-                if ($repository !== $nonModule) {
-                    return true;
-                }
-
-                return false;
-            })
         ;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
