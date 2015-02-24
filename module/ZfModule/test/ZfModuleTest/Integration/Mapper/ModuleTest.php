@@ -94,6 +94,11 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertCount(1, $resultSet);
     }
 
+    public function testFindByReturnsNullIfNothingWasFound()
+    {
+        $this->assertNull($this->mapper->findBy('name', 'foo'));
+    }
+
     /**
      * @return array
      */
