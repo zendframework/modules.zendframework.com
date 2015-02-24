@@ -32,9 +32,9 @@ class ModuleToFeed
     }
 
     /**
-     * @param \Traversable $modules
+     * @param array $modules
      */
-    public function addModules(\Traversable $modules)
+    public function addModules(array $modules)
     {
         foreach ($modules as $module) {
             $this->addModule($module);

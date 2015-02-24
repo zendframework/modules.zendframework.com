@@ -39,7 +39,7 @@ class IndexController extends AbstractActionController
         $query =  $this->params()->fromQuery('query', null);
         $page = (int) $this->params()->fromQuery('page', 1);
 
-        $repositories = $this->getModules($page, $query);
+        $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
 
         return new ViewModel([
             'repositories' => $repositories,
@@ -61,7 +61,8 @@ class IndexController extends AbstractActionController
         $feed->setLink('http://modules.zendframework.com');
 
         // Get the recent modules
-        $modules = $this->getModules();
+        $page = 1;
+        $modules = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC');
 
         // Load them into the feed
         $mapper = new Mapper\ModuleToFeed($feed);
@@ -72,15 +73,5 @@ class IndexController extends AbstractActionController
         $feedmodel->setFeed($feed);
 
         return $feedmodel;
-    }
-
-    /**
-     * @param int $page
-     * @param string $query
-     * @return \Zend\Paginator\Paginator
-     */
-    protected function getModules($page = 1, $query = null)
-    {
-        return $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
     }
 }
