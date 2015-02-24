@@ -96,7 +96,7 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'FlashMessenger'	=> View\Helper\FlashMessenger::class,
+            'FlashMessenger' => View\Helper\FlashMessenger::class,
         ],
         'factories' => [
             'gitHubRepositoryUrl' => View\Helper\GitHubRepositoryUrlFactory::class,

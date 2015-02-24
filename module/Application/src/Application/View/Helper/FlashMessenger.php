@@ -16,28 +16,28 @@ class FlashMessenger extends ZendFlashMessenger
      * @param  array $classes
      * @return string
      */
-    public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = array())
+    public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
     {
         $this->classOptions = [
             PluginFlashMessenger::NAMESPACE_INFO => [
                 'name' => $this->getTranslator()->translate('Information'),
-                'class' => 'alert alert-info'
+                'class' => 'alert alert-info',
             ],
             PluginFlashMessenger::NAMESPACE_ERROR => [
                 'name' => $this->getTranslator()->translate('Error'),
-                'class' => 'alert alert-danger'
+                'class' => 'alert alert-danger',
             ],
             PluginFlashMessenger::NAMESPACE_SUCCESS => [
                 'name' => $this->getTranslator()->translate('Success'),
-                'class' => 'alert alert-success'
+                'class' => 'alert alert-success',
             ],
             PluginFlashMessenger::NAMESPACE_DEFAULT => [
                 'name' => $this->getTranslator()->translate('Message'),
-                'class' => 'alert alert-info'
+                'class' => 'alert alert-info',
             ],
             PluginFlashMessenger::NAMESPACE_WARNING => [
                 'name' => $this->getTranslator()->translate('Warning'),
-                'class' => 'alert alert-warning'
+                'class' => 'alert alert-warning',
             ],
         ];
 
