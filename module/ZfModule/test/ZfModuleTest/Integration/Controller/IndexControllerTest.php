@@ -116,11 +116,6 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
-        $moduleService
-            ->expects($this->never())
-            ->method('isModule')
-        ;
-
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
             ->disableOriginalConstructor()
             ->getMock()
@@ -312,11 +307,6 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService = $this->getMockBuilder(Service\Module::class)
             ->disableOriginalConstructor()
             ->getMock()
-        ;
-
-        $moduleService
-            ->expects($this->never())
-            ->method('isModule')
         ;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
