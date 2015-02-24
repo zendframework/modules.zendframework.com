@@ -19,7 +19,7 @@
 
     <target hidden="true" name="owner-change">
         <echo message="Changing owner" />
-        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'sudo chown -R www-data:www-data ${project.root}'" />
+        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'sudo chown -R www-data:www-data ${project.root}/data'" />
     </target>
 
     <target name="deploy" description="Deploys application to production" depends="git-pull, composer-install, owner-change">
