@@ -10,7 +10,7 @@ namespace ZfModule\Mapper;
 
 use Zend\Feed\Writer\Entry;
 use Zend\Feed\Writer\Feed;
-use Zend\Mvc\Controller\Plugin\Url;
+use Zend\Mvc\Controller\Plugin\Url as UrlPlugin;
 use ZfModule\Entity\Module as ModuleEntity;
 
 /**
@@ -26,17 +26,17 @@ class ModuleToFeed
     protected $feed;
 
     /**
-     * @var Url
+     * @var UrlPlugin
      */
-    protected $url;
+    protected $urlPlugin;
 
     /**
      * @param Feed $feed
      */
-    public function __construct(Feed $feed, Url $url)
+    public function __construct(Feed $feed, UrlPlugin $urlPlugin)
     {
         $this->feed = $feed;
-        $this->url = $url;
+        $this->urlPlugin = $urlPlugin;
     }
 
     /**
@@ -62,14 +62,16 @@ class ModuleToFeed
         }
         $moduleName = $module->getName();
         $urlParams = ['vendor' => $module->getOwner(), 'module' => $moduleName];
+        $id = implode('/', $urlParams);
 
         $entry = $this->feed->createEntry();
+
+        $entry->setId($id);
         $entry->setTitle($moduleName);
         $entry->setDescription($moduleDescription);
-        $entry->setLink($this->url->fromRoute('view-module', $urlParams, ['force_canonical' => true]));
+        $entry->setLink($this->urlPlugin->fromRoute('view-module', $urlParams, ['force_canonical' => true]));
         $entry->addAuthor(['name' => $module->getOwner()]);
         $entry->setDateCreated($module->getCreatedAtDateTime());
-        $entry->setId(implode('/', $urlParams));
 
         $this->feed->addEntry($entry);
 
