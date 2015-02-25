@@ -10,7 +10,7 @@
             <div class="media-body">
                 <h4 class="media-heading">
                     <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]); ?>">
-                        <?php echo $this->escapeHtml($module->getOwner()); ?>/<?php echo $this->escapeHtml($module->getName()); ?>
+                        <?php echo $this->escapeHtml($module->getIdentifier()); ?>
                     </a>
                 </h4>
                 <?php echo $this->escapeHtml($module->getDescription()) ?>
