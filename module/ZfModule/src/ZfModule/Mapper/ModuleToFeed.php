@@ -55,18 +55,18 @@ class ModuleToFeed
      */
     public function addModule(ModuleEntity $module)
     {
-        if (empty($module->getDescription())) {
+        $moduleDescription = $module->getDescription();
+
+        if (empty($moduleDescription)) {
             $moduleDescription = 'No description available';
-        } else {
-            $moduleDescription = $module->getDescription();
         }
+
         $moduleName = $module->getName();
         $urlParams = ['vendor' => $module->getOwner(), 'module' => $moduleName];
-        $id = implode('/', $urlParams);
 
         $entry = $this->feed->createEntry();
 
-        $entry->setId($id);
+        $entry->setId($module->getIdentifier());
         $entry->setTitle($moduleName);
         $entry->setDescription($moduleDescription);
         $entry->setLink($this->urlPlugin->fromRoute('view-module', $urlParams, ['force_canonical' => true]));

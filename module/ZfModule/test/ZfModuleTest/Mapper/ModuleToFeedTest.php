@@ -10,7 +10,7 @@ class ModuleToFeedTest extends \PHPUnit_Framework_TestCase
 
         $module = $this->getMockBuilder(\ZfModule\Entity\Module::class)->getMock();
         $module->expects($this->once())->method('getName')->willReturn('name');
-        $module->expects($this->exactly(2))->method('getDescription')->willReturn('description');
+        $module->expects($this->once())->method('getDescription')->willReturn('description');
         $module->expects($this->once())->method('getCreatedAtDateTime')->willReturn($dateTime);
 
         $entry = $this->getMockBuilder(\Zend\Feed\Writer\Entry::class)->disableOriginalConstructor()->getMock();

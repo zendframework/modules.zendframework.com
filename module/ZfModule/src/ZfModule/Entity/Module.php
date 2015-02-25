@@ -181,4 +181,19 @@ class Module implements ModuleInterface
     {
         $this->name = $name;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getIdentifier()
+    {
+        $owner = $this->getOwner();
+        $name = $this->getName();
+
+        if (empty($owner) || empty($name)) {
+            return;
+        }
+
+        return sprintf('%s/%s', $owner, $name);
+    }
 }
