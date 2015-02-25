@@ -45,7 +45,7 @@
             <h3 style="text-align:center">Hello, <?php echo $this->zfcUserDisplayName(); ?>!</h3>
             <?php /* @var User\Entity\User $identity */ ?>
             <?php $identity = $this->zfcUserIdentity(); ?>
-            <img class="thumbnail" src="<?php echo $identity->getPhotoUrl(); ?>" alt="<?php echo $this->zfcUserDisplayName() ?>"/>
+            <img class="thumbnail img-responsive" src="<?php echo $identity->getPhotoUrl(); ?>" alt="<?php echo $this->zfcUserDisplayName() ?>"/>
             <br/>
         </div>
     </div>
