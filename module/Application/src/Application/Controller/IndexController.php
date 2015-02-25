@@ -53,19 +53,20 @@ class IndexController extends AbstractActionController
      */
     public function feedAction()
     {
+        $url = $this->plugin('url');
         // Prepare the feed
         $feed = new Feed();
         $feed->setTitle('ZF2 Modules');
         $feed->setDescription('Recently added ZF2 modules');
-        $feed->setFeedLink('http://modules.zendframework.com/feed', 'atom');
-        $feed->setLink('http://modules.zendframework.com');
+        $feed->setFeedLink($url->fromRoute('feed', [], ['force_canonical' => true]), 'atom');
+        $feed->setLink($url->fromRoute('home', [], ['force_canonical' => true]));
 
         // Get the recent modules
         $page = 1;
-        $modules = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC');
+        $modules = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC')->getCurrentItems();
 
         // Load them into the feed
-        $mapper = new Mapper\ModuleToFeed($feed);
+        $mapper = new Mapper\ModuleToFeed($feed, $url);
         $mapper->addModules($modules);
 
         // Render the feed
