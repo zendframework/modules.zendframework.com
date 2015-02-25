@@ -1,0 +1,34 @@
+<?php $this->layout()->withLargeHeader = true; ?>
+
+<div class="col-xs-12 col-md-8">
+    <?php if (count($this->modules) >= 1): ?>
+        <?php foreach ($this->modules as $module): ?>
+            <?php /* @var ZfModule\Entity\Module $module */ ?>
+            <div class="module-row">
+                <div class="module-info">
+                    <div class="row">
+                        <div class="hidden-xs col-sm-2">
+                            <img src="<?php echo $this->escapeHtmlAttr($module->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($module->getOwner()) ?>" class="thumbnail img-responsive">
+                        </div>
+                        <div class="col-xs-7 col-sm-6">
+                            <p>
+                                <a href="<?php echo $this->url('view-module', ['vendor' => $this->escapeUrl($module->getOwner()), 'module' => $this->escapeUrl($module->getName())]) ?>">
+                                    <strong><?php echo $this->escapeHtml($module->getOwner()); ?>/<?php echo $this->escapeHtml($module->getName()); ?></strong>
+                                </a>
+                            </p>
+                            <p><span class="zf-green">Created:</span> <?php echo $this->dateFormat($module->getCreatedAtDateTime(), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT); ?></p>
+                        </div>
+                        <div class="col-xs-4">
+                            <a target="_blank" href="<?php echo $this->escapeHtmlAttr($module->getUrl()) ?>">Show module on GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="module-description">
+                    <p><?php echo $this->escapeHtml($module->getDescription()) ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <?php echo $this->paginationControl($this->modules, 'Sliding', 'application/index/pagination', ['query' => $this->query]) ?>
+    <?php endif; ?>
+</div>
+

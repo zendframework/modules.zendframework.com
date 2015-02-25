@@ -25,6 +25,19 @@ return [
                     ],
                 ],
             ],
+            'modules-for-user' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => '/u/:owner',
+                    'constrains' => [
+                        'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'modulesForUser',
+                    ],
+                ],
+            ],
             'zf-module'   => [
                 'type'          => 'Segment',
                 'options'       => [

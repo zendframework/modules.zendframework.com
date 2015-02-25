@@ -10,7 +10,7 @@
                     <div class="col-md-12">
             <?php endif; ?>
                         <div class="col-md-3">
-                            <a href="https://github.com/<?php echo $this->escapeHtmlAttr($user->getUserName()); ?>" data-delay="0" rel="tooltip" title="<?php echo $this->escapeHtmlAttr($user->getUserName()); ?>" class="thumbnail">
+                            <a href="<?php echo $this->url("modules-for-user", ["owner" => $user->getUserName()]); ?>" data-delay="0" rel="tooltip" title="<?php echo $this->escapeHtmlAttr($user->getUserName()); ?>" class="thumbnail">
                                 <img src="<?php echo $this->escapeHtmlAttr($user->getPhotoUrl()) ?>" alt="<?php echo $this->escapeHtmlAttr($user->getUsername()) ?>" class="img-responsive">
                             </a>
                         </div>
