@@ -46,7 +46,15 @@
 </div>
 <div class="hidden-xs hidden-sm col-md-4">
     <div class="sidebar">
-        <?php echo $this->newModule() ?>
-        <?php echo $this->newUsers() ?>
+        <div class="block">
+            <h4><strong>Hosting by</strong></h4>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <a target="_blank" href="https://roave.com"><img class="img-responsive" src="/img/roave-logo-tiny.svg"></a>
+                </div>
+            </div>
+        </div>
+        <?php echo $this->newUsers(); ?>
     </div>
 </div>

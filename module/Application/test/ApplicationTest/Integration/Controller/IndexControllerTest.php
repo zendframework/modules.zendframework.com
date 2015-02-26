@@ -42,17 +42,6 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ->willReturn(0)
         ;
 
-        $moduleMapper
-            ->expects($this->once())
-            ->method('findAll')
-            ->with(
-                $this->equalTo(10),
-                $this->equalTo('created_at'),
-                $this->equalTo('DESC')
-            )
-            ->willReturn([])
-        ;
-
         $userMapper = $this->getMockBuilder(User::class)->getMock();
 
         $userMapper
