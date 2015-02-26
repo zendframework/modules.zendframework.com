@@ -63,7 +63,7 @@ class IndexController extends AbstractActionController
 
         // Get the recent modules
         $page = 1;
-        $modules = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC')->getCurrentItems();
+        $modules = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC');
 
         // Load them into the feed
         $mapper = new Mapper\ModuleToFeed($feed, $url);
