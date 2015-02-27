@@ -151,37 +151,6 @@ div.container a.brand {
     padding-top:60px;
 }
 
-.error-404 {
-    width: 500px;
-    height: 617px;
-    padding-left: 450px;
-
-    background: url(../img/mwop-404.png) no-repeat;
-}
-
-.error-404-speech-bubble {
-    position: relative;
-    display: inline-block;
-    padding: 15px;
-    margin-top: 150px;
-
-    border: 3px solid #000000;
-    border-radius: 7px;
-}
-
-.error-404-speech-bubble:before {
-    position: absolute;
-    content: '';
-
-    left: -69px;
-    top: 50px;
-
-    width: 69px;
-    height: 40px;
-
-    background: url(../img/speech-bubble-arrow.png) no-repeat;
-}
-
 /* Revisited Styles */
 
 .fork-me-ribbon a {
