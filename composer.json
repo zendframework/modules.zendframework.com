@@ -23,10 +23,10 @@
         "zendframework/zftool": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "Application": "module/Application/src/",
-            "User": "module/User/src/",
-            "ZfModule": "module/ZfModule/src/"
+        "psr-4": {
+            "Application\\": "module/Application/src/Application",
+            "User\\": "module/User/src/User",
+            "ZfModule\\": "module/ZfModule/src/ZfModule"
         },
         "classmap": [
             "vendor/hybridauth/hybridauth/hybridauth/Hybrid",
@@ -34,10 +34,10 @@
         ]
     },
     "autoload-dev": {
-        "psr-0": {
-            "ApplicationTest": "module/Application/test/",
-            "UserTest": "module/User/test/",
-            "ZfModuleTest": "module/ZfModule/test/"
+        "psr-4": {
+            "ApplicationTest\\": "module/Application/test/ApplicationTest",
+            "UserTest\\": "module/User/test/UserTest",
+            "ZfModuleTest\\": "module/ZfModule/test/ZfModuleTest"
         }
     }
 }
