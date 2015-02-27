@@ -5,7 +5,7 @@
     "homepage": "https://modules.zendframework.com",
     "require": {
         "bshaffer/oauth2-server-php": "dev-develop",
-        "evandotpro/edp-github": "0.2",
+        "evandotpro/edp-github": "0.2.*",
         "ext-intl": "*",
         "ezyang/htmlpurifier": "4.6.*",
         "monolog/monolog": "~1.12",
