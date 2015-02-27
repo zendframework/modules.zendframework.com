@@ -5,6 +5,7 @@ namespace ZfModuleTest\Integration\Mapper;
 use ApplicationTest\Integration\Util\Bootstrap;
 use PHPUnit_Framework_TestCase;
 use Zend\Db;
+use Zend\Db\Adapter\Exception\RuntimeException as DbRuntimeException;
 use ZfModule\Entity;
 use ZfModule\Mapper;
 
@@ -29,10 +30,17 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $this->mapper = $serviceManager->get(Mapper\Module::class);
 
-        /* @var Db\Adapter\Adapter $database */
+        /* @var  $database Db\Adapter\Adapter */
         $database = $serviceManager->get('zfcuser_zend_db_adapter');
 
         $this->connection = $database->getDriver()->getConnection();
+
+        try {
+            $this->connection->connect();
+        } catch (DbRuntimeException $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
+
         $this->connection->beginTransaction();
     }
 

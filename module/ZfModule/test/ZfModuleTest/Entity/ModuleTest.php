@@ -29,6 +29,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(new DateTime(), $this->module->getCreatedAtDateTime());
         $this->assertNull($this->module->getCreatedAt());
         $this->assertNull($this->module->getUpdatedAt());
+        $this->assertNull($this->module->getIdentifier());
     }
 
     public function testSetOwner()
@@ -102,5 +103,27 @@ class ModuleTest extends PHPUnit_Framework_TestCase
         $this->module->setPhotoUrl($photoUrl);
 
         $this->assertSame($photoUrl, $this->module->getPhotoUrl());
+    }
+
+    public function testGetIdentifier()
+    {
+        $this->module->setOwner('owner');
+        $this->module->setName('name');
+
+        $this->assertEquals('owner/name', $this->module->getIdentifier());
+    }
+
+    public function testGetNullIdentifierOnlyOwner()
+    {
+        $this->module->setOwner('owner');
+
+        $this->assertNull($this->module->getIdentifier());
+    }
+
+    public function testGetNullIdentifierOnlyName()
+    {
+        $this->module->setName('name');
+
+        $this->assertNull($this->module->getIdentifier());
     }
 }

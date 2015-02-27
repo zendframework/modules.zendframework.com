@@ -11,6 +11,7 @@ namespace Application\Controller;
 use Zend\Feed\Writer\Feed;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\FeedModel;
+use Zend\View\Model\ViewModel;
 use ZfModule\Mapper;
 
 class IndexController extends AbstractActionController
@@ -30,6 +31,9 @@ class IndexController extends AbstractActionController
         $this->moduleMapper = $moduleMapper;
     }
 
+    /**
+     * @return ViewModel
+     */
     public function indexAction()
     {
         $query =  $this->params()->fromQuery('query', null);
@@ -37,10 +41,10 @@ class IndexController extends AbstractActionController
 
         $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, $query, 'created_at', 'DESC');
 
-        return [
+        return new ViewModel([
             'repositories' => $repositories,
             'query' => $query,
-        ];
+        ]);
     }
 
     /**
@@ -49,35 +53,21 @@ class IndexController extends AbstractActionController
      */
     public function feedAction()
     {
+        $url = $this->plugin('url');
         // Prepare the feed
         $feed = new Feed();
         $feed->setTitle('ZF2 Modules');
-        $feed->setDescription('Recently added modules.');
-        $feed->setFeedLink('http://modules.zendframework.com/feed', 'atom');
-        $feed->setLink('http://modules.zendframework.com');
+        $feed->setDescription('Recently added ZF2 modules');
+        $feed->setFeedLink($url->fromRoute('feed', [], ['force_canonical' => true]), 'atom');
+        $feed->setLink($url->fromRoute('home', [], ['force_canonical' => true]));
 
         // Get the recent modules
         $page = 1;
-
-        $repositories = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC');
+        $modules = $this->moduleMapper->pagination($page, self::MODULES_PER_PAGE, null, 'created_at', 'DESC');
 
         // Load them into the feed
-        foreach ($repositories as $module) {
-            $entry = $feed->createEntry();
-            $entry->setTitle($module->getName());
-
-            if ($module->getDescription() == '') {
-                $moduleDescription = "No Description available";
-            } else {
-                $moduleDescription = $module->getDescription();
-            }
-
-            $entry->setDescription($moduleDescription);
-            $entry->setLink($module->getUrl());
-            $entry->setDateCreated(strtotime($module->getCreatedAt()));
-
-            $feed->addEntry($entry);
-        }
+        $mapper = new Mapper\ModuleToFeed($feed, $url);
+        $mapper->addModules($modules);
 
         // Render the feed
         $feedmodel = new FeedModel();
