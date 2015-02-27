@@ -4,56 +4,8 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "25a712afc63c36ba38ee52679332966d",
+    "hash": "c7a6e03f7ee9c6bc1efb738584d7bfc7",
     "packages": [
-        {
-            "name": "bshaffer/oauth2-server-php",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bshaffer/oauth2-server-php.git",
-                "reference": "e3d1d244a95fd697cce5fca93b0c75b76475b005"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bshaffer/oauth2-server-php/zipball/e3d1d244a95fd697cce5fca93b0c75b76475b005",
-                "reference": "e3d1d244a95fd697cce5fca93b0c75b76475b005",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "suggest": {
-                "aws/aws-sdk-php": "Required to use the DynamoDB storage engine",
-                "predis/predis": "Required to use the Redis storage engine",
-                "thobbs/phpcassa": "Required to use the Cassandra storage engine"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "OAuth2": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brent Shaffer",
-                    "email": "bshafs@gmail.com",
-                    "homepage": "http://brentertainment.com"
-                }
-            ],
-            "description": "OAuth2 Server for PHP",
-            "homepage": "http://github.com/bshaffer/oauth2-server-php",
-            "keywords": [
-                "auth",
-                "oauth",
-                "oauth2"
-            ],
-            "time": "2015-02-09 07:09:11"
-        },
         {
             "name": "evandotpro/edp-github",
             "version": "0.2.0",
@@ -1939,7 +1891,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "bshaffer/oauth2-server-php": 20,
         "zendframework/zend-developer-tools": 20,
         "zendframework/zftool": 20
     },
