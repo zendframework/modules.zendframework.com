@@ -104,13 +104,6 @@ return [
             ],
         ],
     ],
-    'asset_manager' => [
-        'resolver_configs' => [
-            'paths' => [
-                __DIR__ . '/../public',
-            ],
-        ],
-    ],
     'view_manager' => [
         'display_not_found_reason' => false,
         'display_exceptions'       => false,
