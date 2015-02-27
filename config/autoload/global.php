@@ -1,15 +1,5 @@
 <?php
 return [
-    'asset_manager' => [
-        'caching' => [
-            'default' => [
-                'cache'     => 'FilePath',  // Apc, FilePath, FileSystem etc.
-                'options' => [
-                    'dir' => 'public',
-                ],
-            ],
-        ],
-    ],
     'service_manager' => [
         'factories' => [
             'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',

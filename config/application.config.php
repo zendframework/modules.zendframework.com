@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 return [
     'modules' => [
         'ZF\DevelopmentMode',
-        'AssetManager',
         'ZfcBase',
         'ZfcUser',
         'ScnSocialAuth',

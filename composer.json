@@ -10,7 +10,6 @@
         "ezyang/htmlpurifier": "4.6.*",
         "monolog/monolog": "~1.12",
         "php": "~5.5",
-        "rwoverdijk/assetmanager": "1.3.*",
         "socalnick/scn-social-auth": "1.14.1",
         "zendframework/zendframework": "~2.3.0",
         "zf-commons/zfc-user": "1.0.*",
