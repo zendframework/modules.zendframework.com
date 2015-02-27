@@ -4,7 +4,6 @@
     "license": "BSD-3-Clause",
     "homepage": "https://modules.zendframework.com",
     "require": {
-        "bshaffer/oauth2-server-php": "dev-develop",
         "evandotpro/edp-github": "0.2.*",
         "ext-intl": "*",
         "ezyang/htmlpurifier": "4.6.*",
