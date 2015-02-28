@@ -8,6 +8,7 @@
         "ext-intl": "*",
         "ezyang/htmlpurifier": "4.6.*",
         "monolog/monolog": "~1.12",
+        "phing/phing": "~2.10",
         "php": "~5.5",
         "socalnick/scn-social-auth": "1.14.1",
         "zendframework/zendframework": "~2.3.0",

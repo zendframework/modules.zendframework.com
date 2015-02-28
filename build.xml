@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="modules.zendframework.com" default="main">
+
+    <property file="build.properties" />
+
+    <target hidden="true" name="main">
+        <echo message="Choose your task, please - use 'vendor/bin/phing -l' to see a list of available tasks" />
+    </target>
+
+    <target hidden="true" name="git-pull">
+        <echo message="Pull changes from origin" />
+        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'cd ${project.root}; git pull origin master'" />
+    </target>
+
+    <target hidden="true" name="composer-install">
+        <echo message="Install dependencies with Composer" />
+        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'cd ${project.root}; sudo composer install --no-dev'" />
+    </target>
+
+    <target hidden="true" name="owner-change">
+        <echo message="Changing owner" />
+        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'sudo chown -R www-data:www-data ${project.root}/data'" />
+    </target>
+
+    <target name="deploy" description="Deploys application to production" depends="git-pull, composer-install, owner-change">
+        <echo message="Successfully deployed to production" />
+    </target>
+</project>

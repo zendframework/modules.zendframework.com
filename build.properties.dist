@@ -1,0 +1,5 @@
+ssh.user =
+ssh.host =
+ssh.port =
+
+project.root =
