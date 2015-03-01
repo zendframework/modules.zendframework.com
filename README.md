@@ -43,3 +43,6 @@ To enable development mode:
 ## Deployment
 
 The master branch of this repository is manually deployed live to [modules.zendframework.com](http://modules.zendframework.com/) by [@GeeH](https://github.com/GeeH).
+
+:bulb: After deployment, a tag is created, so the latest of the [releases](https://github.com/zendframework/modules.zendframework.com/releases)
+represents what is deployed to production.
