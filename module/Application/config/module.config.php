@@ -87,21 +87,10 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
             \HTMLPurifier::class => Service\HtmlPurifierFactory::class,
             Log\LoggerInterface::class => Service\LoggerFactory::class,
             Service\ErrorHandlingService::class => Service\ErrorHandlingServiceFactory::class,
             Service\RepositoryRetriever::class => Service\RepositoryRetrieverFactory::class,
-        ],
-    ],
-    'translator' => [
-        'locale' => 'en_US',
-        'translation_patterns' => [
-            [
-                'type'     => 'gettext',
-                'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo',
-            ],
         ],
     ],
     'view_manager' => [
