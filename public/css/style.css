@@ -1,5 +1,5 @@
 body {
-    padding-top: 70px;
+    padding-top: 71px;
     padding-bottom: 40px;
     background: url('../img/light_wool.png') repeat;
 }
@@ -45,8 +45,9 @@ div.container a.brand {
     padding: 5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-top: -20px;
-    padding-top: 75px;
 }
+
+.landing-intro
 
 .attentionimage {
     height: 238px;
@@ -144,18 +145,14 @@ div.container a.brand {
 .small-header p {
     font-size:3em;
     font-style:italic;
-    margin-top:20px;
-}
-
-.small-header {
-    padding-top:60px;
+    margin:0;
 }
 
 /* Revisited Styles */
 
 .fork-me-ribbon a {
     position: absolute;
-    top: 50px;
+    top: 51px;
     right: 0;
     border: 0;
     width: 149px;
