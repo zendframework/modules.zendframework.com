@@ -6,11 +6,6 @@ use Application\Service\RepositoryRetriever;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-/**
- * ContributorsControllerFactory
- *
- * @author Witold Wasiczko <witold@wasiczko.pl>
- */
 class ContributorsControllerFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)

@@ -4,11 +4,6 @@ namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
-/**
- * GitHubRepositoryUrl
- *
- * @author Witold Wasiczko <witold@wasiczko.pl>
- */
 class GitHubRepositoryUrl extends AbstractHelper
 {
     /**

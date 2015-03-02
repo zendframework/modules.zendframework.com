@@ -5,11 +5,6 @@ namespace Application\View\Helper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-/**
- * GitHubRepositoryUrlFactory
- *
- * @author Witold Wasiczko <witold@wasiczko.pl>
- */
 class GitHubRepositoryUrlFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)

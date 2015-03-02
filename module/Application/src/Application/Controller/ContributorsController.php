@@ -6,11 +6,6 @@ use Application\Service\RepositoryRetriever;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-/**
- * ContributorsController
- *
- * @author Witold Wasiczko <witold@wasiczko.pl>
- */
 class ContributorsController extends AbstractActionController
 {
     const LIST_LIMIT = 36;
