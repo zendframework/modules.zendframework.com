@@ -37,7 +37,10 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="<?php echo $this->url('home'); ?>" title="Home">Home</a>
+                            <a href="<?php echo $this->url('home'); ?>">Home</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url('contributors'); ?>">Contibutors</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -82,7 +85,7 @@
                         <div>
                             <p>
                                 If you are interested in helping with this project, simply fork the code on
-                                <a class="zf-green" href="https://github.com/zendframework/modules.zendframework.com" target="_blank">GitHub</a>
+                                <a class="zf-green" href="<?php echo $this->escapeHtmlAttr($this->githubRepositoryUrl()); ?>" target="_blank">GitHub</a>
                                 and get started!
                             </p>
                             <p>

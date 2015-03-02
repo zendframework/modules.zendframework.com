@@ -54,6 +54,26 @@ class RepositoryRetriever
     }
 
     /**
+     * Get repository contributors list
+     *
+     * @param string $owner
+     * @param string $repo
+     * @return array
+     */
+    public function getContributors($owner, $repo, $limit = 20)
+    {
+        try {
+            $contributors = $this->githubClient->api('repos')->contributors($owner, $repo);
+            $data = json_decode($contributors, true);
+            $data = array_reverse($data);
+
+            return array_slice($data, 0, $limit);
+        } catch (RuntimeException $e) {
+            return false;
+        }
+    }
+
+    /**
      * Get File Content from User Repository
      *
      * @param string $user
