@@ -9,7 +9,7 @@
 
     <target hidden="true" name="git-pull">
         <echo message="Pull changes from origin" />
-        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'cd ${project.root}; git pull origin master'" />
+        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'cd ${project.root}; git pull origin master ${tag}'" />
     </target>
 
     <target hidden="true" name="composer-install">
