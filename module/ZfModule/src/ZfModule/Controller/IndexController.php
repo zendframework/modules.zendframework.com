@@ -89,6 +89,7 @@ class IndexController extends AbstractActionController
             'modules' => $modules,
             'query' => $query,
          ]);
+
         return $viewModel;
     }
 
