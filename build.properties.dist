@@ -3,3 +3,5 @@ ssh.host =
 ssh.port =
 
 project.root =
+
+tag =
