@@ -16,5 +16,4 @@ class ContributorsControllerFactory implements FactoryInterface
 
         return new ContributorsController($repositoryRetriever, $repositoryData);
     }
-
 }

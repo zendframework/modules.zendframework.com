@@ -39,6 +39,7 @@ class GitHubRepositoryUrl extends AbstractHelper
         if ($this->url === null) {
             $this->url = sprintf('https://github.com/%s/%s', $this->owner, $this->name);
         }
+
         return $this->url;
     }
 }

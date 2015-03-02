@@ -14,5 +14,4 @@ class GitHubRepositoryUrlFactory implements FactoryInterface
 
         return new GitHubRepositoryUrl($config['owner'], $config['name']);
     }
-
 }
