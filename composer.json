@@ -2,7 +2,7 @@
     "name": "zendframework/modules-site",
     "description": "ZF2 Modules Site",
     "license": "BSD-3-Clause",
-    "homepage": "https://modules.zendframework.com",
+    "homepage": "https://zfmodules.com",
     "require": {
         "evandotpro/edp-github": "0.2.*",
         "ext-intl": "*",
