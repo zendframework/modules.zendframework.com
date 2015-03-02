@@ -11,6 +11,7 @@ return [
     'controllers'  => [
         'factories' => [
             Controller\IndexController::class => Controller\IndexControllerFactory::class,
+            Controller\UserController::class => Controller\UserControllerFactory::class,
         ],
     ],
     'router'       => [
@@ -33,7 +34,7 @@ return [
                         'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\UserController::class,
                         'action'     => 'modulesForUser',
                     ],
                 ],

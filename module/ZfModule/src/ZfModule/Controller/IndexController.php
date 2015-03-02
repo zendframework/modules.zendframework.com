@@ -77,22 +77,6 @@ class IndexController extends AbstractActionController
         ]);
     }
 
-    public function modulesForUserAction()
-    {
-        $query =  $this->params()->fromQuery('query', null);
-        $page = (int) $this->params()->fromQuery('page', 1);
-        $owner = $this->params()->fromRoute('owner');
-
-        $modules = $this->moduleMapper->pagination($page, 10, $owner, 'created_at', "DESC");
-
-        $viewModel = new ViewModel([
-            'modules' => $modules,
-            'query' => $query,
-         ]);
-
-        return $viewModel;
-    }
-
     public function indexAction()
     {
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
