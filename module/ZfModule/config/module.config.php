@@ -28,7 +28,7 @@ return [
             'modules-for-user' => [
                 'type'    => 'Segment',
                 'options' => [
-                    'route'    => '/u/:owner',
+                    'route'    => '/user/:owner',
                     'constrains' => [
                         'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
