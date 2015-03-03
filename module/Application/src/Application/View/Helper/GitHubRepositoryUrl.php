@@ -36,7 +36,7 @@ class GitHubRepositoryUrl extends AbstractHelper
      */
     public function __invoke()
     {
-        if ($this->url === null) {
+        if (null === $this->url) {
             $this->url = sprintf('https://github.com/%s/%s', $this->owner, $this->name);
         }
 
