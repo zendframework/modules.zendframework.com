@@ -12,8 +12,12 @@
             <a href="<?php echo $this->escapeHtmlAttr($this->githubRepositoryUrl()); ?>" target="_blank">Join us!</a>
         </p>
         <?php foreach ($this->contributors as $contributor): ?>
-            <a href="<?php echo $this->escapeHtmlAttr($contributor['author']['html_url']); ?>" class="thumbnail col-md-1" target="_blank">
-                <img src="<?php echo $this->escapeHtmlAttr($contributor['author']['avatar_url']); ?>" alt="<?php echo $this->escapeHtmlAttr($contributor['author']['login']); ?>" title="<?php echo $this->escapeHtmlAttr(sprintf('%s with %d contributions', $contributor['author']['login'], $contributor['total'])) ?>" width="80px" height="80px">
+            <?php $url = $contributor['author']['html_url']; ?>
+            <a href="<?php echo $this->escapeHtmlAttr($url); ?>" class="thumbnail col-md-1" target="_blank">
+                <?php $src = $contributor['author']['avatar_url']; ?>
+                <?php $alt = $contributor['author']['login']; ?>
+                <?php $title = sprintf('%s with %d contributions', $alt, $contributor['total']); ?>
+                <img src="<?php echo $this->escapeHtmlAttr($src); ?>" alt="<?php echo $this->escapeHtmlAttr($alt); ?>" title="<?php echo $this->escapeHtmlAttr($title) ?>" width="80px" height="80px">
             </a>
         <?php endforeach; ?>
     </div>
