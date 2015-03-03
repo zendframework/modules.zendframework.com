@@ -8,7 +8,7 @@
             We have <strong><?php echo $this->escapeHtml($this->metadata->forks_count); ?> forks</strong>,
             <strong><?php echo $this->escapeHtml($this->metadata->stargazers_count); ?> stargazers</strong>,
             <strong><?php echo $this->escapeHtml($this->metadata->watchers_count); ?> watchers</strong> and
-            <strong>awesome contributors</strong> who make a better this site.
+            <strong>awesome contributors</strong> who make this site better.
             <a href="<?php echo $this->escapeHtmlAttr($this->githubRepositoryUrl()); ?>">Join us!</a>
         </p>
         <?php foreach ($this->contributors as $contributor): ?>
