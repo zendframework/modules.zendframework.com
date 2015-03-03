@@ -3,15 +3,19 @@
 namespace ApplicationTest\Service;
 
 use Application\Service\RepositoryRetriever;
+use ApplicationTest\Util\FakerTrait;
 use EdpGithub;
 use EdpGithub\Api;
 use EdpGithub\Client;
 use EdpGithub\Collection;
 use EdpGithub\Listener\Exception;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 {
+    use FakerTrait;
+
     public function testCanRetrieveUserRepositories()
     {
         $payload = [
@@ -232,6 +236,8 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
+        $response = json_encode($this->contributors(5));
+
         $repositoryApi
             ->expects($this->once())
             ->method('contributors')
@@ -239,7 +245,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
                 $this->equalTo($owner),
                 $this->equalTo($name)
             )
-            ->willReturn(json_encode([]))
+            ->willReturn($response)
         ;
 
         $client = $this->getMockBuilder(Client::class)
@@ -310,5 +316,36 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         ;
 
         return $client;
+    }
+
+    /**
+     * @link https://developer.github.com/v3/repos/#response-5
+     *
+     * @return stdClass
+     */
+    private function contributor()
+    {
+        $contributor = new stdClass();
+
+        $contributor->login = $this->faker()->unique()->userName;
+        $contributor->avatar_url = $this->faker()->unique()->url;
+        $contributor->html_url = $this->faker()->unique()->url;
+
+        return $contributor;
+    }
+
+    /**
+     * @param int $count
+     * @return stdClass[]
+     */
+    private function contributors($count)
+    {
+        $contributors = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            array_push($contributors, $this->contributor());
+        }
+
+        return $contributors;
     }
 }
