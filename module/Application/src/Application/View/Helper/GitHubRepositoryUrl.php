@@ -27,8 +27,8 @@ class GitHubRepositoryUrl extends AbstractHelper
      */
     public function __construct($owner, $name)
     {
-        $this->owner = $owner;
-        $this->name = $name;
+        $this->owner = (string) $owner;
+        $this->name = (string) $name;
     }
 
     /**
