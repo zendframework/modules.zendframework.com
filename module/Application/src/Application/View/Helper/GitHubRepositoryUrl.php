@@ -9,17 +9,17 @@ class GitHubRepositoryUrl extends AbstractHelper
     /**
      * @var string
      */
-    protected $owner;
+    private $owner;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      */
-    protected $url;
+    private $url;
 
     /**
      * @param string $owner
@@ -27,8 +27,8 @@ class GitHubRepositoryUrl extends AbstractHelper
      */
     public function __construct($owner, $name)
     {
-        $this->owner = $owner;
-        $this->name = $name;
+        $this->owner = (string) $owner;
+        $this->name = (string) $name;
     }
 
     /**
@@ -36,8 +36,12 @@ class GitHubRepositoryUrl extends AbstractHelper
      */
     public function __invoke()
     {
-        if ($this->url === null) {
-            $this->url = sprintf('https://github.com/%s/%s', $this->owner, $this->name);
+        if (null === $this->url) {
+            $this->url = sprintf(
+                'https://github.com/%s/%s',
+                $this->owner,
+                $this->name
+            );
         }
 
         return $this->url;
