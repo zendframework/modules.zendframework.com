@@ -9,7 +9,7 @@
             <strong><?php echo $this->escapeHtml($this->metadata->stargazers_count); ?> stargazers</strong>,
             <strong><?php echo $this->escapeHtml($this->metadata->watchers_count); ?> watchers</strong> and
             <strong>awesome contributors</strong> who make this site better.
-            <a href="<?php echo $this->escapeHtmlAttr($this->githubRepositoryUrl()); ?>" target="_blank">Join us!</a>
+            <a href="<?php echo $this->escapeHtmlAttr($this->gitHubRepositoryUrl()); ?>" target="_blank">Join us!</a>
         </p>
         <?php foreach ($this->contributors as $contributor): ?>
             <?php $url = $contributor['author']['html_url']; ?>

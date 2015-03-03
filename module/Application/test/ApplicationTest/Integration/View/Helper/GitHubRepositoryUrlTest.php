@@ -18,7 +18,7 @@ class GitHubRepositoryUrlTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             Helper\GitHubRepositoryUrl::class,
-            $viewHelperManager->get('githubRepositoryUrl')
+            $viewHelperManager->get('gitHubRepositoryUrl')
         );
     }
 }

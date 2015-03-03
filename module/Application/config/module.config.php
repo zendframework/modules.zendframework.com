@@ -129,7 +129,7 @@ return [
     'view_helpers' => [
         'factories' => [
             'sanitizeHtml' => View\Helper\SanitizeHtmlFactory::class,
-            'githubRepositoryUrl' => View\Helper\GitHubRepositoryUrlFactory::class,
+            'gitHubRepositoryUrl' => View\Helper\GitHubRepositoryUrlFactory::class,
         ],
     ],
 ];
