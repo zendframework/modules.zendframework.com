@@ -527,6 +527,44 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         });
     }
 
+    public function testGetContributorsReturnsFalseIfRuntimeExceptionIsThrown()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->willThrowException(new Exception\RuntimeException())
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $contributors = $service->getContributors(
+            $owner,
+            $name
+        );
+
+        $this->assertFalse($contributors);
+    }
+
     /**
      * @link https://developer.github.com/v3/repos/#response-5
      *
