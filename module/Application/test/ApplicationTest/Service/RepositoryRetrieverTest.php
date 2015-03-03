@@ -464,6 +464,69 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         });
     }
 
+    public function testGetContributorsReturnsContributorsInReverseOrder()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $contributorsAsReturned = $this->contributors(10);
+
+        $response = json_encode($contributorsAsReturned);
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($name)
+            )
+            ->willReturn($response)
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $contributors = $service->getContributors(
+            $owner,
+            $name
+        );
+
+        $this->assertInternalType('array', $contributors);
+        $this->assertCount(count($contributorsAsReturned), $contributors);
+
+        array_walk($contributors, function ($contributor) use (&$contributorsAsReturned) {
+
+            $expectedContributor = array_pop($contributorsAsReturned);
+
+            $this->assertInternalType('array', $contributor);
+
+            $this->assertArrayHasKey('login', $contributor);
+            $this->assertSame($expectedContributor->login, $contributor['login']);
+
+            $this->assertArrayHasKey('avatar_url', $contributor);
+            $this->assertSame($expectedContributor->avatar_url, $contributor['avatar_url']);
+
+            $this->assertArrayHasKey('html_url', $contributor);
+            $this->assertSame($expectedContributor->html_url, $contributor['html_url']);
+        });
+    }
+
     /**
      * @link https://developer.github.com/v3/repos/#response-5
      *
