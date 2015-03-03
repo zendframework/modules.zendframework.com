@@ -13,12 +13,12 @@ class ContributorsController extends AbstractActionController
     /**
      * @var RepositoryRetriever
      */
-    protected $repositoryRetriever;
+    private $repositoryRetriever;
 
     /**
      * @var array
      */
-    protected $repositoryData;
+    private $repositoryData;
 
     /**
      * @param RepositoryRetriever $repositoryRetriever
