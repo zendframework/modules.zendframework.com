@@ -365,6 +365,54 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertCount($limit, $contributors);
     }
 
+    public function testGetContributorsAcceptsLimit()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $limit = 37;
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $response = json_encode($this->contributors(50));
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($name)
+            )
+            ->willReturn($response)
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $contributors = $service->getContributors(
+            $owner,
+            $name,
+            $limit
+        );
+
+        $this->assertInternalType('array', $contributors);
+        $this->assertCount($limit, $contributors);
+    }
+
     /**
      * @link https://developer.github.com/v3/repos/#response-5
      *
