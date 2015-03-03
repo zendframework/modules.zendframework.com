@@ -5,6 +5,7 @@ namespace ApplicationTest\Service;
 use Application\Service\RepositoryRetriever;
 use EdpGithub;
 use EdpGithub\Api;
+use EdpGithub\Client;
 use EdpGithub\Collection;
 use EdpGithub\Listener\Exception;
 use PHPUnit_Framework_TestCase;
@@ -219,6 +220,46 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $service = new RepositoryRetriever($clientMock);
         $response = $service->getUserRepositoryMetadata('foo', 'bar');
         $this->assertFalse($response);
+    }
+
+    public function testGetContributorsFetchesFromApi()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($name)
+            )
+            ->willReturn(json_encode([]))
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $service->getContributors(
+            $owner,
+            $name
+        );
     }
 
     /**
