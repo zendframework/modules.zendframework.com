@@ -92,8 +92,8 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => Controller\IndexControllerFactory::class,
-            Controller\SearchController::class => Controller\SearchControllerFactory::class,
             Controller\ContributorsController::class => Controller\ContributorsControllerFactory::class,
+            Controller\SearchController::class => Controller\SearchControllerFactory::class,
         ],
     ],
     'service_manager' => [
@@ -128,8 +128,8 @@ return [
     ],
     'view_helpers' => [
         'factories' => [
-            'sanitizeHtml' => View\Helper\SanitizeHtmlFactory::class,
             'gitHubRepositoryUrl' => View\Helper\GitHubRepositoryUrlFactory::class,
+            'sanitizeHtml' => View\Helper\SanitizeHtmlFactory::class,
         ],
     ],
 ];
