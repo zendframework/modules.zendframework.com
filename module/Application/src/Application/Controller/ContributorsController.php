@@ -32,8 +32,16 @@ class ContributorsController extends AbstractActionController
 
     public function indexAction()
     {
-        $contributors = $this->repositoryRetriever->getContributors($this->repositoryData['owner'], $this->repositoryData['name'], self::LIST_LIMIT);
-        $metadata = $this->repositoryRetriever->getUserRepositoryMetadata($this->repositoryData['owner'], $this->repositoryData['name']);
+        $contributors = $this->repositoryRetriever->getContributors(
+            $this->repositoryData['owner'],
+            $this->repositoryData['name'],
+            self::LIST_LIMIT
+        );
+
+        $metadata = $this->repositoryRetriever->getUserRepositoryMetadata(
+            $this->repositoryData['owner'],
+            $this->repositoryData['name']
+        );
 
         return new ViewModel([
             'contributors' => $contributors,
