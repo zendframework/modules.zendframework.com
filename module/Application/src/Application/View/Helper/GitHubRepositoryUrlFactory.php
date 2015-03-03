@@ -20,6 +20,9 @@ class GitHubRepositoryUrlFactory implements FactoryInterface
 
         $config = $serviceManager->get('Config')['zf-modules']['repository'];
 
-        return new GitHubRepositoryUrl($config['owner'], $config['name']);
+        return new GitHubRepositoryUrl(
+            $config['owner'],
+            $config['name']
+        );
     }
 }
