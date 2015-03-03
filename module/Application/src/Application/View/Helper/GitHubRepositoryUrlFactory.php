@@ -7,6 +7,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class GitHubRepositoryUrlFactory implements FactoryInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @return GitHubRepositoryUrl
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $serviceManager = $serviceLocator->getServiceLocator();
