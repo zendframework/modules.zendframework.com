@@ -9,17 +9,17 @@ class GitHubRepositoryUrl extends AbstractHelper
     /**
      * @var string
      */
-    protected $owner;
+    private $owner;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      */
-    protected $url;
+    private $url;
 
     /**
      * @param string $owner
