@@ -363,9 +363,14 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
         array_walk($contributors, function ($contributor) {
             $this->assertInternalType('array', $contributor);
-            $this->assertArrayHasKey('login', $contributor);
-            $this->assertArrayHasKey('avatar_url', $contributor);
-            $this->assertArrayHasKey('html_url', $contributor);
+            $this->assertArrayHasKey('author', $contributor);
+
+            $author = $contributor['author'];
+
+            $this->assertInternalType('array', $author);
+            $this->assertArrayHasKey('login', $author);
+            $this->assertArrayHasKey('avatar_url', $author);
+            $this->assertArrayHasKey('html_url', $author);
         });
     }
 
@@ -417,18 +422,23 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
         array_walk($contributors, function ($contributor) use (&$contributorsAsReturned) {
 
-            $expectedContributor = array_pop($contributorsAsReturned);
+            $expected = array_pop($contributorsAsReturned);
 
             $this->assertInternalType('array', $contributor);
+            $this->assertArrayHasKey('author', $contributor);
 
-            $this->assertArrayHasKey('login', $contributor);
-            $this->assertSame($expectedContributor->login, $contributor['login']);
+            $author = $contributor['author'];
 
-            $this->assertArrayHasKey('avatar_url', $contributor);
-            $this->assertSame($expectedContributor->avatar_url, $contributor['avatar_url']);
+            $this->assertInternalType('array', $author);
 
-            $this->assertArrayHasKey('html_url', $contributor);
-            $this->assertSame($expectedContributor->html_url, $contributor['html_url']);
+            $this->assertArrayHasKey('login', $author);
+            $this->assertSame($expected->author->login, $author['login']);
+
+            $this->assertArrayHasKey('avatar_url', $author);
+            $this->assertSame($expected->author->avatar_url, $author['avatar_url']);
+
+            $this->assertArrayHasKey('html_url', $author);
+            $this->assertSame($expected->author->html_url, $author['html_url']);
         });
     }
 
@@ -471,17 +481,21 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @link https://developer.github.com/v3/repos/#response-5
+     * @link https://developer.github.com/v3/repos/statistics/#response
      *
      * @return stdClass
      */
     private function contributor()
     {
+        $author = new stdClass();
+
+        $author->login = $this->faker()->unique()->userName;
+        $author->avatar_url = $this->faker()->unique()->url;
+        $author->html_url = $this->faker()->unique()->url;
+
         $contributor = new stdClass();
 
-        $contributor->login = $this->faker()->unique()->userName;
-        $contributor->avatar_url = $this->faker()->unique()->url;
-        $contributor->html_url = $this->faker()->unique()->url;
+        $contributor->author = $author;
 
         return $contributor;
     }
