@@ -7,10 +7,8 @@ use Psr\Log;
 
 return [
     'github_repository' => [
-        'repository' => [
-            'owner' => 'zendframework',
-            'name'  => 'modules.zendframework.com',
-        ],
+        'owner' => 'zendframework',
+        'name'  => 'modules.zendframework.com',
     ],
     'router' => [
         'routes' => [

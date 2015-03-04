@@ -26,10 +26,8 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
         $config = $this->getApplicationServiceLocator()->get('Config');
 
         $config['github_repository'] = [
-            'repository' => [
-                'owner' => $vendor,
-                'name'  => $name,
-            ],
+            'owner' => $vendor,
+            'name'  => $name,
         ];
 
         $repositoryRetriever = $this->getMockBuilder(Service\RepositoryRetriever::class)
