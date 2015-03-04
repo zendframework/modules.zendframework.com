@@ -35,6 +35,8 @@ class ContributorsController extends AbstractActionController
             $this->repositoryData['name']
         );
 
+        shuffle($contributors);
+
         $metadata = $this->repositoryRetriever->getUserRepositoryMetadata(
             $this->repositoryData['owner'],
             $this->repositoryData['name']
