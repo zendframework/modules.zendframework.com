@@ -8,7 +8,7 @@ use Zend\View\Model\ViewModel;
 
 class ContributorsController extends AbstractActionController
 {
-    const LIST_LIMIT = 36;
+    const LIST_LIMIT = 100;
 
     /**
      * @var RepositoryRetriever
