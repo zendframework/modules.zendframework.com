@@ -97,6 +97,7 @@ return [
     'service_manager' => [
         'factories' => [
             \HTMLPurifier::class => Service\HtmlPurifierFactory::class,
+            'github_repository' => Service\GitHubRepositoryFactory::class,
             Log\LoggerInterface::class => Service\LoggerFactory::class,
             Service\ErrorHandlingService::class => Service\ErrorHandlingServiceFactory::class,
             Service\RepositoryRetriever::class => Service\RepositoryRetrieverFactory::class,
