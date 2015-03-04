@@ -3,14 +3,19 @@
 namespace ApplicationTest\Service;
 
 use Application\Service\RepositoryRetriever;
+use ApplicationTest\Util\FakerTrait;
 use EdpGithub;
 use EdpGithub\Api;
+use EdpGithub\Client;
 use EdpGithub\Collection;
 use EdpGithub\Listener\Exception;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 {
+    use FakerTrait;
+
     public function testCanRetrieveUserRepositories()
     {
         $payload = [
@@ -221,6 +226,48 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($response);
     }
 
+    public function testGetContributorsFetchesFromApi()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $response = json_encode($this->contributors(5));
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($name)
+            )
+            ->willReturn($response)
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $service->getContributors(
+            $owner,
+            $name
+        );
+    }
+
     /**
      * @param Api\AbstractApi $apiInstance
      * @param array $payload
@@ -269,5 +316,283 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         ;
 
         return $client;
+    }
+
+    public function testGetContributorsHasDefaultLimitOf20()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $limit = 20;
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $response = json_encode($this->contributors(50));
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($name)
+            )
+            ->willReturn($response)
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $contributors = $service->getContributors(
+            $owner,
+            $name
+        );
+
+        $this->assertInternalType('array', $contributors);
+        $this->assertCount($limit, $contributors);
+    }
+
+    public function testGetContributorsAcceptsLimit()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $limit = 37;
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $response = json_encode($this->contributors(50));
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($name)
+            )
+            ->willReturn($response)
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $contributors = $service->getContributors(
+            $owner,
+            $name,
+            $limit
+        );
+
+        $this->assertInternalType('array', $contributors);
+        $this->assertCount($limit, $contributors);
+    }
+
+    public function testGetContributorsDecodesResponseToArray()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $response = json_encode($this->contributors(10));
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($name)
+            )
+            ->willReturn($response)
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $contributors = $service->getContributors(
+            $owner,
+            $name
+        );
+
+        $this->assertInternalType('array', $contributors);
+
+        array_walk($contributors, function ($contributor) {
+            $this->assertInternalType('array', $contributor);
+            $this->assertArrayHasKey('login', $contributor);
+            $this->assertArrayHasKey('avatar_url', $contributor);
+            $this->assertArrayHasKey('html_url', $contributor);
+        });
+    }
+
+    public function testGetContributorsReturnsContributorsInReverseOrder()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $contributorsAsReturned = $this->contributors(10);
+
+        $response = json_encode($contributorsAsReturned);
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->with(
+                $this->equalTo($owner),
+                $this->equalTo($name)
+            )
+            ->willReturn($response)
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $contributors = $service->getContributors(
+            $owner,
+            $name
+        );
+
+        $this->assertInternalType('array', $contributors);
+        $this->assertCount(count($contributorsAsReturned), $contributors);
+
+        array_walk($contributors, function ($contributor) use (&$contributorsAsReturned) {
+
+            $expectedContributor = array_pop($contributorsAsReturned);
+
+            $this->assertInternalType('array', $contributor);
+
+            $this->assertArrayHasKey('login', $contributor);
+            $this->assertSame($expectedContributor->login, $contributor['login']);
+
+            $this->assertArrayHasKey('avatar_url', $contributor);
+            $this->assertSame($expectedContributor->avatar_url, $contributor['avatar_url']);
+
+            $this->assertArrayHasKey('html_url', $contributor);
+            $this->assertSame($expectedContributor->html_url, $contributor['html_url']);
+        });
+    }
+
+    public function testGetContributorsReturnsFalseIfRuntimeExceptionIsThrown()
+    {
+        $owner = 'foo';
+        $name = 'bar';
+
+        $repositoryApi = $this->getMockBuilder(Api\Repos::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryApi
+            ->expects($this->once())
+            ->method('contributors')
+            ->willThrowException(new Exception\RuntimeException())
+        ;
+
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('api')
+            ->with($this->equalTo('repos'))
+            ->willReturn($repositoryApi)
+        ;
+
+        $service = new RepositoryRetriever($client);
+
+        $contributors = $service->getContributors(
+            $owner,
+            $name
+        );
+
+        $this->assertFalse($contributors);
+    }
+
+    /**
+     * @link https://developer.github.com/v3/repos/#response-5
+     *
+     * @return stdClass
+     */
+    private function contributor()
+    {
+        $contributor = new stdClass();
+
+        $contributor->login = $this->faker()->unique()->userName;
+        $contributor->avatar_url = $this->faker()->unique()->url;
+        $contributor->html_url = $this->faker()->unique()->url;
+
+        return $contributor;
+    }
+
+    /**
+     * @param int $count
+     * @return stdClass[]
+     */
+    private function contributors($count)
+    {
+        $contributors = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            array_push($contributors, $this->contributor());
+        }
+
+        return $contributors;
     }
 }
