@@ -84,21 +84,18 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
-    public function testIndexActionRendersValidModulesOnly()
+    public function testIndexActionRendersUnregisteredModulesOnly()
     {
         $this->authenticatedAs(new User());
 
-        $validModule = $this->validModule();
-
-        $nonModule = $this->nonModule();
+        $unregisteredModule = $this->validModule();
         $registeredModule = $this->registeredModule();
 
         $repositories = [
-            $validModule,
-            $nonModule,
+            $unregisteredModule,
             $registeredModule,
-            $this->forkedModule(),
             $this->moduleWithoutPushPermissions(),
+            $this->forkedModule(),
         ];
 
         $repositoryCollection = $this->repositoryCollectionMock($repositories);
@@ -117,18 +114,6 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService = $this->getMockBuilder(Service\Module::class)
             ->disableOriginalConstructor()
             ->getMock()
-        ;
-
-        $moduleService
-            ->expects($this->any())
-            ->method('isModule')
-            ->willReturnCallback(function ($repository) use ($nonModule) {
-                if ($repository !== $nonModule) {
-                    return true;
-                }
-
-                return false;
-            })
         ;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
@@ -180,7 +165,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertInternalType('array', $viewVariable);
         $this->assertCount(1, $viewVariable);
-        $this->assertSame($validModule, $viewVariable[0]);
+        $this->assertSame($unregisteredModule, $viewVariable[0]);
     }
 
     public function testOrganizationActionRedirectsIfNotAuthenticated()
@@ -290,18 +275,15 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
-    public function testOrganizationActionRendersValidModulesOnly()
+    public function testOrganizationActionRendersUnregisteredModulesOnly()
     {
         $this->authenticatedAs(new User());
 
-        $validModule = $this->validModule();
-
-        $nonModule = $this->nonModule();
+        $unregisteredModule = $this->validModule();
         $registeredModule = $this->registeredModule();
 
         $repositories = [
-            $validModule,
-            $nonModule,
+            $unregisteredModule,
             $registeredModule,
             $this->forkedModule(),
             $this->moduleWithoutPushPermissions(),
@@ -325,18 +307,6 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $moduleService = $this->getMockBuilder(Service\Module::class)
             ->disableOriginalConstructor()
             ->getMock()
-        ;
-
-        $moduleService
-            ->expects($this->any())
-            ->method('isModule')
-            ->willReturnCallback(function ($repository) use ($nonModule) {
-                if ($repository !== $nonModule) {
-                    return true;
-                }
-
-                return false;
-            })
         ;
 
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
@@ -393,7 +363,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertInternalType('array', $viewVariable);
         $this->assertCount(1, $viewVariable);
-        $this->assertSame($validModule, $viewVariable[0]);
+        $this->assertSame($unregisteredModule, $viewVariable[0]);
     }
 
     public function testAddActionRedirectsIfNotAuthenticated()
