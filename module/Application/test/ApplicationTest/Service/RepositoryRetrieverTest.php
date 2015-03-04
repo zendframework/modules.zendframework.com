@@ -517,7 +517,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
         array_walk($contributors, function ($contributor) use (&$contributorsAsReturned) {
 
-            $expectedContributor = array_pop($contributorsAsReturned);
+            $expected = array_pop($contributorsAsReturned);
 
             $this->assertInternalType('array', $contributor);
             $this->assertArrayHasKey('author', $contributor);
@@ -527,13 +527,13 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
             $this->assertInternalType('array', $author);
 
             $this->assertArrayHasKey('login', $author);
-            $this->assertSame($expectedContributor->author->login, $author['login']);
+            $this->assertSame($expected->author->login, $author['login']);
 
             $this->assertArrayHasKey('avatar_url', $author);
-            $this->assertSame($expectedContributor->author->avatar_url, $author['avatar_url']);
+            $this->assertSame($expected->author->avatar_url, $author['avatar_url']);
 
             $this->assertArrayHasKey('html_url', $author);
-            $this->assertSame($expectedContributor->author->html_url, $author['html_url']);
+            $this->assertSame($expected->author->html_url, $author['html_url']);
         });
     }
 
