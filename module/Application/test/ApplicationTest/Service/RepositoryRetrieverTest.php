@@ -566,17 +566,21 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @link https://developer.github.com/v3/repos/#response-5
+     * @link https://developer.github.com/v3/repos/statistics/#response
      *
      * @return stdClass
      */
     private function contributor()
     {
+        $author = new stdClass();
+
+        $author->login = $this->faker()->unique()->userName;
+        $author->avatar_url = $this->faker()->unique()->url;
+        $author->html_url = $this->faker()->unique()->url;
+
         $contributor = new stdClass();
 
-        $contributor->login = $this->faker()->unique()->userName;
-        $contributor->avatar_url = $this->faker()->unique()->url;
-        $contributor->html_url = $this->faker()->unique()->url;
+        $contributor->author = $author;
 
         return $contributor;
     }
