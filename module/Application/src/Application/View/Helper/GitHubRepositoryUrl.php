@@ -2,19 +2,15 @@
 
 namespace Application\View\Helper;
 
+use Application\Entity;
 use Zend\View\Helper\AbstractHelper;
 
 class GitHubRepositoryUrl extends AbstractHelper
 {
     /**
-     * @var string
+     * @var Entity\Repository
      */
-    private $owner;
-
-    /**
-     * @var string
-     */
-    private $name;
+    private $repository;
 
     /**
      * @var string
@@ -22,13 +18,11 @@ class GitHubRepositoryUrl extends AbstractHelper
     private $url;
 
     /**
-     * @param string $owner
-     * @param string $name
+     * @param Entity\Repository $repository
      */
-    public function __construct($owner, $name)
+    public function __construct(Entity\Repository $repository)
     {
-        $this->owner = (string) $owner;
-        $this->name = (string) $name;
+        $this->repository = $repository;
     }
 
     /**
@@ -39,8 +33,8 @@ class GitHubRepositoryUrl extends AbstractHelper
         if (null === $this->url) {
             $this->url = sprintf(
                 'https://github.com/%s/%s',
-                $this->owner,
-                $this->name
+                $this->repository->owner(),
+                $this->repository->name()
             );
         }
 

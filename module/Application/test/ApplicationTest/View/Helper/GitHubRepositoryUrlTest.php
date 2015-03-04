@@ -2,8 +2,9 @@
 
 namespace ApplicationTest\View\Helper;
 
+use Application\Entity;
 use Application\View\Helper;
-use ApplicationTest\Mock\StringCastable;
+use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use ReflectionObject;
 
@@ -20,10 +21,12 @@ class GitHubRepositoryUrlTest extends PHPUnit_Framework_TestCase
             $name
         );
 
-        $helper = new Helper\GitHubRepositoryUrl(
+        $repository = $this->repository(
             $owner,
             $name
         );
+
+        $helper = new Helper\GitHubRepositoryUrl($repository);
 
         $this->assertSame($url, $helper());
     }
@@ -35,10 +38,12 @@ class GitHubRepositoryUrlTest extends PHPUnit_Framework_TestCase
 
         $url = 'https://example.org';
 
-        $helper = new Helper\GitHubRepositoryUrl(
+        $repository = $this->repository(
             $owner,
             $name
         );
+
+        $helper = new Helper\GitHubRepositoryUrl($repository);
 
         $reflectionObject = new ReflectionObject($helper);
 
@@ -50,28 +55,30 @@ class GitHubRepositoryUrlTest extends PHPUnit_Framework_TestCase
         $this->assertSame($url, $helper());
     }
 
-    public function testConstructorCastsArgumentsToString()
+    /**
+     * @param string $owner
+     * @param string $name
+     * @return PHPUnit_Framework_MockObject_MockObject|Entity\Repository
+     */
+    private function repository($owner, $name)
     {
-        $owner = new StringCastable('foo');
-        $name = new StringCastable('bar');
+        $repository = $this->getMockBuilder(Entity\Repository::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
 
-        $helper = new Helper\GitHubRepositoryUrl(
-            $owner,
-            $name
-        );
+        $repository
+            ->expects($this->any())
+            ->method('owner')
+            ->willReturn($owner)
+        ;
 
-        $properties = [
-            'owner' => $owner,
-            'name' => $name,
-        ];
+        $repository
+            ->expects($this->any())
+            ->method('name')
+            ->willReturn($name)
+        ;
 
-        $reflectionObject = new ReflectionObject($helper);
-
-        array_walk($properties, function ($value, $name) use ($reflectionObject, $helper) {
-            $reflectionProperty = $reflectionObject->getProperty($name);
-            $reflectionProperty->setAccessible(true);
-
-            $this->assertSame((string) $value, $reflectionProperty->getValue($helper));
-        });
+        return $repository;
     }
 }
