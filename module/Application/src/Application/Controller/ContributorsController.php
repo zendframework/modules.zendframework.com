@@ -8,8 +8,6 @@ use Zend\View\Model\ViewModel;
 
 class ContributorsController extends AbstractActionController
 {
-    const LIST_LIMIT = 100;
-
     /**
      * @var RepositoryRetriever
      */
@@ -34,8 +32,7 @@ class ContributorsController extends AbstractActionController
     {
         $contributors = $this->repositoryRetriever->getContributors(
             $this->repositoryData['owner'],
-            $this->repositoryData['name'],
-            self::LIST_LIMIT
+            $this->repositoryData['name']
         );
 
         $metadata = $this->repositoryRetriever->getUserRepositoryMetadata(

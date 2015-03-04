@@ -42,8 +42,7 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
             ->method('getContributors')
             ->with(
                 $this->equalTo($vendor),
-                $this->equalTo($name),
-                $this->equalTo(100)
+                $this->equalTo($name)
             )
             ->willReturn([])
         ;
