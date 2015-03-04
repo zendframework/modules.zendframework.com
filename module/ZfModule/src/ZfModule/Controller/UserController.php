@@ -15,25 +15,23 @@ class UserController extends AbstractActionController
     /**
      * @param Mapper\Module $moduleMapper
      */
-    public function __construct(
-        Mapper\Module $moduleMapper
-    ) {
+    public function __construct(Mapper\Module $moduleMapper)
+    {
         $this->moduleMapper = $moduleMapper;
     }
 
     public function modulesForUserAction()
     {
-        $query =  $this->params()->fromQuery('query', null);
-        $page = (int) $this->params()->fromQuery('page', 1);
-        $owner = $this->params()->fromRoute('owner');
+        $params = $this->params();
+        $query =  $params->fromQuery('query', null);
+        $page = (int) $params->fromQuery('page', 1);
+        $owner = $params->fromRoute('owner');
 
-        $modules = $this->moduleMapper->pagination($page, 10, $owner, 'created_at', "DESC");
+        $modules = $this->moduleMapper->pagination($page, 10, $owner, 'created_at', 'DESC');
 
-        $viewModel = new ViewModel([
+        return new ViewModel([
             'modules' => $modules,
             'query' => $query,
-         ]);
-
-        return $viewModel;
+        ]);
     }
 }

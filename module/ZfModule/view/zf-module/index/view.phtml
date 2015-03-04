@@ -1,7 +1,7 @@
 <?php $this->headTitle($this->escapeHtmlAttr($module) . ' module by ' . $this->escapeHtmlAttr($vendor)); ?>
 <?php $this->headMeta()->appendName('description', $this->escapeHtmlAttr($repository->description)); ?>
 
-<h3><a href="<?php echo $this->url("modules-for-user", ["owner" => $vendor]); ?>"><?php echo $this->escapeHtml($vendor); ?></a> / <?php echo $this->escapeHtml($module); ?> </h3>
+<h3><a href="<?php echo $this->url('modules-for-user', ['owner' => $vendor]); ?>"><?php echo $this->escapeHtml($vendor); ?></a> / <?php echo $this->escapeHtml($module); ?> </h3>
 
 <div class="row">
     <div class="col-md-8">
