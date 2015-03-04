@@ -458,9 +458,14 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
         array_walk($contributors, function ($contributor) {
             $this->assertInternalType('array', $contributor);
-            $this->assertArrayHasKey('login', $contributor);
-            $this->assertArrayHasKey('avatar_url', $contributor);
-            $this->assertArrayHasKey('html_url', $contributor);
+            $this->assertArrayHasKey('author', $contributor);
+
+            $author = $contributor['author'];
+
+            $this->assertInternalType('array', $author);
+            $this->assertArrayHasKey('login', $author);
+            $this->assertArrayHasKey('avatar_url', $author);
+            $this->assertArrayHasKey('html_url', $author);
         });
     }
 
@@ -515,15 +520,20 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
             $expectedContributor = array_pop($contributorsAsReturned);
 
             $this->assertInternalType('array', $contributor);
+            $this->assertArrayHasKey('author', $contributor);
 
-            $this->assertArrayHasKey('login', $contributor);
-            $this->assertSame($expectedContributor->login, $contributor['login']);
+            $author = $contributor['author'];
 
-            $this->assertArrayHasKey('avatar_url', $contributor);
-            $this->assertSame($expectedContributor->avatar_url, $contributor['avatar_url']);
+            $this->assertInternalType('array', $author);
 
-            $this->assertArrayHasKey('html_url', $contributor);
-            $this->assertSame($expectedContributor->html_url, $contributor['html_url']);
+            $this->assertArrayHasKey('login', $author);
+            $this->assertSame($expectedContributor->author->login, $author['login']);
+
+            $this->assertArrayHasKey('avatar_url', $author);
+            $this->assertSame($expectedContributor->author->avatar_url, $author['avatar_url']);
+
+            $this->assertArrayHasKey('html_url', $author);
+            $this->assertSame($expectedContributor->author->html_url, $author['html_url']);
         });
     }
 
