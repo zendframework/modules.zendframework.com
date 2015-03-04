@@ -21,7 +21,7 @@ class ContributorsControllerFactory implements FactoryInterface
         /* @var Service\RepositoryRetriever $repositoryRetriever */
         $repositoryRetriever = $serviceManager->get(Service\RepositoryRetriever::class);
 
-        $repositoryData = $serviceManager->get('Config')['zf-modules']['repository'];
+        $repositoryData = $serviceManager->get('Config')['zf_modules']['repository'];
 
         return new ContributorsController(
             $repositoryRetriever,
