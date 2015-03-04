@@ -2,6 +2,7 @@
 
 namespace Application\Controller;
 
+use Application\Entity;
 use Application\Service\RepositoryRetriever;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -14,32 +15,32 @@ class ContributorsController extends AbstractActionController
     private $repositoryRetriever;
 
     /**
-     * @var array
+     * @var Entity\Repository
      */
-    private $repositoryData;
+    private $repository;
 
     /**
      * @param RepositoryRetriever $repositoryRetriever
-     * @param array $repositoryData
+     * @param Entity\Repository $repository
      */
-    public function __construct(RepositoryRetriever $repositoryRetriever, array $repositoryData)
+    public function __construct(RepositoryRetriever $repositoryRetriever, Entity\Repository $repository)
     {
         $this->repositoryRetriever = $repositoryRetriever;
-        $this->repositoryData = $repositoryData;
+        $this->repository = $repository;
     }
 
     public function indexAction()
     {
         $contributors = $this->repositoryRetriever->getContributors(
-            $this->repositoryData['owner'],
-            $this->repositoryData['name']
+            $this->repository->owner(),
+            $this->repository->name()
         );
 
         shuffle($contributors);
 
         $metadata = $this->repositoryRetriever->getUserRepositoryMetadata(
-            $this->repositoryData['owner'],
-            $this->repositoryData['name']
+            $this->repository->owner(),
+            $this->repository->name()
         );
 
         return new ViewModel([

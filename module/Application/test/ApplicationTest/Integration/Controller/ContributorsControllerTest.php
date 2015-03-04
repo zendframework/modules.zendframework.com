@@ -3,6 +3,7 @@
 namespace ApplicationTest\Integration\Controller;
 
 use Application\Controller;
+use Application\Entity;
 use Application\Service;
 use ApplicationTest\Integration\Util\Bootstrap;
 use stdClass;
@@ -23,12 +24,22 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
         $vendor = 'foo';
         $name = 'bar';
 
-        $config = $this->getApplicationServiceLocator()->get('Config');
+        $repository = $this->getMockBuilder(Entity\Repository::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
 
-        $config['github_repository'] = [
-            'owner' => $vendor,
-            'name'  => $name,
-        ];
+        $repository
+            ->expects($this->any())
+            ->method('owner')
+            ->willReturn($vendor)
+        ;
+
+        $repository
+            ->expects($this->any())
+            ->method('name')
+            ->willReturn($name)
+        ;
 
         $repositoryRetriever = $this->getMockBuilder(Service\RepositoryRetriever::class)
             ->disableOriginalConstructor()
@@ -63,8 +74,8 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                'Config',
-                $config
+                'github_repository',
+                $repository
             )
             ->setService(
                 Service\RepositoryRetriever::class,
