@@ -18,7 +18,7 @@ class GitHubRepositoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             Entity\Repository::class,
-            $serviceManager->get('github_repository')
+            $serviceManager->get('project_github_repository')
         );
     }
 }

@@ -23,7 +23,7 @@ class ContributorsControllerFactory implements FactoryInterface
         $repositoryRetriever = $serviceManager->get(Service\RepositoryRetriever::class);
 
         /* @var Entity\Repository $repository */
-        $repository = $serviceManager->get('github_repository');
+        $repository = $serviceManager->get('project_github_repository');
 
         return new ContributorsController(
             $repositoryRetriever,

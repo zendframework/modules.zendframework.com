@@ -74,7 +74,7 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
-                'github_repository',
+                'project_github_repository',
                 $repository
             )
             ->setService(

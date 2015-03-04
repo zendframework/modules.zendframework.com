@@ -20,7 +20,7 @@ class GitHubRepositoryUrlFactory implements FactoryInterface
         $serviceManager = $serviceLocator->getServiceLocator();
 
         /* @var Entity\Repository $repository */
-        $repository = $serviceManager->get('github_repository');
+        $repository = $serviceManager->get('project_github_repository');
 
         return new GitHubRepositoryUrl($repository);
     }

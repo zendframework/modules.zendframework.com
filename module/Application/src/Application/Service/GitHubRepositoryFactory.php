@@ -14,7 +14,7 @@ class GitHubRepositoryFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = $serviceLocator->get('Config')['github_repository'];
+        $config = $serviceLocator->get('Config')['project_github_repository'];
 
         return new Entity\Repository(
             $config['owner'],
