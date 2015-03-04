@@ -2,6 +2,7 @@
 
 namespace Application\Controller;
 
+use Application\Entity;
 use Application\Service;
 use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
@@ -21,11 +22,12 @@ class ContributorsControllerFactory implements FactoryInterface
         /* @var Service\RepositoryRetriever $repositoryRetriever */
         $repositoryRetriever = $serviceManager->get(Service\RepositoryRetriever::class);
 
-        $repositoryData = $serviceManager->get('Config')['github_repository'];
+        /* @var Entity\Repository $repository */
+        $repository = $serviceManager->get('project_github_repository');
 
         return new ContributorsController(
             $repositoryRetriever,
-            $repositoryData
+            $repository
         );
     }
 }

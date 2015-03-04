@@ -6,7 +6,7 @@ use Application\View;
 use Psr\Log;
 
 return [
-    'github_repository' => [
+    'project_github_repository' => [
         'owner' => 'zendframework',
         'name'  => 'modules.zendframework.com',
     ],
@@ -98,6 +98,7 @@ return [
         'factories' => [
             \HTMLPurifier::class => Service\HtmlPurifierFactory::class,
             Log\LoggerInterface::class => Service\LoggerFactory::class,
+            'project_github_repository' => Service\GitHubRepositoryFactory::class,
             Service\ErrorHandlingService::class => Service\ErrorHandlingServiceFactory::class,
             Service\RepositoryRetriever::class => Service\RepositoryRetrieverFactory::class,
         ],

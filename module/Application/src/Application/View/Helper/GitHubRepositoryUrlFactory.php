@@ -2,6 +2,7 @@
 
 namespace Application\View\Helper;
 
+use Application\Entity;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\HelperPluginManager;
@@ -18,11 +19,9 @@ class GitHubRepositoryUrlFactory implements FactoryInterface
         /* @var HelperPluginManager $serviceLocator */
         $serviceManager = $serviceLocator->getServiceLocator();
 
-        $config = $serviceManager->get('Config')['github_repository'];
+        /* @var Entity\Repository $repository */
+        $repository = $serviceManager->get('project_github_repository');
 
-        return new GitHubRepositoryUrl(
-            $config['owner'],
-            $config['name']
-        );
+        return new GitHubRepositoryUrl($repository);
     }
 }
