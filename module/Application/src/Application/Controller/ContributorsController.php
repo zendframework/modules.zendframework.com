@@ -38,6 +38,8 @@ class ContributorsController extends AbstractActionController
             self::LIST_LIMIT
         );
 
+        shuffle($contributors);
+
         $metadata = $this->repositoryRetriever->getUserRepositoryMetadata(
             $this->repositoryData['owner'],
             $this->repositoryData['name']
