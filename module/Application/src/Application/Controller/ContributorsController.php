@@ -3,14 +3,14 @@
 namespace Application\Controller;
 
 use Application\Entity;
-use Application\Service\RepositoryRetriever;
+use Application\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class ContributorsController extends AbstractActionController
 {
     /**
-     * @var RepositoryRetriever
+     * @var Service\RepositoryRetriever
      */
     private $repositoryRetriever;
 
@@ -20,10 +20,10 @@ class ContributorsController extends AbstractActionController
     private $repository;
 
     /**
-     * @param RepositoryRetriever $repositoryRetriever
+     * @param Service\RepositoryRetriever $repositoryRetriever
      * @param Entity\Repository $repository
      */
-    public function __construct(RepositoryRetriever $repositoryRetriever, Entity\Repository $repository)
+    public function __construct(Service\RepositoryRetriever $repositoryRetriever, Entity\Repository $repository)
     {
         $this->repositoryRetriever = $repositoryRetriever;
         $this->repository = $repository;
