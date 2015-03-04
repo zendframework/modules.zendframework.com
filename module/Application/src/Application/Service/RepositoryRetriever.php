@@ -60,14 +60,13 @@ class RepositoryRetriever
      * @param string $repo
      * @return array
      */
-    public function getContributors($owner, $repo, $limit = 20)
+    public function getContributors($owner, $repo)
     {
         try {
             $contributors = $this->githubClient->api('repos')->contributors($owner, $repo);
             $data = json_decode($contributors, true);
-            $data = array_reverse($data);
 
-            return array_slice($data, 0, $limit);
+            return array_reverse($data);
         } catch (RuntimeException $e) {
             return false;
         }
