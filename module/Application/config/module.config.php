@@ -6,7 +6,7 @@ use Application\View;
 use Psr\Log;
 
 return [
-    'zf_modules' => [
+    'github_repository' => [
         'repository' => [
             'owner' => 'zendframework',
             'name'  => 'modules.zendframework.com',

@@ -25,7 +25,7 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
 
         $config = $this->getApplicationServiceLocator()->get('Config');
 
-        $config['zf_modules'] = [
+        $config['github_repository'] = [
             'repository' => [
                 'owner' => $vendor,
                 'name'  => $name,

@@ -18,7 +18,7 @@ class GitHubRepositoryUrlFactory implements FactoryInterface
         /* @var HelperPluginManager $serviceLocator */
         $serviceManager = $serviceLocator->getServiceLocator();
 
-        $config = $serviceManager->get('Config')['zf_modules']['repository'];
+        $config = $serviceManager->get('Config')['github_repository']['repository'];
 
         return new GitHubRepositoryUrl(
             $config['owner'],
