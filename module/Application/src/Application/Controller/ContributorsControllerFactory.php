@@ -2,18 +2,30 @@
 
 namespace Application\Controller;
 
-use Application\Service\RepositoryRetriever;
+use Application\Service;
+use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ContributorsControllerFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    /**
+     * @param ServiceLocatorInterface $controllerManager
+     * @return ContributorsController
+     */
+    public function createService(ServiceLocatorInterface $controllerManager)
     {
-        $serviceManager = $serviceLocator->getServiceLocator();
-        $repositoryRetriever = $serviceManager->get(RepositoryRetriever::class);
+        /* @var ControllerManager $controllerManager */
+        $serviceManager = $controllerManager->getServiceLocator();
+
+        /* @var Service\RepositoryRetriever $repositoryRetriever */
+        $repositoryRetriever = $serviceManager->get(Service\RepositoryRetriever::class);
+
         $repositoryData = $serviceManager->get('Config')['zf-modules']['repository'];
 
-        return new ContributorsController($repositoryRetriever, $repositoryData);
+        return new ContributorsController(
+            $repositoryRetriever,
+            $repositoryData
+        );
     }
 }
