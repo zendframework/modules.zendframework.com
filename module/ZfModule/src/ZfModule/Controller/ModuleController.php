@@ -16,7 +16,7 @@ use ZfModule\Service;
  * @method Http\Request getRequest()
  * @method Plugin\ZfcUserAuthentication zfcUserAuthentication()
  */
-class IndexController extends AbstractActionController
+class ModuleController extends AbstractActionController
 {
     /**
      * @var Mapper\Module

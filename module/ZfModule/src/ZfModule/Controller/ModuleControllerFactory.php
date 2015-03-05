@@ -9,11 +9,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfModule\Mapper;
 use ZfModule\Service;
 
-class IndexControllerFactory implements FactoryInterface
+class ModuleControllerFactory implements FactoryInterface
 {
     /**
      * @param ServiceLocatorInterface $controllerManager
-     * @return IndexController
+     * @return ModuleController
      */
     public function createService(ServiceLocatorInterface $controllerManager)
     {
@@ -29,7 +29,7 @@ class IndexControllerFactory implements FactoryInterface
         /* @var RepositoryRetriever $repositoryRetriever */
         $repositoryRetriever = $serviceManager->get(RepositoryRetriever::class);
 
-        return new IndexController(
+        return new ModuleController(
             $moduleMapper,
             $moduleService,
             $repositoryRetriever
