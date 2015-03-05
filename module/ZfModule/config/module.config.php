@@ -11,6 +11,7 @@ return [
     'controllers'  => [
         'factories' => [
             Controller\IndexController::class => Controller\IndexControllerFactory::class,
+            Controller\UserController::class => Controller\UserControllerFactory::class,
         ],
     ],
     'router'       => [
@@ -22,6 +23,19 @@ return [
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action'     => 'view',
+                    ],
+                ],
+            ],
+            'modules-for-user' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => '/user/:owner',
+                    'constrains' => [
+                        'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action'     => 'modulesForUser',
                     ],
                 ],
             ],
