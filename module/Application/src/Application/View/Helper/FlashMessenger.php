@@ -45,7 +45,7 @@ class FlashMessenger extends ZendFlashMessenger
         // if custom namespace handle as default message
         if (!isset($this->classOptions[$namespace])) {
             $this->classOptions = [
-                $namespace => $this->classOptions[PluginFlashMessenger::NAMESPACE_DEFAULT]
+                $namespace => $this->classOptions[PluginFlashMessenger::NAMESPACE_DEFAULT],
             ];
         }
 
@@ -71,7 +71,7 @@ class FlashMessenger extends ZendFlashMessenger
      */
     public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
     {
-        $renderer = function($namespace, $classes) {
+        $renderer = function ($namespace, $classes) {
             return parent::render($namespace, $classes);
         };
 
@@ -83,7 +83,7 @@ class FlashMessenger extends ZendFlashMessenger
      */
     public function renderCurrent($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
     {
-        $renderer = function($namespace, $classes) {
+        $renderer = function ($namespace, $classes) {
             return parent::renderCurrent($namespace, $classes);
         };
 
