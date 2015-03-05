@@ -9,6 +9,7 @@ use Zend\Http;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcUser\Controller\Plugin;
+use ZfModule\Controller\Exception;
 use ZfModule\Mapper;
 use ZfModule\Service;
 
@@ -145,9 +146,11 @@ class ModuleController extends AbstractActionController
     }
 
     /**
-     * @throws Exception\UnexpectedValueException
-     * @throws Exception\RuntimeException
+     * Register a new Module
+     *
      * @return Http\Response
+     * @throws Exception\InvalidDataException
+     * @throws Exception\RepositoryException
      */
     public function addAction()
     {
@@ -157,8 +160,10 @@ class ModuleController extends AbstractActionController
 
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            $this->flashMessenger()->addErrorMessage('Something went wrong with the post values of the request...');
-            return $this->redirect()->toRoute('zfcuser');
+            throw Exception\InvalidDataException::fromInvalidRequest(
+                'Something went wrong with the post values of the request...',
+                $this->getRequest()
+            );
         }
 
         $postParams = $request->getPost();
@@ -169,21 +174,26 @@ class ModuleController extends AbstractActionController
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
         if (!($repository instanceof \stdClass)) {
-            $this->flashMessenger()->addErrorMessage('Not able to fetch the repository from GitHub due to an unknown error.');
-            return $this->redirect()->toRoute('zfcuser');
+            throw Exception\RepositoryException::fromNotFoundRepository(
+                'Not able to fetch the repository from GitHub due to an unknown error.',
+                $owner,
+                $repo
+            );
         }
 
         if ($repository->fork || !$repository->permissions->push) {
-            $this->flashMessenger()->addErrorMessage(
-                'You have no permission to add this module. The reason might be that you are ' .
-                'neither the owner nor a collaborator of this repository.'
+            throw Exception\RepositoryException::fromInsufficientPermissions(
+                'You have no permission to add this module. The reason might be that you are neither the owner nor a collaborator of this repository.',
+                $repository->full_name,
+                ['pushAccess', 'noFork']
             );
-            return $this->redirect()->toRoute('zfcuser');
         }
 
         if (!$this->moduleService->isModule($repository)) {
-            $this->flashMessenger()->addErrorMessage($repository->name . ' is not a Zend Framework Module');
-            return $this->redirect()->toRoute('zfcuser');
+            throw Exception\RepositoryException::fromNonModuleRepository(
+                $repository->name . ' is not a Zend Framework Module',
+                $repository->full_name
+            );
         }
 
         $module = $this->moduleService->register($repository);
@@ -193,8 +203,11 @@ class ModuleController extends AbstractActionController
     }
 
     /**
-     * @throws Exception\UnexpectedValueException
+     * Removes a Module
+     *
      * @return Http\Response
+     * @throws Exception\InvalidDataException
+     * @throws Exception\RepositoryException
      */
     public function removeAction()
     {
@@ -204,8 +217,10 @@ class ModuleController extends AbstractActionController
 
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            $this->flashMessenger()->addErrorMessage('Something went wrong with the post values of the request...');
-            return $this->redirect()->toRoute('zfcuser');
+            throw Exception\InvalidDataException::fromInvalidRequest(
+                'Something went wrong with the post values of the request...',
+                $request
+            );
         }
 
         $postParams = $request->getPost();
@@ -216,23 +231,28 @@ class ModuleController extends AbstractActionController
         $repository = $this->repositoryRetriever->getUserRepositoryMetadata($owner, $repo);
 
         if (!$repository instanceof \stdClass) {
-            $this->flashMessenger()->addErrorMessage('Not able to fetch the repository from GitHub due to an unknown error.');
-            return $this->redirect()->toRoute('zfcuser');
+            throw Exception\RepositoryException::fromNotFoundRepository(
+                'Not able to fetch the repository from GitHub due to an unknown error.',
+                $owner,
+                $repo
+            );
         }
 
         if ($repository->fork || !$repository->permissions->push) {
-            $this->flashMessenger()->addErrorMessage(
-                'You have no permission to remove this module. The reason might be that you are ' .
-                'neither the owner nor a collaborator of this repository.'
+            throw Exception\RepositoryException::fromInsufficientPermissions(
+                'You have no permission to remove this module. The reason might be that you are neither the owner nor a collaborator of this repository.',
+                $repository->full_name,
+                ['pushAccess', 'noFork']
             );
-            return $this->redirect()->toRoute('zfcuser');
         }
 
         $module = $this->moduleMapper->findByUrl($repository->html_url);
 
         if (!$module) {
-            $this->flashMessenger()->addErrorMessage($repository->name . ' was not found');
-            return $this->redirect()->toRoute('zfcuser');
+            throw Exception\RepositoryException::fromNotFoundRepositoryUrl(
+                $repository->name . ' was not found',
+                $repository->html_url
+            );
         }
 
         $this->moduleMapper->delete($module);
