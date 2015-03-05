@@ -3,6 +3,7 @@
 namespace ZfModuleTest\Integration\Controller;
 
 use ApplicationTest\Integration\Util\Bootstrap;
+use Zend\Http;
 use Zend\Paginator;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use ZfModule\Controller;
@@ -46,5 +47,6 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertControllerName(Controller\UserController::class);
         $this->assertActionName('modulesForUser');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 }
