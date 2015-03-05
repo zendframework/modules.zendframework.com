@@ -35,6 +35,13 @@ class UserControllerTest extends AbstractHttpControllerTestCase
             ->willReturn(new Paginator\Paginator(new Paginator\Adapter\Null()))
         ;
 
+        $moduleMapper
+            ->expects($this->any())
+            ->method('findAll')
+            ->with($this->anything())
+            ->willReturn([])
+        ;
+
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)
             ->setService(
