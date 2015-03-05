@@ -54,7 +54,7 @@ return [
                         'type'    => 'Segment',
                         'options' => [
                             'route'      => '/list[/:owner]',
-                            'constrains' => [
+                            'constraints' => [
                                 'owner' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
                             'defaults'   => [
