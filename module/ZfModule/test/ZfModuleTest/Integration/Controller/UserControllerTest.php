@@ -27,7 +27,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
             ->with(
                 $this->equalTo(1),
                 $this->equalTo(10),
-                $this->equalTo("gianarb"),
+                $this->equalTo('gianarb'),
                 $this->equalTo('created_at'),
                 $this->equalTo('DESC')
             )
