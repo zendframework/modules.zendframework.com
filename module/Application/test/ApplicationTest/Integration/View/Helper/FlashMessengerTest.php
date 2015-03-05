@@ -50,5 +50,4 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase
             $flashMessengerViewHelper->render('FooBar')
         );
     }
-
 }

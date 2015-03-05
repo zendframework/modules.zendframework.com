@@ -4,7 +4,6 @@ namespace ZfModuleTest\Exception;
 
 use PHPUnit_Framework_TestCase;
 use Zend\Http;
-use ZfModule\Entity;
 use ZfModule\Controller\Exception;
 
 class RepositoryExceptionTest extends PHPUnit_Framework_TestCase

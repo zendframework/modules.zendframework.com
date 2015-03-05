@@ -9,7 +9,6 @@ use Zend\Http;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcUser\Controller\Plugin;
-use ZfModule\Controller\Exception;
 use ZfModule\Mapper;
 use ZfModule\Service;
 
