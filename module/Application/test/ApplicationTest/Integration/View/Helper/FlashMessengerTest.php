@@ -11,11 +11,8 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase
     {
         $serviceManager = Bootstrap::getServiceManager();
 
-        /** @var \Zend\Mvc\Controller\Plugin\FlashMessenger $flashMessengerPlugin */
+        /* @var $flashMessengerControllerPlugin \Zend\Mvc\Controller\Plugin\FlashMessenger */
         $flashMessengerControllerPlugin = $serviceManager->get('ControllerPluginManager')->get('FlashMessenger');
-
-        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
-        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
         $flashMessengerControllerPlugin->addMessage('FooMessage');
         $flashMessengerControllerPlugin->addSuccessMessage('FooSuccess');
@@ -23,13 +20,16 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase
         $flashMessengerControllerPlugin->addErrorMessage('FooError');
         $flashMessengerControllerPlugin->addInfoMessage('FooInfo');
 
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerViewHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
+
         $this->assertEquals(
             '<div class="alert alert-info"><span class="sr-only">Information</span>FooInfo</div>' .
             '<div class="alert alert-danger"><span class="sr-only">Error</span>FooError</div>' .
             '<div class="alert alert-success"><span class="sr-only">Success</span>FooSuccess</div>' .
             '<div class="alert alert-info"><span class="sr-only">Message</span>FooMessage</div>' .
             '<div class="alert alert-warning"><span class="sr-only">Warning</span>FooWarning</div>',
-            $flashMessengerViewHelper->render()
+            $flashMessengerViewHelper->renderCurrent()
         );
     }
 
@@ -37,17 +37,18 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase
     {
         $serviceManager = Bootstrap::getServiceManager();
 
-        /** @var \Zend\Mvc\Controller\Plugin\FlashMessenger $flashMessengerPlugin */
+        /* @var $flashMessengerControllerPlugin \Zend\Mvc\Controller\Plugin\FlashMessenger */
         $flashMessengerControllerPlugin = $serviceManager->get('ControllerPluginManager')->get('FlashMessenger');
         $flashMessengerControllerPlugin->setNamespace('FooBar');
 
-        /* @var \Application\View\Helper\FlashMessenger $flashMessengerHelper */
-        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
         $flashMessengerControllerPlugin->addMessage('FooMessage');
+
+        /* @var \Application\View\Helper\FlashMessenger $flashMessengerViewHelper */
+        $flashMessengerViewHelper = $serviceManager->get('ViewHelperManager')->get('FlashMessenger');
 
         $this->assertEquals(
             '<div class="alert alert-info"><span class="sr-only">Message</span>FooMessage</div>',
-            $flashMessengerViewHelper->render('FooBar')
+            $flashMessengerViewHelper->renderCurrent('FooBar')
         );
     }
 }
