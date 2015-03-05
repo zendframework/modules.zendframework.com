@@ -98,6 +98,7 @@ return [
             'repository'        => Helper\Repository::class,
             'moduleDescription' => Helper\ModuleDescription::class,
             'composerView'      => Helper\ComposerView::class,
+            'twitterWidget' => Helper\TwitterWidget::class,
         ],
     ],
     'service_manager' => [
