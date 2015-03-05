@@ -3,6 +3,7 @@
 namespace ZfModuleTest\Integration\Controller;
 
 use ApplicationTest\Integration\Util\Bootstrap;
+use Zend\Http;
 use Zend\Paginator;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use ZfModule\Controller;
@@ -19,6 +20,8 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function testUserPageCanBeAccessed()
     {
+        $userName = 'gianarb';
+
         $moduleMapper = $this->getMockBuilder(Mapper\Module::class)->getMock();
 
         $moduleMapper
@@ -27,11 +30,18 @@ class UserControllerTest extends AbstractHttpControllerTestCase
             ->with(
                 $this->equalTo(1),
                 $this->equalTo(10),
-                $this->equalTo('gianarb'),
+                $this->equalTo($userName),
                 $this->equalTo('created_at'),
                 $this->equalTo('DESC')
             )
             ->willReturn(new Paginator\Paginator(new Paginator\Adapter\Null()))
+        ;
+
+        $moduleMapper
+            ->expects($this->any())
+            ->method('findAll')
+            ->with($this->anything())
+            ->willReturn([])
         ;
 
         $this->getApplicationServiceLocator()
@@ -42,9 +52,15 @@ class UserControllerTest extends AbstractHttpControllerTestCase
             )
         ;
 
-        $this->dispatch('/user/gianarb');
+        $url = sprintf(
+            '/user/%s',
+            $userName
+        );
+
+        $this->dispatch($url);
 
         $this->assertControllerName(Controller\UserController::class);
         $this->assertActionName('modulesForUser');
+        $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 }
