@@ -98,7 +98,7 @@ class ModuleController extends AbstractActionController
         return $viewModel;
     }
 
-    public function organizationAction()
+    public function listAction()
     {
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toRoute('zfcuser/login');

@@ -168,7 +168,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $this->assertSame($unregisteredModule, $viewVariable[0]);
     }
 
-    public function testOrganizationActionRedirectsIfNotAuthenticated()
+    public function testListActionRedirectsIfNotAuthenticated()
     {
         $this->notAuthenticated();
 
@@ -182,13 +182,13 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $this->dispatch($url);
 
         $this->assertControllerName(Controller\ModuleController::class);
-        $this->assertActionName('organization');
+        $this->assertActionName('list');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
         $this->assertRedirectTo('/user/login');
     }
 
-    public function testOrganizationActionFetches100MostRecentlyUpdatedRepositoriesWhenNoOwnerIsSpecified()
+    public function testListActionFetches100MostRecentlyUpdatedRepositoriesWhenNoOwnerIsSpecified()
     {
         $this->authenticatedAs(new User());
 
@@ -224,15 +224,15 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $this->dispatch('/module/list');
 
         $this->assertControllerName(Controller\ModuleController::class);
-        $this->assertActionName('organization');
+        $this->assertActionName('list');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
     /**
      * @dataProvider providerInvalidVendor
-     * @param $vendor
+     * @param string $vendor
      */
-    public function testOrganizationActionDoesNotMatchOnInvalidVendor($vendor)
+    public function testListActionDoesNotMatchOnInvalidVendor($vendor)
     {
         $this->authenticatedAs(new User());
 
@@ -289,7 +289,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         ];
     }
 
-    public function testOrganizationActionFetches100MostRecentlyUpdatedRepositoriesWithOwnerSpecified()
+    public function testListActionFetches100MostRecentlyUpdatedRepositoriesWithOwnerSpecified()
     {
         $this->authenticatedAs(new User());
 
@@ -332,11 +332,11 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $this->dispatch($url);
 
         $this->assertControllerName(Controller\ModuleController::class);
-        $this->assertActionName('organization');
+        $this->assertActionName('list');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
-    public function testOrganizationActionRendersUnregisteredModulesOnly()
+    public function testListActionRendersUnregisteredModulesOnly()
     {
         $this->authenticatedAs(new User());
 
@@ -411,7 +411,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $this->dispatch($url);
 
         $this->assertControllerName(Controller\ModuleController::class);
-        $this->assertActionName('organization');
+        $this->assertActionName('list');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
 
         /* @var Mvc\Application $application */
