@@ -116,7 +116,7 @@ class ModuleController extends AbstractActionController
 
         $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
-        $viewModel->setTemplate('zf-module/index/index.phtml');
+        $viewModel->setTemplate('zf-module/module/index.phtml');
 
         return $viewModel;
     }

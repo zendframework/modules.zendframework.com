@@ -159,7 +159,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
 
         $this->assertTrue($viewModel->terminate());
-        $this->assertSame('zf-module/index/index', $viewModel->getTemplate());
+        $this->assertSame('zf-module/module/index', $viewModel->getTemplate());
 
         $viewVariable = $viewModel->getVariable('repositories');
 
@@ -418,7 +418,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
 
         $this->assertTrue($viewModel->terminate());
-        $this->assertSame('zf-module/index/index.phtml', $viewModel->getTemplate());
+        $this->assertSame('zf-module/module/index.phtml', $viewModel->getTemplate());
 
         $viewVariable = $viewModel->getVariable('repositories');
 
