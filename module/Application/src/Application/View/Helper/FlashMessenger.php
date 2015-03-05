@@ -6,17 +6,18 @@ use Zend\View\Helper\FlashMessenger as ZendFlashMessenger;
 
 class FlashMessenger extends ZendFlashMessenger
 {
-    /** @var array */
+    /* @var string[][] */
     private $classOptions = [];
 
     /**
-     * Render Messages
+     * Covers Messages in a BS message format
      *
-     * @param  string $namespace
-     * @param  array $classes
+     * @param callable $renderer
+     * @param string $namespace
+     * @param string[] $classes
      * @return string
      */
-    public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
+    private function renderInternal($renderer, $namespace, array $classes = [])
     {
         $this->classOptions = [
             PluginFlashMessenger::NAMESPACE_INFO => [
@@ -43,7 +44,9 @@ class FlashMessenger extends ZendFlashMessenger
 
         // if custom namespace handle as default message
         if (!isset($this->classOptions[$namespace])) {
-            $this->classOptions[$namespace] = $this->classOptions[PluginFlashMessenger::NAMESPACE_DEFAULT];
+            $this->classOptions = [
+                $namespace => $this->classOptions[PluginFlashMessenger::NAMESPACE_DEFAULT]
+            ];
         }
 
         $messageOutput = '';
@@ -57,9 +60,33 @@ class FlashMessenger extends ZendFlashMessenger
             $this->setMessageSeparatorString(sprintf('</div>%s', $openingString));
             $this->setMessageCloseString('</div>');
 
-            $messageOutput .= parent::render($currentNamespace, $classes);
+            $messageOutput .= $renderer($currentNamespace, $classes);
         }
 
         return $messageOutput;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
+    {
+        $renderer = function($namespace, $classes) {
+            return parent::render($namespace, $classes);
+        };
+
+        return $this->renderInternal($renderer, $namespace, $classes);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function renderCurrent($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
+    {
+        $renderer = function($namespace, $classes) {
+            return parent::renderCurrent($namespace, $classes);
+        };
+
+        return $this->renderInternal($renderer, $namespace, $classes);
     }
 }
