@@ -228,6 +228,67 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
 
+    /**
+     * @dataProvider providerInvalidVendor
+     * @param $vendor
+     */
+    public function testOrganizationActionDoesNotMatchOnInvalidVendor($vendor)
+    {
+        $this->authenticatedAs(new User());
+
+        $repositoryCollection = $this->repositoryCollectionMock();
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->any())
+            ->method('getUserRepositories')
+            ->with(
+                $this->equalTo($vendor),
+                $this->equalTo([
+                    'per_page' => 100,
+                    'sort' => 'updated',
+                    'direction' => 'desc',
+                ]
+            ))
+            ->willReturn($repositoryCollection)
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+        ;
+
+        $url = sprintf(
+            '/module/list/%s',
+            $vendor
+        );
+
+        $this->dispatch($url);
+
+        $event = $this->getApplication()->getMvcEvent();
+
+        $this->assertSame(Mvc\Application::ERROR_ROUTER_NO_MATCH, $event->getError());
+    }
+
+    /**
+     * @return array
+     */
+    public function providerInvalidVendor()
+    {
+        return [
+            [
+                '9',
+            ],
+        ];
+    }
+
     public function testOrganizationActionFetches100MostRecentlyUpdatedRepositoriesWithOwnerSpecified()
     {
         $this->authenticatedAs(new User());
