@@ -14,11 +14,11 @@
     </div>
     <?php foreach ($this->contributors as $contributor): ?>
     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3">
-        <?php $url = $contributor['author']['html_url']; ?>
+        <?php $url = $contributor->author->html_url; ?>
         <a href="<?php echo $this->escapeHtmlAttr($url); ?>" class="thumbnail img-responsive" target="_blank">
-            <?php $src = $contributor['author']['avatar_url']; ?>
-            <?php $alt = $contributor['author']['login']; ?>
-            <?php $title = sprintf('%s with %d contributions', $alt, $contributor['total']); ?>
+            <?php $src = $contributor->author->avatar_url; ?>
+            <?php $alt = $contributor->author->login; ?>
+            <?php $title = sprintf('%s with %d contributions', $alt, $contributor->total); ?>
             <img src="<?php echo $this->escapeHtmlAttr($src); ?>" alt="<?php echo $this->escapeHtmlAttr($alt); ?>" title="<?php echo $this->escapeHtmlAttr($title); ?>">
         </a>
     </div>

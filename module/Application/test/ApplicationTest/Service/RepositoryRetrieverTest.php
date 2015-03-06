@@ -362,17 +362,17 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $contributors);
 
         array_walk($contributors, function ($contributor) {
-            $this->assertInternalType('array', $contributor);
+            $this->assertInstanceOf(stdClass::class, $contributor);
 
-            $this->assertArrayHasKey('total', $contributor);
-            $this->assertArrayHasKey('author', $contributor);
+            $this->assertObjectHasAttribute('total', $contributor);
+            $this->assertObjectHasAttribute('author', $contributor);
 
-            $author = $contributor['author'];
+            $author = $contributor->author;
 
-            $this->assertInternalType('array', $author);
-            $this->assertArrayHasKey('login', $author);
-            $this->assertArrayHasKey('avatar_url', $author);
-            $this->assertArrayHasKey('html_url', $author);
+            $this->assertInstanceOf(stdClass::class, $author);
+            $this->assertObjectHasAttribute('login', $author);
+            $this->assertObjectHasAttribute('avatar_url', $author);
+            $this->assertObjectHasAttribute('html_url', $author);
         });
     }
 
@@ -426,25 +426,25 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
             $expected = array_pop($contributorsAsReturned);
 
-            $this->assertInternalType('array', $contributor);
+            $this->assertInstanceOf(stdClass::class, $contributor);
 
-            $this->assertArrayHasKey('total', $contributor);
-            $this->assertSame($expected->total, $contributor['total']);
+            $this->assertObjectHasAttribute('total', $contributor);
+            $this->assertSame($expected->total, $contributor->total);
 
-            $this->assertArrayHasKey('author', $contributor);
+            $this->assertObjectHasAttribute('author', $contributor);
 
-            $author = $contributor['author'];
+            $author = $contributor->author;
 
-            $this->assertInternalType('array', $author);
+            $this->assertInstanceOf(stdClass::class, $author);
 
-            $this->assertArrayHasKey('login', $author);
-            $this->assertSame($expected->author->login, $author['login']);
+            $this->assertObjectHasAttribute('login', $author);
+            $this->assertSame($expected->author->login, $author->login);
 
-            $this->assertArrayHasKey('avatar_url', $author);
-            $this->assertSame($expected->author->avatar_url, $author['avatar_url']);
+            $this->assertObjectHasAttribute('avatar_url', $author);
+            $this->assertSame($expected->author->avatar_url, $author->avatar_url);
 
-            $this->assertArrayHasKey('html_url', $author);
-            $this->assertSame($expected->author->html_url, $author['html_url']);
+            $this->assertObjectHasAttribute('html_url', $author);
+            $this->assertSame($expected->author->html_url, $author->html_url);
         });
     }
 

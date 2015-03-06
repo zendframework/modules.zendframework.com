@@ -96,18 +96,24 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
     }
 
     /**
-     * @return array
+     * @link https://developer.github.com/v3/repos/statistics/#response
+     *
+     * @return stdClass
      */
     private function contributor()
     {
-        return [
-            'author' => [
-                'login' => $this->faker()->unique()->userName,
-                'avatar_url' => $this->faker()->unique()->url,
-                'html_url' => $this->faker()->unique()->url,
-            ],
-            'total' => $this->faker()->randomNumber(),
-        ];
+        $author = new stdClass();
+
+        $author->login = $this->faker()->unique()->userName;
+        $author->avatar_url = $this->faker()->unique()->url;
+        $author->html_url = $this->faker()->unique()->url;
+
+        $contributor = new stdClass();
+
+        $contributor->author = $author;
+        $contributor->total = $this->faker()->randomNumber();
+
+        return $contributor;
     }
 
     /**
