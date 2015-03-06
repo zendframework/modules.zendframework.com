@@ -6,12 +6,15 @@ use Application\Controller;
 use Application\Entity;
 use Application\Service;
 use ApplicationTest\Integration\Util\Bootstrap;
+use ApplicationTest\Util\FakerTrait;
 use stdClass;
 use Zend\Http;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
 class ContributorsControllerTest extends AbstractHttpControllerTestCase
 {
+    use FakerTrait;
+
     protected function setUp()
     {
         parent::setUp();
@@ -46,6 +49,8 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
             ->getMock()
         ;
 
+        $contributors = $this->contributors(5);
+
         $repositoryRetriever
             ->expects($this->once())
             ->method('getContributors')
@@ -53,7 +58,7 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
                 $this->equalTo($vendor),
                 $this->equalTo($name)
             )
-            ->willReturn([])
+            ->willReturn($contributors)
         ;
 
         $metaData = new stdClass();
@@ -88,5 +93,35 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName(Controller\ContributorsController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
+    }
+
+    /**
+     * @return array
+     */
+    private function contributor()
+    {
+        return [
+            'author' => [
+                'login' => $this->faker()->unique()->userName,
+                'avatar_url' => $this->faker()->unique()->url,
+                'html_url' => $this->faker()->unique()->url,
+            ],
+            'total' => $this->faker()->randomNumber(),
+        ];
+    }
+
+    /**
+     * @param int $count
+     * @return stdClass[]
+     */
+    private function contributors($count)
+    {
+        $contributors = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            array_push($contributors, $this->contributor());
+        }
+
+        return $contributors;
     }
 }
