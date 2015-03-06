@@ -32,6 +32,8 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/user');
 
+        $this->assertMatchedRouteName('scn-social-auth-user');
+
         $this->assertControllerName('zfcuser');
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
@@ -102,6 +104,8 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->authenticatedAs(new User());
 
         $this->dispatch('/user');
+
+        $this->assertMatchedRouteName('scn-social-auth-user');
 
         $this->assertControllerName('zfcuser');
         $this->assertActionName('index');

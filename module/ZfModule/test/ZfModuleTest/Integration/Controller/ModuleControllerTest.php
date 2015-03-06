@@ -39,6 +39,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/module');
 
+        $this->assertMatchedRouteName('zf-module');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
@@ -78,6 +80,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         ;
 
         $this->dispatch('/module');
+
+        $this->assertMatchedRouteName('zf-module');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('index');
@@ -151,6 +155,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/module');
 
+        $this->assertMatchedRouteName('zf-module');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
@@ -180,6 +186,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         );
 
         $this->dispatch($url);
+
+        $this->assertMatchedRouteName('zf-module/list');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('list');
@@ -222,6 +230,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         ;
 
         $this->dispatch('/module/list');
+
+        $this->assertMatchedRouteName('zf-module/list');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('list');
@@ -331,6 +341,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
+        $this->assertMatchedRouteName('zf-module/list');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('list');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
@@ -410,11 +422,12 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
+        $this->assertMatchedRouteName('zf-module/list');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('list');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
 
-        /* @var Mvc\Application $application */
         $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
 
         $this->assertTrue($viewModel->terminate());
@@ -432,6 +445,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $this->notAuthenticated();
 
         $this->dispatch('/module/add');
+
+        $this->assertMatchedRouteName('zf-module/add');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
@@ -453,6 +468,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
             '/module/add',
             $method
         );
+
+        $this->assertMatchedRouteName('zf-module/add');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
@@ -525,6 +542,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
+        $this->assertMatchedRouteName('zf-module/add');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
@@ -585,6 +604,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
                 'owner' => $vendor,
             ]
         );
+
+        $this->assertMatchedRouteName('zf-module/add');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
@@ -675,6 +696,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
+        $this->assertMatchedRouteName('zf-module/add');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
@@ -759,6 +782,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
+        $this->assertMatchedRouteName('zf-module/add');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
@@ -771,6 +796,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $this->notAuthenticated();
 
         $this->dispatch('/module/remove');
+
+        $this->assertMatchedRouteName('zf-module/remove');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
@@ -792,6 +819,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
             '/module/remove',
             $method
         );
+
+        $this->assertMatchedRouteName('zf-module/remove');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
@@ -845,6 +874,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
                 'owner' => $vendor,
             ]
         );
+
+        $this->assertMatchedRouteName('zf-module/remove');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
@@ -906,6 +937,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
                 'owner' => $vendor,
             ]
         );
+
+        $this->assertMatchedRouteName('zf-module/remove');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
@@ -981,6 +1014,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
                 'owner' => $vendor,
             ]
         );
+
+        $this->assertMatchedRouteName('zf-module/remove');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
@@ -1067,6 +1102,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
+        $this->assertMatchedRouteName('zf-module/remove');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
@@ -1106,6 +1143,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         );
 
         $this->dispatch($url);
+
+        $this->assertMatchedRouteName('view-module');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('not-found');
@@ -1164,6 +1203,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
+        $this->assertMatchedRouteName('view-module');
+
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('not-found');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_404);
@@ -1220,6 +1261,8 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         );
 
         $this->dispatch($url);
+
+        $this->assertMatchedRouteName('view-module');
 
         $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('view');

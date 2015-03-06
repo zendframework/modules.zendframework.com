@@ -69,6 +69,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/');
 
+        $this->assertMatchedRouteName('home');
+
         $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
@@ -100,6 +102,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         ;
 
         $this->dispatch('/feed');
+
+        $this->assertMatchedRouteName('feed');
 
         $this->assertControllerName(Controller\IndexController::class);
         $this->assertActionName('feed');
