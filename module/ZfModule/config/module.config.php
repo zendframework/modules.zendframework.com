@@ -10,7 +10,7 @@ use ZfModule\View\Helper;
 return [
     'controllers'  => [
         'factories' => [
-            Controller\IndexController::class => Controller\IndexControllerFactory::class,
+            Controller\ModuleController::class => Controller\ModuleControllerFactory::class,
             Controller\UserController::class => Controller\UserControllerFactory::class,
         ],
     ],
@@ -21,7 +21,7 @@ return [
                 'options' => [
                     'route'    => '/:vendor/:module',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\ModuleController::class,
                         'action'     => 'view',
                     ],
                 ],
@@ -44,7 +44,7 @@ return [
                 'options'       => [
                     'route'    => '/module',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\ModuleController::class,
                         'action'     => 'index',
                     ],
                 ],

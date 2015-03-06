@@ -16,7 +16,7 @@ use ZfModule\Service;
  * @method Http\Request getRequest()
  * @method Plugin\ZfcUserAuthentication zfcUserAuthentication()
  */
-class IndexController extends AbstractActionController
+class ModuleController extends AbstractActionController
 {
     /**
      * @var Mapper\Module
@@ -116,7 +116,7 @@ class IndexController extends AbstractActionController
 
         $viewModel = new ViewModel(['repositories' => $repositories]);
         $viewModel->setTerminal(true);
-        $viewModel->setTemplate('zf-module/index/index.phtml');
+        $viewModel->setTemplate('zf-module/module/index.phtml');
 
         return $viewModel;
     }

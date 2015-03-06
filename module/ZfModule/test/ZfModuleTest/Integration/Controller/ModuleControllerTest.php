@@ -22,7 +22,7 @@ use ZfModule\Service;
 /**
  * @method Mvc\Application getApplication()
  */
-class IndexControllerTest extends AbstractHttpControllerTestCase
+class ModuleControllerTest extends AbstractHttpControllerTestCase
 {
     use AuthenticationTrait;
 
@@ -39,7 +39,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/module');
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
@@ -79,7 +79,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/module');
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
@@ -151,7 +151,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/module');
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
 
@@ -159,7 +159,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
 
         $this->assertTrue($viewModel->terminate());
-        $this->assertSame('zf-module/index/index', $viewModel->getTemplate());
+        $this->assertSame('zf-module/module/index', $viewModel->getTemplate());
 
         $viewVariable = $viewModel->getVariable('repositories');
 
@@ -181,7 +181,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('organization');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
@@ -223,7 +223,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/module/list');
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('organization');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
@@ -331,7 +331,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('organization');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
     }
@@ -410,7 +410,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('organization');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
 
@@ -418,7 +418,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $viewModel = $this->getApplication()->getMvcEvent()->getViewModel();
 
         $this->assertTrue($viewModel->terminate());
-        $this->assertSame('zf-module/index/index.phtml', $viewModel->getTemplate());
+        $this->assertSame('zf-module/module/index.phtml', $viewModel->getTemplate());
 
         $viewVariable = $viewModel->getVariable('repositories');
 
@@ -433,7 +433,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/module/add');
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
@@ -454,7 +454,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             $method
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
 
@@ -525,7 +525,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
 
@@ -586,7 +586,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
 
@@ -675,7 +675,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
 
@@ -759,7 +759,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('add');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
@@ -772,7 +772,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/module/remove');
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
@@ -793,7 +793,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             $method
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
 
@@ -846,7 +846,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
 
@@ -907,7 +907,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
 
@@ -982,7 +982,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_500);
 
@@ -1067,7 +1067,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             ]
         );
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('remove');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_302);
 
@@ -1107,7 +1107,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('not-found');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_404);
     }
@@ -1164,7 +1164,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('not-found');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_404);
     }
@@ -1221,7 +1221,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
-        $this->assertControllerName(Controller\IndexController::class);
+        $this->assertControllerName(Controller\ModuleController::class);
         $this->assertActionName('view');
     }
 
