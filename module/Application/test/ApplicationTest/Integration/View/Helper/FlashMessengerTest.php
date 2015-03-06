@@ -5,6 +5,9 @@ namespace ApplicationTest\Integration\View\Helper;
 use ApplicationTest\Integration\Util\Bootstrap;
 use PHPUnit_Framework_TestCase;
 
+/**
+ * @covers Application\View\Helper\FlashMessenger
+ */
 class FlashMessengerTest extends PHPUnit_Framework_TestCase
 {
     public function testMultipleMessageTypesGetsRendered()
