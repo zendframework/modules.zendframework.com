@@ -102,16 +102,15 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
      */
     private function contributor()
     {
-        $author = new stdClass();
-
-        $author->login = $this->faker()->unique()->userName;
-        $author->avatar_url = $this->faker()->unique()->url;
-        $author->html_url = $this->faker()->unique()->url;
-
         $contributor = new stdClass();
 
-        $contributor->author = $author;
         $contributor->total = $this->faker()->randomNumber();
+
+        $contributor->author = new stdClass();
+
+        $contributor->author->login = $this->faker()->unique()->userName;
+        $contributor->author->avatar_url = $this->faker()->unique()->url;
+        $contributor->author->html_url = $this->faker()->unique()->url;
 
         return $contributor;
     }
