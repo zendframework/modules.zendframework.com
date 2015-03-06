@@ -2,7 +2,6 @@
 .php_cs.cache
 .vagrant
 build.properties
-clover.xml
 config/development.config.php
 data/logs/*
 puphpet/files/dot/ssh
