@@ -10,14 +10,14 @@ class FlashMessenger extends ZendFlashMessenger
     private $classOptions = [];
 
     /**
-     * Covers Messages in a BS message format
+     * Render Messages in a BS message format
      *
      * @param callable $renderer
      * @param string $namespace
      * @param string[] $classes
      * @return string
      */
-    private function renderInternal($renderer, $namespace, array $classes = [])
+    private function doRender($renderer, $namespace, array $classes = [])
     {
         $this->classOptions = [
             PluginFlashMessenger::NAMESPACE_INFO => [
@@ -75,7 +75,7 @@ class FlashMessenger extends ZendFlashMessenger
             return parent::render($namespace, $classes);
         };
 
-        return $this->renderInternal($renderer, $namespace, $classes);
+        return $this->doRender($renderer, $namespace, $classes);
     }
 
     /**
@@ -87,6 +87,6 @@ class FlashMessenger extends ZendFlashMessenger
             return parent::renderCurrent($namespace, $classes);
         };
 
-        return $this->renderInternal($renderer, $namespace, $classes);
+        return $this->doRender($renderer, $namespace, $classes);
     }
 }
