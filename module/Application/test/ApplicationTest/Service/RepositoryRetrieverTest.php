@@ -363,6 +363,8 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
         array_walk($contributors, function ($contributor) {
             $this->assertInternalType('array', $contributor);
+
+            $this->assertArrayHasKey('total', $contributor);
             $this->assertArrayHasKey('author', $contributor);
 
             $author = $contributor['author'];
@@ -425,6 +427,10 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
             $expected = array_pop($contributorsAsReturned);
 
             $this->assertInternalType('array', $contributor);
+
+            $this->assertArrayHasKey('total', $contributor);
+            $this->assertSame($expected->total, $contributor['total']);
+
             $this->assertArrayHasKey('author', $contributor);
 
             $author = $contributor['author'];
@@ -496,6 +502,7 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $contributor = new stdClass();
 
         $contributor->author = $author;
+        $contributor->total = $this->faker()->randomNumber();
 
         return $contributor;
     }
