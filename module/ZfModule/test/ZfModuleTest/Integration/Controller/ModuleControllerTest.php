@@ -1226,6 +1226,92 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
     }
 
     /**
+     * @dataProvider providerTakenUrls
+     *
+     * @param string $url
+     */
+    public function testViewActionIsNotDispatchedToIfUrlIsTaken($url)
+    {
+        $moduleMapper = $this->getMockBuilder(Mapper\Module::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $moduleMapper
+            ->expects($this->any())
+            ->method('findByName')
+            ->willReturn(new Entity\Module())
+        ;
+
+        $repositoryRetriever = $this->getMockBuilder(RepositoryRetriever::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $repositoryRetriever
+            ->expects($this->any())
+            ->method('getUserRepositoryMetadata')
+            ->willReturn(new stdClass())
+        ;
+
+        $this->getApplicationServiceLocator()
+            ->setAllowOverride(true)
+            ->setService(
+                Mapper\Module::class,
+                $moduleMapper
+            )
+            ->setService(
+                RepositoryRetriever::class,
+                $repositoryRetriever
+            )
+        ;
+
+        $this->dispatch($url);
+
+        $routeMatch = $this->getApplication()->getMvcEvent()->getRouteMatch();
+
+        $controller = $routeMatch->getParam('controller');
+        $action = $routeMatch->getParam('action');
+
+        $unexpectedController = Controller\ModuleController::class;
+        $unexpectedAction = 'view';
+
+        $isController = strtolower($controller) === strtolower($unexpectedController);
+        $isAction = strtolower($action) === $unexpectedAction;
+
+        $this->assertFalse(
+            $isController && $isAction,
+            sprintf(
+                'Failed to assert that the url "%s" is not dispatched to "%s::%sAction()"',
+                $url,
+                $unexpectedController,
+                $unexpectedAction
+            )
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function providerTakenUrls()
+    {
+        return [
+            [
+                '/module/add',
+            ],
+            [
+                '/module/list',
+            ],
+            [
+                '/module/remove',
+            ],
+            [
+                '/user/anyone',
+            ],
+        ];
+    }
+
+    /**
      * @link http://stackoverflow.com/a/15907250
      *
      * @param array $repositories
