@@ -362,15 +362,16 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $contributors);
 
         array_walk($contributors, function ($contributor) {
-            $this->assertInternalType('array', $contributor);
-            $this->assertArrayHasKey('author', $contributor);
+            $this->assertInstanceOf(stdClass::class, $contributor);
 
-            $author = $contributor['author'];
+            $this->assertObjectHasAttribute('total', $contributor);
 
-            $this->assertInternalType('array', $author);
-            $this->assertArrayHasKey('login', $author);
-            $this->assertArrayHasKey('avatar_url', $author);
-            $this->assertArrayHasKey('html_url', $author);
+            $this->assertObjectHasAttribute('author', $contributor);
+            $this->assertInstanceOf(stdClass::class, $contributor->author);
+
+            $this->assertObjectHasAttribute('login', $contributor->author);
+            $this->assertObjectHasAttribute('avatar_url', $contributor->author);
+            $this->assertObjectHasAttribute('html_url', $contributor->author);
         });
     }
 
@@ -424,21 +425,22 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
 
             $expected = array_pop($contributorsAsReturned);
 
-            $this->assertInternalType('array', $contributor);
-            $this->assertArrayHasKey('author', $contributor);
+            $this->assertInstanceOf(stdClass::class, $contributor);
 
-            $author = $contributor['author'];
+            $this->assertObjectHasAttribute('total', $contributor);
+            $this->assertSame($expected->total, $contributor->total);
 
-            $this->assertInternalType('array', $author);
+            $this->assertObjectHasAttribute('author', $contributor);
+            $this->assertInstanceOf(stdClass::class, $contributor->author);
 
-            $this->assertArrayHasKey('login', $author);
-            $this->assertSame($expected->author->login, $author['login']);
+            $this->assertObjectHasAttribute('login', $contributor->author);
+            $this->assertSame($expected->author->login, $contributor->author->login);
 
-            $this->assertArrayHasKey('avatar_url', $author);
-            $this->assertSame($expected->author->avatar_url, $author['avatar_url']);
+            $this->assertObjectHasAttribute('avatar_url', $contributor->author);
+            $this->assertSame($expected->author->avatar_url, $contributor->author->avatar_url);
 
-            $this->assertArrayHasKey('html_url', $author);
-            $this->assertSame($expected->author->html_url, $author['html_url']);
+            $this->assertObjectHasAttribute('html_url', $contributor->author);
+            $this->assertSame($expected->author->html_url, $contributor->author->html_url);
         });
     }
 
@@ -487,15 +489,15 @@ class RepositoryRetrieverTest extends PHPUnit_Framework_TestCase
      */
     private function contributor()
     {
-        $author = new stdClass();
-
-        $author->login = $this->faker()->unique()->userName;
-        $author->avatar_url = $this->faker()->unique()->url;
-        $author->html_url = $this->faker()->unique()->url;
-
         $contributor = new stdClass();
 
-        $contributor->author = $author;
+        $contributor->total = $this->faker()->randomNumber();
+
+        $contributor->author = new stdClass();
+
+        $contributor->author->login = $this->faker()->unique()->userName;
+        $contributor->author->avatar_url = $this->faker()->unique()->url;
+        $contributor->author->html_url = $this->faker()->unique()->url;
 
         return $contributor;
     }

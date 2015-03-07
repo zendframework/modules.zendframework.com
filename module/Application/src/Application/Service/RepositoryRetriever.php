@@ -64,7 +64,7 @@ class RepositoryRetriever
     {
         try {
             $contributors = $this->githubClient->api('repos')->contributors($owner, $repo);
-            $data = json_decode($contributors, true);
+            $data = json_decode($contributors);
 
             return array_reverse($data);
         } catch (RuntimeException $e) {
