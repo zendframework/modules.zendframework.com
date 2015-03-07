@@ -1,6 +1,5 @@
 <h1>A 404 error occurred</h1>
-<h2><?php echo $this->message ?></h2>
-
+<hr>
 <?php if (isset($this->reason) && $this->reason): ?>
     <?php
     $reasonMessage = '';
@@ -22,7 +21,10 @@
             break;
     }
     ?>
-    <p><?php echo $reasonMessage ?></p>
+    <div class="alert alert-danger alert-error">
+        <strong><?php echo $this->message ?></strong>
+        <p><?php echo $reasonMessage ?></p>
+    </div>
 <?php endif ?>
 
 <?php if (isset($this->controller) && $this->controller): ?>
