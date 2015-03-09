@@ -16,7 +16,7 @@ final class LoginListener implements SharedListenerAggregateInterface
     protected $listeners = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attachShared(SharedEventManagerInterface $events)
     {
@@ -28,7 +28,7 @@ final class LoginListener implements SharedListenerAggregateInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function detachShared(SharedEventManagerInterface $events)
     {

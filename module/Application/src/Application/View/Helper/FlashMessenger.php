@@ -67,7 +67,7 @@ class FlashMessenger extends ZendFlashMessenger
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
     {
@@ -79,7 +79,7 @@ class FlashMessenger extends ZendFlashMessenger
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function renderCurrent($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
     {

@@ -8,7 +8,7 @@ class ViewableUserException extends \Exception implements ViewableUserExceptionI
     private $publicMessage;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($message = '', $publicMessage = '', $code = 0, \Exception $previous = null)
     {
@@ -17,7 +17,7 @@ class ViewableUserException extends \Exception implements ViewableUserExceptionI
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPublicMessage()
     {
