@@ -6,7 +6,6 @@ use Application\Service\RepositoryRetriever;
 use ApplicationTest\Integration\Util\AuthenticationTrait;
 use ApplicationTest\Integration\Util\Bootstrap;
 use EdpGithub\Collection;
-use Exception;
 use PHPUnit_Framework_MockObject_MockObject;
 use stdClass;
 use Zend\Http;
@@ -15,6 +14,7 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\View;
 use ZfcUser\Entity\User;
 use ZfModule\Controller;
+use ZfModule\Controller\Exception;
 use ZfModule\Entity;
 use ZfModule\Mapper;
 use ZfModule\Service;
@@ -205,11 +205,11 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
             ->with(
                 $this->equalTo(null),
                 $this->equalTo([
-                    'per_page' => 100,
-                    'sort' => 'updated',
-                    'direction' => 'desc',
-                ]
-            ))
+                        'per_page' => 100,
+                        'sort' => 'updated',
+                        'direction' => 'desc',
+                    ]
+                ))
             ->willReturn($repositoryCollection)
         ;
 
@@ -249,11 +249,11 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
             ->with(
                 $this->equalTo($vendor),
                 $this->equalTo([
-                    'per_page' => 100,
-                    'sort' => 'updated',
-                    'direction' => 'desc',
-                ]
-            ))
+                        'per_page' => 100,
+                        'sort' => 'updated',
+                        'direction' => 'desc',
+                    ]
+                ))
             ->willReturn($repositoryCollection)
         ;
 
@@ -445,7 +445,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
      *
      * @param string $method
      */
-    public function testAddActionThrowsUnexpectedValueExceptionIfNotPostedTo($method)
+    public function testAddActionThrowsInvalidDataExceptionIfNotPostedTo($method)
     {
         $this->authenticatedAs(new User());
 
@@ -461,11 +461,11 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         /* @var View\Model\ViewModel  $result */
         $result = $this->getApplication()->getMvcEvent()->getResult();
 
-        /* @var Exception $exception */
+        /* @var Exception\InvalidDataException $exception */
         $exception = $result->getVariable('exception');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
-        $this->assertSame('Something went wrong with the post values of the request...', $exception->getMessage());
+        $this->assertInstanceOf(Exception\InvalidDataException::class, $exception);
+        $this->assertSame('Something went wrong with the post values of the request...', $exception->getPublicMessage());
     }
 
     /**
@@ -486,7 +486,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         ];
     }
 
-    public function testAddActionThrowsRuntimeExceptionIfUnableToFetchRepositoryMetaData()
+    public function testAddActionThrowsRepositoryExceptionIfUnableToFetchRepositoryMetaData()
     {
         $this->authenticatedAs(new User());
 
@@ -532,13 +532,13 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         /* @var View\Model\ViewModel  $result */
         $result = $this->getApplication()->getMvcEvent()->getResult();
 
-        /* @var Exception $exception */
+        /* @var Exception\RepositoryException $exception */
         $exception = $result->getVariable('exception');
 
-        $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
+        $this->assertInstanceOf(Exception\RepositoryException::class, $exception);
         $this->assertSame(
             'Not able to fetch the repository from GitHub due to an unknown error.',
-            $exception->getMessage()
+            $exception->getPublicMessage()
         );
     }
 
@@ -547,7 +547,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
      *
      * @param stdClass $repository
      */
-    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryHasInsufficientPrivileges($repository)
+    public function testAddActionThrowsRepositoryExceptionWhenRepositoryHasInsufficientPrivileges($repository)
     {
         $this->authenticatedAs(new User());
 
@@ -593,14 +593,14 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         /* @var View\Model\ViewModel  $result */
         $result = $this->getApplication()->getMvcEvent()->getResult();
 
-        /* @var Exception $exception */
+        /* @var Exception\RepositoryException $exception */
         $exception = $result->getVariable('exception');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertInstanceOf(Exception\RepositoryException::class, $exception);
         $this->assertSame(
             'You have no permission to add this module. The reason might be that you are ' .
             'neither the owner nor a collaborator of this repository.',
-            $exception->getMessage()
+            $exception->getPublicMessage()
         );
     }
 
@@ -618,7 +618,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         ];
     }
 
-    public function testAddActionThrowsUnexpectedValueExceptionWhenRepositoryIsNotAModule()
+    public function testAddActionThrowsRepositoryExceptionWhenRepositoryIsNotAModule()
     {
         $this->authenticatedAs(new User());
 
@@ -682,16 +682,16 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         /* @var View\Model\ViewModel  $result */
         $result = $this->getApplication()->getMvcEvent()->getResult();
 
-        /* @var Exception $exception */
+        /* @var Exception\RepositoryException $exception */
         $exception = $result->getVariable('exception');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertInstanceOf(Exception\RepositoryException::class, $exception);
         $this->assertSame(
             sprintf(
                 '%s is not a Zend Framework Module',
                 $nonModule->name
             ),
-            $exception->getMessage()
+            $exception->getPublicMessage()
         );
     }
 
@@ -784,7 +784,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
      *
      * @param string $method
      */
-    public function testRemoveActionThrowsUnexpectedValueExceptionIfNotPostedTo($method)
+    public function testRemoveActionThrowsInvalidDataExceptionIfNotPostedTo($method)
     {
         $this->authenticatedAs(new User());
 
@@ -800,14 +800,14 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         /* @var View\Model\ViewModel  $result */
         $result = $this->getApplication()->getMvcEvent()->getResult();
 
-        /* @var Exception $exception */
+        /* @var Exception\InvalidDataException $exception */
         $exception = $result->getVariable('exception');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
-        $this->assertSame('Something went wrong with the post values of the request...', $exception->getMessage());
+        $this->assertInstanceOf(Exception\InvalidDataException::class, $exception);
+        $this->assertSame('Something went wrong with the post values of the request...', $exception->getPublicMessage());
     }
 
-    public function testRemoveActionThrowsRuntimeExceptionIfUnableToFetchRepositoryMetaData()
+    public function testRemoveActionThrowsRepositoryExceptionIfUnableToFetchRepositoryMetaData()
     {
         $this->authenticatedAs(new User());
 
@@ -853,13 +853,13 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         /* @var View\Model\ViewModel  $result */
         $result = $this->getApplication()->getMvcEvent()->getResult();
 
-        /* @var Exception $exception */
+        /* @var Exception\RepositoryException $exception */
         $exception = $result->getVariable('exception');
 
-        $this->assertInstanceOf(Controller\Exception\RuntimeException::class, $exception);
+        $this->assertInstanceOf(Exception\RepositoryException::class, $exception);
         $this->assertSame(
             'Not able to fetch the repository from GitHub due to an unknown error.',
-            $exception->getMessage()
+            $exception->getPublicMessage()
         );
     }
 
@@ -868,7 +868,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
      *
      * @param stdClass $repository
      */
-    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryHasInsufficientPrivileges($repository)
+    public function testRemoveActionThrowsRepositoryExceptionWhenRepositoryHasInsufficientPrivileges($repository)
     {
         $this->authenticatedAs(new User());
 
@@ -914,18 +914,18 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         /* @var View\Model\ViewModel  $result */
         $result = $this->getApplication()->getMvcEvent()->getResult();
 
-        /* @var Exception $exception */
+        /* @var Exception\RepositoryException $exception */
         $exception = $result->getVariable('exception');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertInstanceOf(Exception\RepositoryException::class, $exception);
         $this->assertSame(
             'You have no permission to remove this module. The reason might be that you are ' .
             'neither the owner nor a collaborator of this repository.',
-            $exception->getMessage()
+            $exception->getPublicMessage()
         );
     }
 
-    public function testRemoveActionThrowsUnexpectedValueExceptionWhenRepositoryNotPreviouslyRegistered()
+    public function testRemoveActionThrowsRepositoryExceptionWhenRepositoryNotPreviouslyRegistered()
     {
         $this->authenticatedAs(new User());
 
@@ -989,16 +989,16 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         /* @var View\Model\ViewModel  $result */
         $result = $this->getApplication()->getMvcEvent()->getResult();
 
-        /* @var Exception $exception */
+        /* @var Exception\RepositoryException $exception */
         $exception = $result->getVariable('exception');
 
-        $this->assertInstanceOf(Controller\Exception\UnexpectedValueException::class, $exception);
+        $this->assertInstanceOf(Exception\RepositoryException::class, $exception);
         $this->assertSame(
             sprintf(
                 '%s was not found',
                 $unregisteredModule->name
             ),
-            $exception->getMessage()
+            $exception->getPublicMessage()
         );
     }
 
@@ -1410,6 +1410,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $repository = $this->validModule();
 
         $repository->name = 'non-module';
+        $repository->full_name = 'foo/non-module';
 
         return $repository;
     }
@@ -1422,6 +1423,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $repository = $this->validModule();
 
         $repository->name = 'forked-module';
+        $repository->full_name = 'foo/forked-module';
         $repository->fork = true;
 
         return $repository;
@@ -1435,6 +1437,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
         $repository = $this->validModule();
 
         $repository->name = 'module-without-push-permissions';
+        $repository->full_name = 'foo/module-without-push-permissions';
         $repository->permissions->push = false;
 
         return $repository;

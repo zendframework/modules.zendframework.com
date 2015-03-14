@@ -10,9 +10,7 @@
                 </div>
             </div>
         </div>
-        <?php foreach ($this->flashMessenger()->getMessages() as $message): ?>
-            <h3 class="zf-green"><?php echo $this->escapeHtml($message); ?></h3>
-        <?php endforeach; ?>
+        <?php echo $this->flashMessenger()->render(); ?>
 
         <ul class="nav nav-tabs">
             <li class="active"><a href="#modules" data-toggle="tab">Registered Modules</a></li>
