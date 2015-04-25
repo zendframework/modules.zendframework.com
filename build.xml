@@ -22,12 +22,7 @@
         <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'cd ${project.root}; composer install --no-dev'" />
     </target>
 
-    <target hidden="true" name="owner-change">
-        <echo message="Changing owner" />
-        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'chown -R www-data:www-data ${project.root}/data'" />
-    </target>
-
-    <target name="deploy" description="Deploys application to production" depends="git-reset, git-pull, composer-install, owner-change">
+    <target name="deploy" description="Deploys application to production" depends="git-reset, git-pull, composer-install">
         <echo message="Successfully deployed to production" />
     </target>
 </project>
