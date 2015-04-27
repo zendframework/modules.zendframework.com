@@ -90,6 +90,8 @@ class ContributorsControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/contributors');
 
+        $this->assertMatchedRouteName('contributors');
+
         $this->assertControllerName(Controller\ContributorsController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);

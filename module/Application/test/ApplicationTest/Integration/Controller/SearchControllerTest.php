@@ -38,6 +38,8 @@ class SearchControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/live-search');
 
+        $this->assertMatchedRouteName('live-search');
+
         $this->assertControllerName(Controller\SearchController::class);
         $this->assertActionName('index');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);

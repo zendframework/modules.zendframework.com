@@ -59,6 +59,8 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch($url);
 
+        $this->assertMatchedRouteName('modules-for-user');
+
         $this->assertControllerName(Controller\UserController::class);
         $this->assertActionName('modulesForUser');
         $this->assertResponseStatusCode(Http\Response::STATUS_CODE_200);
