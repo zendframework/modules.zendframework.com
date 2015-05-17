@@ -19,7 +19,7 @@ This projects follows the [PSR-2 Coding Style Guide](http://www.php-fig.org/psr/
 Before opening a pull request or pushing more commits, you should run coding style checks locally:
  
 ```
-$ ./vendor/bin/phpcs --standard=./phpcs.xml -np --report=summary .
+$ ./vendor/bin/php-cs-fixer fix --config-file=./.php_cs --dry-run --diff -v
 ```
 
 
