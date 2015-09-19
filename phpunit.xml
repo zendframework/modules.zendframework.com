@@ -2,15 +2,15 @@
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
+    backupGlobals="false"
     bootstrap="./module/Application/test/bootstrap.php"
     colors="true"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
-    verbose="true"
-    stopOnFailure="false"
     processIsolation="false"
-    backupGlobals="false"
+    stopOnFailure="false"
+    verbose="true"
 >
     <testsuite name="Test all modules">
         <directory>./module/Application/test/ApplicationTest</directory>
