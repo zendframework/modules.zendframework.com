@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/zendframework/modules.zendframework.com.svg?branch=master)](https://travis-ci.org/zendframework/modules.zendframework.com) 
 [![Dependency Status](https://www.versioneye.com/user/projects/54885d5a746eb514b0000279/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54885d5a746eb514b0000279) 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/?branch=develop) 
-[![Build Status](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/build-status/develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/badges/build.png?b=master)](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/build-status/master)
 
 ## Introduction
 
