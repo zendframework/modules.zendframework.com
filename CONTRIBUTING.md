@@ -16,10 +16,10 @@ locally rather than keeping Travis busy doing it. There's not much more pleasing
 
 This projects follows the [PSR-2 Coding Style Guide](http://www.php-fig.org/psr/psr-2/). Be sure to read it!
 
-Before opening a pull request or pushing more commits, you should run coding style checks locally:
- 
+Before opening a pull request or pushing more commits, fix coding style issues locally:
+
 ```
-$ ./vendor/bin/php-cs-fixer fix --config-file=./.php_cs --dry-run --diff -v
+$ make cs
 ```
 
 
@@ -30,7 +30,7 @@ We do have a - somewhat - limited test suite, but are hoping for more.
 Please run the tests locally to see if they pass:
 
 ```
-$ ./vendor/bin/phpunit --configuration phpunit.xml
+$ make test
 ```
 
 ## Contributors
