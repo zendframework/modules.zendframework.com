@@ -5,6 +5,7 @@ $config = new Symfony\CS\Config\Config();
 $config->getFinder()
     ->exclude('data')
     ->exclude('puphpet')
+    ->name('*.php.dist')
     ->in(__DIR__)
 ;
 
