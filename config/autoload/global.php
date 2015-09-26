@@ -14,4 +14,25 @@ return [
         'username'  => 'modules',
         'password'  => 'modules',
     ],
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'params' => [
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'modules',
+                    'password' => 'modules',
+                    'dbname'   => 'modules',
+                ],
+            ],
+        ],
+        'migrations_configuration' => [
+            'orm_default' => [
+                'directory' => 'data/migrations',
+                'name'      => 'ZFModules DBAL Migrations',
+                'namespace' => 'ZfModulesMigrations',
+                'table'     => 'doctrine_migration_versions',
+            ],
+        ],
+    ],
 ];
