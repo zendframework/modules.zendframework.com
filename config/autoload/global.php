@@ -28,9 +28,9 @@ return [
         ],
         'migrations_configuration' => [
             'orm_default' => [
-                'directory' => 'data/migrations',
+                'directory' => 'module/Application/src/Application/Doctrine/DBAL/Migration',
                 'name'      => 'ZFModules DBAL Migrations',
-                'namespace' => 'ZfModulesMigrations',
+                'namespace' => 'Application\Doctrine\DBAL\Migration',
                 'table'     => 'doctrine_migration_versions',
             ],
         ],

@@ -1,6 +1,6 @@
 <?php
 
-namespace ZfModulesMigrations;
+namespace Application\Doctrine\DBAL\Migration;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
