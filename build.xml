@@ -22,7 +22,12 @@
         <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'cd ${project.root}; composer install --no-dev'" />
     </target>
 
-    <target name="deploy" description="Deploys application to production" depends="git-reset, git-pull, composer-install">
+    <target hidden="true" name="doctrine-migration">
+        <echo message="Runs Doctrine migrations" />
+        <exec logoutput="true" checkreturn="true" command="ssh ${ssh.user}@${ssh.host} -p ${ssh.port} 'cd ${project.root}; php public/index.php migrations:migrate --no-interaction --verbose'" />
+    </target>
+
+    <target name="deploy" description="Deploys application to production" depends="git-reset, git-pull, composer-install, doctrine-migration">
         <echo message="Successfully deployed to production" />
     </target>
 </project>
