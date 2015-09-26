@@ -11,7 +11,6 @@ test: composer
 	cp config/autoload/travis.php.local.dist config/autoload/travis.local.php
 	mysql -uroot -e 'DROP DATABASE IF EXISTS modules_test;'
 	mysql -uroot -e 'CREATE DATABASE modules_test;'
-	mysql -uroot modules_test < data/sql/0.sql
 	php public/index.php migrations:migrate --no-interaction --verbose
 	vendor/bin/phpunit --configuration phpunit.xml
 	rm config/autoload/travis.local.php

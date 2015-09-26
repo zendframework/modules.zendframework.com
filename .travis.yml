@@ -26,7 +26,6 @@ install:
 before_script:
   - cp config/autoload/travis.php.local.dist config/autoload/travis.local.php
   - mysql -uroot -e 'create database modules_test;'
-  - mysql -uroot modules_test < data/sql/0.sql
   - php public/index.php migrations:migrate --no-interaction --verbose
 
 script:
