@@ -2,6 +2,8 @@
 
 return [
     'modules' => [
+        'DoctrineModule',
+        'DoctrineORMModule',
         'ZF\DevelopmentMode',
         'ZfcBase',
         'ZfcUser',
