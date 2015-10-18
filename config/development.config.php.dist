@@ -12,6 +12,6 @@ return [
     ],
     // development time configuration globbing
     'module_listener_options' => [
-        'config_glob_paths' => ['config/autoload/{,*.}{global,local}-development.php']
-    ]
+        'config_glob_paths' => ['config/autoload/{,*.}{global,local}-development.php'],
+    ],
 ];

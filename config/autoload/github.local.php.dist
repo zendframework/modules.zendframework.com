@@ -8,7 +8,7 @@
 $settings = [
     /**
      * Github Client id
-     * 
+     *
      * Please specify the client id provided by github
      *
      * You can register a new application at:
@@ -17,13 +17,13 @@ $settings = [
     'github_client_id' => '',
     /**
      * Github Secret
-     * 
+     *
      * Please specify the secret provided by github
      *
      * You can register a new application at:
      * https://github.com/settings/applications/new
      */
-    'github_secret' =>'',
+    'github_secret' => '',
 ];
 
 /**

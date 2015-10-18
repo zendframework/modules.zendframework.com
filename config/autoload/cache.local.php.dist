@@ -14,8 +14,8 @@ return [
             ],
             'plugins' => [
                 'exception_handler' => ['throw_exceptions' => true],
-                'serializer'
-            ]
+                'serializer',
+            ],
         ],
         'cache_key' => 'github_api',
     ],
