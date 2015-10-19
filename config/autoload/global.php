@@ -1,6 +1,11 @@
 <?php
 return [
     'service_manager' => [
+        'aliases' => [
+            'ScnSocialAuth_ZendDbAdapter' => 'Zend\Db\Adapter\Adapter',
+            'ScnSocialAuth_ZendSessionManager' => 'Zend\Session\SessionManager',
+            'zfcuser_zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
+        ],
         'factories' => [
             'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
         ],
@@ -34,5 +39,16 @@ return [
                 'table'     => 'doctrine_migration_versions',
             ],
         ],
+    ],
+    'htmlpurifier' => [
+        'Cache.SerializerPath' => realpath('./data/cache'),
+    ],
+    'scn-social-auth' => [
+        'github_enabled' => true,
+        'github_scope' => 'user:email,read:org',
+    ],
+    'zfcuser' => [
+        'user_entity_class' => 'User\Entity\User',
+        'logout_redirect_route' => 'home',
     ],
 ];
