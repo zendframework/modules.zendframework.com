@@ -7,4 +7,17 @@ return [
         'username' => 'root',
         'password' => '',
     ],
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'params' => [
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'root',
+                    'password' => '',
+                    'dbname'   => 'modules_test',
+                ],
+            ],
+        ],
+    ],
 ];
