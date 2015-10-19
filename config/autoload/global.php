@@ -1,4 +1,9 @@
 <?php
+
+use User\Entity;
+use Zend\Db;
+use Zend\Session;
+
 return [
     'db' => [
         'driver'    => 'pdo',
@@ -36,19 +41,19 @@ return [
     ],
     'service_manager' => [
         'aliases' => [
-            'ScnSocialAuth_ZendDbAdapter' => 'Zend\Db\Adapter\Adapter',
-            'ScnSocialAuth_ZendSessionManager' => 'Zend\Session\SessionManager',
-            'zfcuser_zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
+            'ScnSocialAuth_ZendDbAdapter' => Db\Adapter\Adapter::class,
+            'ScnSocialAuth_ZendSessionManager' => Session\SessionManager::class,
+            'zfcuser_zend_db_adapter' => Db\Adapter\Adapter::class,
         ],
         'factories' => [
-            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+            Db\Adapter\Adapter::class => Db\Adapter\AdapterServiceFactory::class,
         ],
         'invokables' => [
-            'Zend\Session\SessionManager' => 'Zend\Session\SessionManager',
+            Session\SessionManager::class => Session\SessionManager::class,
         ],
     ],
     'zfcuser' => [
-        'user_entity_class' => 'User\Entity\User',
+        'user_entity_class' => Entity\User::class,
         'logout_redirect_route' => 'home',
     ],
 ];
