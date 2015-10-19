@@ -1,18 +1,5 @@
 <?php
 return [
-    'service_manager' => [
-        'aliases' => [
-            'ScnSocialAuth_ZendDbAdapter' => 'Zend\Db\Adapter\Adapter',
-            'ScnSocialAuth_ZendSessionManager' => 'Zend\Session\SessionManager',
-            'zfcuser_zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
-        ],
-        'factories' => [
-            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
-        ],
-        'invokables' => [
-            'Zend\Session\SessionManager' => 'Zend\Session\SessionManager',
-        ],
-    ],
     'db' => [
         'driver'    => 'pdo',
         'dsn'       => 'mysql:dbname=modules;host=localhost',
@@ -46,6 +33,19 @@ return [
     'scn-social-auth' => [
         'github_enabled' => true,
         'github_scope' => 'user:email,read:org',
+    ],
+    'service_manager' => [
+        'aliases' => [
+            'ScnSocialAuth_ZendDbAdapter' => 'Zend\Db\Adapter\Adapter',
+            'ScnSocialAuth_ZendSessionManager' => 'Zend\Session\SessionManager',
+            'zfcuser_zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
+        ],
+        'factories' => [
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+        ],
+        'invokables' => [
+            'Zend\Session\SessionManager' => 'Zend\Session\SessionManager',
+        ],
     ],
     'zfcuser' => [
         'user_entity_class' => 'User\Entity\User',
