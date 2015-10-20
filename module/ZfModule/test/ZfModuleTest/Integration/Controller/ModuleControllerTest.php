@@ -30,6 +30,7 @@ class ModuleControllerTest extends AbstractHttpControllerTestCase
     {
         parent::setUp();
 
+        $this->setTraceError(false);
         $this->setApplicationConfig(Bootstrap::getConfig());
     }
 
