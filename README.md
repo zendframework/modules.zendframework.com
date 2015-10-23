@@ -20,6 +20,7 @@ This site will eventually be a community site for publishing and sharing Zend Fr
  * Copy `config/autoload/github.local.php.dist` to `config/autoload/github.local.php` and enter the Id and Secret provided during the application registration on GitHub
  * Copy `config/autoload/database.local.php.dist` to `config/autoload/database.local.php` and enter your database credentials here
  * Copy `config/autoload/cache.local.php.dist` to `config/autoload/cache.local.php`. It's optional
+ * Build the Database with ``php public/index.php migrations:migrate`` 
 
 ### Development Mode
 
