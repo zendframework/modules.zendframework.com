@@ -28,6 +28,10 @@ To enable development mode:
  * Toggle the development mode flag: `php public/index.php development enable`
  * Copy `config/autoload/development.local.php.dist` to `config/autoload/development.local.php`
  * Copy `vendor/zendframework/zend-developer-tools/config/zenddevelopertools.local.php.dist` to `config/autoload/zenddevelopertools.local.php`
+ 
+ Additional hint for GitHub Login:
+ 
+  * Make sure you create a new [application token in GitHub](https://github.com/settings/applications/new) where the CALLBACK url fits with your local url e.g. http://modules.zendframework.dev
 
 ## Deployment
 
