@@ -21,21 +21,6 @@ This site will eventually be a community site for publishing and sharing Zend Fr
  * Copy `config/autoload/database.local.php.dist` to `config/autoload/database.local.php` and enter your database credentials here
  * Copy `config/autoload/cache.local.php.dist` to `config/autoload/cache.local.php`. It's optional
 
-###Vagrant Setup
-
- * Clone this project: `git clone git://github.com/zendframework/modules.zendframework.com.git`
- * [Create a new application in GitHub](https://github.com/settings/applications/new)
- * Main URL and CALLBACK url must be the same without any routing. e.g. http://modules.zendframework.com
- * Remove the `.dist` suffix from the files in `config/autoload` and edit them according to your own credentials
-    - The database information for vagrant is:
-    - Username: `modules`
-    - Database name: `modules`
-    - Password: `modules`
- * Run `vagrant up` (You will need [Vagrant](http://www.vagrantup.com/))
- * Add an entry in your hosts (`/etc/hosts` or `C:\Windows\system32\drivers\etc\hosts`):
-    - `192.168.56.101 modules.zendframework.dev`
- * Browse to http://modules.zendframework.dev/
-
 ### Development Mode
 
 To enable development mode:
