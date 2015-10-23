@@ -15,7 +15,6 @@ This site will eventually be a community site for publishing and sharing Zend Fr
 
  * Clone this project `git clone git://github.com/zendframework/modules.zendframework.com.git`
  * Run `composer install` to initialize your vendors
- * Import `data/0.sql` into your database
  * [Create a new application in GitHub](https://github.com/settings/applications/new)
     * Main URL and CALLBACK url must be the same without any routing. e.g. http://modules.zendframework.com
  * Copy `config/autoload/github.local.php.dist` to `config/autoload/github.local.php` and enter the Id and Secret provided during the application registration on GitHub
