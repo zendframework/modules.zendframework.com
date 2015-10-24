@@ -11,4 +11,17 @@ return [
         'username'  => 'CHANGEME',
         'password'  => 'CHANGEME',
     ],
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'params' => [
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'CHANGE_DEV_DB_USER',
+                    'password' => 'CHANGE_DEV_DB_PASS',
+                    'dbname'   => 'CHANGE_DEV_DB_NAME',
+                ],
+            ],
+        ],
+    ],
 ];
