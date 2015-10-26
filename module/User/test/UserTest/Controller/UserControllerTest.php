@@ -4,7 +4,6 @@ namespace UserTest\Controller;
 
 use ApplicationTest\Integration\Util\Bootstrap;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-use User\Controller;
 use ZfcUser\Controller\UserController;
 
 /**
@@ -27,7 +26,6 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         try {
             $userController = new UserController($callable);
             $this->assertInstanceOf(UserController::class, $userController);
-
         } catch (\Exception $e) {
             $this->fail('Constructor fails with Callable Argument');
         }
