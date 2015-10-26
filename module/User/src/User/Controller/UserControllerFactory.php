@@ -21,7 +21,8 @@ class UserControllerFactory implements FactoryInterface
         /* @var Service\Module $moduleService */
         $moduleService = $serviceManager->get(Service\Module::class);
 
-        $redirectCallback = $controllerManager->getServiceLocator()->get('zfcuser_redirect_callback');
+        /* @var \ScnSocialAuth\Controller\RedirectCallback */
+        $redirectCallback = $serviceManager->get('zfcuser_redirect_callback');
 
         return new UserController($redirectCallback, $moduleService);
     }
