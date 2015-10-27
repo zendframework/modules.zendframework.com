@@ -33,7 +33,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
                 $this->equalTo('created_at'),
                 $this->equalTo('DESC')
             )
-            ->willReturn(new Paginator\Paginator(new Paginator\Adapter\Null()))
+            ->willReturn(new Paginator\Paginator(new Paginator\Adapter\NullFill()))
         ;
 
         $moduleMapper

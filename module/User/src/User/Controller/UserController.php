@@ -19,10 +19,15 @@ class UserController extends ZfcUserController
     private $moduleService;
 
     /**
+     * @param callable $redirectCallback
      * @param Service\Module $moduleService
      */
-    public function __construct(Service\Module $moduleService)
+    public function __construct($redirectCallback, Service\Module $moduleService)
     {
+        if (!is_callable($redirectCallback)) {
+            throw new \InvalidArgumentException('You must supply a callable redirectCallback');
+        }
+        $this->redirectCallback = $redirectCallback;
         $this->moduleService = $moduleService;
     }
 

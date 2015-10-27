@@ -12,12 +12,13 @@ class FlashMessenger extends ZendFlashMessenger
     /**
      * Render Messages in a BS message format
      *
-     * @param callable $renderer
-     * @param string $namespace
-     * @param string[] $classes
+     * @param $renderer
+     * @param $namespace
+     * @param array $classes
+     * @param bool|false $autoEscape
      * @return string
      */
-    private function doRender($renderer, $namespace, array $classes = [])
+    private function doRender($renderer, $namespace, array $classes = [], $autoEscape = false)
     {
         $this->classOptions = [
             PluginFlashMessenger::NAMESPACE_INFO => [
@@ -60,7 +61,7 @@ class FlashMessenger extends ZendFlashMessenger
             $this->setMessageSeparatorString(sprintf('</div>%s', $openingString));
             $this->setMessageCloseString('</div>');
 
-            $messageOutput .= $renderer($currentNamespace, $classes);
+            $messageOutput .= $renderer($currentNamespace, $classes, $autoEscape);
         }
 
         return $messageOutput;
@@ -69,10 +70,10 @@ class FlashMessenger extends ZendFlashMessenger
     /**
      * {@inheritdoc}
      */
-    public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
+    public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [], $autoEscape = null)
     {
-        $renderer = function ($namespace, $classes) {
-            return parent::render($namespace, $classes);
+        $renderer = function ($namespace, $classes, $autoEscape) {
+            return parent::render($namespace, $classes, $autoEscape);
         };
 
         return $this->doRender($renderer, $namespace, $classes);
@@ -81,12 +82,12 @@ class FlashMessenger extends ZendFlashMessenger
     /**
      * {@inheritdoc}
      */
-    public function renderCurrent($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [])
+    public function renderCurrent($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = [], $autoEscape = null)
     {
-        $renderer = function ($namespace, $classes) {
-            return parent::renderCurrent($namespace, $classes);
+        $renderer = function ($namespace, $classes, $autoEscape) {
+            return parent::renderCurrent($namespace, $classes, $autoEscape);
         };
 
-        return $this->doRender($renderer, $namespace, $classes);
+        return $this->doRender($renderer, $namespace, $classes, $autoEscape);
     }
 }
