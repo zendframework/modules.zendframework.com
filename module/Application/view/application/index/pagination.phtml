@@ -8,7 +8,7 @@
                             <a href="<?php echo $this->url('home', [], ['query' => ['query' => $this->query, 'page' => $this->first]]); ?>">&lt;&lt; First</a>
                         </li>
                         <li>
-                            <a href="<?php echo $this->url('home', [], ['query' => ['query' => $this->$query, 'page' => $this->previous]]); ?>">Previous &gt;</a>
+                            <a href="<?php echo $this->url('home', [], ['query' => ['query' => $this->$query, 'page' => $this->previous]]); ?>">&lt; Previous</a>
                         </li>
                     <?php endif; ?>
                     <?php foreach ($this->pagesInRange as $page): ?>
