@@ -1,17 +1,16 @@
 # ZF2 Modules Site 
 
-[![Build Status](https://travis-ci.org/zendframework/modules.zendframework.com.svg?branch=master)](https://travis-ci.org/zendframework/modules.zendframework.com) 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/badges/build.png?b=master)](https://scrutinizer-ci.com/g/zendframework/modules.zendframework.com/build-status/master)
-[![Dependency Status](https://www.versioneye.com/user/projects/54885d5a746eb514b0000279/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54885d5a746eb514b0000279) 
+> ## UNMAINTAINED
+>
+> This repository is no longer maintained.
 
 ## Introduction
 
 This site will eventually be a community site for publishing and sharing Zend Framework modules.
 
-##Installation
+## Installation
 
-###Main Setup
+### Main Setup
 
  * Clone this project `git clone git://github.com/zendframework/modules.zendframework.com.git`
  * Run `composer install` to initialize your vendors
